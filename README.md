@@ -58,6 +58,10 @@ _Note: You are totally free on the names of projects and environments, they are 
 
 ## Changelog
 
+2014-02-24 - **0.0.2**
+
+* Replaced icon
+
 2014-02-24 - **0.0.1**
 
 * Initial release
