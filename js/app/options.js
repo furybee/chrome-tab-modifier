@@ -61,7 +61,9 @@ var OptionsModel = Stapes.subclass({
     },
 
     /**
-    * Sets projectss
+    * Sets projects
+    *
+    * @param string content
     */
     setProjects: function(content) {
         localStorage.projects = content;
@@ -87,7 +89,6 @@ var OptionsModel = Stapes.subclass({
     }
 
 });
-
 
 /**
 * View
