@@ -72,7 +72,7 @@ var OptionsModel = Stapes.subclass({
     },
 
     /**
-    * Sets projectss
+    * Shows current file content
     */
     showCurrentFile: function() {
         /**
