@@ -4,7 +4,7 @@ This extension allows you to automatically add a prefix to the pages you want.
 
 This feature is useful when you have multiple tabs open a site on multiple execution environments (development, pre-production, production ...) to identify them quickly.
 
-<img src="https://github.com/sylouuu/website-environment-identifier/blob/master/img/tabs.png" alt="tabs">
+<img src="https://raw.github.com/sylouuu/website-environment-identifier/master/img/tabs.png" alt="tabs">
 
 ### Install
 
