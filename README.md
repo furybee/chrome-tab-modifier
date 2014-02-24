@@ -8,7 +8,7 @@ This feature is useful when you have multiple tabs open a site on multiple execu
 
 ### Install
 
-Download and install from the [Chrome Web Store](https://github.com/).
+Download and install from the [Chrome Web Store](https://chrome.google.com/webstore/detail/hcbgadmbdkiilgpifjgcakjehmafcjai/).
 
 ### Usage
 
