@@ -116,11 +116,6 @@ var OptionsView = Stapes.subclass({
             var reader = new FileReader();
 
             /**
-            * Reading file as text
-            */
-            reader.readAsText(file);
-
-            /**
             * Async reader event
             */
             reader.onload = function(e) {
@@ -147,9 +142,12 @@ var OptionsView = Stapes.subclass({
                 } else {
                     alert('Content KO');
                 }
-
             };
 
+            /**
+            * Reading file as text
+            */
+            reader.readAsText(file);
         });
     }
 
