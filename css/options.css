@@ -1,0 +1,26 @@
+.file {
+    position: relative;
+}
+    .file label {
+        background: #39D2B4;
+        padding: 5px 20px;
+        color: #fff;
+        font-weight: bold;
+        font-size: .9em;
+        transition: all .4s;
+    }
+
+    .file input {
+        position: absolute;
+        display: inline-block;
+        left: 0;
+        top: 0;
+        opacity: 0.01;
+        cursor: pointer;
+    }
+
+    .file input:hover + label,
+    .file input:focus + label {
+        background: #34495E;
+        color: #39D2B4;
+    }

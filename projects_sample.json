@@ -1,0 +1,16 @@
+{
+    "My Website": {
+        "dev": {
+            "prefix": "[DEV]",
+            "url": "http://my-website.local"
+        },
+        "preprod": {
+            "prefix": "[PREPROD]",
+            "url": "http://my-website.preprod.com"
+        },
+        "prod": {
+            "prefix": "[PROD]",
+            "url": "http://my-website.com"
+        }
+    }
+}
