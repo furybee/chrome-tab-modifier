@@ -1,6 +1,6 @@
 ## Website Environment Identifier
 
-This extension allows you to automatically add a prefix to the pages you want.
+This Chrome extension allows you to automatically add a prefix to the pages you want.
 
 This feature is useful when you have multiple tabs open a site on multiple execution environments (development, pre-production, production ...) to identify them quickly.
 
