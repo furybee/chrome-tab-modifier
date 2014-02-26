@@ -29,6 +29,8 @@ To use this extension, you must create a file in JSON format where a project con
 }
 ```
 
+_Note: You are totally free on the names of projects and environments, they are there only for file organization. Only prefixes and URL are used._
+
 ### Example
 
 ```js
@@ -40,7 +42,7 @@ To use this extension, you must create a file in JSON format where a project con
         },
         "preprod": {
             "prefix": "[PREPROD]",
-            "url": "http://my-website.preprod.com"
+            "url": "http://preprod.my-website.com"
         },
         "prod": {
             "prefix": "[PROD]",
@@ -50,7 +52,28 @@ To use this extension, you must create a file in JSON format where a project con
 }
 ```
 
-_Note: You are totally free on the names of projects and environments, they are there only for file organization. Only prefixes and URL are used._
+Keep in mind that the first goal was to detect websites environments by the URL.
+
+However, the extension tries to match the URL value with the current loaded (full length) URL. Then you can match any string.
+
+```js
+{
+    "All": {
+        "dev": {
+            "prefix": "[DEV]",
+            "url": ".local"
+        },
+        "preprod": {
+            "prefix": "[PREPROD]",
+            "url": ".preprod.domain.com"
+        },
+        "prod": {
+            "prefix": "[PROD]",
+            "url": "domain.com"
+        }
+    }
+}
+```
 
 ### Options
 
