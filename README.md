@@ -61,7 +61,7 @@ Once created, go to the extensions options: [chrome://extensions](chrome://exten
 
 ## How it works?
 
-Each time you open an URL, the extension tries to match the URL with your settings and do the job.
+Each time you open a page, the script tries to match the URL with your settings, and does the job.
 Attention, the first match is used, the other ones will be ignored.
 
 ## Options preview
