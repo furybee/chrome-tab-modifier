@@ -57,7 +57,7 @@ The tab will be pinned if you set this property to ```true```.
 
 <img src="https://raw.github.com/sylouuu/website-settings/master/img/screenshots/tabs.png" alt="tabs">
 
-Once created, go to the extensions options: [chrome://extensions](chrome://extensions) and import your ```file.json```. Your settings are saved locally, you can remove the file.
+Once created, go to the extensions page: [chrome://extensions/](chrome://extensions/) and import your ```file.json```. Your settings are saved locally, you can remove the file.
 
 ## How it works?
 
