@@ -1,3 +1,7 @@
+<p align="center">
+    <img src="https://raw.github.com/sylouuu/website-settings/master/img/icon_128.png" alt="icon">
+</p>
+
 # Website Settings
 
 This Chrome extension allows you to automatically make some things on a website, such as renaming title or pin the tab.
@@ -5,6 +9,10 @@ This Chrome extension allows you to automatically make some things on a website,
 ## Install
 
 Download and install from the [Chrome Web Store](https://chrome.google.com/webstore/detail/hcbgadmbdkiilgpifjgcakjehmafcjai/).
+
+<p align="center">
+    <img src="https://raw.github.com/sylouuu/website-settings/master/img/screenshots/extension.png" alt="extension">
+</p>
 
 ## Usage
 
