@@ -1,85 +1,69 @@
-## Website Environment Identifier
+# Website Settings
 
-This Chrome extension allows you to automatically add a prefix to the pages you want.
+This Chrome extension allows you to automatically make some things on a website, such as renaming title.
 
-This feature is useful when you have multiple tabs open a site on multiple execution environments (development, pre-production, production ...) to identify them quickly.
-
-<img src="https://raw.github.com/sylouuu/website-environment-identifier/master/img/tabs.png" alt="tabs">
-
-### Install
+## Install
 
 Download and install from the [Chrome Web Store](https://chrome.google.com/webstore/detail/hcbgadmbdkiilgpifjgcakjehmafcjai/).
 
-### Usage
+## Usage
 
-To use this extension, you must create a file in JSON format where a project contains multiple environments, and the environments contain a prefix and an URL.
+To use this extension, you must create a JSON file which contains your settings.
 
 ### Syntax
 
 ```js
 {
-    "Project Name": {
-        "Environment name": {
-            "prefix": "prefix",
-            "url": "http://project.com"
-        },
-        ... another environment
+    "string to match the complete URL": {
+        "title": "New page title"
     },
-    ... another project
-}
-```
-
-_Note: You are totally free on the names of projects and environments, they are there only for file organization. Only prefixes and URL are used._
-
-### Example
-
-```js
-{
-    "My Website": {
-        "dev": {
-            "prefix": "[DEV]",
-            "url": "http://my-website.local"
-        },
-        "preprod": {
-            "prefix": "[PREPROD]",
-            "url": "http://preprod.my-website.com"
-        },
-        "prod": {
-            "prefix": "[PROD]",
-            "url": "http://my-website.com"
-        }
+    "another string, domain name or whatever": {
+        "title": "Welcome to {title}",
+        "pinned": true
     }
 }
 ```
 
-Keep in mind that the first goal was to detect websites environments by the URL.
+```{title}``` is the website title. Use this tag if you need to add a prefix/suffix.
 
-However, the extension tries to match the URL value with the current loaded (full length) URL. Then you can match any string.
+The tab will be pinned if you set this property to ```true```.
+
+### Sample file
 
 ```js
 {
-    "All": {
-        "dev": {
-            "prefix": "[DEV]",
-            "url": ".local"
-        },
-        "preprod": {
-            "prefix": "[PREPROD]",
-            "url": ".preprod.domain.com"
-        },
-        "prod": {
-            "prefix": "[PROD]",
-            "url": "domain.com"
-        }
+    ".local": {
+        "title": "[DEV] {title}"
+    },
+    "domain.com": {
+        "title": "[PROD] {title}"
+    },
+    "youtube.com": {
+        "pinned": true
+    },
+    "twitter.com": {
+        "title": "I'm working hard!"
     }
 }
 ```
 
-### Options
+<img src="https://raw.github.com/sylouuu/website-settings/master/img/screenshots/tabs.png" alt="tabs">
 
-<img src="https://raw.github.com/sylouuu/website-environment-identifier/master/img/options.png" alt="options">
+Once created, go to the extensions options: chrome://extensions and import your ```file.json```. Your settings are saved locally, you can remove the file.
 
-## Changelog
+## How it works?
+
+Each time you open an URL, the extension will try to match the URL with your settings and will replace the title. Attention, the first match is used, the other ones will be ignored.
+
+## Options
+
+<img src="https://raw.github.com/sylouuu/website-settings/master/img/screenshots/options.png" alt="options">
+
+# Ideas
+
+* Change website (fav)icon
+
+# Changelog
 
 2014-02-24 - **0.0.2**
 

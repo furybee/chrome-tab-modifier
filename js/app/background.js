@@ -8,54 +8,91 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     if(changeInfo.status === 'complete') {
 
         /**
-        * Getting the projects
+        * Getting the settings
         */
-        var projects = localStorage.projects;
+        var settings = localStorage.settings;
 
         /**
-        * Projects are set
+        * settings are set
         */
-        if(projects !== undefined) {
+        if(settings !== undefined) {
 
             /**
             * Converting string to object
             */
-            projects = JSON.parse(projects);
-
-            var prefix = null;
+            settings = JSON.parse(settings);
 
             /**
-            * Looping projects
+            * Working variables
             */
-            for (var i in projects) {
+            var new_title   = null;
+            var pinned      = null;
+            var found       = false;
+
+            /**
+            * Looping settings
+            */
+            for (var string_to_match in settings) {
                 /**
-                * Looping environments
+                * Verifying that the current URL matches the string
                 */
-                for (var j in projects[i]) {
-                    console.log(projects[i][j].url);
+                if(tab.url.indexOf(string_to_match) !== -1 && found === false) {
+                    /**
+                    * Getting the new title
+                    */
+                    if(settings[string_to_match].title !== undefined) {
+                        new_title = settings[string_to_match].title;
+                    }
 
                     /**
-                    * Verifying that the current URL matches an environment URL
+                    * Pinned property is set?
                     */
-                    if(tab.url.indexOf(projects[i][j].url) != -1) {
-                        /**
-                        * Getting the prefix
-                        */
-                        prefix = projects[i][j].prefix;
+                    if(settings[string_to_match].pinned !== undefined) {
+                        pinned = settings[string_to_match].pinned;
                     }
+
+                    found = true;
                 }
             }
 
             /**
-            * A prefix has been set
+            * A new title has been set
             */
-            if(prefix !== null) {
+            if(found === true) {
+
                 /**
-                * Updating the document title
+                * Want a new title?
                 */
-                chrome.tabs.executeScript(tabId, {
-                    code: 'document.title = "'+ prefix +' ' + tab.title + '";'
-                });
+                if(new_title !== null) {
+                    var title_tag = '{title}';
+
+                    /**
+                    * Replacing {title} tag
+                    */
+                    if(new_title.indexOf(title_tag) !== -1) {
+                        new_title = new_title.replace(title_tag, tab.title);
+                    }
+
+                    /**
+                    * Updating the document title
+                    */
+                    chrome.tabs.executeScript(tabId, {
+                        code: 'document.title = "'+ new_title + '";'
+                    });
+                }
+
+                /**
+                * Want to pin?
+                */
+                if(tab.pinned === false && pinned === true) {
+                    /**
+                    * Updating the pinned state
+                    */
+                    chrome.tabs.update(tabId, {
+                        pinned: true
+                    });
+                }
+
             }
         }
     }

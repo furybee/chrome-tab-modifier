@@ -10,6 +10,10 @@
         transition: all .4s;
     }
 
+    .file label:hover {
+        cursor: pointer;
+    }
+
     .file input {
         position: absolute;
         display: inline-block;
@@ -23,4 +27,47 @@
     .file input:focus + label {
         background: #34495E;
         color: #39D2B4;
+    }
+
+pre {
+    font-family: Menlo, Consolas, 'Courier New', monospace
+}
+
+    footer.bottom-menu {
+        color: #bcc3ca;
+        padding: 40px 0;
+    }
+
+        footer.bottom-menu .navbar-brand {
+            float: none;
+            margin-top: -22px;
+            padding: 14px 0;
+        }
+
+    footer .bottom-links {
+        margin-bottom: 0;
+    }
+
+        footer .bottom-links > li {
+            color: #7F8C8D;
+            line-height : 32px;
+        }
+
+    footer ul[class^="list-"] {
+        margin-bottom: 0;
+    }
+
+    footer ul[class^="list-"] > li {
+        padding-left: 10px;
+        padding-right: 0;
+    }
+
+    footer a {
+        font-weight: normal;
+    }
+
+    @media (max-width: 767px) {
+        footer article[class^="col-"] {
+            text-align: center;
+        }
     }

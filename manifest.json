@@ -1,9 +1,9 @@
 ﻿{
     "manifest_version": 2,
-    "name": "Website Environment Identifier",
-    "version": "0.0.2",
-    "description": "Prefix titles websites to identify environment",
-    "homepage_url": "https://github.com/sylouuu/website-environment-identifier",
+    "name": "Website Settings",
+    "version": "0.1.0",
+    "description": "Rename websites titles over Chrome extension",
+    "homepage_url": "https://github.com/sylouuu/website-settings",
 
     "icons": {
         "16": "img/icon_16.png",

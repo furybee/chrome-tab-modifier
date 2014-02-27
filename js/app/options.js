@@ -9,8 +9,8 @@ var OptionsModel = Stapes.subclass({
     * Constructor
     */
     constructor: function() {
-        this.$current_file = $('#current_file');
-        this.$projects_file = $('#projects_file');
+        this.$current_file  = $('#current_file');
+        this.$settings_file = $('#settings_file');
     },
 
     /**
@@ -52,21 +52,21 @@ var OptionsModel = Stapes.subclass({
     },
 
     /**
-    * Gets projects
+    * Gets settings
     *
-    * @return mixed projects
+    * @return mixed settings
     */
-    getProjects: function() {
-        return localStorage.projects;
+    getSettings: function() {
+        return localStorage.settings;
     },
 
     /**
-    * Sets projects
+    * Sets settings
     *
     * @param string content
     */
-    setProjects: function(content) {
-        localStorage.projects = content;
+    setSettings: function(content) {
+        localStorage.settings = content;
 
         this.showCurrentFile();
     },
@@ -76,15 +76,15 @@ var OptionsModel = Stapes.subclass({
     */
     showCurrentFile: function() {
         /**
-        * Getting projects
+        * Getting settings
         */
-        var projects = this.getProjects();
+        var settings = this.getSettings();
 
-        if(projects !== undefined) {
+        if(settings !== undefined) {
             /**
             * Updating DOM
             */
-            this.getAttribute('$current_file').html(JSON.stringify(JSON.parse(projects), undefined, 4));
+            this.getAttribute('$current_file').html(JSON.stringify(JSON.parse(settings), undefined, 4));
         }
     }
 
@@ -105,7 +105,7 @@ var OptionsView = Stapes.subclass({
         /**
         * Change event for importing
         */
-        this.model.getAttribute('$projects_file').on('change', function() {
+        this.model.getAttribute('$settings_file').on('change', function() {
             /**
             * Retrieving given file
             */
@@ -131,17 +131,17 @@ var OptionsView = Stapes.subclass({
                     */
                     if(self.model.isValidJSON(content) === true) {
                         /**
-                        * Setting projects
+                        * Set settings
                         */
                         self.model.push({
-                            item: 'setProjects',
+                            item: 'setSettings',
                             content: content
                         });
                     } else {
-                        alert('Unvalid JSON file');
+                        alert('Unvalid JSON file. Please check it on jsonlint.com.');
                     }
                 } else {
-                    alert('Content KO');
+                    alert('An error has occured. Please check your file.');
                 }
             };
 
@@ -168,7 +168,7 @@ var OptionsController = Stapes.subclass({
         this.view   = new OptionsView(this.model);
 
         /**
-        * Showing projects
+        * Showing settings
         */
         this.model.showCurrentFile();
 
@@ -176,11 +176,11 @@ var OptionsController = Stapes.subclass({
             var obj = self.model.get(id);
 
             switch(obj.item) {
-                case 'setProjects':
+                case 'setSettings':
                     /**
-                    * Setting projects
+                    * Set settings
                     */
-                    self.model.setProjects(obj.content);
+                    self.model.setSettings(obj.content);
                 break;
             }
 

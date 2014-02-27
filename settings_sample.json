@@ -1,0 +1,14 @@
+{
+    ".local": {
+        "title": "[DEV] {title}"
+    },
+    "domain.com": {
+        "title": "[PROD] {title}"
+    },
+    "youtube.com": {
+        "pinned": true
+    },
+    "twitter.com": {
+        "title": "I'm working hard!"
+    }
+}

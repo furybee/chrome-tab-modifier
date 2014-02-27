@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Website Environment Identifier - Options</title>
+        <title>Website Settings - Options</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -15,9 +15,9 @@
 
             <div class="row">
                 <div class="col-lg-12">
-                    <h3>Website Environment Identifier</h3>
+                    <h3>Website Settings</h3>
 
-                    <p><a href="https://github.com/sylouuu/website-environment-identifier/blob/master/README.md" target="_blank">Read instructions</a> before using this extension.</p>
+                    <p><a href="https://github.com/sylouuu/website-settings/blob/master/README.md" target="_blank">Read instructions</a> before using this extension.</p>
                 </div>
             </div>
 
@@ -27,22 +27,59 @@
 
                     <form class="form-horizontal" role="form">
                         <p class="file">
-                            <input type="file" name="file" id="projects_file" />
-                            <label for="projects_file">Import your project file</label>
+                            <input type="file" name="file" id="settings_file" />
+                            <label for="settings_file">Import your settings file</label>
                         </p>
                     </form>
-              </div>
+                </div>
             </div>
 
             <div class="row">
                 <div class="col-lg-12">
-                    <h4>Current file</h4>
+                    <h4>Current settings</h4>
 
-                    <pre id="current_file">No file found. Please import one for using this extension.</pre>
+                    <pre id="current_file">No settings found. Please import your settings file.</pre>
               </div>
             </div>
 
         </div>
+
+        <footer class="bottom-menu">
+            <div class="container">
+
+                <div class="row">
+
+                    <article class="col-sm-3 col-md-2 col-lg-2">
+                        <div class="navbar-brand">
+                            <img src="../img/icon_48.png" alt="logo">
+                        </div>
+                    </article>
+
+                    <article class="col-sm-7 col-md-8 col-lg-8">
+                        <ul class="list-inline bottom-links">
+                            <li><a href="http://chez-syl.fr/" target="_blank">My blog</a></li>
+                            <li><a href="https://github.com/sylouuu/website-settings" target="_blank">Project on GitHub</a></li>
+                            <li><a href="https://github.com/sylouuu/website-settings/issues" target="_blank">Issues</a></li>
+                        </ul>
+                    </article>
+
+                    <article class="col-sm-2 col-md-2 col-lg-2 text-right">
+                        <ul class="list-inline">
+                            <li>
+                                <a href="https://github.com/sylouuu" title="Visit my GitHub profile" target="_blank">
+                                    <img src="../img/social/github_logo.png" alt="github logo">
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://twitter.com/sylwebdev" title="Follow me on Twitter (@sylwebdev)" target="_blank">
+                                    <img src="../img/social/twitter_logo.png" alt="twitter logo">
+                                </a>
+                            </li>
+                        </ul>
+                    </article>
+                </div>
+            </div>
+        </footer>
 
         <script src="../js/libs/jquery.min.js"></script>
         <script src="../js/libs/stapes.min.js"></script>
