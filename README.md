@@ -1,6 +1,6 @@
 # Website Settings
 
-This Chrome extension allows you to automatically make some things on a website, such as renaming title.
+This Chrome extension allows you to automatically make some things on a website, such as renaming title or pin the tab.
 
 ## Install
 
@@ -49,19 +49,20 @@ The tab will be pinned if you set this property to ```true```.
 
 <img src="https://raw.github.com/sylouuu/website-settings/master/img/screenshots/tabs.png" alt="tabs">
 
-Once created, go to the extensions options: chrome://extensions and import your ```file.json```. Your settings are saved locally, you can remove the file.
+Once created, go to the extensions options: [chrome://extensions](chrome://extensions) and import your ```file.json```. Your settings are saved locally, you can remove the file.
 
 ## How it works?
 
-Each time you open an URL, the extension will try to match the URL with your settings and will replace the title. Attention, the first match is used, the other ones will be ignored.
+Each time you open an URL, the extension tries to match the URL with your settings and do the job.
+Attention, the first match is used, the other ones will be ignored.
 
-## Options
+## Options preview
 
 <img src="https://raw.github.com/sylouuu/website-settings/master/img/screenshots/options.png" alt="options">
 
 # Ideas
 
-* Change website (fav)icon
+* Change website icon
 
 # Changelog
 

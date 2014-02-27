@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "Website Settings",
     "version": "0.1.0",
-    "description": "Rename websites titles over Chrome extension",
+    "description": "Modify websites over Chrome extension",
     "homepage_url": "https://github.com/sylouuu/website-settings",
 
     "icons": {
