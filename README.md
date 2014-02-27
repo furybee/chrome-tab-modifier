@@ -66,6 +66,14 @@ Attention, the first match is used, the other ones will be ignored.
 
 # Changelog
 
+2014-02-27 - **0.1.0**
+
+* New name: Website Settings
+* New icon
+* New JSON file format (BC break)
+* New feature (pinned)
+* Enhanced options page
+
 2014-02-24 - **0.0.2**
 
 * Replaced icon
