@@ -4,11 +4,11 @@
 
 # Website Settings
 
-This Chrome extension allows you to automatically make some things on a website, such as renaming title or pin the tab.
+This Chrome extension allows you to automatically set some things on a website, such as renaming the title or pin the tab.
 
 ## Install
 
-Download and install from the [Chrome Web Store](https://chrome.google.com/webstore/detail/hcbgadmbdkiilgpifjgcakjehmafcjai/).
+Download and install from the **[Chrome Web Store](https://chrome.google.com/webstore/detail/hcbgadmbdkiilgpifjgcakjehmafcjai/)**.
 
 <p align="center">
     <img src="https://raw.github.com/sylouuu/website-settings/master/img/screenshots/extension.png" alt="extension">
