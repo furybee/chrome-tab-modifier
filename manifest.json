@@ -18,6 +18,11 @@
 
     "options_page": "html/options.html",
 
+    "content_scripts": [{
+        "matches": ["<all_urls>"],
+        "js": ["js/app/content.js"]
+    }],
+
     "permissions": [
         "tabs",
         "http://*/*",
