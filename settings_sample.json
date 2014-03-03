@@ -6,9 +6,11 @@
         "title": "[PROD] {title}"
     },
     "youtube.com": {
+        "icon": "https://www.google.com/favicon.ico",
         "pinned": true
     },
     "twitter.com": {
-        "title": "I'm working hard!"
+        "title": "I'm working hard!",
+        "icon": "{default}"
     }
 }

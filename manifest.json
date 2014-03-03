@@ -12,16 +12,26 @@
         "128": "img/icon_128.png"
     },
 
+    "options_page": "html/options.html",
+
     "background": {
         "scripts": ["js/app/background.js"]
     },
 
-    "options_page": "html/options.html",
-
     "content_scripts": [{
-        "matches": ["<all_urls>"],
-        "js": ["js/app/content.js"]
+        "matches": [
+            "http://*/*",
+            "https://*/*"
+        ],
+        "js": [
+            "js/libs/jquery.min.js",
+            "js/app/content.js"
+        ]
     }],
+
+    "web_accessible_resources": [
+        "img/*.png"
+    ],
 
     "permissions": [
         "tabs",

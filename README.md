@@ -23,7 +23,8 @@ To use this extension, you must create a JSON file which contains your settings.
 ```js
 {
     "string to match the complete URL": {
-        "title": "New page title"
+        "title": "New page title",
+        "icon": "New favicon URL or {default}"
     },
     "another string, domain name or whatever": {
         "title": "Welcome to {title}",
@@ -32,9 +33,12 @@ To use this extension, you must create a JSON file which contains your settings.
 }
 ```
 
-```{title}``` is the website title. Use this tag if you need to add a prefix/suffix.
+| Propery       | Tag               | Meaning                                                   |
+| ------------- |:-----------------:| ---------------------------------------------------------:|
+| title         | ```{title}```     | Website title, use it if you need to add a prefix/suffix  |
+| icon          | ```{default}```   | Default Chrome icon (white paper)                         |
 
-The tab will be pinned if you set this property to ```true```.
+The tab will be pinned if you set ```pinned``` to ```true```.
 
 ### Sample file
 
@@ -47,10 +51,12 @@ The tab will be pinned if you set this property to ```true```.
         "title": "[PROD] {title}"
     },
     "youtube.com": {
+        "icon": "https://www.google.com/favicon.ico",
         "pinned": true
     },
     "twitter.com": {
-        "title": "I'm working hard!"
+        "title": "I'm working hard!",
+        "icon": "{default}"
     }
 }
 ```
@@ -70,9 +76,14 @@ Attention, the first match is used, the other ones will be ignored.
 
 # Ideas
 
-* Change website icon
+* Any suggestion?
 
 # Changelog
+
+2014-03-03 - **0.2.0**
+
+* Totally reworked script behavior: content-script <=> background instead of background only
+* New feature (icon)
 
 2014-02-27 - **0.1.0**
 
