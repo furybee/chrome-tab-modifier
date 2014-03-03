@@ -33,8 +33,8 @@ To use this extension, you must create a JSON file which contains your settings.
 }
 ```
 
-| Propery       | Tag               | Meaning                                                   |
-| ------------- |:-----------------:| ---------------------------------------------------------:|
+| Property      | Tag               | Meaning                                                   |
+| :-----------: | :---------------: | :-------------------------------------------------------: |
 | title         | ```{title}```     | Website title, use it if you need to add a prefix/suffix  |
 | icon          | ```{default}```   | Default Chrome icon (white paper)                         |
 
