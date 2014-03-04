@@ -7,8 +7,8 @@
         /**
         * Options
         */
-        var settings = JSON.parse(options.settings);
-        var tabId = JSON.parse(options.tabId);
+        var settings    = JSON.parse(options.settings);
+        var tabId       = options.tabId;
 
         /**
         * Page

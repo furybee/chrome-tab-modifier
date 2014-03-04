@@ -4,7 +4,7 @@
 
 # Website Settings
 
-This Chrome extension allows you to automatically set some things on a website, such as renaming the title, changing the icon or pin the tab.
+This Chrome extension allows you to automatically set some things on a website, such as renaming the title, changing the icon or pinning the tab.
 
 ## Install
 

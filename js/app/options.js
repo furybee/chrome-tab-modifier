@@ -54,7 +54,7 @@ var OptionsModel = Stapes.subclass({
     /**
     * Gets settings
     *
-    * @return mixed settings
+    * @return string settings
     */
     getSettings: function() {
         return localStorage.settings;
@@ -141,7 +141,7 @@ var OptionsView = Stapes.subclass({
                         alert('Unvalid JSON file. Please check it on jsonlint.com.');
                     }
                 } else {
-                    alert('An error has occured. Please check your file.');
+                    alert('An error has occurred. Please check your file.');
                 }
             };
 
