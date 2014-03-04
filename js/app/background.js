@@ -7,7 +7,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
             sendResponse({
                 data: {
                     tabId:      sender.tab.id,
-                    settings:   localStorage['settings']
+                    settings:   localStorage.settings
                 }
             });
         break;
