@@ -14,7 +14,7 @@
         * Page
         */
         var page = {
-            url:    document.URL,
+            url:    location.URL,
             title:  document.title
         };
 
