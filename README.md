@@ -83,6 +83,10 @@ Attention, once a match is found, the other ones will be ignored.
 
 # Changelog
 
+2014-03-12 - **0.2.1**
+
+* Fixed a non-standard URL retrieving #1
+
 2014-03-03 - **0.2.0**
 
 * Totally reworked script behavior: content-script <=> background instead of background only
