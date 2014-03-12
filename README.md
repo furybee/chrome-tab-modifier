@@ -68,7 +68,10 @@ Once created, go to the extensions page: [chrome://extensions/](chrome://extensi
 ## How it works?
 
 Each time you open a page, the script tries to match the URL with your settings, and does the job.
-Attention, the first match is used, the other ones will be ignored.
+
+You don't need to use a wildcard such as ```*```. Specify ```cde``` to match ```abcde```, ```cdefg```, ```abcdefg``` and obviously ```cde```.
+
+Attention, once a match is found, the other ones will be ignored.
 
 ## Options preview
 
