@@ -86,7 +86,7 @@ Warning: once a match is found, the other ones will be ignored.
 
 # Changelog
 
-2014-05-* - **0.3.0**
+2014-05-27 - **0.3.0**
 
 * Renamed extension to `Tab Modifier`
 * Updated extension icon
