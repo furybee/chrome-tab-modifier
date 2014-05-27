@@ -1,17 +1,21 @@
 <p align="center">
-    <img src="https://raw.github.com/sylouuu/website-settings/master/img/icon_128.png" alt="icon">
+    <img src="https://raw.github.com/sylouuu/chrome-tab-modifier/master/img/icon_128.png" alt="icon">
 </p>
 
-# Website Settings
+# Tab Modifier
 
-This Chrome extension allows you to automatically set some things on a website, such as renaming the title, changing the icon or pinning the tab.
+This Chrome extension allows you to automatically change some of your tabs properties, here is the features list:
+
+* Rename the tab
+* Change the tab icon
+* Pin the tab
 
 ## Install
 
 Download and install from the **[Chrome Web Store](https://chrome.google.com/webstore/detail/hcbgadmbdkiilgpifjgcakjehmafcjai/)**.
 
 <p align="center">
-    <img src="https://raw.github.com/sylouuu/website-settings/master/img/screenshots/extension.png" alt="extension">
+    <img src="https://raw.github.com/sylouuu/chrome-tab-modifier/master/img/screenshots/extension.png" alt="extension">
 </p>
 
 ## Usage
@@ -23,8 +27,8 @@ To use this extension, you must create a JSON file which contains your settings.
 ```js
 {
     "string to match the complete URL": {
-        "title": "New page title",
-        "icon": "New favicon URL or {default}"
+        "title": "New tab title",
+        "icon": "New icon URL or {default}"
     },
     "another string, domain name or whatever": {
         "title": "Welcome to {title}",
@@ -33,12 +37,11 @@ To use this extension, you must create a JSON file which contains your settings.
 }
 ```
 
-| Property      | Tag               | Meaning                                                   |
-| :-----------: | :---------------: | :-------------------------------------------------------: |
-| title         | ```{title}```     | Website title, use it if you need to add a prefix/suffix  |
-| icon          | ```{default}```   | Default Chrome icon (white paper)                         |
-
-The tab will be pinned if you set ```pinned``` to ```true```.
+| Property      | Tag           | Meaning                                                   |
+| :-----------: | :-----------: | :-------------------------------------------------------: |
+| title         | `{title}`     | Website title, use it if you need to add a prefix/suffix  |
+| icon          | `{default}`   | Default Chrome icon (white paper)                         |
+| pinned        |               | Pin the tab                                               |
 
 ### Sample file
 
@@ -61,7 +64,7 @@ The tab will be pinned if you set ```pinned``` to ```true```.
 }
 ```
 
-<img src="https://raw.github.com/sylouuu/website-settings/master/img/screenshots/tabs.png" alt="tabs">
+<img src="https://raw.github.com/sylouuu/chrome-tab-modifier/master/img/screenshots/tabs.png" alt="tabs">
 
 Once created, go to the extensions page: [chrome://extensions/](chrome://extensions/) and import your ```file.json```. Your settings are saved locally, you can remove the file.
 
@@ -71,17 +74,22 @@ Each time you open a page, the script tries to match the URL with your settings,
 
 You don't need to use a wildcard such as ```*```. Specify ```cde``` to match ```abcde```, ```cdefg```, ```abcdefg``` and obviously ```cde```.
 
-Attention, once a match is found, the other ones will be ignored.
+Warning: once a match is found, the other ones will be ignored.
 
 ## Options preview
 
-<img src="https://raw.github.com/sylouuu/website-settings/master/img/screenshots/options.png" alt="options">
+<img src="https://raw.github.com/sylouuu/chrome-tab-modifier/master/img/screenshots/options.png" alt="options">
 
 # Ideas
 
 * Any suggestion?
 
 # Changelog
+
+2014-05-* - **0.3.0**
+
+* Renamed extension to `Tab Modifier`
+* Updated extension icon
 
 2014-03-12 - **0.2.1**
 
@@ -94,7 +102,7 @@ Attention, once a match is found, the other ones will be ignored.
 
 2014-02-27 - **0.1.0**
 
-* New name: Website Settings
+* New name: `Website Settings`
 * New icon
 * New JSON file format (BC break)
 * New feature (pinned)

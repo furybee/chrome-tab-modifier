@@ -2,13 +2,13 @@
 
     'use strict';
 
-    $.websiteSettings = function(options) {
+    $.tabModifier = function(options) {
 
         /**
         * Options
         */
-        var settings    = JSON.parse(options.settings);
-        var tabId       = options.tabId;
+        var settings = JSON.parse(options.settings);
+        var tabId    = options.tabId;
 
         /**
         * Page
@@ -147,6 +147,6 @@ chrome.runtime.sendMessage({
     var settings = response.data;
 
     if(settings !== undefined) {
-        $.websiteSettings(settings);
+        $.tabModifier(settings);
     }
 });

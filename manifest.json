@@ -1,9 +1,9 @@
 ﻿{
     "manifest_version": 2,
-    "name": "Website Settings",
-    "version": "0.2.1",
-    "description": "Modify websites over Chrome extension",
-    "homepage_url": "https://github.com/sylouuu/website-settings",
+    "name": "Tab Modifier",
+    "version": "0.3.0",
+    "description": "Modify your tabs in Chrome",
+    "homepage_url": "https://github.com/sylouuu/chrome-tab-modifier",
 
     "icons": {
         "16": "img/icon_16.png",
