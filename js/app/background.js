@@ -1,13 +1,17 @@
 /**
 * Chrome message receiver
+*
+* @param object request
+* @param object sender
+* @param function sendResponse
 */
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     switch(request.method) {
         case 'getSettings':
             sendResponse({
                 data: {
-                    tabId:      sender.tab.id,
-                    settings:   localStorage.settings
+                    tabId:    sender.tab.id,
+                    settings: localStorage.settings
                 }
             });
         break;

@@ -2,55 +2,44 @@
 
     'use strict';
 
+    /**
+    * Main Tab Modifier object
+    *
+    * @param object options
+    */
     $.tabModifier = function(options) {
 
-        /**
-        * Options
-        */
+        // Options
         var settings = JSON.parse(options.settings);
         var tabId    = options.tabId;
 
-        /**
-        * Page
-        */
+        // Page
         var page = {
             url:    location.href,
             title:  document.title
         };
 
-        /**
-        * Main object
-        */
+        // Main object
         var app = {
 
             init: function() {
                 var found = false;
 
-                /**
-                * Looping settings
-                */
+                // Looping settings
                 for(var string_to_match in settings) {
-                    /**
-                    * Verifying that the current URL matches the string
-                    */
+                    // Verifying that the current URL matches the string
                     if(page.url.indexOf(string_to_match) !== -1 && found === false) {
-                        /**
-                        * Is title property set?
-                        */
+                        // Is title property set?
                         if(settings[string_to_match].title !== undefined) {
                             app.title(settings[string_to_match].title);
                         }
 
-                        /**
-                        * Is icon property set?
-                        */
+                        // Is icon property set?
                         if(settings[string_to_match].icon !== undefined) {
                             app.icon(settings[string_to_match].icon);
                         }
 
-                        /**
-                        * Is pinned property set?
-                        */
+                        // Is pinned property set?
                         if(settings[string_to_match].pinned !== undefined) {
                             app.pinned(settings[string_to_match].pinned);
                         }
@@ -66,21 +55,15 @@
             * @param string title
             */
             title: function(title) {
-                /**
-                * Title tag
-                */
+                // Title tag
                 var title_tag = '{title}';
 
-                /**
-                * Replacing title tag
-                */
+                // Replacing title tag
                 if(title.indexOf(title_tag) !== -1) {
                     title = title.replace(title_tag, page.title);
                 }
 
-                /**
-                * Updating the document title
-                */
+                // Updating the document title
                 document.title = title;
             },
 
@@ -90,21 +73,15 @@
             * @param string icon
             */
             icon: function(icon) {
-                /**
-                * Removing existing icon(s)
-                */
+                // Removing existing icon(s)
                 $('head link[rel*="icon"]').remove();
 
-                /**
-                * Default icon if needed
-                */
+                // Default icon if needed
                 if(icon === '{default}') {
                     icon = chrome.extension.getURL('/img/default_favicon.png');
                 }
 
-                /**
-                * Adding new icon
-                */
+                // Adding new icon
                 $('<link>', {
                     'type': 'image/x-icon',
                     'rel':  'icon',
@@ -118,13 +95,9 @@
             * @param bool pinned
             */
             pinned: function(pinned) {
-                /**
-                * Want to pin?
-                */
+                // Want to pin?
                 if(pinned === true) {
-                    /**
-                    * Updating the pinned state
-                    */
+                    // Updating the pinned state
                     chrome.runtime.sendMessage({
                         method: 'setPinned',
                         tabId: tabId
@@ -134,6 +107,7 @@
 
         };
 
+        // Do the job
         app.init();
     };
 }(jQuery));
