@@ -11,7 +11,7 @@
 
         // Options
         var settings = JSON.parse(options.settings);
-        var tabId    = options.tabId;
+        var tab_id   = options.tab_id;
 
         // Page
         var page = {
@@ -100,7 +100,7 @@
                     // Updating the pinned state
                     chrome.runtime.sendMessage({
                         method: 'setPinned',
-                        tabId: tabId
+                        tabId: tab_id
                     });
                 }
             }

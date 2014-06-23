@@ -10,7 +10,7 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
         case 'getSettings':
             sendResponse({
                 data: {
-                    tabId:    sender.tab.id,
+                    tab_id:   sender.tab.id,
                     settings: localStorage.settings
                 }
             });

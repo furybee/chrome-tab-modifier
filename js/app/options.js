@@ -122,7 +122,7 @@
                                 content: content
                             });
                         } else {
-                            alert('Unvalid JSON file. Please check it on jsonlint.com.');
+                            alert('Invalid JSON file. Please check it on jsonlint.com.');
                         }
                     } else {
                         alert('An error has occurred. Please check your file.');
