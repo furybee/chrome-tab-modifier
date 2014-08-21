@@ -2,7 +2,9 @@
     <img src="https://raw.github.com/sylouuu/chrome-tab-modifier/master/img/icon_128.png" alt="icon">
 </p>
 
-# Tab Modifier [![GitHub version](https://badge.fury.io/gh/sylouuu%2Fchrome-tab-modifier.svg)](http://badge.fury.io/gh/sylouuu%2Fchrome-tab-modifier)
+# Tab Modifier
+
+[![Version](http://img.shields.io/github/release/sylouuu/chrome-tab-modifier.svg?style=flat)](https://github.com/sylouuu/chrome-tab-modifier/releases)
 
 This Chrome extension allows you to automatically change some of your tabs properties, here is the features list:
 
