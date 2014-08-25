@@ -2,7 +2,7 @@
     <img src="https://raw.github.com/sylouuu/chrome-tab-modifier/master/img/icon_128.png" alt="icon">
 </p>
 
-# Tab Modifier [![Version](http://img.shields.io/github/release/sylouuu/chrome-tab-modifier.svg?style=flat)](https://github.com/sylouuu/chrome-tab-modifier/releases)
+# Tab Modifier
 
 This Chrome extension allows you to automatically change some of your tabs properties, here is the features list:
 
@@ -10,40 +10,7 @@ This Chrome extension allows you to automatically change some of your tabs prope
 * Change the tab icon
 * Pin the tab
 
-## Install
-
-Download and install from the **[Chrome Web Store](https://chrome.google.com/webstore/detail/hcbgadmbdkiilgpifjgcakjehmafcjai/)**.
-
-<p align="center">
-    <img src="https://raw.github.com/sylouuu/chrome-tab-modifier/master/img/screenshots/extension.png" alt="extension">
-</p>
-
-## Usage
-
-To use this extension, you must create a JSON file which contains your settings.
-
-### Syntax
-
-```js
-{
-    "string to match the complete URL": {
-        "title": "New tab title",
-        "icon": "New icon URL or {default}"
-    },
-    "another string, domain name or whatever": {
-        "title": "Welcome to {title}",
-        "pinned": true
-    }
-}
-```
-
-| Property      | Tag           | Meaning                                                   |
-| :-----------: | :-----------: | :-------------------------------------------------------: |
-| title         | `{title}`     | Website title, use it if you need to add a prefix/suffix  |
-| icon          | `{default}`   | Default Chrome icon (white paper)                         |
-| pinned        |               | Pin the tab                                               |
-
-### Sample file
+## Demo
 
 ```js
 {
@@ -65,6 +32,40 @@ To use this extension, you must create a JSON file which contains your settings.
 ```
 
 <img src="https://raw.github.com/sylouuu/chrome-tab-modifier/master/img/screenshots/tabs.png" alt="tabs">
+
+## Install
+
+Download and install from the **[Chrome Web Store](https://chrome.google.com/webstore/detail/hcbgadmbdkiilgpifjgcakjehmafcjai/)**.
+
+<p align="center">
+    <img src="https://raw.github.com/sylouuu/chrome-tab-modifier/master/img/screenshots/extension.png" alt="extension">
+</p>
+
+## Usage
+
+To use this extension, you must create a JSON file which contains your settings.
+
+### File Syntax
+
+```js
+{
+    "string to match the complete URL": {
+        "title": "New tab title",
+        "icon": "New icon URL or {default}"
+    },
+    "another string, domain name or whatever": {
+        "title": "Welcome to {title}",
+        "pinned": true
+    }
+}
+```
+
+| Property      | Tag           | Meaning                                                   |
+| :-----------: | :-----------: | :-------------------------------------------------------: |
+| title         | `{title}`     | Website title, use it if you need to add a prefix/suffix  |
+| icon          | `{default}`   | Default Chrome icon (white paper)                         |
+| pinned        |               | Pin the tab                                               |
+
 
 Once created, go to the extensions page: [chrome://extensions/](chrome://extensions/) and import your ```file.json```. Your settings are saved locally, you can remove the file.
 
