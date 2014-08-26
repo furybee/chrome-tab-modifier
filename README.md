@@ -69,7 +69,7 @@ To use this extension, create a `tab_modifier_settings.json` file which contains
 
 Once created, go to the extensions page: [chrome://extensions/](chrome://extensions/), and click on the **Options** link for the **Tab Modifier** extension.
 
-Import `tab_modifier_settings.json`. Your settings are saved in the localStorage, but I recommend to keep your file as a backup.
+Import `tab_modifier_settings.json`. Your settings are saved in the localStorage, but I recommend you to keep your file as a backup.
 
 ## How it works?
 
