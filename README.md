@@ -43,7 +43,7 @@ Download and install from the **[Chrome Web Store](https://chrome.google.com/web
 
 ## Usage
 
-To use this extension, you must create a JSON file which contains your settings.
+To use this extension, create a `tab_modifier_settings.json` file which contains your settings
 
 ### File Syntax
 
@@ -67,7 +67,9 @@ To use this extension, you must create a JSON file which contains your settings.
 | pinned        |               | Pin the tab                                               |
 
 
-Once created, go to the extensions page: [chrome://extensions/](chrome://extensions/) and import your ```file.json```. Your settings are saved locally, you can remove the file.
+Once created, go to the extensions page: [chrome://extensions/](chrome://extensions/), and click on the **Options** link for the **Tab Modifier** extension.
+
+Import `tab_modifier_settings.json`. Your settings are saved in the localStorage, but I recommend to keep your file as a backup.
 
 ## How it works?
 
