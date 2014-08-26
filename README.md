@@ -83,10 +83,6 @@ Warning: once a match is found, the other ones will be ignored.
 
 <img src="https://raw.github.com/sylouuu/chrome-tab-modifier/master/img/screenshots/options.png" alt="options">
 
-# Ideas
-
-* Any suggestion?
-
 # Changelog
 
 2014-05-27 - **0.3.0**
