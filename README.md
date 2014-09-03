@@ -47,7 +47,7 @@ Download and install from the **[Chrome Web Store](https://chrome.google.com/web
 
 ## Usage
 
-To use this extension, create a `tab_modifier_settings.json` file which contains your settings
+To use this extension, create a `tab_modifier_settings.json` file which contains your settings.
 
 ### File Syntax
 
