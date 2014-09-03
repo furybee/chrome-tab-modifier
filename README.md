@@ -12,7 +12,7 @@ This Chrome extension allows you to automatically change some of your tabs prope
 
 ## Demo
 
-### Render
+### Result
 
 <img src="https://raw.github.com/sylouuu/chrome-tab-modifier/master/img/screenshots/tabs.png" alt="tabs">
 
