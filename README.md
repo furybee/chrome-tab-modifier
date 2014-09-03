@@ -83,7 +83,7 @@ You don't need to use a wildcard such as ```*```. Specify ```cde``` to match ```
 
 Warning: once a match is found, the other ones will be ignored.
 
-## Options preview
+## Options page
 
 <img src="https://raw.github.com/sylouuu/chrome-tab-modifier/master/img/screenshots/options.png" alt="options">
 
