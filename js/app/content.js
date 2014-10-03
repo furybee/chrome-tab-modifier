@@ -3,15 +3,16 @@
     'use strict';
 
     /**
-    * Main Tab Modifier object
-    *
-    * @param object options
-    */
+     * Main Tab Modifier object
+     *
+     * @param object options
+     */
     $.tabModifier = function(options) {
 
         // Options
         var settings = JSON.parse(options.settings);
         var tab_id   = options.tab_id;
+        var rules    = {};
 
         // Page
         var page = {
@@ -25,35 +26,52 @@
             init: function() {
                 var found = false;
 
-                // Looping settings
+                // Looping settings to create rules
                 for(var string_to_match in settings) {
                     // Verifying that the current URL matches the string
                     if(page.url.indexOf(string_to_match) !== -1 && found === false) {
                         // Is title property set?
                         if(settings[string_to_match].title !== undefined) {
-                            app.title(settings[string_to_match].title);
+                            rules.title = settings[string_to_match].title;
                         }
 
                         // Is icon property set?
                         if(settings[string_to_match].icon !== undefined) {
-                            app.icon(settings[string_to_match].icon);
+                            rules.icon = settings[string_to_match].icon;
                         }
 
                         // Is pinned property set?
                         if(settings[string_to_match].pinned !== undefined) {
-                            app.pinned(settings[string_to_match].pinned);
+                            rules.pinned = settings[string_to_match].pinned;
                         }
 
                         found = true;
                     }
                 }
+
+                if (rules.hasOwnProperty('title')) {
+                    app.title(rules.title);
+
+                    // Regular changes
+                    setInterval(function () {
+                        app.title(rules.title);
+                    }, 1500);
+                }
+
+                if (rules.hasOwnProperty('icon')) {
+                    app.icon(rules.icon);
+                }
+
+                if (rules.hasOwnProperty('pinned')) {
+                    app.pinned(rules.pinned);
+                }
             },
 
             /**
-            * Title management
-            *
-            * @param string title
-            */
+             * Title management
+             *
+             * @param string title
+             */
             title: function(title) {
                 // Title tag
                 var title_tag = '{title}';
@@ -68,10 +86,10 @@
             },
 
             /**
-            * Icon management
-            *
-            * @param string icon
-            */
+             * Icon management
+             *
+             * @param string icon
+             */
             icon: function(icon) {
                 // Removing existing icon(s)
                 $('head link[rel*="icon"]').remove();
@@ -90,10 +108,10 @@
             },
 
             /**
-            * Pinned state management
-            *
-            * @param bool pinned
-            */
+             * Pinned state management
+             *
+             * @param bool pinned
+             */
             pinned: function(pinned) {
                 // Want to pin?
                 if(pinned === true) {
