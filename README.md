@@ -89,10 +89,6 @@ Warning: once a match is found, the other ones will be ignored.
 
 # Changelog
 
-2014-10-03 - **0.3.1**
-
-* Added regular changes for `title`
-
 2014-05-27 - **0.3.0**
 
 * Renamed extension to `Tab Modifier`

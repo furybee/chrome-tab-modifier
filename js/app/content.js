@@ -51,11 +51,6 @@
 
                 if (rules.hasOwnProperty('title')) {
                     app.title(rules.title);
-
-                    // Regular changes
-                    setInterval(function () {
-                        app.title(rules.title);
-                    }, 1500);
                 }
 
                 if (rules.hasOwnProperty('icon')) {
