@@ -91,7 +91,7 @@ Warning: once a match is found, the other ones will be ignored.
 
 2015-03-02 - **0.3.1**
 
-* Replaced Event Page instead of Background Page (#4)
+* Replaced Event Page instead of Background Page ([#4](https://github.com/sylouuu/chrome-tab-modifier/issues/4))
 
 2014-05-27 - **0.3.0**
 
