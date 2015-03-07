@@ -85,7 +85,7 @@ Warning: once a match is found, the other ones will be ignored.
 
 ## Options page
 
-<img src="https://raw.github.com/sylouuu/chrome-tab-modifier/master/img/screenshots/options.png" alt="options">
+<img src="https://raw.githubusercontent.com/sylouuu/chrome-tab-modifier/master/img/screenshots/options.png" alt="options">
 
 # Changelog
 
