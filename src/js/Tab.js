@@ -17,5 +17,3 @@ var Tab = (function (hey) {
 
     return self;
 })();
-
-module.exports = Tab;

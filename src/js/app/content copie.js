@@ -126,8 +126,8 @@
 }(jQuery));
 
 /**
-* Chrome message pusher
-*/
+ * Chrome message pusher
+ */
 chrome.runtime.sendMessage({
     method: 'getSettings'
 }, function(response) {
