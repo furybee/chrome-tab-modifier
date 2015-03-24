@@ -1,13 +1,10 @@
-/**
- * Chrome message pusher
- */
 chrome.runtime.sendMessage({
     method: 'getSettings'
 }, function(response) {
     var settings = response.data;
 
     if (settings !== undefined) {
-        var tab = Tab.init(location.href, JSON.parse(settings.settings));
+        var tab = new Tab(location.href, document.title, JSON.parse(settings.settings));
 
         if (tab.title !== null) {
             // Title tag
@@ -32,8 +29,6 @@ chrome.runtime.sendMessage({
 
             // Remove existing favicons
             Array.prototype.forEach.call(el, function (node) {
-                console.log(node);
-
                 node.parentNode.removeChild(node);
             });
 

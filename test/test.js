@@ -15,48 +15,50 @@ var options = {
     }
 };
 
-var tab1 = Tab.init('http://project.local.com', options);
+var tab1 = new Tab('http://project.local.com', 'My project', options);
 
 QUnit.test('http://project.local.com should match ".local"', function (assert) {
-    assert.strictEqual('[DEV] {title}', tab1.title, 'title OK');
-    assert.strictEqual(null, tab1.icon, 'icon OK');
-    assert.strictEqual(null, tab1.pinned, 'pinned OK');
+    assert.strictEqual('[DEV] {title}', tab1.getTitle(), 'title OK');
+    assert.strictEqual(null, tab1.getIcon(), 'icon OK');
+    assert.strictEqual(null, tab1.getPinned(), 'pinned OK');
 });
 
 // ----------------------------------------------------------
 
-var tab2 = Tab.init('http://shop.domain.com', options);
+var tab2 = new Tab('http://shop.domain.com', 'My project', options);
 
 QUnit.test('http://shop.domain.com should match "domain.com"', function (assert) {
-    assert.strictEqual('[PROD] {title}', tab2.title, 'title OK');
-    assert.strictEqual(null, tab2.icon, 'icon OK');
-    assert.strictEqual(null, tab2.pinned, 'pinned OK');
+    assert.strictEqual('[PROD] {title}', tab2.getTitle(), 'title OK');
+    assert.strictEqual(null, tab2.getIcon(), 'icon OK');
+    assert.strictEqual(null, tab2.getPinned(), 'pinned OK');
 });
 
 // ----------------------------------------------------------
 
-var tab3 = Tab.init('http://youtube.com', options);
+var tab3 = new Tab('http://youtube.com', 'My project', options);
 
 QUnit.test('http://youtube.com should match "youtube.com"', function (assert) {
-    assert.strictEqual(null, tab3.title, 'title OK');
-    assert.strictEqual('https://www.google.com/favicon.ico', tab3.icon, 'icon OK');
-    assert.strictEqual(true, tab3.pinned, 'pinned OK');
+    assert.strictEqual(null, tab3.getTitle(), 'title OK');
+    assert.strictEqual('https://www.google.com/favicon.ico', tab3.getIcon(), 'icon OK');
+    assert.strictEqual(true, tab3.getPinned(), 'pinned OK');
 });
 
 // ----------------------------------------------------------
 
-var tab4 = Tab.init('http://twitter.com', options);
+var tab4 = new Tab('http://twitter.com', 'My project', options);
 
 QUnit.test('http://twitter.com should match "twitter.com"', function (assert) {
-    assert.strictEqual('I\'m working hard!', tab4.title, 'title OK');
-    assert.strictEqual('{default}', tab4.icon, 'icon OK');
-    assert.strictEqual(null, tab4.pinned, 'pinned OK');
+    assert.strictEqual('I\'m working hard!', tab4.getTitle(), 'title OK');
+    assert.strictEqual('{default}', tab4.getIcon(), 'icon OK');
+    assert.strictEqual(null, tab4.getPinned(), 'pinned OK');
 });
 
 // ----------------------------------------------------------
 
-var tab5 = Tab.init('http://not-found.com', options);
+var tab5 = new Tab('http://not-found.com', 'My project', options);
 
 QUnit.test('http://not-found.com should not match anything', function (assert) {
-    assert.deepEqual({}, tab5, 'empty object');
+    assert.strictEqual(null, tab5.getTitle(), 'title OK');
+    assert.strictEqual(null, tab5.getIcon(), 'icon OK');
+    assert.strictEqual(null, tab5.getPinned(), 'pinned OK');
 });

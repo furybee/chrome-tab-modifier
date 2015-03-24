@@ -1,19 +1,35 @@
-var Tab = (function (hey) {
-    var self = {};
+var Tab = (function (current_url, current_title, options) {
+    var title = null, icon = null, pinned = null,
+        setTitle, getTitle, getIcon, getPinned;
 
-    self.init = function (url_to_match, options) {
-        for (var string_to_match in options) {
-            if (url_to_match.indexOf(string_to_match) !== -1) {
-                return {
-                    title: options[string_to_match].title || null,
-                    icon: options[string_to_match].icon || null,
-                    pinned: options[string_to_match].pinned || null
-                };
-            }
+    for (var string_to_match in options) {
+        if (current_url.indexOf(string_to_match) !== -1) {
+            title = options[string_to_match].title || null;
+            icon = options[string_to_match].icon || null;
+            pinned = options[string_to_match].pinned || null;
         }
+    }
 
-        return {};
+    setTitle = (function () {
+        title = (title.indexOf('{title}') !== -1) ? title.replace('{title}', current_title) : title;
+    });
+
+    getTitle = function () {
+        return title;
     };
 
-    return self;
-})();
+    getIcon = function () {
+        return icon;
+    };
+
+    getPinned = function () {
+        return pinned;
+    };
+
+    // Public
+    return {
+        getTitle: getTitle,
+        getIcon: getIcon,
+        getPinned: getPinned
+    };
+});
