@@ -18,7 +18,7 @@ var options = {
 var tab1 = new Tab('http://project.local.com', 'My project', options);
 
 QUnit.test('http://project.local.com should match ".local"', function (assert) {
-    assert.strictEqual('[DEV] {title}', tab1.getTitle(), 'title OK');
+    assert.strictEqual('[DEV] My project', tab1.getTitle(), 'title OK');
     assert.strictEqual(null, tab1.getIcon(), 'icon OK');
     assert.strictEqual(null, tab1.getPinned(), 'pinned OK');
 });
@@ -28,7 +28,7 @@ QUnit.test('http://project.local.com should match ".local"', function (assert) {
 var tab2 = new Tab('http://shop.domain.com', 'My project', options);
 
 QUnit.test('http://shop.domain.com should match "domain.com"', function (assert) {
-    assert.strictEqual('[PROD] {title}', tab2.getTitle(), 'title OK');
+    assert.strictEqual('[PROD] My project', tab2.getTitle(), 'title OK');
     assert.strictEqual(null, tab2.getIcon(), 'icon OK');
     assert.strictEqual(null, tab2.getPinned(), 'pinned OK');
 });

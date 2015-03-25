@@ -1,43 +1,57 @@
-var Tab = (function (hey) {
-    var self = {};
+var Tab = (function (current_url, current_title, options) {
+    var title = null, icon = null, pinned = null,
+        setTitle, getTitle, getIcon, getPinned;
 
-    self.init = function (url_to_match, options) {
-        for (var string_to_match in options) {
-            if (url_to_match.indexOf(string_to_match) !== -1) {
-                return {
-                    title: options[string_to_match].title || null,
-                    icon: options[string_to_match].icon || null,
-                    pinned: options[string_to_match].pinned || null
-                };
-            }
+    for (var string_to_match in options) {
+        if (current_url.indexOf(string_to_match) !== -1) {
+            title = options[string_to_match].title || null;
+            icon = options[string_to_match].icon || null;
+            pinned = options[string_to_match].pinned || null;
         }
+    }
 
-        return {};
+    setTitle = function () {
+        if (title !== null) {
+            title = (title.indexOf('{title}') !== -1) ? title.replace('{title}', current_title) : title;
+        }
     };
 
-    return self;
-})();
+    setTitle();
 
-/**
- * Chrome message pusher
- */
+    getTitle = function () {
+        console.log(title);
+        return title;
+    };
+
+    getIcon = function () {
+        return icon;
+    };
+
+    getPinned = function () {
+        return pinned;
+    };
+
+    // Public
+    return {
+        getTitle: getTitle,
+        getIcon: getIcon,
+        getPinned: getPinned
+    };
+});
+
 chrome.runtime.sendMessage({
     method: 'getSettings'
 }, function(response) {
     var settings = response.data;
 
     if (settings !== undefined) {
-        var tab = Tab.init(location.href, JSON.parse(settings.settings));
+        var tab = new Tab(location.href, document.title, JSON.parse(settings.settings));
 
-        if (tab.title !== null) {
-            // Title tag
-            var title_tag = '{title}';
-
-            // Updating the document title
-            document.title = (tab.title.indexOf(title_tag) !== -1) ? tab.title.replace(title_tag, document.title) : tab.title;
+        if (tab.getTitle() !== null) {
+            document.title = tab.getTitle();
         }
 
-        if (tab.pinned === true) {
+        if (tab.getPinned() === true) {
             // Updating the pinned state
             chrome.runtime.sendMessage({
                 method: 'setPinned',
@@ -45,19 +59,17 @@ chrome.runtime.sendMessage({
             });
         }
 
-        if (tab.icon !== null) {
+        if (tab.getIcon() !== null) {
             var el, icon, link;
 
             el = document.querySelectorAll('head link[rel*="icon"]'),
 
             // Remove existing favicons
             Array.prototype.forEach.call(el, function (node) {
-                console.log(node);
-
                 node.parentNode.removeChild(node);
             });
 
-            icon = (tab.icon === '{default}') ? chrome.extension.getURL('/dist/img/default_favicon.png') : tab.icon;
+            icon = (tab.getIcon() === '{default}') ? chrome.extension.getURL('/dist/img/default_favicon.png') : tab.getIcon();
 
             // Create new favicon
             link      = document.createElement('link');
@@ -65,7 +77,7 @@ chrome.runtime.sendMessage({
             link.rel  = 'icon';
             link.href = icon;
 
-            document.head.appendChild(link);
+            document.getElementsByTagName('head')[0].appendChild(link);
         }
     }
 });

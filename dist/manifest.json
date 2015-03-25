@@ -6,16 +6,16 @@
     "homepage_url": "https://github.com/sylouuu/chrome-tab-modifier",
 
     "icons": {
-        "16": "dist/img/icon_16.png",
-        "32": "dist/img/icon_32.png",
-        "48": "dist/img/icon_48.png",
-        "128": "dist/img/icon_128.png"
+        "16": "img/icon_16.png",
+        "32": "img/icon_32.png",
+        "48": "img/icon_48.png",
+        "128": "img/icon_128.png"
     },
 
-    "options_page": "src/html/options.html",
+    "options_page": "html/options.html",
 
     "background": {
-        "scripts": ["src/js/background.js"],
+        "scripts": ["js/background.js"],
         "persistent": false
     },
 
@@ -25,12 +25,12 @@
             "https://*/*"
         ],
         "js": [
-            "dist/js/content.js"
+            "js/content.js"
         ]
     }],
 
     "web_accessible_resources": [
-        "dist/img/*.png"
+        "img/*.png"
     ],
 
     "permissions": [

@@ -10,9 +10,13 @@ var Tab = (function (current_url, current_title, options) {
         }
     }
 
-    setTitle = (function () {
-        title = (title.indexOf('{title}') !== -1) ? title.replace('{title}', current_title) : title;
-    });
+    setTitle = function () {
+        if (title !== null) {
+            title = (title.indexOf('{title}') !== -1) ? title.replace('{title}', current_title) : title;
+        }
+    };
+
+    setTitle();
 
     getTitle = function () {
         return title;
