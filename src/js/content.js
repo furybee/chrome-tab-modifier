@@ -28,7 +28,7 @@ chrome.runtime.sendMessage({
                 node.parentNode.removeChild(node);
             });
 
-            icon = (tab.getIcon() === '{default}') ? chrome.extension.getURL('/dist/img/default_favicon.png') : tab.getIcon();
+            icon = (tab.getIcon() === '{default}') ? chrome.extension.getURL('/img/default_favicon.png') : tab.getIcon();
 
             // Create new favicon
             link      = document.createElement('link');
