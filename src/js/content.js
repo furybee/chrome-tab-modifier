@@ -1,7 +1,7 @@
 chrome.runtime.sendMessage({
     method: 'getSettings'
 }, function(response) {
-    var settings = response.data;
+    var settings = response.data, toto;
 
     if (settings !== undefined) {
         var tab = new Tab(location.href, document.title, JSON.parse(settings.settings));
@@ -11,7 +11,6 @@ chrome.runtime.sendMessage({
         }
 
         if (tab.getPinned() === true) {
-            // Updating the pinned state
             chrome.runtime.sendMessage({
                 method: 'setPinned',
                 tabId: settings.tab_id
@@ -21,7 +20,7 @@ chrome.runtime.sendMessage({
         if (tab.getIcon() !== null) {
             var el, icon, link;
 
-            el = document.querySelectorAll('head link[rel*="icon"]'),
+            el = document.querySelectorAll('head link[rel*="icon"]');
 
             // Remove existing favicons
             Array.prototype.forEach.call(el, function (node) {

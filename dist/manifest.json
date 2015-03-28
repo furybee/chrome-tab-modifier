@@ -12,10 +12,10 @@
         "128": "img/icon_128.png"
     },
 
-    "options_page": "html/options.html",
+    "options_page": "html/options.min.html",
 
     "background": {
-        "scripts": ["js/background.js"],
+        "scripts": ["js/background.min.js"],
         "persistent": false
     },
 
@@ -25,7 +25,7 @@
             "https://*/*"
         ],
         "js": [
-            "js/content.js"
+            "js/content.min.js"
         ]
     }],
 

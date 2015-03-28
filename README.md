@@ -1,22 +1,32 @@
-<p align="center">
-    <img src="https://raw.github.com/sylouuu/chrome-tab-modifier/master/img/icon_128.png" alt="icon">
-</p>
+# Tab Modifier
 
-# Tab Modifier [![CodeClimate](http://img.shields.io/codeclimate/github/sylouuu/chrome-tab-modifier.svg?style=flat)](https://codeclimate.com/github/sylouuu/chrome-tab-modifier)
+[![Build Status](http://img.shields.io/travis/sylouuu/chrome-tab-modifier.svg?style=flat)](https://travis-ci.org/sylouuu/chrome-tab-modifier)
+[![devDependency Status](http://img.shields.io/david/dev/sylouuu/chrome-tab-modifier.svg?style=flat)](https://david-dm.org/sylouuu/chrome-tab-modifier#info=devDependencies)
+[![Version](http://img.shields.io/npm/v/chrome-tab-modifier.svg?style=flat)](https://www.npmjs.org/package/chrome-tab-modifier)
+[![CodeClimate](http://img.shields.io/codeclimate/github/sylouuu/chrome-tab-modifier.svg?style=flat)](https://codeclimate.com/github/sylouuu/chrome-tab-modifier)
 
-This Chrome extension allows you to automatically change some of your tabs properties, here is the features list:
+This Chrome extension allows you to **automatically** change some of your tabs properties, here is the features list:
 
 * Rename the tab
 * Change the tab icon
 * Pin the tab
 
+### How?
+
+1. Download and install from the **[Chrome Web Store](https://chrome.google.com/webstore/detail/hcbgadmbdkiilgpifjgcakjehmafcjai/)**.
+2. Create a JSON file like `tab_modifier.json`.
+2. Copy/paste the sample file below in your file.
+3. Go to the extension Options page: open [chrome://extensions/](chrome://extensions/), and click on the **Options** link for the **Tab Modifier** extension.
+4. Import your `tab_modifier.json` file.
+5. Done! Your settings are saved in your localStorage, but I recommend you to keep your file as a backup.
+
 ## Demo
 
 ### Result
 
-<img src="https://raw.github.com/sylouuu/chrome-tab-modifier/master/img/screenshots/tabs.png" alt="tabs">
+<img src="https://raw.github.com/sylouuu/chrome-tab-modifier/master/screenshots/tabs.png" alt="tabs">
 
-### Settings file
+### Settings file (sample)
 
 ```js
 {
@@ -37,57 +47,62 @@ This Chrome extension allows you to automatically change some of your tabs prope
 }
 ```
 
-## Install
-
-Download and install from the **[Chrome Web Store](https://chrome.google.com/webstore/detail/hcbgadmbdkiilgpifjgcakjehmafcjai/)**.
-
-<p align="center">
-    <img src="https://raw.github.com/sylouuu/chrome-tab-modifier/master/img/screenshots/extension.png" alt="extension">
-</p>
-
-## Usage
-
-To use this extension, create a `tab_modifier_settings.json` file which contains your settings.
-
-### File Syntax
+## File format
 
 ```js
 {
-    "string to match the complete URL": {
-        "title": "New tab title",
-        "icon": "New icon URL or {default}"
-    },
-    "another string, domain name or whatever": {
-        "title": "Welcome to {title}",
+    "string to match the URL": {
+        "title": "...",
+        "icon": "http://..."
+        "pinned": true
+}
+```
+
+| Property      | Meaning                                                   |
+| :-----------: | :-------------------------------------------------------: |
+| title         | `{title}`     | The new title you want to display. You can use use `{title}` inside to append the current website title |
+| icon          | `{default}`   | URL for the new favicon. For removing the default favicon website, use `{default}` to append the Default Chrome favicon (white paper) |
+| pinned        | `true` to pin the tab, otherwise nothing happens |
+
+## How it works?
+
+Each time you open a page, the script tries to match the loaded URL with your settings, and does the job.
+
+### Examples
+
+Pin all tabs:
+
+```js
+{
+    "http": {
         "pinned": true
     }
 }
 ```
 
-| Property      | Tag           | Meaning                                                   |
-| :-----------: | :-----------: | :-------------------------------------------------------: |
-| title         | `{title}`     | Website title, use it if you need to add a prefix/suffix  |
-| icon          | `{default}`   | Default Chrome icon (white paper)                         |
-| pinned        |               | Pin the tab                                               |
+Say hello to all Google websites:
 
-
-Once created, go to the extensions page: [chrome://extensions/](chrome://extensions/), and click on the **Options** link for the **Tab Modifier** extension.
-
-Import `tab_modifier_settings.json`. Your settings are saved in the localStorage, but I recommend you to keep your file as a backup.
-
-## How it works?
-
-Each time you open a page, the script tries to match the URL with your settings, and does the job.
-
-You don't need to use a wildcard such as ```*```. Specify ```cde``` to match ```abcde```, ```cdefg```, ```abcdefg``` and obviously ```cde```.
-
-Warning: once a match is found, the other ones will be ignored.
+```js
+{
+    "google.com": {
+        "title": 'Hello Google: {title}'
+    }
+}
+```
 
 ## Options page
 
-<img src="https://raw.githubusercontent.com/sylouuu/chrome-tab-modifier/master/img/screenshots/options.png" alt="options">
+<img src="https://raw.githubusercontent.com/sylouuu/chrome-tab-modifier/master/screenshots/options.png" alt="options">
 
 # Changelog
+
+2015-03-29 - **0.4.0**
+
+* Improved scripts performances, lighter and faster
+* Removed jQuery
+* Updated Options page UI
+* Added `Gulp`
+* Added unit tests
 
 2015-03-02 - **0.3.1**
 
