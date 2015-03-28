@@ -53,15 +53,15 @@ This Chrome extension allows you to **automatically** change some of your tabs p
 {
     "string to match the URL": {
         "title": "...",
-        "icon": "http://..."
+        "icon": "http://...",
         "pinned": true
 }
 ```
 
 | Property      | Meaning                                                   |
 | :-----------: | :-------------------------------------------------------: |
-| title         | `{title}`     | The new title you want to display. You can use use `{title}` inside to append the current website title |
-| icon          | `{default}`   | URL for the new favicon. For removing the default favicon website, use `{default}` to append the Default Chrome favicon (white paper) |
+| title         | The new title you want to display. You can use use `{title}` inside to append the current website title |
+| icon          | URL for the new favicon. For removing the default favicon website, use `{default}` to append the Default Chrome favicon (white paper) |
 | pinned        | `true` to pin the tab, otherwise nothing happens |
 
 ## How it works?
