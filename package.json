@@ -1,0 +1,27 @@
+{
+    "name": "chrome-tab-modifier",
+    "version": "0.4.0",
+    "description": "Modify your tabs in Chrome",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/sylouuu/chrome-tab-modifier.git"
+    },
+    "author": "sylouuu",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/sylouuu/chrome-tab-modifier/issues"
+    },
+    "devDependencies": {
+        "gulp": "~3.8.0",
+        "gulp-jshint": "~1.9.0",
+        "gulp-jscs": "~1.4.0",
+        "gulp-minify-css": "~0.4.0",
+        "gulp-rename": "~1.2.0",
+        "gulp-notify": "~2.2.0",
+        "gulp-uglify": "~1.1.0",
+        "gulp-less": "~3.0.0",
+        "gulp-minify-html": "~1.0.0",
+        "gulp-concat": "~2.5.0",
+        "node-qunit-phantomjs": "~1.2.0"
+    }
+}

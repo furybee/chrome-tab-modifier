@@ -1,0 +1,41 @@
+﻿{
+    "manifest_version": 2,
+    "name": "Tab Modifier",
+    "version": "0.4.0",
+    "description": "Modify your tabs in Chrome",
+    "homepage_url": "https://github.com/sylouuu/chrome-tab-modifier",
+
+    "icons": {
+        "16": "img/icon_16.png",
+        "32": "img/icon_32.png",
+        "48": "img/icon_48.png",
+        "128": "img/icon_128.png"
+    },
+
+    "options_page": "html/options.min.html",
+
+    "background": {
+        "scripts": ["js/background.min.js"],
+        "persistent": false
+    },
+
+    "content_scripts": [{
+        "matches": [
+            "http://*/*",
+            "https://*/*"
+        ],
+        "js": [
+            "js/content.min.js"
+        ]
+    }],
+
+    "web_accessible_resources": [
+        "img/*.png"
+    ],
+
+    "permissions": [
+        "tabs",
+        "http://*/*",
+        "https://*/*"
+    ]
+}
