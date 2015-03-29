@@ -37,14 +37,14 @@ handleFileSelect = function (e) {
                 setSettings(content);
 
                 showCurrentSettings();
-
-                document.getElementById('settings_file').value = '';
             } else {
                 alert('Invalid JSON file. Please check it on jsonlint.com.');
             }
         } else {
             alert('An error has occurred. Please check your file.');
         }
+
+        document.getElementById('settings_file').value = '';
     };
 
     reader.readAsText(file);
