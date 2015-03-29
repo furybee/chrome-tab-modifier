@@ -28,7 +28,7 @@ This Chrome extension allows you to **automatically** change some of your tabs p
 
 ### Settings file (sample)
 
-```js
+```json
 {
     ".local": {
         "title": "[DEV] {title}"
@@ -49,16 +49,17 @@ This Chrome extension allows you to **automatically** change some of your tabs p
 
 ## File format
 
-```js
+```json
 {
     "string to match the URL": {
         "title": "...",
         "icon": "http://...",
         "pinned": true
+    }
 }
 ```
 
-| Property      | Meaning                                                   |
+| Property      | Description                                               |
 | :------------ | :-------------------------------------------------------- |
 | title         | The new title you want to display. You can use use `{title}` inside to append the current website title |
 | icon          | URL for the new favicon. For removing the default favicon website, use `{default}` to append the Default Chrome favicon (white paper) |
@@ -72,7 +73,7 @@ Each time you open a page, the script tries to match the loaded URL with your se
 
 Pin all tabs:
 
-```js
+```json
 {
     "http": {
         "pinned": true
@@ -82,7 +83,7 @@ Pin all tabs:
 
 Say hello to all Google websites:
 
-```js
+```json
 {
     "google.com": {
         "title": 'Hello Google: {title}'
