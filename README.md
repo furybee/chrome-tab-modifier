@@ -86,7 +86,7 @@ Say hello to all Google websites:
 ```json
 {
     "google.com": {
-        "title": 'Hello Google: {title}'
+        "title": "Hello Google: {title}"
     }
 }
 ```
