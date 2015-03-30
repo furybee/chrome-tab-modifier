@@ -97,6 +97,10 @@ Say hello to all Google websites:
 
 # Changelog
 
+2015-03-30 - **0.4.1**
+
+* Fixed settings: first match must be taken if many matches found
+
 2015-03-29 - **0.4.0**
 
 * Improved scripts performances, lighter and faster
