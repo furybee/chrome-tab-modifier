@@ -15,9 +15,9 @@ var options = {
     }
 };
 
-var tab1 = new Tab('http://project.local.com', 'My project', options);
+var tab1 = new Tab('http://project.local.domain.com', 'My project', options);
 
-QUnit.test('http://project.local.com should match ".local"', function (assert) {
+QUnit.test('http://project.local.domain.com should match ".local"', function (assert) {
     assert.strictEqual('[DEV] My project', tab1.getTitle(), 'title OK');
     assert.strictEqual(null, tab1.getIcon(), 'icon OK');
     assert.strictEqual(null, tab1.getPinned(), 'pinned OK');

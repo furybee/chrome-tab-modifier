@@ -7,6 +7,7 @@ var Tab = (function (current_url, current_title, options) {
             title = options[string_to_match].title || null;
             icon = options[string_to_match].icon || null;
             pinned = options[string_to_match].pinned || null;
+            break;
         }
     }
 
