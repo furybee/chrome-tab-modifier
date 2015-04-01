@@ -10,7 +10,7 @@ isValidJSON = function (str) {
     return true;
 };
 
-getSettings = function (str) {
+getSettings = function () {
     return localStorage.settings;
 };
 

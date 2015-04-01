@@ -1,7 +1,7 @@
 chrome.runtime.sendMessage({
     method: 'getSettings'
-}, function(response) {
-    var settings = response.data, toto;
+}, function (response) {
+    var settings = response.data;
 
     if (settings !== undefined) {
         var tab = new Tab(location.href, document.title, JSON.parse(settings.settings));
