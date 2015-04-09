@@ -42,7 +42,8 @@ This Chrome extension allows you to **automatically** change some of your tabs p
     },
     "twitter.com": {
         "title": "I'm working hard!",
-        "icon": "{default}"
+        "icon": "{default}",
+        "protected": true
     }
 }
 ```
@@ -54,7 +55,8 @@ This Chrome extension allows you to **automatically** change some of your tabs p
     "string to match the URL": {
         "title": "...",
         "icon": "http://...",
-        "pinned": true
+        "pinned": true,
+        "protected": true
     }
 }
 ```
@@ -64,6 +66,7 @@ This Chrome extension allows you to **automatically** change some of your tabs p
 | `title`       | The new title you want to display. You can use use `{title}` inside to append the current website title. |
 | `icon`        | URL for the new favicon. For removing the default favicon website, use `{default}` to append the Default Chrome favicon (white paper). |
 | `pinned`      | `true` to pin the tab, otherwise nothing happens. |
+| `protected`   | `true` will ask you before closing the tab. |
 
 ## How it works?
 
@@ -87,6 +90,16 @@ Say hello to all Google websites:
 {
     "google.com": {
         "title": "Hello Google: {title}"
+    }
+}
+```
+
+Prevent accidental tab closure:
+
+```json
+{
+    "important-website.com": {
+        "protected": true
     }
 }
 ```

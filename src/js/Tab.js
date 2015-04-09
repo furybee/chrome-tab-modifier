@@ -1,5 +1,5 @@
 var Tab = (function (current_url, current_title, options) {
-    var title = null, icon = null, pinned = null,
+    var title = null, icon = null, pinned = null, protected = null,
         setTitle, getTitle, getIcon, getPinned;
 
     for (var string_to_match in options) {
@@ -7,6 +7,8 @@ var Tab = (function (current_url, current_title, options) {
             title = options[string_to_match].title || null;
             icon = options[string_to_match].icon || null;
             pinned = options[string_to_match].pinned || null;
+            protected = options[string_to_match].protected || null;
+
             break;
         }
     }
@@ -31,10 +33,15 @@ var Tab = (function (current_url, current_title, options) {
         return pinned;
     };
 
+    getProtected = function () {
+        return protected;
+    };
+
     // Public
     return {
         getTitle: getTitle,
         getIcon: getIcon,
-        getPinned: getPinned
+        getPinned: getPinned,
+        getProtected: getProtected
     };
 });

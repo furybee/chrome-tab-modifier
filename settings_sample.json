@@ -11,6 +11,7 @@
     },
     "twitter.com": {
         "title": "I'm working hard!",
-        "icon": "{default}"
+        "icon": "{default}",
+        "protected": true
     }
 }

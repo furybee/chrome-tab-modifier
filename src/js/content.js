@@ -1,3 +1,5 @@
+var w = window;
+
 chrome.runtime.sendMessage({
     method: 'getSettings'
 }, function (response) {
@@ -36,6 +38,12 @@ chrome.runtime.sendMessage({
             link.href = icon;
 
             document.getElementsByTagName('head')[0].appendChild(link);
+        }
+
+        if (tab.getProtected() === true) {
+            w.onbeforeunload = function () {
+                return '';
+            };
         }
     }
 });

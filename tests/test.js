@@ -11,7 +11,8 @@ var options = {
     },
     "twitter.com": {
         "title": "I'm working hard!",
-        "icon": "{default}"
+        "icon": "{default}",
+        "protected": true
     }
 };
 
@@ -21,6 +22,7 @@ QUnit.test('http://project.local.domain.com should match ".local"', function (as
     assert.strictEqual('[DEV] My project', tab1.getTitle(), 'title OK');
     assert.strictEqual(null, tab1.getIcon(), 'icon OK');
     assert.strictEqual(null, tab1.getPinned(), 'pinned OK');
+    assert.strictEqual(null, tab1.getProtected(), 'protected OK');
 });
 
 // ----------------------------------------------------------
@@ -31,6 +33,7 @@ QUnit.test('http://shop.domain.com should match "domain.com"', function (assert)
     assert.strictEqual('[PROD] My project', tab2.getTitle(), 'title OK');
     assert.strictEqual(null, tab2.getIcon(), 'icon OK');
     assert.strictEqual(null, tab2.getPinned(), 'pinned OK');
+    assert.strictEqual(null, tab2.getProtected(), 'protected OK');
 });
 
 // ----------------------------------------------------------
@@ -41,6 +44,7 @@ QUnit.test('http://youtube.com should match "youtube.com"', function (assert) {
     assert.strictEqual(null, tab3.getTitle(), 'title OK');
     assert.strictEqual('https://www.google.com/favicon.ico', tab3.getIcon(), 'icon OK');
     assert.strictEqual(true, tab3.getPinned(), 'pinned OK');
+    assert.strictEqual(null, tab3.getProtected(), 'protected OK');
 });
 
 // ----------------------------------------------------------
@@ -51,6 +55,7 @@ QUnit.test('http://twitter.com should match "twitter.com"', function (assert) {
     assert.strictEqual('I\'m working hard!', tab4.getTitle(), 'title OK');
     assert.strictEqual('{default}', tab4.getIcon(), 'icon OK');
     assert.strictEqual(null, tab4.getPinned(), 'pinned OK');
+    assert.strictEqual(true, tab4.getProtected(), 'protected OK');
 });
 
 // ----------------------------------------------------------
@@ -61,4 +66,5 @@ QUnit.test('http://not-found.com should not match anything', function (assert) {
     assert.strictEqual(null, tab5.getTitle(), 'title OK');
     assert.strictEqual(null, tab5.getIcon(), 'icon OK');
     assert.strictEqual(null, tab5.getPinned(), 'pinned OK');
+    assert.strictEqual(null, tab5.getProtected(), 'protected OK');
 });
