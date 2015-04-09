@@ -44,6 +44,9 @@ This Chrome extension allows you to **automatically** change some of your tabs p
         "title": "I'm working hard!",
         "icon": "{default}",
         "protected": true
+    },
+    "mail.google.com": {
+        "unique": true
     }
 }
 ```
@@ -56,7 +59,8 @@ This Chrome extension allows you to **automatically** change some of your tabs p
         "title": "...",
         "icon": "http://...",
         "pinned": true,
-        "protected": true
+        "protected": true,
+        "unique": true
     }
 }
 ```
@@ -67,6 +71,7 @@ This Chrome extension allows you to **automatically** change some of your tabs p
 | `icon`        | URL for the new favicon. For removing the default favicon website, use `{default}` to append the Default Chrome favicon (white paper). |
 | `pinned`      | `true` to pin the tab, otherwise nothing happens. |
 | `protected`   | `true` will ask you before closing the tab. |
+| `unique`      | `true` will prevent for opening a new tab if it is already opened. |
 
 ## How it works?
 
@@ -100,6 +105,16 @@ Prevent accidental tab closure:
 {
     "important-website.com": {
         "protected": true
+    }
+}
+```
+
+Get only one GMail tab opened at once:
+
+```json
+{
+    "mail.google.com": {
+        "unique": true
     }
 }
 ```

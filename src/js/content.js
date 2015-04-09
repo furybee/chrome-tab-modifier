@@ -45,5 +45,14 @@ chrome.runtime.sendMessage({
                 return '';
             };
         }
+
+        if (tab.getUnique() === true) {
+            chrome.runtime.sendMessage({
+                method: 'setUnique',
+                match: tab.getMatch(),
+                tabId: settings.tab_id
+            });
+        }
+
     }
 });

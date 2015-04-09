@@ -13,5 +13,8 @@
         "title": "I'm working hard!",
         "icon": "{default}",
         "protected": true
+    },
+    "mail.google.com": {
+        "unique": true
     }
 }
