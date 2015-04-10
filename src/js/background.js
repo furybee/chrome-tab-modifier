@@ -1,3 +1,5 @@
+/*jshint loopfunc: true */
+
 chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
     switch (request.method) {
         case 'getSettings':
@@ -24,7 +26,11 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                             });
 
                             if (tab.id !== current_tab.id) {
-                                chrome.tabs.remove(current_tab.id);
+                                chrome.tabs.executeScript(current_tab.id, {
+                                    code: 'window.onbeforeunload = function () {};'
+                                }, function () {
+                                    chrome.tabs.remove(current_tab.id);
+                                });
                             }
                         }
                     }
