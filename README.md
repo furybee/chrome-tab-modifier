@@ -10,6 +10,8 @@ This Chrome extension allows you to **automatically** change some of your tabs p
 * Rename the tab
 * Change the tab icon
 * Pin the tab
+* Prevent tab closing
+* Unique tab
 
 ### How?
 
@@ -73,11 +75,7 @@ This Chrome extension allows you to **automatically** change some of your tabs p
 | `protected`   | `true` will ask you before closing the tab. |
 | `unique`      | `true` will prevent for opening a new tab if it is already opened. |
 
-## How it works?
-
-Each time you open a page, the script tries to match the loaded URL with your settings, and does the job.
-
-### Examples
+## Examples
 
 Pin all tabs:
 
