@@ -125,8 +125,8 @@ Get only one GMail tab opened at once:
 
 2015-04-12 - **0.5.0**
 
-* Added `protected` property #8
-* Added `unique` property #8
+* Added `protected` property ([#8](https://github.com/sylouuu/chrome-tab-modifier/issues/8))
+* Added `unique` property ([#8](https://github.com/sylouuu/chrome-tab-modifier/issues/8))
 
 2015-03-30 - **0.4.1**
 
@@ -151,7 +151,7 @@ Get only one GMail tab opened at once:
 
 2014-03-12 - **0.2.1**
 
-* Fixed a non-standard URL retrieving #1
+* Fixed a non-standard URL retrieving ([#1](https://github.com/sylouuu/chrome-tab-modifier/issues/1))
 
 2014-03-03 - **0.2.0**
 
