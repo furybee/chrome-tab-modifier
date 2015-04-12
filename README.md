@@ -123,6 +123,11 @@ Get only one GMail tab opened at once:
 
 # Changelog
 
+2015-04-12 - **0.5.0**
+
+* Added `protected` property #8
+* Added `unique` property #8
+
 2015-03-30 - **0.4.1**
 
 * Fixed settings: first match must be taken if many matches found
