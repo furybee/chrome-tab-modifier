@@ -12,7 +12,7 @@
         "url": "https://github.com/sylouuu/chrome-tab-modifier/issues"
     },
     "devDependencies": {
-        "gulp": "~3.8.0",
+        "gulp": "~3.9.0",
         "gulp-jshint": "~1.11.0",
         "gulp-jscs": "~1.6.0",
         "gulp-minify-css": "~1.1.0",
