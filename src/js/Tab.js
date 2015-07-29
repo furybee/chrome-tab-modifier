@@ -1,16 +1,16 @@
 var Tab = (function (current_url, current_title, options) {
-    var match = null, title = null, icon = null, pinned = null, protected = null, unique = null,
+    var match = null, title = null, icon = null, pinned = null, protected_state = null, unique = null,
         setTitle, getTitle, getIcon, getPinned;
 
     for (var string_to_match in options) {
         if (current_url.indexOf(string_to_match) !== -1) {
             match = string_to_match;
 
-            title = options[string_to_match].title || null;
-            icon = options[string_to_match].icon || null;
-            pinned = options[string_to_match].pinned || null;
-            protected = options[string_to_match].protected || null;
-            unique = options[string_to_match].unique || null;
+            title           = options[string_to_match].title || null;
+            icon            = options[string_to_match].icon || null;
+            pinned          = options[string_to_match].pinned || null;
+            protected_state = options[string_to_match].protected || null;
+            unique          = options[string_to_match].unique || null;
 
             break;
         }
@@ -41,7 +41,7 @@ var Tab = (function (current_url, current_title, options) {
     };
 
     getProtected = function () {
-        return protected;
+        return protected_state;
     };
 
     getUnique = function () {

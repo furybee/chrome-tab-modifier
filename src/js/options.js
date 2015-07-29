@@ -21,7 +21,7 @@ setSettings = function (str) {
 showCurrentSettings = function () {
     document.getElementById('current_file').innerHTML = getSettings();
 
-    document.getElementById('no_settings').style.display = 'none';
+    document.getElementById('no_settings').style.display  = 'none';
     document.getElementById('current_file').style.display = 'block';
 };
 
@@ -54,7 +54,7 @@ if (getSettings() !== undefined) {
     showCurrentSettings();
 } else {
     document.getElementById('current_file').style.display = 'none';
-    document.getElementById('no_settings').style.display = 'block';
+    document.getElementById('no_settings').style.display  = 'block';
 }
 
 document.getElementById('settings_file').addEventListener('change', handleFileSelect, false);
