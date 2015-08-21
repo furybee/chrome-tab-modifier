@@ -121,6 +121,10 @@ Get only one GMail tab opened at once:
 
 <img src="https://raw.githubusercontent.com/sylouuu/chrome-tab-modifier/master/screenshots/options.png" alt="options">
 
+## Known issues
+
+* The extension does not support self-refreshing tabs such as Twitter, etc.
+
 # Changelog
 
 2015-04-12 - **0.5.0**
