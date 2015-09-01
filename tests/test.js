@@ -16,7 +16,13 @@ var options = {
     },
     "mail.google.com": {
         "unique": true
-    }
+    },
+    "github.com": {
+        "title": "[{repo}] {title}",
+        "url_params": {
+          "repo": "github\\.com\/[A-Za-z0-9\\-\\_]+\/([A-Za-z0-9\\-\\_]+)"
+        }
+      }
 };
 
 var tab1 = new Tab('http://project.local.domain.com', 'My project', options);
@@ -84,13 +90,26 @@ QUnit.test('https://mail.google.com/mail/u/0/#inbox should match "mail.google.co
 
 // ----------------------------------------------------------
 
-var tab6 = new Tab('http://not-found.com', 'My project', options);
+var tab6 = new Tab('https://github.com/user-name/repo_name/pulls/123', 'My project', options);
 
-QUnit.test('http://not-found.com should not match anything', function (assert) {
-    assert.strictEqual(null, tab6.getMatch(), 'match OK');
-    assert.strictEqual(null, tab6.getTitle(), 'title OK');
+QUnit.test('https://github.com/user-name/repo_name/pulls/123 should match "github.com"', function (assert) {
+    assert.strictEqual('github.com', tab6.getMatch(), 'match OK');
+    assert.strictEqual('[repo_name] My project', tab6.getTitle(), 'title OK');
     assert.strictEqual(null, tab6.getIcon(), 'icon OK');
     assert.strictEqual(null, tab6.getPinned(), 'pinned OK');
     assert.strictEqual(null, tab6.getProtected(), 'protected OK');
     assert.strictEqual(null, tab6.getUnique(), 'unique OK');
+});
+
+// ----------------------------------------------------------
+
+var tab7 = new Tab('http://not-found.com', 'My project', options);
+
+QUnit.test('http://not-found.com should not match anything', function (assert) {
+    assert.strictEqual(null, tab7.getMatch(), 'match OK');
+    assert.strictEqual(null, tab7.getTitle(), 'title OK');
+    assert.strictEqual(null, tab7.getIcon(), 'icon OK');
+    assert.strictEqual(null, tab7.getPinned(), 'pinned OK');
+    assert.strictEqual(null, tab7.getProtected(), 'protected OK');
+    assert.strictEqual(null, tab7.getUnique(), 'unique OK');
 });
