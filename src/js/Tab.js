@@ -1,5 +1,5 @@
 var Tab = (function (current_url, current_title, options) {
-    var match = null, title = null, icon = null, pinned = null, protected_state = null, unique = null, url_params = null,
+    var match = null, title = null, icon = null, pinned = null, protected_state = null, unique = null, url_matcher = null,
         setTitle, getTitle, getIcon, getPinned;
 
     for (var string_to_match in options) {
