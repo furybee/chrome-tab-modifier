@@ -11,7 +11,7 @@ var Tab = (function (current_url, current_title, options) {
             pinned          = options[string_to_match].pinned || null;
             protected_state = options[string_to_match].protected || null;
             unique          = options[string_to_match].unique || null;
-            url_params      = options[string_to_match].url_params || null;
+            url_matcher     = options[string_to_match].url_matcher || null;
 
             break;
         }
@@ -21,11 +21,10 @@ var Tab = (function (current_url, current_title, options) {
         if (title !== null) {
             title = (title.indexOf('{title}') !== -1) ? title.replace('{title}', current_title) : title;
         }
-        if (url_params !== null) {
-            for (var token in url_params) {
-                var match = current_url.match(url_params[token]) || [];
-                var value = match[1] || '';
-                title = title.replace('{'+token+'}', value);
+        if (url_matcher !== null) {
+            var match = current_url.match(url_matcher) || [];
+            for (var i = 1; i < match.length; i++) {
+                title = title.replace('$'+i, match[i] || '');
             }
         }
     };

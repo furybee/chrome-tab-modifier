@@ -18,11 +18,9 @@ var options = {
         "unique": true
     },
     "github.com": {
-        "title": "[{repo}] {title}",
-        "url_params": {
-          "repo": "github\\.com\/[A-Za-z0-9\\-\\_]+\/([A-Za-z0-9\\-\\_]+)"
-        }
-      }
+        "title": "[$1::$2] {title}",
+        "url_matcher":  "github\\.com\/([A-Za-z0-9\\-\\_]+)\/([A-Za-z0-9\\-\\_]+)"
+    }
 };
 
 var tab1 = new Tab('http://project.local.domain.com', 'My project', options);
@@ -94,7 +92,7 @@ var tab6 = new Tab('https://github.com/user-name/repo_name/pulls/123', 'My proje
 
 QUnit.test('https://github.com/user-name/repo_name/pulls/123 should match "github.com"', function (assert) {
     assert.strictEqual('github.com', tab6.getMatch(), 'match OK');
-    assert.strictEqual('[repo_name] My project', tab6.getTitle(), 'title OK');
+    assert.strictEqual('[user-name::repo_name] My project', tab6.getTitle(), 'title OK');
     assert.strictEqual(null, tab6.getIcon(), 'icon OK');
     assert.strictEqual(null, tab6.getPinned(), 'pinned OK');
     assert.strictEqual(null, tab6.getProtected(), 'protected OK');

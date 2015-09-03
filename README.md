@@ -49,6 +49,14 @@ This Chrome extension allows you to **automatically** change some of your tabs p
     },
     "mail.google.com": {
         "unique": true
+    },
+    "pinterest.com/search" : {
+      "title" : "$1 | Pinterest",
+      "url_matcher" : "q=([^&]+)"
+    },
+    "github.com": {
+        "title": "[$1::$2] {title}",
+        "url_matcher": "github\\.com\/([A-Za-z0-9\\-\\_]+)\/([A-Za-z0-9\\-\\_]+)"
     }
 }
 ```
