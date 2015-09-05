@@ -5,7 +5,7 @@
 [![Version](http://img.shields.io/npm/v/chrome-tab-modifier.svg?style=flat)](https://www.npmjs.org/package/chrome-tab-modifier)
 [![CodeClimate](http://img.shields.io/codeclimate/github/sylouuu/chrome-tab-modifier.svg?style=flat)](https://codeclimate.com/github/sylouuu/chrome-tab-modifier)
 
-This Chrome extension allows you to **automatically** change some of your tabs properties, here is the features list:
+This Chrome extension allows you to **automatically** change some properties of your tabs, here is the features list:
 
 * Rename the tab
 * Change the tab icon
@@ -122,6 +122,10 @@ Get only one GMail tab opened at once:
 <img src="https://raw.githubusercontent.com/sylouuu/chrome-tab-modifier/master/screenshots/options.png" alt="options">
 
 # Changelog
+
+Y-m-d - **0.6.0**
+
+* Settings in Options page are now live-editable.
 
 2015-04-12 - **0.5.0**
 

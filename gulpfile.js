@@ -3,16 +3,16 @@
     'use strict';
 
     // Gulp dependencies
-    var gulp      = require('gulp'),
-        jshint    = require('gulp-jshint'),
-        concat    = require('gulp-concat'),
-        rename    = require('gulp-rename'),
-        uglify    = require('gulp-uglify'),
-        jscs      = require('gulp-jscs'),
-        less      = require('gulp-less'),
-        minifyCSS = require('gulp-minify-css'),
+    var gulp       = require('gulp'),
+        jshint     = require('gulp-jshint'),
+        concat     = require('gulp-concat'),
+        rename     = require('gulp-rename'),
+        uglify     = require('gulp-uglify'),
+        jscs       = require('gulp-jscs'),
+        less       = require('gulp-less'),
+        minifyCSS  = require('gulp-minify-css'),
         minifyHTML = require('gulp-minify-html'),
-        qunit     = require('node-qunit-phantomjs');
+        qunit      = require('node-qunit-phantomjs');
 
     // Linter
     // ------------------------------------------------------------------------------------------------------

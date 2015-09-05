@@ -14,15 +14,18 @@ getSettings = function () {
     return localStorage.settings;
 };
 
-setSettings = function (str) {
-    localStorage.settings = str;
+setSettings = function (settings) {
+    localStorage.settings = settings;
 };
 
 showCurrentSettings = function () {
-    document.getElementById('current_file').innerHTML = getSettings();
+    var current_file = document.getElementById('current_file');
 
-    document.getElementById('no_settings').style.display  = 'none';
-    document.getElementById('current_file').style.display = 'block';
+    // Reindent
+    current_file.innerHTML = JSON.stringify(JSON.parse(getSettings()), null, 4);
+
+    document.getElementById('no_settings_found').style.display = 'none';
+    document.getElementById('settings_found').style.display = 'block';
 };
 
 handleFileSelect = function (e) {
@@ -50,11 +53,41 @@ handleFileSelect = function (e) {
     reader.readAsText(file);
 };
 
+handleLiveSettingsChange = function (e) {
+    // Escape pressed
+    if (e.which === 27) {
+        document.execCommand('undo');
+
+        e.target.blur();
+    } else if (e.which === 13) { // Enter
+        e.preventDefault();
+
+        e.target.blur();
+    }
+};
+
+saveLiveSettings = function (e) {
+    var content = document.getElementById('current_file').textContent;
+
+    if (isValidJSON(content) === true) {
+        setSettings(content);
+
+        showCurrentSettings();
+    } else {
+        document.execCommand('undo');
+
+        e.target.blur();
+    }
+};
+
+document.getElementById('current_file').addEventListener('keydown', handleLiveSettingsChange, true);
+document.getElementById('current_file').addEventListener('blur', saveLiveSettings, true);
+
 if (getSettings() !== undefined) {
     showCurrentSettings();
 } else {
-    document.getElementById('current_file').style.display = 'none';
-    document.getElementById('no_settings').style.display  = 'block';
+    document.getElementById('settings_found').style.display = 'none';
+    document.getElementById('no_settings_found').style.display  = 'block';
 }
 
 document.getElementById('settings_file').addEventListener('change', handleFileSelect, false);

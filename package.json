@@ -1,6 +1,6 @@
 {
     "name": "chrome-tab-modifier",
-    "version": "0.5.0",
+    "version": "0.6.0",
     "description": "Modify your tabs in Chrome",
     "repository": {
         "type": "git",
