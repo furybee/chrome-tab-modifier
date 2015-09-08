@@ -3,22 +3,28 @@ var w = window;
 chrome.runtime.sendMessage({
     method: 'getSettings'
 }, function (response) {
-    var settings = response.data;
+    var data = response.data;
 
-    if (settings !== undefined) {
-        var tab = new Tab(location.href, document.title, JSON.parse(settings.settings));
+    if (data !== undefined && data.settings !== undefined) {
+        var tab = new Tab(location.href, document.title, JSON.parse(data.settings));
+
+        // Set title at loading
+        tab.setTitle();
 
         if (tab.getTitle() !== null) {
+            // Write the new title
             document.title = tab.getTitle();
         }
 
+        // Pin the tab
         if (tab.getPinned() === true) {
             chrome.runtime.sendMessage({
                 method: 'setPinned',
-                tabId: settings.tab_id
+                tabId: data.tab_id
             });
         }
 
+        // Set new icon
         if (tab.getIcon() !== null) {
             var el, icon, link;
 
@@ -40,17 +46,19 @@ chrome.runtime.sendMessage({
             document.getElementsByTagName('head')[0].appendChild(link);
         }
 
+        // Protect the tab
         if (tab.getProtected() === true) {
             w.onbeforeunload = function () {
                 return '';
             };
         }
 
+        // Keep this tab unique
         if (tab.getUnique() === true) {
             chrome.runtime.sendMessage({
                 method: 'setUnique',
                 match: tab.getMatch(),
-                tabId: settings.tab_id
+                tabId: data.tab_id
             });
         }
 

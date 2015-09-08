@@ -16,20 +16,18 @@ var Tab = (function (current_url, current_title, options) {
         }
     }
 
-    setTitle = function () {
-        if (title !== null) {
-            title = (title.indexOf('{title}') !== -1) ? title.replace('{title}', current_title) : title;
-        }
-    };
-
-    setTitle();
-
     getMatch = function () {
         return match;
     };
 
     getTitle = function () {
         return title;
+    };
+
+    setTitle = function () {
+        if (title !== null) {
+            title = (title.indexOf('{title}') !== -1) ? title.replace('{title}', current_title) : title;
+        }
     };
 
     getIcon = function () {
@@ -52,6 +50,7 @@ var Tab = (function (current_url, current_title, options) {
     return {
         getMatch: getMatch,
         getTitle: getTitle,
+        setTitle: setTitle,
         getIcon: getIcon,
         getPinned: getPinned,
         getProtected: getProtected,

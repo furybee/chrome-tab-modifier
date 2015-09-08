@@ -49,7 +49,6 @@
             .pipe(gulp.dest('dist/js'));
     });
 
-
     // Options
     // ------------------------------------------------------------------------------------------------------
 
@@ -104,6 +103,7 @@
 
     // Default tasks (called when running `gulp` from cli)
     gulp.task('default', [
+        'build',
         'watch'
     ]);
 
