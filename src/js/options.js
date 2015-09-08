@@ -59,10 +59,6 @@ handleLiveSettingsChange = function (e) {
         document.execCommand('undo');
 
         e.target.blur();
-    } else if (e.which === 13) { // Enter
-        e.preventDefault();
-
-        e.target.blur();
     }
 };
 
