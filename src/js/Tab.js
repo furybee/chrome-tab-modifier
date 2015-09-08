@@ -32,8 +32,9 @@ var Tab = (function (current_url, current_title, options) {
 
         if (url_matcher !== null) {
             var match = current_url.match(url_matcher) || [];
+
             for (var i = 1; i < match.length; i++) {
-                title = title.replace('$'+i, match[i] || '');
+                title = title.replace('$'+ i, match[i] || '');
             }
         }
     };
