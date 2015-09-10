@@ -55,7 +55,7 @@ This Chrome extension allows you to **automatically** change some properties of 
       "url_matcher" : "q=([^&]+)"
     },
     "github.com": {
-        "title": "[$1::$2] {title}",
+        "title": "{title} | $2 by $1",
         "url_matcher": "github\\.com\/([A-Za-z0-9\\-\\_]+)\/([A-Za-z0-9\\-\\_]+)"
     }
 }
@@ -82,6 +82,7 @@ This Chrome extension allows you to **automatically** change some properties of 
 | `pinned`      | `true` to pin the tab, otherwise nothing happens. |
 | `protected`   | `true` will ask you before closing the tab. |
 | `unique`      | `true` will prevent for opening a new tab if it is already opened. |
+| `url_matcher` | Regular expression to search string fragment(s) and use it inside the `title` property |
 
 ## Examples
 
@@ -135,9 +136,10 @@ Get only one GMail tab opened at once:
 
 # Changelog
 
-Y-m-d - **0.6.0**
+WIP - **0.6.0**
 
 * Settings in Options page are now live-editable.
+* Added `url_matcher` property ([#12](https://github.com/sylouuu/chrome-tab-modifier/issues/12))
 
 2015-04-12 - **0.5.0**
 
