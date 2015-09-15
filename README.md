@@ -82,7 +82,7 @@ This Chrome extension allows you to **automatically** change some properties of 
 | `pinned`      | `true` to pin the tab, otherwise nothing happens. |
 | `protected`   | `true` will ask you before closing the tab. |
 | `unique`      | `true` will prevent for opening a new tab if it is already opened. |
-| `url_matcher` | Regular expression to search string fragment(s) and use it inside the `title` property |
+| `url_matcher` | Regular expression to search string fragment(s) and use it inside the `title` property. |
 
 ## Examples
 
@@ -132,8 +132,8 @@ Get only one GMail tab opened at once:
 
 # Known issues
 
-* The extension can't access to Chrome pages `chrome://` ([#11](https://github.com/sylouuu/chrome-tab-modifier/issues/11).
-* The extension can't access to local files like `file://` ([#13](https://github.com/sylouuu/chrome-tab-modifier/issues/13).
+* The extension can't access to Chrome pages `chrome://` ([#11](https://github.com/sylouuu/chrome-tab-modifier/issues/11)).
+* The extension can't access to local files like `file://` ([#13](https://github.com/sylouuu/chrome-tab-modifier/issues/13)).
 
 # Changelog
 
