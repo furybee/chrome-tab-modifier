@@ -133,7 +133,6 @@ Get only one GMail tab opened at once:
 # Known issues
 
 * The extension can't access to Chrome pages `chrome://` ([#11](https://github.com/sylouuu/chrome-tab-modifier/issues/11)).
-* The extension can't access to local files like `file://` ([#13](https://github.com/sylouuu/chrome-tab-modifier/issues/13)).
 
 # Changelog
 
