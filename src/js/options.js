@@ -32,7 +32,7 @@ handleFileSelect = function (e) {
     var file = this.files[0],
         reader = new FileReader();
 
-    reader.onload = function(e) {
+    reader.onload = function (e) {
         var content = e.target.result;
 
         if (content) {
