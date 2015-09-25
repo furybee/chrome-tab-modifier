@@ -21,6 +21,7 @@
         return gulp
             .src('src/js/**/*.js')
             .pipe(jscs())
+            .pipe(jscs.reporter())
             .pipe(jshint())
             .pipe(jshint.reporter('default'));
     });
