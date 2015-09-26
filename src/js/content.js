@@ -6,15 +6,35 @@ chrome.runtime.sendMessage({
     var data = response.data;
 
     if (data !== undefined && data.settings !== undefined) {
-        var tab = new Tab(location.href, document.title, JSON.parse(data.settings));
+        var tab = new Tab(location.href, document.title, JSON.parse(data.settings)),
+            changed_by_me = false, observer;
 
         // Set title at loading
         tab.setTitle();
 
         if (tab.getTitle() !== null) {
-            // Write the new title
             document.title = tab.getTitle();
         }
+
+        // Create an observer to detect when the website changes the title
+        observer = new window.WebKitMutationObserver(function (mutations) {
+            if (changed_by_me === true) {
+                changed_by_me = false;
+            } else {
+                mutations.forEach(function (mutation) {
+                    tab.setCurrentTitle(mutation.target.textContent);
+                    tab.setTitle();
+
+                    if (tab.getTitle() !== null) {
+                        document.title = tab.getTitle();
+                    }
+
+                    changed_by_me = true;
+                });
+            }
+        });
+
+        observer.observe(document.querySelector('head > title'), { subtree: true, characterData: true, childList: true });
 
         // Pin the tab
         if (tab.getPinned() === true) {
