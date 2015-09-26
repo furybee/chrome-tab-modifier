@@ -3,7 +3,6 @@
 [![Build Status](http://img.shields.io/travis/sylouuu/chrome-tab-modifier.svg?style=flat)](https://travis-ci.org/sylouuu/chrome-tab-modifier)
 [![devDependency Status](http://img.shields.io/david/dev/sylouuu/chrome-tab-modifier.svg?style=flat)](https://david-dm.org/sylouuu/chrome-tab-modifier#info=devDependencies)
 [![Version](http://img.shields.io/npm/v/chrome-tab-modifier.svg?style=flat)](https://www.npmjs.org/package/chrome-tab-modifier)
-[![CodeClimate](http://img.shields.io/codeclimate/github/sylouuu/chrome-tab-modifier.svg?style=flat)](https://codeclimate.com/github/sylouuu/chrome-tab-modifier)
 
 This Chrome extension allows you to **automatically** change some properties of your tabs, here is the features list:
 
@@ -20,7 +19,7 @@ This Chrome extension allows you to **automatically** change some properties of 
 2. Copy/paste the sample file below in your file.
 3. Go to the extension Options page: open [chrome://extensions/](chrome://extensions/), and click on the **Options** link for the **Tab Modifier** extension.
 4. Import your `tab_modifier.json` file.
-5. Done! Your settings are saved in your localStorage, but I recommend you to keep your file as a backup.
+5. Done! Your settings are saved in your `localStorage`, but I recommend you to keep your file as a backup.
 
 ## Demo
 
@@ -70,7 +69,8 @@ This Chrome extension allows you to **automatically** change some properties of 
         "icon": "http://...",
         "pinned": true,
         "protected": true,
-        "unique": true
+        "unique": true,
+        "url_matcher": "<regexp>"
     }
 }
 ```
@@ -138,8 +138,9 @@ Get only one GMail tab opened at once:
 
 WIP - **0.6.0**
 
-* Settings in Options page are now live-editable.
+* Added support of websites that dynamically change the document title (ie. Twitter) ([#9](https://github.com/sylouuu/chrome-tab-modifier/issues/9))
 * Added `url_matcher` property ([#12](https://github.com/sylouuu/chrome-tab-modifier/issues/12))
+* Settings in Options page are now live-editable
 
 2015-04-12 - **0.5.0**
 
