@@ -1,7 +1,7 @@
 /*jshint loopfunc: true */
 
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-    switch (request.method) {
+chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
+    switch (message.method) {
         case 'getSettings':
             sendResponse({
                 data: {
@@ -11,7 +11,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             });
         break;
         case 'setUnique':
-            chrome.tabs.get(request.tabId, function (tab) {
+            chrome.tabs.get(message.tab_id, function (tab) {
                 var current_tab = tab;
 
                 chrome.tabs.query({}, function (tabs) {
@@ -20,7 +20,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
                     for (i in tabs) {
                         tab = tabs[i];
 
-                        if (tab.url.indexOf(request.match) !== -1) {
+                        if (tab.url.indexOf(message.match) !== -1) {
                             chrome.tabs.update(tab.id, {
                                 highlighted: true
                             });
@@ -38,7 +38,7 @@ chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
             });
         break;
         case 'setPinned':
-            chrome.tabs.update(request.tabId, {
+            chrome.tabs.update(message.tab_id, {
                 pinned: true
             });
         break;

@@ -40,7 +40,7 @@ chrome.runtime.sendMessage({
         if (tab.getPinned() === true) {
             chrome.runtime.sendMessage({
                 method: 'setPinned',
-                tabId: data.tab_id
+                tab_id: data.tab_id
             });
         }
 
@@ -78,7 +78,7 @@ chrome.runtime.sendMessage({
             chrome.runtime.sendMessage({
                 method: 'setUnique',
                 match: tab.getMatch(),
-                tabId: data.tab_id
+                tab_id: data.tab_id
             });
         }
 
