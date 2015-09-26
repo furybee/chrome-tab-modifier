@@ -12,7 +12,7 @@ This Chrome extension allows you to **automatically** change some properties of 
 * Prevent tab closing
 * Unique tab
 
-### How?
+### How to use?
 
 1. Download and install from the **[Chrome Web Store](https://chrome.google.com/webstore/detail/hcbgadmbdkiilgpifjgcakjehmafcjai/)**.
 2. Create a JSON file like `tab_modifier.json`.
