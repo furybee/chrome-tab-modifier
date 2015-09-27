@@ -136,59 +136,9 @@ Get only one GMail tab opened at once:
 
 # Changelog
 
-WIP - **0.6.0**
+See [releases](https://github.com/sylouuu/chrome-tab-modifier/releases) section.
 
-* Added support of websites that dynamically change the document title (ie. Twitter) ([#9](https://github.com/sylouuu/chrome-tab-modifier/issues/9))
-* Added `url_matcher` property ([#12](https://github.com/sylouuu/chrome-tab-modifier/issues/12))
-* Settings in Options page are now live-editable
+# License
 
-2015-04-12 - **0.5.0**
+See [license](LICENSE.md) file.
 
-* Added `protected` property ([#8](https://github.com/sylouuu/chrome-tab-modifier/issues/8))
-* Added `unique` property ([#8](https://github.com/sylouuu/chrome-tab-modifier/issues/8))
-
-2015-03-30 - **0.4.1**
-
-* Fixed settings: first match must be taken if many matches found
-
-2015-03-29 - **0.4.0**
-
-* Improved scripts performances, lighter and faster
-* Removed jQuery
-* Updated Options page UI
-* Added `Gulp`
-* Added unit tests
-
-2015-03-02 - **0.3.1**
-
-* Replaced Event Page instead of Background Page ([#4](https://github.com/sylouuu/chrome-tab-modifier/issues/4))
-
-2014-05-27 - **0.3.0**
-
-* Renamed extension to `Tab Modifier`
-* Updated extension icon
-
-2014-03-12 - **0.2.1**
-
-* Fixed a non-standard URL retrieving ([#1](https://github.com/sylouuu/chrome-tab-modifier/issues/1))
-
-2014-03-03 - **0.2.0**
-
-* Totally reworked script behavior: content-script <=> background instead of background only
-* New feature (icon)
-
-2014-02-27 - **0.1.0**
-
-* New name: `Website Settings`
-* New icon
-* New JSON file format (BC break)
-* New feature (pinned)
-* Enhanced options page
-
-2014-02-24 - **0.0.2**
-
-* Replaced icon
-
-2014-02-24 - **0.0.1**
-
-* Initial release
