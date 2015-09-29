@@ -45,12 +45,23 @@
 
                     <h1 class="content-subhead">Current settings</h1>
 
-                    <pre id="current_file" style="display:none;"></pre>
+                    <div id="settings_found" style="display:none;">
+                        Your settings are live-editable.
 
-                    <p id="no_settings" style="display:none;">
-                        No settings found.<br>
-                        If you are new here, please, check out the <a href="https://github.com/sylouuu/chrome-tab-modifier/blob/master/README.md" target="_blank">README</a> file.
-                    </p>
+                        <ul>
+                            <li>Click on the JSON below to enter in edit mode.</li>
+                            <li>Click outside the field to save.</li>
+                            <li>Press <code>Escape</code> to undo.</li>
+                        </ul>
+
+                        <pre id="current_file" contenteditable="true"></pre>
+                    </div>
+
+                    <div id="no_settings_found" style="display:none;">
+                        <p>No settings found.</p>
+                        <p>If you are new here, download the <a href="https://github.com/sylouuu/chrome-tab-modifier/blob/master/settings_sample.json" target="_blank">settings_sample.json</a> file to see how the extension works.</p>
+                        <p>For more info, check out the <a href="https://github.com/sylouuu/chrome-tab-modifier/blob/master/README.md" target="_blank">README</a> file.</p>
+                    </div>
                 </div>
             </div>
         </div>

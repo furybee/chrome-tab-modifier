@@ -16,10 +16,16 @@ var options = {
     },
     "mail.google.com": {
         "unique": true
+    },
+    "github.com": {
+        "title": "[$1::$2] {title}",
+        "url_matcher":  "github\\.com\/([A-Za-z0-9\\-\\_]+)\/([A-Za-z0-9\\-\\_]+)"
     }
 };
 
 var tab1 = new Tab('http://project.local.domain.com', 'My project', options);
+
+tab1.setTitle();
 
 QUnit.test('http://project.local.domain.com should match ".local"', function (assert) {
     assert.strictEqual('.local', tab1.getMatch(), 'match OK');
@@ -34,6 +40,8 @@ QUnit.test('http://project.local.domain.com should match ".local"', function (as
 
 var tab2 = new Tab('http://shop.domain.com', 'My project', options);
 
+tab2.setTitle();
+
 QUnit.test('http://shop.domain.com should match "domain.com"', function (assert) {
     assert.strictEqual('domain.com', tab2.getMatch(), 'match OK');
     assert.strictEqual('[PROD] My project', tab2.getTitle(), 'title OK');
@@ -46,6 +54,8 @@ QUnit.test('http://shop.domain.com should match "domain.com"', function (assert)
 // ----------------------------------------------------------
 
 var tab3 = new Tab('http://youtube.com', 'My project', options);
+
+tab3.setTitle();
 
 QUnit.test('http://youtube.com should match "youtube.com"', function (assert) {
     assert.strictEqual('youtube.com', tab3.getMatch(), 'match OK');
@@ -60,6 +70,8 @@ QUnit.test('http://youtube.com should match "youtube.com"', function (assert) {
 
 var tab4 = new Tab('http://twitter.com', 'My project', options);
 
+tab4.setTitle();
+
 QUnit.test('http://twitter.com should match "twitter.com"', function (assert) {
     assert.strictEqual('twitter.com', tab4.getMatch(), 'match OK');
     assert.strictEqual('I\'m working hard!', tab4.getTitle(), 'title OK');
@@ -73,6 +85,8 @@ QUnit.test('http://twitter.com should match "twitter.com"', function (assert) {
 
 var tab5 = new Tab('https://mail.google.com/mail/u/0/#inbox', 'My project', options);
 
+tab5.setTitle();
+
 QUnit.test('https://mail.google.com/mail/u/0/#inbox should match "mail.google.com"', function (assert) {
     assert.strictEqual('mail.google.com', tab5.getMatch(), 'match OK');
     assert.strictEqual(null, tab5.getTitle(), 'title OK');
@@ -84,13 +98,30 @@ QUnit.test('https://mail.google.com/mail/u/0/#inbox should match "mail.google.co
 
 // ----------------------------------------------------------
 
-var tab6 = new Tab('http://not-found.com', 'My project', options);
+var tab6 = new Tab('https://github.com/user-name/repo_name/pulls/123', 'My project', options);
 
-QUnit.test('http://not-found.com should not match anything', function (assert) {
-    assert.strictEqual(null, tab6.getMatch(), 'match OK');
-    assert.strictEqual(null, tab6.getTitle(), 'title OK');
+tab6.setTitle();
+
+QUnit.test('https://github.com/user-name/repo_name/pulls/123 should match "github.com"', function (assert) {
+    assert.strictEqual('github.com', tab6.getMatch(), 'match OK');
+    assert.strictEqual('[user-name::repo_name] My project', tab6.getTitle(), 'title OK');
     assert.strictEqual(null, tab6.getIcon(), 'icon OK');
     assert.strictEqual(null, tab6.getPinned(), 'pinned OK');
     assert.strictEqual(null, tab6.getProtected(), 'protected OK');
     assert.strictEqual(null, tab6.getUnique(), 'unique OK');
+});
+
+// ----------------------------------------------------------
+
+var tab7 = new Tab('http://not-found.com', 'My project', options);
+
+tab7.setTitle();
+
+QUnit.test('http://not-found.com should not match anything', function (assert) {
+    assert.strictEqual(null, tab7.getMatch(), 'match OK');
+    assert.strictEqual(null, tab7.getTitle(), 'title OK');
+    assert.strictEqual(null, tab7.getIcon(), 'icon OK');
+    assert.strictEqual(null, tab7.getPinned(), 'pinned OK');
+    assert.strictEqual(null, tab7.getProtected(), 'protected OK');
+    assert.strictEqual(null, tab7.getUnique(), 'unique OK');
 });

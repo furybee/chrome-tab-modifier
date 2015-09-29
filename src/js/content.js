@@ -3,22 +3,46 @@ var w = window;
 chrome.runtime.sendMessage({
     method: 'getSettings'
 }, function (response) {
-    var settings = response.data;
+    if (response !== undefined && response.settings !== undefined) {
+        var tab = new Tab(location.href, document.title, JSON.parse(response.settings)),
+            changed_by_me = false, observer;
 
-    if (settings !== undefined) {
-        var tab = new Tab(location.href, document.title, JSON.parse(settings.settings));
+        // Set title at loading
+        tab.setTitle();
 
         if (tab.getTitle() !== null) {
             document.title = tab.getTitle();
         }
 
+        // Create an observer to detect when the website changes the title
+        observer = new window.WebKitMutationObserver(function (mutations) {
+            if (changed_by_me === true) {
+                changed_by_me = false;
+            } else {
+                mutations.forEach(function (mutation) {
+                    tab.setCurrentTitle(mutation.target.textContent);
+                    tab.setTitle();
+
+                    if (tab.getTitle() !== null) {
+                        document.title = tab.getTitle();
+                    }
+
+                    changed_by_me = true;
+                });
+            }
+        });
+
+        observer.observe(document.querySelector('head > title'), { subtree: true, characterresponse: true, childList: true });
+
+        // Pin the tab
         if (tab.getPinned() === true) {
             chrome.runtime.sendMessage({
                 method: 'setPinned',
-                tabId: settings.tab_id
+                tab_id: response.tab_id
             });
         }
 
+        // Set new icon
         if (tab.getIcon() !== null) {
             var el, icon, link;
 
@@ -40,17 +64,19 @@ chrome.runtime.sendMessage({
             document.getElementsByTagName('head')[0].appendChild(link);
         }
 
+        // Protect the tab
         if (tab.getProtected() === true) {
             w.onbeforeunload = function () {
                 return '';
             };
         }
 
+        // Keep this tab unique
         if (tab.getUnique() === true) {
             chrome.runtime.sendMessage({
                 method: 'setUnique',
                 match: tab.getMatch(),
-                tabId: settings.tab_id
+                tab_id: response.tab_id
             });
         }
 

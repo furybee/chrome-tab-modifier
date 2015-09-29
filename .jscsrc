@@ -1,4 +1,11 @@
 {
+    "disallowQuotedKeysInObjects": true,
+    "requireCapitalizedConstructors": true,
+    "requireDotNotation": true,
+    "requireMatchingFunctionName": true,
+    "requireSemicolons": true,
+    "requireSpaceBetweenArguments": true,
+    "requireSpacesInForStatement": true,
     "requireCurlyBraces": [
         "if",
         "else",
@@ -6,6 +13,11 @@
         "while",
         "do",
         "try",
+        "catch"
+    ],
+    "requireSpaceBeforeKeywords": [
+        "else",
+        "while",
         "catch"
     ],
     "requireSpaceAfterKeywords": [
@@ -28,9 +40,11 @@
         "beforeAlternate": true
     },
     "requireSpacesInFunctionExpression": {
+        "beforeOpeningRoundBrace": true,
         "beforeOpeningCurlyBrace": true
     },
     "requireSpacesInAnonymousFunctionExpression": {
+        "beforeOpeningRoundBrace": true,
         "beforeOpeningCurlyBrace": true
     },
     "requireSpacesInNamedFunctionExpression": {
@@ -42,6 +56,7 @@
         "beforeOpeningCurlyBrace": true
     },
     "requireSpacesInFunction": {
+        "beforeOpeningRoundBrace": true,
         "beforeOpeningCurlyBrace": true
     },
     "requireMultipleVarDecl": true,
@@ -49,6 +64,7 @@
     "disallowEmptyBlocks": true,
     "disallowSpacesInsideArrayBrackets": "all",
     "disallowSpacesInsideParentheses": true,
+    "disallowSpacesInsideParenthesizedExpression": true,
     "requireSpacesInsideObjectBrackets": "all",
     "disallowSpaceAfterObjectKeys": true,
     "requireSpaceBeforeObjectValues": true,

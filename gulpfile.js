@@ -3,16 +3,16 @@
     'use strict';
 
     // Gulp dependencies
-    var gulp      = require('gulp'),
-        jshint    = require('gulp-jshint'),
-        concat    = require('gulp-concat'),
-        rename    = require('gulp-rename'),
-        uglify    = require('gulp-uglify'),
-        jscs      = require('gulp-jscs'),
-        less      = require('gulp-less'),
-        minifyCSS = require('gulp-minify-css'),
+    var gulp       = require('gulp'),
+        jshint     = require('gulp-jshint'),
+        concat     = require('gulp-concat'),
+        rename     = require('gulp-rename'),
+        uglify     = require('gulp-uglify'),
+        jscs       = require('gulp-jscs'),
+        less       = require('gulp-less'),
+        minifyCSS  = require('gulp-minify-css'),
         minifyHTML = require('gulp-minify-html'),
-        qunit     = require('node-qunit-phantomjs');
+        qunit      = require('node-qunit-phantomjs');
 
     // Linter
     // ------------------------------------------------------------------------------------------------------
@@ -21,6 +21,7 @@
         return gulp
             .src('src/js/**/*.js')
             .pipe(jscs())
+            .pipe(jscs.reporter())
             .pipe(jshint())
             .pipe(jshint.reporter('default'));
     });
@@ -48,7 +49,6 @@
             }))
             .pipe(gulp.dest('dist/js'));
     });
-
 
     // Options
     // ------------------------------------------------------------------------------------------------------
@@ -104,6 +104,7 @@
 
     // Default tasks (called when running `gulp` from cli)
     gulp.task('default', [
+        'build',
         'watch'
     ]);
 
