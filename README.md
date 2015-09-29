@@ -128,7 +128,7 @@ Get only one GMail tab opened at once:
 
 ## Options page
 
-<img src="https://raw.githubusercontent.com/sylouuu/chrome-tab-modifier/master/screenshots/options.png" alt="options">
+<img src="screenshots/options.png" alt="options">
 
 # Known issues
 
