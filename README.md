@@ -25,7 +25,7 @@ This Chrome extension allows you to **automatically** change some properties of 
 
 ### Result
 
-<img src="https://raw.github.com/sylouuu/chrome-tab-modifier/master/screenshots/tabs.png" alt="tabs">
+<img src="screenshots/tabs.png" alt="tabs">
 
 ### Settings file (sample)
 
