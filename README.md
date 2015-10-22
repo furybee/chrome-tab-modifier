@@ -12,7 +12,7 @@ This Chrome extension allows you to **automatically** change some properties of 
 * Prevent tab closing
 * Unique tab
 
-### How to use?
+## How to use?
 
 1. Download and install from the **[Chrome Web Store](https://chrome.google.com/webstore/detail/hcbgadmbdkiilgpifjgcakjehmafcjai/)**.
 2. Create a JSON file like `tab_modifier.json`.
@@ -130,15 +130,39 @@ Get only one GMail tab opened at once:
 
 <img src="screenshots/options.png" alt="options">
 
-# Known issues
+## Known issues
 
 * The extension can't access to Chrome pages `chrome://` ([#11](https://github.com/sylouuu/chrome-tab-modifier/issues/11)).
 
-# Changelog
+## Changelog
 
 See [releases](https://github.com/sylouuu/chrome-tab-modifier/releases) section.
 
-# License
+## Development
+
+In case you want to contribute or just want to play with the code, follow the guide.
+
+### Setup
+
+Download and install [NodeJS](http://nodejs.org/download/) to get [npm](https://www.npmjs.org/).
+
+Install `gulp` globally:
+
+```bash
+sudo npm install -g gulp
+```
+
+Clone the project and install dependencies with `npm install`.
+
+Type `gulp` to watch your changes inside `src/` folder or type `gulp build` after each change.
+
+### Load your local extension in Chrome
+
+Go to `chrome://extensions/` and enable the "Developer mode".
+
+Click on "Load unpacked extension..." and select the project `dist/` folder.
+
+## License
 
 See [license](LICENSE.md) file.
 
