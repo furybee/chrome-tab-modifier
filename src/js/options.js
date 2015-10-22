@@ -19,13 +19,10 @@ setSettings = function (settings) {
 };
 
 showCurrentSettings = function () {
-    var current_file = document.getElementById('current_file');
-
-    // Reindent
-    current_file.innerHTML = JSON.stringify(JSON.parse(getSettings()), null, 4);
+    document.getElementById('current_file').innerHTML = JSON.stringify(JSON.parse(getSettings()), null, 4);
 
     document.getElementById('no_settings_found').style.display = 'none';
-    document.getElementById('settings_found').style.display = 'block';
+    document.getElementById('settings_found').style.display    = 'block';
 };
 
 handleFileSelect = function (e) {
@@ -82,8 +79,9 @@ document.getElementById('current_file').addEventListener('blur', saveLiveSetting
 if (getSettings() !== undefined) {
     showCurrentSettings();
 } else {
-    document.getElementById('settings_found').style.display = 'none';
-    document.getElementById('no_settings_found').style.display  = 'block';
+    document.getElementById('settings_found').style.display    = 'none';
+    document.getElementById('no_settings_found').style.display = 'block';
+    document.getElementById('current_file').innerHTML          = 'Paste your JSON here';
 }
 
 document.getElementById('settings_file').addEventListener('change', handleFileSelect, false);
