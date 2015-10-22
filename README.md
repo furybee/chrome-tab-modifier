@@ -158,7 +158,7 @@ Type `gulp` to watch your changes inside `src/` folder or type `gulp build` afte
 
 ### Load your local extension in Chrome
 
-Go to [chrome://extensions/](chrome://extensions/) and enable the "Developer mode".
+Go to `chrome://extensions/]` and enable the "Developer mode".
 
 Click on "Load unpacked extension..." and select the project `dist/` folder.
 
