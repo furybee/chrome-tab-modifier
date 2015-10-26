@@ -14,7 +14,7 @@ This Chrome extension allows you to **automatically** change some properties of 
 ## How to use?
 
 1. Download and install from the **[Chrome Web Store](https://chrome.google.com/webstore/detail/hcbgadmbdkiilgpifjgcakjehmafcjai/)**.
-2. Click on "Tab Modifier" icon in your toolbar to access to the Options.
+2. Click on "Tab Modifier" icon in your toolbar to access Options.
 3. Copy the sample JSON below and paste it in Options.
 4. Try & enjoy!
 
