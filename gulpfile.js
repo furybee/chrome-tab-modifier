@@ -95,7 +95,8 @@
         'build_content_script',
         'build_options_script',
         'build_options_html',
-        'build_options_less'
+        'build_options_less',
+        'lint'
     ]);
 
     gulp.task('watch', function() {
