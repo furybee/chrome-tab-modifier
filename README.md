@@ -2,7 +2,6 @@
 
 [![Build Status](http://img.shields.io/travis/sylouuu/chrome-tab-modifier.svg?style=flat)](https://travis-ci.org/sylouuu/chrome-tab-modifier)
 [![devDependency Status](http://img.shields.io/david/dev/sylouuu/chrome-tab-modifier.svg?style=flat)](https://david-dm.org/sylouuu/chrome-tab-modifier#info=devDependencies)
-[![Version](http://img.shields.io/npm/v/chrome-tab-modifier.svg?style=flat)](https://www.npmjs.org/package/chrome-tab-modifier)
 
 This Chrome extension allows you to **automatically** change some properties of your tabs, here is the features list:
 
