@@ -15,11 +15,11 @@ This Chrome extension allows you to **automatically** change some properties of 
 ## How to use?
 
 1. Download and install from the **[Chrome Web Store](https://chrome.google.com/webstore/detail/hcbgadmbdkiilgpifjgcakjehmafcjai/)**.
-2. Create a JSON file like `tab_modifier.json`.
-2. Copy/paste the sample file below in your file.
-3. Go to the extension Options page: open [chrome://extensions/](chrome://extensions/), and click on the **Options** link for the **Tab Modifier** extension.
-4. Import your `tab_modifier.json` file.
-5. Done! Your settings are saved in your `localStorage`, but I recommend you to keep your file as a backup.
+2. Click on "Tab Modifier" icon in your toolbar to access to the Options.
+3. Copy the sample JSON below and paste it in the area in Options.
+4. Try & enjoy!
+
+_Tip: Keep a file like `tab_modifier.json` which contains your custom settings and consider it as a backup. Your settings are saved in your `localStorage`._
 
 ## Demo
 
