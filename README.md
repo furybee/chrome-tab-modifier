@@ -16,7 +16,7 @@ This Chrome extension allows you to **automatically** change some properties of 
 
 1. Download and install from the **[Chrome Web Store](https://chrome.google.com/webstore/detail/hcbgadmbdkiilgpifjgcakjehmafcjai/)**.
 2. Click on "Tab Modifier" icon in your toolbar to access to the Options.
-3. Copy the sample JSON below and paste it in the area in Options.
+3. Copy the sample JSON below and paste it in Options.
 4. Try & enjoy!
 
 _Tip: Keep a file like `tab_modifier.json` which contains your custom settings and consider it as a backup. Your settings are saved in your `localStorage`._
