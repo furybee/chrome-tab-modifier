@@ -6,7 +6,7 @@ var Tab = (function (current_url, current_title, options) {
             pinned: null,
             protected: null,
             unique: null,
-            url_matcher: null,
+            url_matcher: null
         };
 
     for (var string_to_match in options) {

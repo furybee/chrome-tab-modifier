@@ -45,3 +45,29 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
         break;
     }
 });
+
+chrome.browserAction.onClicked.addListener(function (tab) {
+    var relative_options_page_file = 'html/options.min.html',
+        options_url = chrome.extension.getURL(relative_options_page_file),
+        found = false;
+
+    chrome.tabs.query({}, function (tabs) {
+        var i, tab;
+
+        for (i in tabs) {
+            tab = tabs[i];
+
+            if (tab.url === options_url) {
+                chrome.tabs.update(tab.id, {
+                    highlighted: true
+                });
+
+                found = true;
+            }
+        }
+
+        if (found === false) {
+            chrome.tabs.create({ url: relative_options_page_file });
+        }
+    });
+});
