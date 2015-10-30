@@ -22,9 +22,13 @@ _Tip: Keep a file like `tab_modifier.json` which contains your custom settings a
 
 ## Demo
 
-### Result
+### Before
 
-<img src="screenshots/tabs.png" alt="tabs">
+<img src="screenshots/tabs+before.png" alt="tabs before">
+
+### After
+
+<img src="screenshots/tabs+after.png" alt="tabs after">
 
 ### Settings file (sample)
 
