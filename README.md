@@ -30,6 +30,12 @@ _Tip: Keep a file like `tab_modifier.json` which contains your custom settings a
 
 <img src="screenshots/tabs+after.png" alt="tabs after">
 
+* Youtube tab has been modified: use Google icon and pinned state.
+* My Website tabs have been modified: use a prefix depending on URL.
+* Twitter tab has been modified: use default Chrome icon (white paper) and renamed to "I'm working hard!".
+
+You can achieve this with the file below.
+
 ### Settings file (sample)
 
 ```json
