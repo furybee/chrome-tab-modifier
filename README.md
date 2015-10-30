@@ -3,7 +3,7 @@
 [![Build Status](http://img.shields.io/travis/sylouuu/chrome-tab-modifier.svg?style=flat)](https://travis-ci.org/sylouuu/chrome-tab-modifier)
 [![devDependency Status](http://img.shields.io/david/dev/sylouuu/chrome-tab-modifier.svg?style=flat)](https://david-dm.org/sylouuu/chrome-tab-modifier#info=devDependencies)
 
-This Chrome extension allows you to **automatically** change some properties of your tabs, here is the features list:
+This Chrome extension allows you to **automatically** change some properties of your tabs:
 
 * Rename the tab
 * Change the tab icon
@@ -31,7 +31,7 @@ _Tip: Keep a file like `tab_modifier.json` which contains your custom settings a
 <img src="screenshots/tabs+after.png" alt="tabs after">
 
 * Youtube tab has been modified: use Google icon and pinned state.
-* My Website tabs have been modified: use a prefix depending on URL.
+* My Website tabs have been modified: use a prefix in title.
 * Twitter tab has been modified: use default Chrome icon (white paper) and renamed to "I'm working hard!".
 
 You can achieve this with the file below.
