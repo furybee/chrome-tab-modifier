@@ -22,6 +22,7 @@
             .src('src/js/**/*.js')
             .pipe(jscs())
             .pipe(jscs.reporter())
+            .pipe(jscs.reporter('fail'))
             .pipe(jshint())
             .pipe(jshint.reporter('default'));
     });
