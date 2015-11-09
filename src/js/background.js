@@ -13,11 +13,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
                 var current_tab = tab;
 
                 chrome.tabs.query({}, function (tabs) {
-                    var i, tab;
-
-                    for (i in tabs) {
-                        tab = tabs[i];
-
+                    for (var tab in tabs) {
                         if (tab.url.indexOf(message.match) !== -1) {
                             chrome.tabs.update(tab.id, {
                                 highlighted: true
@@ -52,11 +48,7 @@ chrome.browserAction.onClicked.addListener(function (tab) {
         found = false;
 
     chrome.tabs.query({}, function (tabs) {
-        var i, tab;
-
-        for (i in tabs) {
-            tab = tabs[i];
-
+        for (var tab in tabs) {
             if (tab.url === options_url) {
                 chrome.tabs.update(tab.id, {
                     highlighted: true
