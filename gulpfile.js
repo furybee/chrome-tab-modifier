@@ -30,6 +30,20 @@
     // Core
     // ------------------------------------------------------------------------------------------------------
 
+    gulp.task('build_app_script', function () {
+        return gulp
+            .src([
+                'src/js/app.module.js',
+                'src/js/app.controller.js'
+            ])
+            .pipe(concat('app.js'))
+            .pipe(uglify())
+            .pipe(rename({
+                suffix: '.min'
+            }))
+            .pipe(gulp.dest('dist/js'));
+    });
+
     gulp.task('build_background_script', function () {
         return gulp
             .src(['src/js/background.js'])
@@ -92,6 +106,7 @@
     });
 
     gulp.task('build', [
+        'build_app_script',
         'build_background_script',
         'build_content_script',
         'build_options_script',
