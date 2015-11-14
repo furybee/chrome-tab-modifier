@@ -18,6 +18,7 @@
 
         // Load icons list by name
         $mdIconProvider
+            .icon('settings', 'icons/settings.svg')
             .icon('duplicate', 'icons/content-copy.svg')
             .icon('delete', 'icons/delete.svg')
             .icon('edit', 'icons/pencil.svg')

@@ -11,76 +11,89 @@
 
         <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc3/angular-material.min.css">
         <style>
-            .md-icon-mini {
-                font-size: 14px;
+            .md-icon-title {
+                margin-right: 10px;
             }
         </style>
         <!-- <link rel="stylesheet" href="../css/options.min.css"> -->
     </head>
-    <body layout="column" ng-app="TabModifier" ng-controller="BaseController as base">
+    <body layout="row" ng-app="TabModifier" ng-controller="BaseController as base">
 
         <!-- Menu - Navbar -->
-        <md-toolbar layout="row">
-            <div class="md-toolbar-tools">
-                <h1 class="md-display-1">
-                    Tab Modifier
-                </h1>
+        <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="aside-left" md-is-locked-open="$mdMedia('gt-md')" flex="20" >
 
-                <div layout="row" layout-align="end" flex>
-                    <md-button class="md-icon-button" href="https://chrome.google.com/webstore/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai" target="_blank" aria-label="Chrome Web Store Project">
-                        <md-icon md-svg-icon="google-chrome"></md-icon>
-                        <md-tooltip md-direction="bottom">View Project on Chrome Web Store</md-tooltip>
-                    </md-button>
-                    <md-button class="md-icon-button" href="https://github.com/sylouuu/chrome-tab-modifier" target="_blank" aria-label="Github Project">
-                        <md-icon md-svg-icon="github-circle"></md-icon>
-                        <md-tooltip md-direction="bottom">View Source on Github</md-tooltip>
-                    </md-button>
-                </div>
-            </div>
-        </md-toolbar>
+            <md-toolbar class="md-theme-indigo">
+                <h1 class="md-toolbar-tools">Tab Modifier</h1>
+            </md-toolbar>
 
-        <md-content class="md-padding" layout="row">
-            <div flex="60" flex-offset="20">
-                <h1>Configure your tabs in Chrome</h1>
-                <p>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                </p>
+            <md-content>
+                <md-menu>
+                    <md-menu-content>
+                        <md-subheader class="md-no-sticky md-display-2">Menu</md-subheader>
+                        <md-menu-item>
+                            <md-button class="md-button" href="/" aria-label="Settings">
+                                <md-icon class="md-icon-title" md-svg-icon="google-chrome"></md-icon>
+                                Settings
+                            </md-button>
+                        </md-menu-item>
+                        <md-subheader class="md-no-sticky md-display-2">Resources</md-subheader>
+                        <md-menu-item>
+                            <md-button class="md-button" href="https://chrome.google.com/webstore/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai" target="_blank" aria-label="Chrome Web Store Project">
+                                <md-icon class="md-icon-title" md-svg-icon="google-chrome"></md-icon>
+                                Chrome Web Store
+                            </md-button>
+                        </md-menu-item>
+                        <md-menu-item>
+                            <md-button class="md-button" href="https://github.com/sylouuu/chrome-tab-modifier" target="_blank" aria-label="Github Project">
+                                <md-icon class="md-icon-title" md-svg-icon="github-circle"></md-icon>
+                                Github
+                            </md-button>
+                        </md-menu-item>
+                    </md-menu-content>
+                </md-menu>
+            </md-content>
+        </md-sidenav>
 
-                <md-divider></md-divider>
+        <md-content class="md-padding" flex="80">
+            <h1>Configure your tabs in Chrome</h1>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
 
-                <div layout="row">
-                    <form flex="50">
+            <md-divider></md-divider>
 
-                    </form>
+            <div layout="row">
+                <form flex="50">
 
-                    <md-content layout="column" style="height: 400px;" flex="50">
-                        <md-list>
-                            <md-list-item class="md-2-line" ng-repeat="item in items">
-                                <div layout=row>
-                                    <div class="md-list-item-text" flex="60">
-                                        <h3>{{ item.title }}</h3>
-                                        <h4>{{ item.description }}</h4>
-                                    </div>
-                                    <div flex="40" layout-fill>
-                                        <md-button class="md-icon-button" aria-label="Edit rule">
-                                            <md-icon md-svg-icon="edit"></md-icon>
-                                            <md-tooltip md-direction="bottom">Edit rule</md-tooltip>
-                                        </md-button>
-                                        <md-button class="md-icon-button" aria-label="Duplicate rule">
-                                            <md-icon md-svg-icon="duplicate"></md-icon>
-                                            <md-tooltip md-direction="bottom">Duplicate rule</md-tooltip>
-                                        </md-button>
-                                        <md-button class="md-icon-button" aria-label="Delete rule">
-                                            <md-icon md-svg-icon="delete"></md-icon>
-                                            <md-tooltip md-direction="bottom">Delete rule</md-tooltip>
-                                        </md-button>
-                                    </div>
+                </form>
+
+                <md-content layout="column" style="height: 400px;" flex="50">
+                    <md-list>
+                        <md-list-item class="md-2-line" ng-repeat="item in items">
+                            <div layout=row>
+                                <div class="md-list-item-text" flex="60">
+                                    <h3>{{ item.title }}</h3>
+                                    <h4>{{ item.description }}</h4>
                                 </div>
-                                <md-divider ng-if="!$last"></md-divider>
-                            </md-list-item>
-                        </md-list>
-                    </md-content>
-                </div>
+                                <div flex="40" layout-fill>
+                                    <md-button class="md-icon-button" aria-label="Edit rule">
+                                        <md-icon md-svg-icon="edit"></md-icon>
+                                        <md-tooltip md-direction="bottom">Edit rule</md-tooltip>
+                                    </md-button>
+                                    <md-button class="md-icon-button" aria-label="Duplicate rule">
+                                        <md-icon md-svg-icon="duplicate"></md-icon>
+                                        <md-tooltip md-direction="bottom">Duplicate rule</md-tooltip>
+                                    </md-button>
+                                    <md-button class="md-icon-button" aria-label="Delete rule">
+                                        <md-icon md-svg-icon="delete"></md-icon>
+                                        <md-tooltip md-direction="bottom">Delete rule</md-tooltip>
+                                    </md-button>
+                                </div>
+                            </div>
+                            <md-divider ng-if="!$last"></md-divider>
+                        </md-list-item>
+                    </md-list>
+                </md-content>
             </div>
         </md-content>
         <!--
