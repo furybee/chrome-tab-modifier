@@ -16,7 +16,7 @@
         "default_icon": "img/icon_48.png"
     },
 
-    "content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self'",
+    "content_security_policy": "script-src 'self' https://ajax.googleapis.com https://cdnjs.cloudflare.com; object-src 'self'",
 
     "options_page": "html/options.min.html",
 
