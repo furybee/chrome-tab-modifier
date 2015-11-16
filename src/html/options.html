@@ -16,7 +16,10 @@
                 background-color: rgba(158,158,158,0.2);
             }
             .md-icon-title {
-                margin-right: 10px;
+                margin-right: 1rem;
+            }
+            .md-padding-left {
+                padding-left: 1rem;
             }
         </style>
 
@@ -138,10 +141,10 @@
                         <md-subheader><md-icon md-svg-icon="list"></md-icon>&nbsp;List of tabs configurations</md-subheader>
 
                         <!-- Rule's item -->
-                        <md-list-item class="md-hover" ng-repeat="item in items" layout-padding>
+                        <md-list-item class="md-padding-left md-hover" ng-repeat="item in items">
                             <p class="md-body-1">{{ item.title }}</p>
 
-                            <div class="md-secondary">
+                            <div layout-align="end">
                                 <!-- Edit rule button -->
                                 <md-button class="md-icon-button" aria-label="Edit rule">
                                     <md-icon md-svg-icon="edit"></md-icon>
@@ -160,8 +163,6 @@
                                     <md-tooltip md-direction="bottom">Delete {{ item.title }}</md-tooltip>
                                 </md-button>
                             </div>
-
-
                         </md-list-item>
                     </md-list>
                 </md-content>
