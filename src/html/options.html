@@ -12,6 +12,9 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.0.0-rc4/angular-material.min.css">
 
         <style>
+            .md-hover:hover {
+                background-color: rgba(158,158,158,0.2);
+            }
             .md-icon-title {
                 margin-right: 10px;
             }
@@ -121,21 +124,21 @@
                         </md-list-item>
 
                         <!-- Rule's form actions -->
-                        <md-list-item layout-align="end">
+                        <md-list-item layout-padding layout-align="end">
                             <md-button class="md-raised"><md-icon md-svg-icon="clear"></md-icon>&nbsp;Clear</md-button>
                             <md-button class="md-raised md-primary"><md-icon md-svg-icon="list-plus"></md-icon>&nbsp;Add</md-button>
                         </md-list-item>
                     </md-list>
                 </form>
 
-                <md-content style="height: 510px;" flex>
+                <md-content style="height: 510px;border-left: 1px solid rgba(0,0,0,0.12);" flex="50">
 
                     <!-- Rules list -->
                     <md-list>
                         <md-subheader><md-icon md-svg-icon="list"></md-icon>&nbsp;List of tabs configurations</md-subheader>
 
                         <!-- Rule's item -->
-                        <md-list-item ng-repeat="item in items" layout-padding>
+                        <md-list-item class="md-hover" ng-repeat="item in items" layout-padding>
                             <p class="md-body-1">{{ item.title }}</p>
 
                             <div class="md-secondary">
