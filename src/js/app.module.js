@@ -18,6 +18,8 @@
 
         // Load icons list by name
         $mdIconProvider
+            .icon('list-plus', 'icons/playlist-plus.svg')
+            .icon('clear', 'icons/eraser.svg')
             .icon('settings', 'icons/settings.svg')
             .icon('duplicate', 'icons/content-copy.svg')
             .icon('delete', 'icons/delete.svg')
