@@ -4,19 +4,21 @@
     angular
         .module('TabModifier')
         .controller('BaseController', [
-            '$mdSidenav',
             '$scope',
+            '$mdSidenav',
+            '$mdDialog',
             BaseController
         ]);
 
     /**
      * Base controller
      *
-     * @param $mdSidenav
      * @param $scope
+     * @param $mdSidenav
+     * @param $mdDialog
      * @constructor
      */
-    function BaseController ($mdSidenav, $scope) {
+    function BaseController ($scope, $mdSidenav, $mdDialog) {
         $scope.items = [];
 
         var i;
@@ -27,5 +29,19 @@
                 description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
             });
         }
+
+        $scope.confirmDeleteRule = function (ev) {
+            var confirmDeleteRule = $mdDialog
+                .confirm()
+                .clickOutsideToClose(false)
+                .title('Delete rule')
+                .textContent('Do you really want to delete this rule?')
+                .ariaLabel('Delete rule')
+                .targetEvent(ev)
+                .ok('Delete')
+                .cancel('Cancel');
+
+            $mdDialog.show(confirmDeleteRule);
+        };
     }
 })();
