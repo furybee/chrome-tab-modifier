@@ -80,7 +80,7 @@
 
     gulp.task('build_options_html', function () {
         return gulp
-            .src(['src/html/options.html'])
+            .src(['src/html/options.html', 'src/html/form.tmpl.html'])
             .pipe(minifyHTML())
             .pipe(rename({
                 suffix: '.min'

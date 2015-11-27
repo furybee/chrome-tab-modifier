@@ -9,11 +9,11 @@
         <!-- Set base URL for the application -->
         <base href="/"/>
 
-        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc4/angular-material.min.css">
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc5/angular-material.min.css">
 
         <style>
-            .md-hover:hover {
-                background-color: rgba(158,158,158,0.2);
+            .md-subheader .md-button.md-fab.md-fab-bottom-right {
+                bottom : -50px;
             }
             .md-icon-title {
                 margin-right: 1rem;
@@ -86,115 +86,61 @@
         </md-sidenav>
 
         <md-content flex="90">
-            <md-toolbar>
+            <md-toolbar md-scroll-shrink>
                 <h1 class="md-toolbar-tools" layout="row">Tabs</h1>
             </md-toolbar>
 
-            <div layout="row">
+            <md-subheader class="md-display-2">
+                List of tabs
+                <md-button class="md-accent md-fab md-fab-bottom-right" ng-click="showForm($event)">
+                    <md-icon md-svg-icon="plus"></md-icon>
+                    <md-tooltip md-direction="left">Show new tab configuration</md-tooltip>
+                </md-button>
+            </md-subheader>
 
-                <!-- Rule's settings form -->
-                <form flex>
-                    <md-list>
-                        <md-subheader class="md-no-sticky"><md-icon md-svg-icon="tab"></md-icon>&nbsp;Tab configuration rules</md-subheader>
+            <md-divider></md-divider>
 
-                        <!-- Title -->
-                        <md-list-item>
-                            <md-input-container flex>
-                                <label for="rule_title" class="md-body-1">Title</label>
-                                <input id="rule_title" type="text" ng-required="true">
-                                <span class="md-caption">The new title you want to display.</span>
-                            </md-input-container>
-                        </md-list-item>
+            <md-content class="md-padding" layout="row" layout-wrap layout-align="center start">
 
-                        <!-- Icon -->
-                        <md-list-item>
-                            <md-input-container flex>
-                                <label for="rule_icon" class="md-body-1">Icon</label>
-                                <input id="rule_icon" type="url">
-                                <span class="md-caption">URL for the new favicon.</span>
-                            </md-input-container>
-                        </md-list-item>
+                <!-- Card -->
+                <md-card ng-repeat="item in items">
+                    <md-card-header>
 
-                        <!-- Is Pinned -->
-                        <md-list-item class="md-2-line">
-                            <md-switch class="md-primary"></md-switch>
-                            <div class="md-list-item-text">
-                                <p class="md-body-1">Pinned</p>
-                                <span class="md-caption">To pin the tab, otherwise nothing happens.</span>
-                            </div>
-                        </md-list-item>
+                        <!-- Avatar -->
+                        <md-card-avatar>
+                            <md-icon class="md-icon-title" md-svg-icon="image"></md-icon>
+                        </md-card-avatar>
 
-                        <!-- Is Protected -->
-                        <md-list-item class="md-2-line">
-                            <md-switch class="md-primary"></md-switch>
-                            <div class="md-list-item-text">
-                                <p class="md-body-1">Protected</p>
-                                <span class="md-caption">Will ask you before closing the tab.</span>
-                            </div>
-                        </md-list-item>
+                        <!-- Header -->
+                        <md-card-header-text>
+                            <span class="md-title">Name</span>
+                            <span class="md-subhead">URL fragment</span>
+                        </md-card-header-text>
+                    </md-card-header>
 
-                        <!-- Is Unique -->
-                        <md-list-item class="md-2-line">
-                            <md-switch class="md-primary"></md-switch>
-                            <div class="md-list-item-text">
-                                <p class="md-body-1">Unique</p>
-                                <span class="md-caption">Will prevent for opening a new tab if it is already opened.</span>
-                            </div>
-                        </md-list-item>
+                    <md-card-actions layout="row" layout-align="center center">
 
-                        <!-- Regex -->
-                        <md-list-item>
-                            <md-input-container flex>
-                                <label for="rule_regex" class="md-body-1">Regex</label>
-                                <input id="rule_regex" type="text">
-                                <span class="md-caption">Regular expression to search string fragment(s) and use it inside the title property.</span>
-                            </md-input-container>
-                        </md-list-item>
+                        <!-- Edit rule button -->
+                        <md-button class="md-icon-button" aria-label="Edit rule">
+                            <md-icon md-svg-icon="edit"></md-icon>
+                            <md-tooltip md-direction="bottom">Edit {{ item.title }}</md-tooltip>
+                        </md-button>
 
-                        <!-- Rule's form actions -->
-                        <md-list-item layout-padding layout-align="end">
-                            <!-- <md-button class="md-raised"><md-icon md-svg-icon="clear"></md-icon>&nbsp;Clear</md-button> -->
-                            <md-button class="md-raised md-warn" ng-click="confirmDeleteRule($event)"><md-icon md-svg-icon="delete"></md-icon>&nbsp;Delete</md-button>
-                            <md-button class="md-raised"><md-icon md-svg-icon="duplicate"></md-icon>&nbsp;Duplicate</md-button>
-                            <md-button class="md-raised md-accent"><md-icon md-svg-icon="list-plus"></md-icon>&nbsp;Add</md-button>
-                            <md-button class="md-raised md-primary"><md-icon md-svg-icon="save"></md-icon>&nbsp;Save</md-button>
-                        </md-list-item>
-                    </md-list>
-                </form>
+                        <!-- Duplicate rule button -->
+                        <md-button class="md-icon-button" aria-label="Duplicate rule">
+                            <md-icon md-svg-icon="duplicate"></md-icon>
+                            <md-tooltip md-direction="bottom">Duplicate {{ item.title }}</md-tooltip>
+                        </md-button>
 
-                <md-content style="height: 100vh;border-left: 1px solid rgba(0,0,0,0.12);" flex="50">
+                        <!-- Delete rule button -->
+                        <md-button class="md-icon-button" ng-click="confirmDeleteRule($event)" aria-label="Delete rule">
+                            <md-icon md-svg-icon="delete"></md-icon>
+                            <md-tooltip md-direction="bottom">Delete {{ item.title }}</md-tooltip>
+                        </md-button>
+                    </md-card-actions>
+                </md-card>
 
-                    <!-- Rules list -->
-                    <md-list>
-                        <md-subheader><md-icon md-svg-icon="list"></md-icon>&nbsp;List of tabs configurations</md-subheader>
-
-                        <!-- Rule's item -->
-                        <md-list-item class="md-padding-left md-hover" ng-repeat="item in items">
-                            <p class="md-body-1">{{ item.title }}</p>
-
-                            <div layout-align="end">
-                                <!-- Edit rule button -->
-                                <md-button class="md-icon-button" aria-label="Edit rule">
-                                    <md-icon md-svg-icon="edit"></md-icon>
-                                    <md-tooltip md-direction="bottom">Edit {{ item.title }}</md-tooltip>
-                                </md-button>
-
-                                <!-- Duplicate rule button -->
-                                <md-button class="md-icon-button" aria-label="Duplicate rule">
-                                    <md-icon md-svg-icon="duplicate"></md-icon>
-                                    <md-tooltip md-direction="bottom">Duplicate {{ item.title }}</md-tooltip>
-                                </md-button>
-
-                                <!-- Delete rule button -->
-                                <md-button class="md-icon-button" ng-click="confirmDeleteRule($event)" aria-label="Delete rule">
-                                    <md-icon md-svg-icon="delete"></md-icon>
-                                    <md-tooltip md-direction="bottom">Delete {{ item.title }}</md-tooltip>
-                                </md-button>
-                            </div>
-                        </md-list-item>
-                    </md-list>
-                </md-content>
-            </div>
+            </md-content>
         </md-content>
 
         <!--
@@ -245,7 +191,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-aria.min.js"></script>
 
         <!-- Angular Material Javascript  -->
-        <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc4/angular-material.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc5/angular-material.min.js"></script>
         <script src="../js/app.min.js"></script>
         <!-- <script src="../js/options.min.js"></script> -->
     </body>

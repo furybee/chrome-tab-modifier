@@ -19,6 +19,8 @@
 
         // Load icons list by name
         $mdIconProvider
+            .icon('plus', 'icons/plus.svg')
+            .icon('image', 'icons/image.svg')
             .icon('save', 'icons/content-save.svg')
             .icon('tab', 'icons/checkbox-multiple-marked-outline.svg')
             .icon('list', 'icons/format-list-bulleted.svg')

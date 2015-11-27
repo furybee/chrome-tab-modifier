@@ -1,0 +1,92 @@
+<md-dialog aria-label="New tab configuration">
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h3>New tab configuration</h3>
+            </div>
+        </md-toolbar>
+        <md-dialog-content>
+            <md-list>
+                <md-list-item>
+
+                    <!-- Name -->
+                    <md-input-container flex>
+                        <label for="rule_name" class="md-body-1">Name</label>
+                        <input id="rule_name" type="text" ng-required="true">
+                        <span class="md-caption">Name description.</span>
+                    </md-input-container>
+
+                    <!-- URL fragment -->
+                    <md-input-container flex>
+                        <label for="rule_url_fragment" class="md-body-1">URL fragment</label>
+                        <input id="rule_url_fragment" type="text" ng-required="true">
+                        <span class="md-caption">URL fragment description.</span>
+                    </md-input-container>
+                </md-list-item>
+
+
+                <!-- Title -->
+                <md-list-item>
+                    <md-input-container flex>
+                        <label for="rule_title" class="md-body-1">Title</label>
+                        <input id="rule_title" type="text" ng-required="true">
+                        <span class="md-caption">The new title you want to display.</span>
+                    </md-input-container>
+                </md-list-item>
+
+                <!-- Icon -->
+                <md-list-item>
+                    <md-input-container flex>
+                        <label for="rule_icon" class="md-body-1">Icon</label>
+                        <input id="rule_icon" type="url">
+                        <span class="md-caption">URL for the new favicon.</span>
+                    </md-input-container>
+                </md-list-item>
+
+                <!-- Is Pinned -->
+                <md-list-item class="md-2-line">
+                    <md-switch class="md-primary"></md-switch>
+                    <div class="md-list-item-text">
+                        <p class="md-body-1">Pinned</p>
+                        <span class="md-caption">To pin the tab, otherwise nothing happens.</span>
+                    </div>
+                </md-list-item>
+
+                <!-- Is Protected -->
+                <md-list-item class="md-2-line">
+                    <md-switch class="md-primary"></md-switch>
+                    <div class="md-list-item-text">
+                        <p class="md-body-1">Protected</p>
+                        <span class="md-caption">Will ask you before closing the tab.</span>
+                    </div>
+                </md-list-item>
+
+                <!-- Is Unique -->
+                <md-list-item class="md-2-line">
+                    <md-switch class="md-primary"></md-switch>
+                    <div class="md-list-item-text">
+                        <p class="md-body-1">Unique</p>
+                        <span class="md-caption">Will prevent for opening a new tab if it is already opened.</span>
+                    </div>
+                </md-list-item>
+
+                <!-- Regex -->
+                <md-list-item>
+                    <md-input-container flex>
+                        <label for="rule_regex" class="md-body-1">Regex</label>
+                        <input id="rule_regex" type="text">
+                        <span class="md-caption">Regular expression to search string fragment(s) and use it inside the title property.</span>
+                    </md-input-container>
+                </md-list-item>
+            </md-list>
+        </md-dialog-content>
+
+        <!-- Rule's form actions -->
+        <md-dialog-actions layout="row">
+            <md-button class="md-raised md-warn" ng-click="confirmDeleteRule($event)"><md-icon md-svg-icon="delete"></md-icon>&nbsp;Delete</md-button>
+            <md-button class="md-raised"><md-icon md-svg-icon="duplicate"></md-icon>&nbsp;Duplicate</md-button>
+            <md-button class="md-raised md-accent"><md-icon md-svg-icon="list-plus"></md-icon>&nbsp;Add</md-button>
+            <md-button class="md-raised md-primary"><md-icon md-svg-icon="save"></md-icon>&nbsp;Save</md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>
