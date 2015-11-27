@@ -28,7 +28,7 @@
             }
             md-input-container .md-caption {
                 display: inline-block;
-                padding: 2px;
+                padding: 6px 2px;
             }
         </style>
 
@@ -86,7 +86,7 @@
         </md-sidenav>
 
         <md-content flex="90">
-            <md-toolbar class="md-theme-indigo">
+            <md-toolbar>
                 <h1 class="md-toolbar-tools" layout="row">Tabs</h1>
             </md-toolbar>
 
@@ -117,7 +117,7 @@
 
                         <!-- Is Pinned -->
                         <md-list-item class="md-2-line">
-                            <md-switch></md-switch>
+                            <md-switch class="md-primary"></md-switch>
                             <div class="md-list-item-text">
                                 <p class="md-body-1">Pinned</p>
                                 <span class="md-caption">To pin the tab, otherwise nothing happens.</span>
@@ -126,7 +126,7 @@
 
                         <!-- Is Protected -->
                         <md-list-item class="md-2-line">
-                            <md-switch></md-switch>
+                            <md-switch class="md-primary"></md-switch>
                             <div class="md-list-item-text">
                                 <p class="md-body-1">Protected</p>
                                 <span class="md-caption">Will ask you before closing the tab.</span>
@@ -135,7 +135,7 @@
 
                         <!-- Is Unique -->
                         <md-list-item class="md-2-line">
-                            <md-switch></md-switch>
+                            <md-switch class="md-primary"></md-switch>
                             <div class="md-list-item-text">
                                 <p class="md-body-1">Unique</p>
                                 <span class="md-caption">Will prevent for opening a new tab if it is already opened.</span>
@@ -156,7 +156,7 @@
                             <!-- <md-button class="md-raised"><md-icon md-svg-icon="clear"></md-icon>&nbsp;Clear</md-button> -->
                             <md-button class="md-raised md-warn" ng-click="confirmDeleteRule($event)"><md-icon md-svg-icon="delete"></md-icon>&nbsp;Delete</md-button>
                             <md-button class="md-raised"><md-icon md-svg-icon="duplicate"></md-icon>&nbsp;Duplicate</md-button>
-                            <md-button class="md-raised md-primary"><md-icon md-svg-icon="list-plus"></md-icon>&nbsp;Add</md-button>
+                            <md-button class="md-raised md-accent"><md-icon md-svg-icon="list-plus"></md-icon>&nbsp;Add</md-button>
                             <md-button class="md-raised md-primary"><md-icon md-svg-icon="save"></md-icon>&nbsp;Save</md-button>
                         </md-list-item>
                     </md-list>

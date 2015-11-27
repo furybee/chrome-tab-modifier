@@ -35,11 +35,14 @@
         // Configure default theme
         $mdThemingProvider
             .theme('default')
-            .primaryPalette('blue-grey', {
-                'default': '800'
+            .primaryPalette('teal', {
+                'default': '700'
             })
-            .accentPalette('indigo', {
-                'default': '200'
+            .accentPalette('blue', {
+                'default': '700'
+            })
+            .warnPalette('red', {
+                'default': '700'
             });
     }
 })();
