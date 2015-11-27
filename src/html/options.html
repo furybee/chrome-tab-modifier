@@ -21,6 +21,11 @@
             .md-padding-left {
                 padding-left: 1rem;
             }
+            md-sidenav.md-locked-open {
+                width: 250px;
+                min-width: 250px;
+                max-width: 250px;
+            }
         </style>
 
         <!-- <link rel="stylesheet" href="../css/options.min.css"> -->
@@ -28,7 +33,7 @@
     <body layout="row" ng-app="TabModifier" ng-controller="BaseController as base">
 
         <!-- Sidenav -->
-        <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="aside-left" md-is-locked-open="true" flex="15" >
+        <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="aside-left" md-is-locked-open="true" flex="10">
 
             <md-toolbar>
                 <h1 class="md-toolbar-tools">Tab Modifier</h1>
@@ -76,7 +81,7 @@
             </md-content>
         </md-sidenav>
 
-        <md-content flex="85">
+        <md-content flex="90">
             <md-toolbar class="md-theme-indigo">
                 <h1 class="md-toolbar-tools" layout="row">Tabs</h1>
             </md-toolbar>
