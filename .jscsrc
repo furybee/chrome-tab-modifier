@@ -1,5 +1,5 @@
 {
-    "disallowQuotedKeysInObjects": true,
+    "disallowQuotedKeysInObjects": false,
     "requireCapitalizedConstructors": true,
     "requireDotNotation": true,
     "requireMatchingFunctionName": true,

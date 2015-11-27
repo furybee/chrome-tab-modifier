@@ -5,6 +5,7 @@
         .module('TabModifier', ['ngMaterial'])
         .config([
             '$mdIconProvider',
+            '$mdThemingProvider',
             ConfigureModule
         ]);
 
@@ -14,12 +15,12 @@
      * @param $mdIconProvider
      * @constructor
      */
-    function ConfigureModule ($mdIconProvider) {
+    function ConfigureModule ($mdIconProvider, $mdThemingProvider) {
 
         // Load icons list by name
         $mdIconProvider
             .icon('save', 'icons/content-save.svg')
-            .icon('rule', 'icons/checkbox-multiple-marked-outline.svg')
+            .icon('tab', 'icons/checkbox-multiple-marked-outline.svg')
             .icon('list', 'icons/format-list-bulleted.svg')
             .icon('tab', 'icons/tab.svg')
             .icon('list-plus', 'icons/playlist-plus.svg')
@@ -30,5 +31,15 @@
             .icon('edit', 'icons/pencil.svg')
             .icon('google-chrome', 'icons/google-chrome.svg')
             .icon('github-circle', 'icons/github-circle.svg');
+
+        // Configure default theme
+        $mdThemingProvider
+            .theme('default')
+            .primaryPalette('blue-grey', {
+                'default': '800'
+            })
+            .accentPalette('indigo', {
+                'default': '200'
+            });
     }
 })();

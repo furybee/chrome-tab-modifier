@@ -30,7 +30,7 @@
         <!-- Sidenav -->
         <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="aside-left" md-is-locked-open="true" flex="15" >
 
-            <md-toolbar class="md-theme-indigo">
+            <md-toolbar>
                 <h1 class="md-toolbar-tools">Tab Modifier</h1>
             </md-toolbar>
 
@@ -41,9 +41,9 @@
 
                     <!-- Rules link -->
                     <md-menu-item>
-                        <md-button class="md-button" href="/" aria-label="Rules">
-                            <md-icon class="md-icon-title" md-svg-icon="rule"></md-icon>
-                            Rules
+                        <md-button class="md-button" href="/" aria-label="Tabs">
+                            <md-icon class="md-icon-title" md-svg-icon="tab"></md-icon>
+                            Tabs
                         </md-button>
                     </md-menu-item>
 
@@ -76,13 +76,10 @@
             </md-content>
         </md-sidenav>
 
-        <md-content class="md-padding" flex="85">
-            <h1><md-icon class="md-icon-title" md-svg-icon="rule"></md-icon> Rules</h1>
-            <p class="md-body-1">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-            </p>
-
-            <md-divider></md-divider>
+        <md-content flex="85">
+            <md-toolbar class="md-theme-indigo">
+                <h1 class="md-toolbar-tools" layout="row">Tabs</h1>
+            </md-toolbar>
 
             <div layout="row">
 
@@ -185,20 +182,6 @@
             </div>
         </md-content>
 
-        <div layout=row>
-            <div class="md-list-item-text" flex="60">
-                <h3>{{ item.title }}</h3>
-            </div>
-            <div flex="40">
-
-
-
-
-            </div>
-        </div>
-
-        <!-- Divider line -->
-        <md-divider ng-if="!$last"></md-divider>
         <!--
         <div class="pure-g">
 
