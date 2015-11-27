@@ -26,6 +26,10 @@
                 min-width: 250px;
                 max-width: 250px;
             }
+            md-input-container .md-caption {
+                display: inline-block;
+                padding: 2px;
+            }
         </style>
 
         <!-- <link rel="stylesheet" href="../css/options.min.css"> -->
@@ -96,48 +100,54 @@
                         <!-- Title -->
                         <md-list-item>
                             <md-input-container flex>
-                                <label for="rule_title" class="md-body-1">
-                                    Title : the new title you want to display
-                                </label>
+                                <label for="rule_title" class="md-body-1">Title</label>
                                 <input id="rule_title" type="text" ng-required="true">
+                                <span class="md-caption">The new title you want to display.</span>
                             </md-input-container>
                         </md-list-item>
 
                         <!-- Icon -->
                         <md-list-item>
                             <md-input-container flex>
-                                <label for="rule_icon" class="md-body-1">
-                                    Icon : URL for the new favicon
-                                </label>
+                                <label for="rule_icon" class="md-body-1">Icon</label>
                                 <input id="rule_icon" type="url">
+                                <span class="md-caption">URL for the new favicon.</span>
                             </md-input-container>
                         </md-list-item>
 
                         <!-- Is Pinned -->
-                        <md-list-item>
+                        <md-list-item class="md-2-line">
                             <md-switch></md-switch>
-                            <p class="md-body-1">Pinned : to pin the tab, otherwise nothing happens.</p>
+                            <div class="md-list-item-text">
+                                <p class="md-body-1">Pinned</p>
+                                <span class="md-caption">To pin the tab, otherwise nothing happens.</span>
+                            </div>
                         </md-list-item>
 
                         <!-- Is Protected -->
-                        <md-list-item>
+                        <md-list-item class="md-2-line">
                             <md-switch></md-switch>
-                            <p class="md-body-1">Protected : will ask you before closing the tab.</p>
+                            <div class="md-list-item-text">
+                                <p class="md-body-1">Protected</p>
+                                <span class="md-caption">Will ask you before closing the tab.</span>
+                            </div>
                         </md-list-item>
 
                         <!-- Is Unique -->
-                        <md-list-item>
+                        <md-list-item class="md-2-line">
                             <md-switch></md-switch>
-                            <p class="md-body-1">Unique : will prevent for opening a new tab if it is already opened.</p>
+                            <div class="md-list-item-text">
+                                <p class="md-body-1">Unique</p>
+                                <span class="md-caption">Will prevent for opening a new tab if it is already opened.</span>
+                            </div>
                         </md-list-item>
 
                         <!-- Regex -->
                         <md-list-item>
                             <md-input-container flex>
-                                <label for="rule_regex" class="md-body-1">
-                                    Regex : regular expression to search string fragment(s) and use it inside the title property
-                                </label>
+                                <label for="rule_regex" class="md-body-1">Regex</label>
                                 <input id="rule_regex" type="text">
+                                <span class="md-caption">Regular expression to search string fragment(s) and use it inside the title property.</span>
                             </md-input-container>
                         </md-list-item>
 
