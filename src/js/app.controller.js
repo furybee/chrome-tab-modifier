@@ -27,8 +27,8 @@
 
         for (i = 0; i < 50; i++) {
             $scope.items.push({
-                title: 'Rule\'s title ' + i,
-                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit'
+                name: 'Tab\'s name ' + i,
+                url_fragment: 'name-' + i + '.com'
             });
         }
 

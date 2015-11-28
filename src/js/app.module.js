@@ -19,6 +19,7 @@
 
         // Load icons list by name
         $mdIconProvider
+            .icon('options-vertical', 'icons/dots-vertical.svg')
             .icon('close', 'icons/close.svg')
             .icon('plus', 'icons/plus.svg')
             .icon('image', 'icons/image.svg')
