@@ -7,6 +7,7 @@
             '$scope',
             '$mdSidenav',
             '$mdDialog',
+            '$mdMedia',
             BaseController
         ]);
 
@@ -16,9 +17,10 @@
      * @param $scope
      * @param $mdSidenav
      * @param $mdDialog
+     * @param $mdMedia
      * @constructor
      */
-    function BaseController ($scope, $mdSidenav, $mdDialog) {
+    function BaseController ($scope, $mdSidenav, $mdDialog, $mdMedia) {
         $scope.items = [];
 
         var i;
@@ -32,10 +34,12 @@
 
         $scope.showForm = function (ev) {
             $mdDialog.show({
-              templateUrl: '../html/form.tmpl.min.html',
-              targetEvent: ev,
-              clickOutsideToClose: true
-          });
+                controller: 'FormController',
+                templateUrl: '../html/form.tmpl.min.html',
+                targetEvent: ev,
+                clickOutsideToClose: false,
+                fullscreen: $mdMedia('md')
+            });
         };
 
         $scope.confirmDeleteRule = function (ev) {

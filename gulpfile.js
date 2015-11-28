@@ -34,6 +34,7 @@
         return gulp
             .src([
                 'src/js/app.module.js',
+                'src/js/form.controller.js',
                 'src/js/app.controller.js'
             ])
             .pipe(concat('app.js'))
