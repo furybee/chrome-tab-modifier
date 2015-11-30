@@ -16,8 +16,8 @@
                     <!-- Name -->
                     <md-input-container flex>
                         <label for="rule_name" class="md-body-1">Name</label>
-                        <input id="rule_name" type="text" ng-model="rule.name" placeholder="Rule name" required>
-                        <span class="md-caption">Give an explicit name</span>
+                        <input id="rule_name" type="text" ng-model="rule.name" placeholder="e.g. Sticky GMail" required>
+                        <span class="md-caption">Give an explicit name, just for you</span>
                     </md-input-container>
 
                     <!-- URL fragment -->
@@ -28,7 +28,8 @@
                     </md-input-container>
                 </md-list-item>
 
-                <md-subheader class="md-accent">The following actions will be executed when the URL contains <code ng-bind="rule.url_fragment"></code>:</md-subheader>
+                <md-subheader class="md-accent" ng-if="rule.url_fragment === null">The URL fragment is required by the extension to detect when to apply your actions</md-subheader>
+                <md-subheader class="md-accent" ng-if="rule.url_fragment !== null">The following actions will be applied when the URL contains <code ng-bind="rule.url_fragment"></code>:</md-subheader>
 
                 <md-content ng-if="rule.url_fragment !== null">
                     <!-- Title -->

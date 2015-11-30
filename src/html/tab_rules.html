@@ -47,7 +47,7 @@
     </md-card> -->
 
     <md-list flex="70">
-        <md-list-item ng-repeat="rule in tab_modifier.rules" ng-click="showForm($event, rule)" layout="row">
+        <md-list-item ng-repeat="rule in tab_modifier.rules" layout="row">
             <!--<md-icon md-svg-icon="image" flex="5"></md-icon>-->
 
             <p flex="40" ng-bind="rule.name"></p>
@@ -55,6 +55,10 @@
             <p flex="45" ng-bind="rule.url_fragment"></p>
 
             <div flex="15" layout="row" layout-align="end center">
+                <md-button class="md-icon-button" ng-click="showForm($event, rule)" aria-label="Edit rule">
+                    <md-icon md-svg-icon="edit" md-menu-align-target></md-icon>
+                    <md-tooltip md-direction="bottom">Edit</md-tooltip>
+                </md-button>
                 <md-button class="md-icon-button" ng-click="duplicate(rule)" aria-label="Duplicate rule">
                     <md-icon md-svg-icon="duplicate" md-menu-align-target></md-icon>
                     <md-tooltip md-direction="bottom">Duplicate</md-tooltip>
@@ -64,7 +68,6 @@
                     <md-tooltip md-direction="bottom">Delete</md-tooltip>
                 </md-button>
             </div>
-            <md-tooltip md-direction="bottom">Edit rule</md-tooltip>
             <md-divider ng-if="$last === false"></md-divider>
         </md-list-item>
     </md-list>

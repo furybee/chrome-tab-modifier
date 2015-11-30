@@ -58,8 +58,6 @@ app.factory('TabModifier', ['Rule', function (Rule) {
 
             old_settings = JSON.parse(localStorage.settings);
 
-            console.log(old_settings);
-
             for (var key in old_settings) {
                 if (old_settings.hasOwnProperty(key)) {
                     rule = new Rule({
@@ -76,8 +74,6 @@ app.factory('TabModifier', ['Rule', function (Rule) {
                     });
 
                     self.addRule(rule);
-
-                    console.log(rule);
                 }
 
                 i++;

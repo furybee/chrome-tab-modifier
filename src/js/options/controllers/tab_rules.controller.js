@@ -25,11 +25,7 @@ app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', 'Rule',
                 }
             }
         }).then(function (rule) {
-            console.log('save', rule);
-
             tab_modifier.save(rule, index);
-        }, function () {
-            console.log('exit');
         });
     };
 
@@ -50,8 +46,6 @@ app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', 'Rule',
 
         $mdDialog.show(confirm).then(function () {
             tab_modifier.removeRule(rule);
-        }, function () {
-            console.log('exit');
         });
     };
 
@@ -60,12 +54,6 @@ app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', 'Rule',
 app.controller('FormModalController', ['$scope', '$mdDialog', 'rule', function ($scope, $mdDialog, rule) {
 
     $scope.rule = rule;
-
-    $scope.$watch('rule.name', function () {
-        if (rule.name === '' || rule.name === undefined) {
-            rule.setModel({ name: null });
-        }
-    });
 
     $scope.$watch('rule.url_fragment', function () {
         if (rule.url_fragment === '' || rule.url_fragment === undefined) {
