@@ -7,6 +7,7 @@ app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdTheming
 
     // Load icons list by name
     $mdIconProvider
+        .icon('file-outline', '/icons/file-outline.svg')
         .icon('options-vertical', '/icons/dots-vertical.svg')
         .icon('close', '/icons/close.svg')
         .icon('plus', '/icons/plus.svg')
