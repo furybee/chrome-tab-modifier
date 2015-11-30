@@ -21,7 +21,7 @@ app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', 'Rule',
             fullscreen: $mdMedia('md'),
             resolve: {
                 rule: function () {
-                    return rule;
+                    return (index === null) ? new Rule() : rule;
                 }
             }
         }).then(function (rule) {
