@@ -9,8 +9,6 @@
         rename     = require('gulp-rename'),
         uglify     = require('gulp-uglify'),
         jscs       = require('gulp-jscs'),
-        less       = require('gulp-less'),
-        minifyCSS  = require('gulp-minify-css'),
         minifyHTML = require('gulp-minify-html'),
         qunit      = require('node-qunit-phantomjs');
 
@@ -30,35 +28,7 @@
     // Core
     // ------------------------------------------------------------------------------------------------------
 
-    //gulp.task('build_app_script', function () {
-    //    return gulp
-    //        .src([
-    //            'src/js/app.module.js',
-    //            'src/js/form.controller.js',
-    //            'src/js/app.controller.js'
-    //        ])
-    //        .pipe(concat('app.js'))
-    //        .pipe(uglify())
-    //        .pipe(rename({
-    //            suffix: '.min'
-    //        }))
-    //        .pipe(gulp.dest('dist/js'));
-    //});
-
-    gulp.task('build_options_script', function () {
-        return gulp
-            .src([
-                'src/js/options/app.js',
-                'src/js/options/tab_rules.controller.js',
-                'src/js/options/settings.controller.js'
-            ])
-            .pipe(concat('options.js'))
-            .pipe(uglify())
-            .pipe(rename({
-                suffix: '.min'
-            }))
-            .pipe(gulp.dest('dist/js'));
-    });
+    gulp.task('build_core', ['build_background_script', 'build_content_script']);
 
     gulp.task('build_background_script', function () {
         return gulp
@@ -84,36 +54,37 @@
     // Options
     // ------------------------------------------------------------------------------------------------------
 
-    //gulp.task('build_options_script', function () {
-    //    return gulp
-    //        .src(['src/js/options.js'])
-    //        .pipe(uglify())
-    //        .pipe(rename({
-    //            suffix: '.min'
-    //        }))
-    //        .pipe(gulp.dest('dist/js'));
-    //});
+    gulp.task('build_options', ['build_options_script', 'build_options_html']);
+
+    gulp.task('build_options_script', function () {
+        return gulp
+            .src([
+                'src/js/options/app.js',
+                'src/js/options/tab_rules.controller.js',
+                'src/js/options/settings.controller.js'
+            ])
+            .pipe(concat('options.js'))
+            .pipe(uglify())
+            .pipe(rename({
+                suffix: '.min'
+            }))
+            .pipe(gulp.dest('dist/js'));
+    });
 
     gulp.task('build_options_html', function () {
         return gulp
-            .src(['src/html/options.html', 'src/html/tab_rules.html', 'src/html/form.html', 'src/html/settings.html'])
+            .src([
+                'src/html/options.html',
+                'src/html/tab_rules.html',
+                'src/html/form.html',
+                'src/html/settings.html'
+            ])
             .pipe(minifyHTML())
             .pipe(rename({
                 suffix: '.min'
             }))
             .pipe(gulp.dest('dist/html'));
     });
-
-    //gulp.task('build_options_less', function () {
-    //    return gulp
-    //        .src(['src/less/options.less'])
-    //        .pipe(less())
-    //        .pipe(minifyCSS())
-    //        .pipe(rename({
-    //            suffix: '.min'
-    //        }))
-    //        .pipe(gulp.dest('dist/css'));
-    //});
 
     // ------------------------------------------------------------------------------------------------------
 
@@ -122,13 +93,8 @@
     });
 
     gulp.task('build', [
-        //'build_app_script',
-        'build_background_script',
-        'build_content_script',
-        //'build_options_script',
-        'build_options_html',
-        'build_options_script',
-        //'build_options_less',
+        'build_core',
+        'build_options',
         'lint'
     ]);
 
