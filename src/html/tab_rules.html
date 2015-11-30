@@ -50,37 +50,19 @@
         <md-list-item ng-repeat="rule in tab_modifier.rules" ng-click="showForm($event, rule)" layout="row">
             <!--<md-icon md-svg-icon="image" flex="5"></md-icon>-->
 
-            <p flex="45" ng-bind="rule.name"></p>
+            <p flex="40" ng-bind="rule.name"></p>
 
             <p flex="45" ng-bind="rule.url_fragment"></p>
 
-            <div flex="5" layout-align="end">
-                <md-menu md-offset="-84 0" md-position-mode="target-right target">
-                    <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)" aria-label="Open tab interaction menu">
-                        <md-icon class="md-secondary" md-svg-icon="options-vertical" md-menu-origin></md-icon>
-                    </md-button>
-                    <md-menu-content width="2">
-                        <md-menu-item>
-                            <md-button aria-label="Edit rule" ng-click="showForm($event, rule)">
-                                <md-icon md-svg-icon="edit" md-menu-align-target></md-icon>
-                                Edit
-                            </md-button>
-                        </md-menu-item>
-                        <md-menu-item>
-                            <md-button aria-label="Duplicate rule" ng-click="duplicate(rule)">
-                                <md-icon md-svg-icon="duplicate" md-menu-align-target></md-icon>
-                                Duplicate
-                            </md-button>
-                        </md-menu-item>
-                        <md-divider></md-divider>
-                        <md-menu-item>
-                            <md-button ng-click="delete($event, rule)" aria-label="Delete rule">
-                                <md-icon md-svg-icon="delete" md-menu-align-target></md-icon>
-                                Delete
-                            </md-button>
-                        </md-menu-item>
-                    </md-menu-content>
-                </md-menu>
+            <div flex="15" layout="row" layout-align="end center">
+                <md-button class="md-icon-button" ng-click="duplicate(rule)" aria-label="Duplicate rule">
+                    <md-icon md-svg-icon="duplicate" md-menu-align-target></md-icon>
+                    <md-tooltip md-direction="bottom">Duplicate</md-tooltip>
+                </md-button>
+                <md-button class="md-icon-button" ng-click="delete($event, rule)" aria-label="Delete rule">
+                    <md-icon md-svg-icon="delete" md-menu-align-target></md-icon>
+                    <md-tooltip md-direction="bottom">Delete</md-tooltip>
+                </md-button>
             </div>
             <md-tooltip md-direction="bottom">Edit rule</md-tooltip>
             <md-divider ng-if="$last === false"></md-divider>
