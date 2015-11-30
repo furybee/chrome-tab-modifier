@@ -1,12 +1,15 @@
 var Tab = (function (current_url, current_title, tab_modifier) {
     var title = null, rule,
         current_rule = {
-            title: null,
-            icon: null,
-            pinned: null,
-            protected: null,
-            unique: null,
-            url_matcher: null
+            name: null,
+            tab: {
+                title: null,
+                icon: null,
+                pinned: null,
+                protected: null,
+                unique: null,
+                url_matcher: null
+            }
         };
 
     for (var i = 0; i < tab_modifier.rules.length; i++) {
@@ -51,11 +54,11 @@ var Tab = (function (current_url, current_title, tab_modifier) {
     };
 
     setTitle = function () {
-        if (current_rule.tab.title !== null) {
+        if (current_rule.tab !== undefined && current_rule.tab.title !== null) {
             title = (current_rule.tab.title.indexOf('{title}') !== -1) ? current_rule.tab.title.replace('{title}', current_title) : current_rule.tab.title;
         }
 
-        if (current_rule.tab.url_matcher !== null) {
+        if (current_rule.tab !== undefined && current_rule.tab.url_matcher !== null) {
             var matcher = current_url.match(current_rule.tab.url_matcher);
 
             if (matcher !== null) {
