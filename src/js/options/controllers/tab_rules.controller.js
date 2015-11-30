@@ -37,7 +37,7 @@ app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', 'Rule',
         tab_modifier.save(new Rule(rule));
     };
 
-    $scope.confirmDeleteRule = function (evt, rule) {
+    $scope.delete = function (evt, rule) {
         var confirm = $mdDialog
             .confirm()
             .clickOutsideToClose(false)
