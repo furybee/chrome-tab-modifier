@@ -2,10 +2,10 @@
 
 chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
     switch (message.method) {
-        case 'getSettings':
+        case 'getRules':
             sendResponse({
                 tab_id: sender.tab.id,
-                settings: localStorage.settings
+                tab_modifier: localStorage.tab_modifier
             });
         break;
         case 'setUnique':

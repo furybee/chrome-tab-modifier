@@ -1,6 +1,6 @@
-var Tab = (function (current_url, current_title, options) {
-    var match = null, title = null,
-        settings = {
+var Tab = (function (current_url, current_title, tab_modifier) {
+    var title = null, rule,
+        current_rule = {
             title: null,
             icon: null,
             pinned: null,
@@ -9,23 +9,21 @@ var Tab = (function (current_url, current_title, options) {
             url_matcher: null
         };
 
-    for (var string_to_match in options) {
-        if (current_url.indexOf(string_to_match) !== -1) {
-            match = string_to_match;
+    for (var i = 0; i < tab_modifier.rules.length; i++) {
+        rule = tab_modifier.rules[i];
 
-            settings.title       = options[string_to_match].title || null;
-            settings.icon        = options[string_to_match].icon || null;
-            settings.pinned      = options[string_to_match].pinned || null;
-            settings.protected   = options[string_to_match].protected || null;
-            settings.unique      = options[string_to_match].unique || null;
-            settings.url_matcher = options[string_to_match].url_matcher || null;
-
+        if (current_url.indexOf(rule.url_fragment) !== -1) {
+            current_rule = rule;
             break;
         }
     }
 
-    getMatch = function () {
-        return match;
+    getUrlFragment = function () {
+        return current_rule.url_fragment;
+    };
+
+    getRuleName = function () {
+        return current_rule.name;
     };
 
     getTitle = function () {
@@ -33,19 +31,19 @@ var Tab = (function (current_url, current_title, options) {
     };
 
     getIcon = function () {
-        return settings.icon;
+        return current_rule.tab.icon;
     };
 
     getPinned = function () {
-        return settings.pinned;
+        return current_rule.tab.pinned;
     };
 
     getProtected = function () {
-        return settings.protected;
+        return current_rule.tab.protected;
     };
 
     getUnique = function () {
-        return settings.unique;
+        return current_rule.tab.unique;
     };
 
     setCurrentTitle = function (new_title) {
@@ -53,12 +51,12 @@ var Tab = (function (current_url, current_title, options) {
     };
 
     setTitle = function () {
-        if (settings.title !== null) {
-            title = (settings.title.indexOf('{title}') !== -1) ? settings.title.replace('{title}', current_title) : settings.title;
+        if (current_rule.tab.title !== null) {
+            title = (current_rule.tab.title.indexOf('{title}') !== -1) ? current_rule.tab.title.replace('{title}', current_title) : current_rule.tab.title;
         }
 
-        if (settings.url_matcher !== null) {
-            var matcher = current_url.match(settings.url_matcher);
+        if (current_rule.tab.url_matcher !== null) {
+            var matcher = current_url.match(current_rule.tab.url_matcher);
 
             if (matcher !== null) {
                 for (var i = 0; i <= matcher.length; i++) {
@@ -70,7 +68,7 @@ var Tab = (function (current_url, current_title, options) {
 
     // Public
     return {
-        getMatch: getMatch,
+        getUrlFragment: getUrlFragment,
         getTitle: getTitle,
         getIcon: getIcon,
         getPinned: getPinned,

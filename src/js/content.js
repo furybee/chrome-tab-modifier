@@ -1,10 +1,10 @@
 var w = window;
 
 chrome.runtime.sendMessage({
-    method: 'getSettings'
+    method: 'getRules'
 }, function (response) {
-    if (response !== undefined && response.settings !== undefined) {
-        var tab = new Tab(location.href, document.title, JSON.parse(response.settings)),
+    if (response !== undefined && response.tab_modifier !== undefined) {
+        var tab = new Tab(location.href, document.title, JSON.parse(response.tab_modifier)),
             changed_by_me = false, observer;
 
         // Set title at loading
@@ -75,7 +75,7 @@ chrome.runtime.sendMessage({
         if (tab.getUnique() === true) {
             chrome.runtime.sendMessage({
                 method: 'setUnique',
-                match: tab.getMatch(),
+                match: tab.getUrlFragment(),
                 tab_id: response.tab_id
             });
         }
