@@ -61,6 +61,36 @@ app.controller('FormModalController', ['$scope', '$mdDialog', 'rule', function (
 
     $scope.rule = rule;
 
+    $scope.$watch('rule.name', function () {
+        if (rule.name === '' || rule.name === undefined) {
+            rule.setModel({ name: null });
+        }
+    });
+
+    $scope.$watch('rule.url_fragment', function () {
+        if (rule.url_fragment === '' || rule.url_fragment === undefined) {
+            rule.setModel({ url_fragment: null });
+        }
+    });
+
+    $scope.$watch('rule.title', function () {
+        if (rule.title === '' || rule.title === undefined) {
+            rule.setModel({ title: null });
+        }
+    });
+
+    $scope.$watch('rule.icon', function () {
+        if (rule.icon === '' || rule.icon === undefined) {
+            rule.setModel({ icon: null });
+        }
+    });
+
+    $scope.$watch('rule.url_matcher', function () {
+        if (rule.url_matcher === '' || rule.url_matcher === undefined) {
+            rule.setModel({ url_matcher: null });
+        }
+    });
+
     $scope.closeForm = function () {
         $mdDialog.cancel();
     };
