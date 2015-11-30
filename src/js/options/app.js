@@ -27,15 +27,26 @@ app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdTheming
     // Configure default theme
     $mdThemingProvider
         .theme('default')
-        .primaryPalette('teal', {
-            'default': '700'
+        .primaryPalette('blue-grey', {
+            default: '500'
         })
-        .accentPalette('blue', {
-            'default': '700'
+        .accentPalette('pink', {
+            default: '400'
         })
         .warnPalette('red', {
-            'default': '700'
+            default: '500'
         });
+    //$mdThemingProvider
+    //    .theme('default')
+    //    .primaryPalette('teal', {
+    //        default: '700'
+    //    })
+    //    .accentPalette('blue', {
+    //        default: '700'
+    //    })
+    //    .warnPalette('red', {
+    //        default: '700'
+    //    });
 
     var routes = {
         '/': {

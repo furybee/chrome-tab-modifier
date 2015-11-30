@@ -1,0 +1,94 @@
+app.factory('TabModifier', ['Rule', function (Rule) {
+
+    var TabModifier = function (properties) {
+        this.rules = [];
+
+        angular.extend(this, properties);
+    };
+
+    TabModifier.prototype.setModel = function (obj) {
+        angular.extend(this, obj);
+    };
+
+    TabModifier.prototype.addRule = function (rule) {
+        this.rules.push(rule);
+    };
+
+    TabModifier.prototype.removeRule = function (rule) {
+        this.rules.splice(this.rules.indexOf(rule), 1);
+
+        this.setLocalData();
+    };
+
+    TabModifier.prototype.save = function (rule, index) {
+        if (index === null || index === undefined) {
+            this.addRule(rule);
+        } else {
+            this.rules[index] = rule;
+        }
+
+        this.setLocalData();
+    };
+
+    TabModifier.prototype.build = function (data) {
+        var self = this;
+
+        this.rules = [];
+
+        angular.forEach(data.rules, function (rule) {
+            self.addRule(new Rule(rule));
+        });
+    };
+
+    TabModifier.prototype.getLocalData = function () {
+        if (localStorage.tab_modifier !== undefined) {
+            this.build(JSON.parse(localStorage.tab_modifier));
+        }
+    };
+
+    TabModifier.prototype.setLocalData = function () {
+        localStorage.tab_modifier = JSON.stringify(this);
+    };
+
+    TabModifier.prototype.checkOldSettings = function () {
+        var self = this, old_settings, rule, i = 0;
+
+        if (localStorage.settings !== undefined) {
+            this.rules = [];
+
+            old_settings = JSON.parse(localStorage.settings);
+
+            console.log(old_settings);
+
+            for (var key in old_settings) {
+                if (old_settings.hasOwnProperty(key)) {
+                    rule = new Rule({
+                        name: 'Rule '+ (i + 1),
+                        url_fragment: key,
+                        tab: {
+                            title: old_settings[key].title || null,
+                            icon: old_settings[key].icon  || null,
+                            pinned: old_settings[key].pinned  || false,
+                            protected: old_settings[key].protected  || false,
+                            unique: old_settings[key].unique  || false,
+                            url_matcher: old_settings[key].url_matcher  || null
+                        }
+                    });
+
+                    self.addRule(rule);
+
+                    console.log(rule);
+                }
+
+                i++;
+            }
+
+            this.setLocalData();
+
+            localStorage.removeItem('settings');
+        }
+    };
+
+    return TabModifier;
+
+}]);

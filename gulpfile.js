@@ -60,8 +60,10 @@
         return gulp
             .src([
                 'src/js/options/app.js',
-                'src/js/options/tab_rules.controller.js',
-                'src/js/options/settings.controller.js'
+                'src/js/options/models/tab_modifier.model.js',
+                'src/js/options/models/rule.model.js',
+                'src/js/options/controllers/tab_rules.controller.js',
+                'src/js/options/controllers/settings.controller.js'
             ])
             .pipe(concat('options.js'))
             .pipe(uglify())
@@ -99,12 +101,13 @@
     ]);
 
     gulp.task('watch', function() {
-        gulp.watch('src/**/*', ['build']);
+        gulp.watch('src/**/*', ['build_core', 'build_options']);
     });
 
     // Default tasks (called when running `gulp` from cli)
     gulp.task('default', [
-        'build',
+        'build_core',
+        'build_options',
         'watch'
     ]);
 

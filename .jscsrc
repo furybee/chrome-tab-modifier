@@ -1,5 +1,5 @@
 {
-    "disallowQuotedKeysInObjects": false,
+    "disallowQuotedKeysInObjects": true,
     "requireCapitalizedConstructors": true,
     "requireDotNotation": true,
     "requireMatchingFunctionName": true,
@@ -107,6 +107,6 @@
     "requireCapitalizedConstructors": true,
     "safeContextKeyword": ["that", "self"],
     "disallowYodaConditions": true,
-    "requireSpaceAfterLineComment": true,
+    "requireSpaceAfterLineComment": false,
     "disallowNewlineBeforeBlockStatements": true
 }
