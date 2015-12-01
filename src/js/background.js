@@ -38,6 +38,11 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
                 pinned: true
             });
         break;
+        case 'setMuted':
+            chrome.tabs.update(message.tab_id, {
+                muted: true
+            });
+        break;
         default:
             sendResponse({ });
         break;

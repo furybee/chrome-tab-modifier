@@ -9,6 +9,7 @@ app.factory('Rule', function () {
             pinned: false,
             protected: false,
             unique: false,
+            muted: false,
             url_matcher: null
         };
 

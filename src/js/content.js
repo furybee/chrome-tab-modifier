@@ -42,6 +42,14 @@ chrome.runtime.sendMessage({
             });
         }
 
+        // Mute the tab
+        if (tab.getMuted() === true) {
+            chrome.runtime.sendMessage({
+                method: 'setMuted',
+                tab_id: response.tab_id
+            });
+        }
+
         // Set new icon
         if (tab.getIcon() !== null) {
             var el, icon, link;

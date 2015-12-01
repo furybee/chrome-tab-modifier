@@ -69,6 +69,7 @@ app.factory('TabModifier', ['Rule', function (Rule) {
                             pinned: old_settings[key].pinned  || false,
                             protected: old_settings[key].protected  || false,
                             unique: old_settings[key].unique  || false,
+                            muted: old_settings[key].muted  || false,
                             url_matcher: old_settings[key].url_matcher  || null
                         }
                     });

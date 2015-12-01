@@ -5,9 +5,10 @@ var Tab = (function (current_url, current_title, tab_modifier) {
             tab: {
                 title: null,
                 icon: null,
-                pinned: null,
-                protected: null,
-                unique: null,
+                pinned: false,
+                protected: false,
+                unique: false,
+                muted: false,
                 url_matcher: null
             }
         };
@@ -49,6 +50,10 @@ var Tab = (function (current_url, current_title, tab_modifier) {
         return current_rule.tab.unique;
     };
 
+    getMuted = function () {
+        return current_rule.tab.muted;
+    };
+
     setCurrentTitle = function (new_title) {
         current_title = new_title;
     };
@@ -77,6 +82,7 @@ var Tab = (function (current_url, current_title, tab_modifier) {
         getPinned: getPinned,
         getProtected: getProtected,
         getUnique: getUnique,
+        getMuted: getMuted,
 
         setCurrentTitle: setCurrentTitle,
         setTitle: setTitle
