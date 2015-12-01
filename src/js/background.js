@@ -9,12 +9,14 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
             });
         break;
         case 'setUnique':
-            chrome.tabs.get(message.tab_id, function (tab) {
-                var current_tab = tab;
+            chrome.tabs.get(message.tab_id, function (current_tab) {
+                var tab;
 
                 chrome.tabs.query({}, function (tabs) {
-                    for (var tab in tabs) {
-                        if (tab.url.indexOf(message.match) !== -1) {
+                    for (var i = 0; i < tabs.length; i++) {
+                        tab = tabs[i];
+
+                        if (tab.url.indexOf(message.url_fragment) !== -1) {
                             chrome.tabs.update(tab.id, {
                                 highlighted: true
                             });
@@ -48,8 +50,10 @@ chrome.browserAction.onClicked.addListener(function (tab) {
         found = false;
 
     chrome.tabs.query({}, function (tabs) {
-        for (var tab in tabs) {
-            if (tab.url === options_url) {
+        for (var i = 0; i < tabs.length; i++) {
+            tab = tabs[i];
+
+            if (tab.url.indexOf(options_url) !== -1) {
                 chrome.tabs.update(tab.id, {
                     highlighted: true
                 });

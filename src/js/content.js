@@ -75,7 +75,7 @@ chrome.runtime.sendMessage({
         if (tab.getUnique() === true) {
             chrome.runtime.sendMessage({
                 method: 'setUnique',
-                match: tab.getUrlFragment(),
+                url_fragment: tab.getUrlFragment(),
                 tab_id: response.tab_id
             });
         }
