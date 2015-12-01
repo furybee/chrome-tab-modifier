@@ -17,7 +17,7 @@
                 <!-- Name -->
                 <md-input-container flex>
                     <label for="rule_name" class="md-body-1">Name</label>
-                    <input id="rule_name" type="text" ng-model="rule.name" placeholder="e.g. Sticky GMail" required>
+                    <input id="rule_name" type="text" ng-model="rule.name" placeholder="e.g. Pinned GMail" required>
                     <span class="md-caption">Give an explicit name, just for you</span>
                 </md-input-container>
 
@@ -44,7 +44,7 @@
                 <!-- Icon -->
                 <div layout="row">
                     <md-input-container class="md-padding-left-0" flex="10">
-                        <md-checkbox aria-label="Default Icon">
+                        <md-checkbox ng-model="rule.tab.icon" ng-true-value="'{default}'" ng-false-value="null" aria-label="Default Icon">
                             <md-icon md-svg-icon="file-outline"></md-icon>
                             <md-tooltip md-direction="bottom">Set default icon</md-tooltip>
                         </md-checkbox>
@@ -52,7 +52,7 @@
 
                     <md-input-container flex="90">
                         <label for="rule_icon" class="md-body-1">Icon</label>
-                        <input id="rule_icon" type="url" ng-model="rule.tab.icon" placeholder="e.g. https://google.com/favicon.ico">
+                        <input id="rule_icon" type="url" ng-model="rule.tab.icon" ng-disabled="rule.tab.icon === '{default}'" placeholder="e.g. https://google.com/favicon.ico">
                         <span class="md-caption">URL for the new favicon</span>
                     </md-input-container>
                 </div>
@@ -60,7 +60,7 @@
                 <!-- Is Pinned -->
                 <md-switch class="md-accent md-2-line" ng-model="rule.tab.pinned" aria-label="Pinned">
                     <p>Pinned</p>
-                    <span class="md-caption">To pin the tab, otherwise nothing happens</span>
+                    <span class="md-caption">Will pin the tab</span>
                 </md-switch>
 
                 <!-- Is Protected -->
@@ -79,7 +79,7 @@
                 <md-input-container class="md-margin-bottom-0" flex>
                     <label for="rule_url_matcher" class="md-body-1">URL matcher</label>
                     <input id="rule_url_matcher" type="text" ng-model="rule.tab.url_matcher">
-                    <span class="md-caption">Regular expression to search string fragments and use it inside the title property with <code>$1</code>, <code>$2</code>... Read the <a href="https://github.com/sylouuu/chrome-tab-modifier" target="_blank" aria-label="GitHub Project">doc</a></span>
+                    <span class="md-caption">Advanced usage: regular expression to search string fragments and use it inside the title (read the <a href="https://github.com/sylouuu/chrome-tab-modifier" target="_blank" aria-label="GitHub Project">doc</a>)</span>
                 </md-input-container>
             </div>
         </md-dialog-content>
