@@ -63,7 +63,8 @@
                 'src/js/options/models/tab_modifier.model.js',
                 'src/js/options/models/rule.model.js',
                 'src/js/options/controllers/tab_rules.controller.js',
-                'src/js/options/controllers/settings.controller.js'
+                'src/js/options/controllers/settings.controller.js',
+                'src/js/options/controllers/help.controller.js'
             ])
             .pipe(concat('options.js'))
             .pipe(uglify())
@@ -79,7 +80,8 @@
                 'src/html/options.html',
                 'src/html/tab_rules.html',
                 'src/html/form.html',
-                'src/html/settings.html'
+                'src/html/settings.html',
+                'src/html/help.html'
             ])
             .pipe(minifyHTML())
             .pipe(rename({

@@ -23,7 +23,8 @@ app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdTheming
         .icon('delete', '/icons/delete.svg')
         .icon('edit', '/icons/pencil.svg')
         .icon('google-chrome', '/icons/google-chrome.svg')
-        .icon('github-circle', '/icons/github-circle.svg');
+        .icon('github-circle', '/icons/github-circle.svg')
+        .icon('help', '/icons/help-circle.svg');
 
     // Configure default theme
     $mdThemingProvider
@@ -37,26 +38,19 @@ app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdTheming
         .warnPalette('red', {
             default: '500'
         });
-    //$mdThemingProvider
-    //    .theme('default')
-    //    .primaryPalette('teal', {
-    //        default: '700'
-    //    })
-    //    .accentPalette('blue', {
-    //        default: '700'
-    //    })
-    //    .warnPalette('red', {
-    //        default: '700'
-    //    });
 
     var routes = {
         '/': {
-            templateUrl: '/html/tab_rules.min.html?d=' + Date.now(),
+            templateUrl: '/html/tab_rules.min.html',
             controller: 'TabRulesController'
         },
         '/settings': {
-            templateUrl: '/html/settings.min.html?d=' + Date.now(),
+            templateUrl: '/html/settings.min.html',
             controller: 'SettingsController'
+        },
+        '/help': {
+            templateUrl: '/html/help.min.html',
+            controller: 'HelpController'
         }
     };
 
