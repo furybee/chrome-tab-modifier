@@ -13,7 +13,6 @@
         <md-dialog-content layout-padding>
 
             <div layout="row">
-
                 <!-- Name -->
                 <md-input-container flex>
                     <label for="rule_name" class="md-body-1">Name</label>
@@ -57,23 +56,27 @@
                     </md-input-container>
                 </div>
 
-                <!-- Is Pinned -->
-                <md-switch class="md-accent md-2-line" ng-model="rule.tab.pinned" aria-label="Pinned">
-                    <p>Pinned</p>
-                    <span class="md-caption">Will pin the tab</span>
-                </md-switch>
+                <div layout="row">
+                    <!-- Is Pinned -->
+                    <md-switch class="md-accent md-2-line flex" ng-model="rule.tab.pinned" aria-label="Pinned">
+                        <p>Pinned</p>
+                        <span class="md-caption">Will pin the tab</span>
+                    </md-switch>
 
-                <!-- Is Protected -->
-                <md-switch class="md-accent md-2-line" ng-model="rule.tab.protected" aria-label="Protected">
-                    <p>Protected</p>
-                    <span class="md-caption">Will ask you before closing the tab</span>
-                </md-switch>
+                    <!-- Is Protected -->
+                    <md-switch class="md-accent md-2-line flex" ng-model="rule.tab.protected" aria-label="Protected">
+                        <p>Protected</p>
+                        <span class="md-caption">Will ask you before closing the tab</span>
+                    </md-switch>
+                </div>
 
-                <!-- Is Unique -->
-                <md-switch class="md-accent md-2-line" ng-model="rule.tab.unique" aria-label="Unique">
-                    <p>Unique</p>
-                    <span class="md-caption">Will prevent for opening a new tab if it is already opened</span>
-                </md-switch>
+                <div layout="row">
+                    <!-- Is Unique -->
+                    <md-switch class="md-accent md-2-line flex" ng-model="rule.tab.unique" aria-label="Unique">
+                        <p>Unique</p>
+                        <span class="md-caption">Will prevent for opening a new tab if it is already opened</span>
+                    </md-switch>
+                </div>
 
                 <!-- Regex -->
                 <md-input-container class="md-margin-bottom-0" flex>

@@ -54,8 +54,8 @@ chrome.browserAction.onClicked.addListener(function (tab) {
             tab = tabs[i];
 
             if (tab.url.indexOf(options_url) !== -1) {
-                chrome.tabs.update(tab.id, {
-                    highlighted: true
+                chrome.tabs.get(tab.id, function (tab) {
+                    chrome.tabs.highlight({ tabs: tab.index });
                 });
 
                 found = true;
