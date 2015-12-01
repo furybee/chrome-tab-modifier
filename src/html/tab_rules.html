@@ -12,9 +12,24 @@
 
 <md-divider></md-divider>
 
-<md-content class="md-padding" layout="row" layout-align="start">
-    <p>No rule found. It seems that your are new here, hit the "plus" button to create your first rule.<br>
-        Otherwise visit the <a href="#/help">help page</a>.</p>
+<md-content class="md-padding" layout="row" layout-align="center center">
+    <md-card>
+        <md-card-header>
+            <md-card-avatar>
+                <md-icon class="md-icon-title" md-svg-icon="information-outline"></md-icon>
+            </md-card-avatar>
+            <md-card-header-text layout-align="center start">
+                <h2 class="md-title">No rules found</h2>
+            </md-card-header-text>
+        </md-card-header>
+        <md-card-content>
+            <p>
+                It seems that your are new here, hit the "plus" button to create your first rule.
+                <br>
+                Otherwise visit the <a href="#/help">help page</a>.
+            </p>
+        </md-card-content>
+    </md-card>
 </md-content>
 
 <md-content class="md-padding" layout="row" layout-align="center start">
@@ -53,8 +68,6 @@
 
     <md-list flex="70">
         <md-list-item ng-repeat="rule in tab_modifier.rules | orderBy:'name'">
-            <!--<md-icon md-svg-icon="image" flex="5"></md-icon>-->
-
             <p flex="40" ng-bind="rule.name"></p>
 
             <p flex="40" ng-bind="rule.url_fragment"></p>
