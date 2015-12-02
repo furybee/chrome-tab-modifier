@@ -86,14 +86,33 @@ app.factory('TabModifier', ['Rule', function (Rule) {
         }
     };
 
-    TabModifier.prototype.import = function () {
+    TabModifier.prototype.import = function (json) {
+        try {
+            var settings = JSON.parse(json);
+            console.log(settings);
 
+            if ('rules' in settings === false) {
+                return 'INVALID_SETTINGS';
+            }
+        } catch (e) {
+            return 'INVALID_JSON_FORMAT';
+        }
+
+        localStorage.tab_modifier = json;
+
+        return true;
     };
 
     TabModifier.prototype.export = function () {
-        var blob = new Blob([JSON.stringify(this, null, 4)], { type : 'text/plain' });
+        var blob = new Blob([JSON.stringify(this, null, 4)], { type: 'text/plain' });
 
         return (window.URL || window.webkitURL).createObjectURL(blob);
+    };
+
+    TabModifier.prototype.deleteRules = function () {
+        this.setModel({ rules: [] });
+
+        this.setLocalData();
     };
 
     return TabModifier;

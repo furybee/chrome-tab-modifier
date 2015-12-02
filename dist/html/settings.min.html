@@ -1,1 +1,1 @@
-<a ng-href="{{ json_url }}" download=tab_modifier.json>Export</a>
+<input type=file id=settings on-read-file=import($fileContent)>Import Tab Rules <a ng-href="{{ json_url }}" download=tab_modifier.json>Export Tab Rules</a> <button ng-click=deleteRules()>Delete all Tab Rules</button>
