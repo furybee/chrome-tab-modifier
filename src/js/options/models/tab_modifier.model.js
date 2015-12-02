@@ -16,8 +16,6 @@ app.factory('TabModifier', ['Rule', function (Rule) {
 
     TabModifier.prototype.removeRule = function (rule) {
         this.rules.splice(this.rules.indexOf(rule), 1);
-
-        this.setLocalData();
     };
 
     TabModifier.prototype.save = function (rule, index) {
@@ -26,8 +24,6 @@ app.factory('TabModifier', ['Rule', function (Rule) {
         } else {
             this.rules[index] = rule;
         }
-
-        this.setLocalData();
     };
 
     TabModifier.prototype.build = function (data) {
@@ -80,9 +76,11 @@ app.factory('TabModifier', ['Rule', function (Rule) {
                 i++;
             }
 
-            this.setLocalData();
-
             localStorage.removeItem('settings');
+
+            return true;
+        } else {
+            return false;
         }
     };
 
@@ -111,8 +109,6 @@ app.factory('TabModifier', ['Rule', function (Rule) {
 
     TabModifier.prototype.deleteRules = function () {
         this.setModel({ rules: [] });
-
-        this.setLocalData();
     };
 
     return TabModifier;

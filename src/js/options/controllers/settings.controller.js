@@ -28,6 +28,8 @@ app.controller('SettingsController', ['$scope', 'TabModifier', function ($scope,
     $scope.deleteRules = function () {
         if (confirm('Are your sure?') === true) {
             tab_modifier.deleteRules();
+
+            tab_modifier.setLocalData();
         }
     };
 

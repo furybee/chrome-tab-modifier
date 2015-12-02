@@ -3,7 +3,9 @@ app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', 'Rule',
     var tab_modifier = new TabModifier();
 
     // Avoid BC break
-    tab_modifier.checkOldSettings();
+    if (tab_modifier.checkOldSettings() === true) {
+        tab_modifier.setLocalData();
+    }
 
     // Load saved data
     tab_modifier.getLocalData();
@@ -26,11 +28,15 @@ app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', 'Rule',
             }
         }).then(function (rule) {
             tab_modifier.save(rule, index);
+
+            tab_modifier.setLocalData();
         });
     };
 
     $scope.duplicate = function (rule) {
         tab_modifier.save(new Rule(rule));
+
+        tab_modifier.setLocalData();
     };
 
     $scope.delete = function (evt, rule) {
@@ -46,6 +52,8 @@ app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', 'Rule',
 
         $mdDialog.show(confirm).then(function () {
             tab_modifier.removeRule(rule);
+
+            tab_modifier.setLocalData();
         });
     };
 
