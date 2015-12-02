@@ -41,15 +41,18 @@
                 </md-input-container>
 
                 <!-- Icon -->
-                <div layout="row">
-                    <md-input-container class="md-padding-left-0" flex="10">
-                        <md-checkbox ng-model="rule.tab.icon" ng-true-value="'{default}'" ng-false-value="null" aria-label="Default Icon">
-                            <md-icon md-svg-icon="file-outline"></md-icon>
-                            <md-tooltip md-direction="bottom">Set default icon</md-tooltip>
-                        </md-checkbox>
-                    </md-input-container>
+                <div layout="row" layout-align="start center">
 
-                    <md-input-container flex="90">
+                    <!-- Default Icon -->
+                    <md-switch class="md-accent md-2-line" ng-model="rule.tab.icon" ng-true-value="'{default}'" ng-false-value="null" aria-label="Default Icon" flex="25">
+                        <p>Default icon</p>
+                        <span class="md-caption">
+                            <md-icon class="md-icon-title" md-svg-icon="file-outline"></md-icon>
+                        </span>
+                    </md-switch>
+
+                    <!-- URL Icon -->
+                    <md-input-container flex="75">
                         <label for="rule_icon" class="md-body-1">Icon</label>
                         <input id="rule_icon" type="url" ng-model="rule.tab.icon" ng-disabled="rule.tab.icon === '{default}'" placeholder="e.g. https://google.com/favicon.ico">
                         <span class="md-caption">URL for the new favicon</span>
