@@ -3,7 +3,7 @@ var app = angular.module('TabModifier', ['ngRoute', 'ngAnimate', 'ngMaterial']);
 app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdThemingProvider', function ($routeProvider, $compileProvider, $mdIconProvider, $mdThemingProvider) {
 
     // Allow "chrome-extension" protocol
-    $compileProvider.aHrefSanitizationWhitelist(/^\s*(http|https|chrome-extension):/);
+    $compileProvider.aHrefSanitizationWhitelist(/^\s*(blob|http|https|chrome-extension):/);
 
     // Load icons list by name
     $mdIconProvider

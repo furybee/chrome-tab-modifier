@@ -86,6 +86,16 @@ app.factory('TabModifier', ['Rule', function (Rule) {
         }
     };
 
+    TabModifier.prototype.import = function () {
+
+    };
+
+    TabModifier.prototype.export = function () {
+        var blob = new Blob([JSON.stringify(this, null, 4)], { type : 'text/plain' });
+
+        return (window.URL || window.webkitURL).createObjectURL(blob);
+    };
+
     return TabModifier;
 
 }]);
