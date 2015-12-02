@@ -7,6 +7,7 @@ app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdTheming
 
     // Load icons list by name
     $mdIconProvider
+        .icon('backup-restore', '/icons/backup-restore.svg')
         .icon('information-outline', '/icons/information-outline.svg')
         .icon('alert', '/icons/alert.svg')
         .icon('file-import', '/icons/file-import.svg')
