@@ -3,14 +3,16 @@
     'use strict';
 
     // Gulp dependencies
-    var gulp       = require('gulp'),
+    var args       = require('yargs').argv,
+        gulp       = require('gulp'),
         jshint     = require('gulp-jshint'),
         concat     = require('gulp-concat'),
         rename     = require('gulp-rename'),
         uglify     = require('gulp-uglify'),
         jscs       = require('gulp-jscs'),
         minifyHTML = require('gulp-minify-html'),
-        qunit      = require('node-qunit-phantomjs');
+        qunit      = require('node-qunit-phantomjs'),
+        Server     = require('karma').Server;
 
     // Linter
     // ------------------------------------------------------------------------------------------------------
@@ -58,14 +60,7 @@
 
     gulp.task('build_options_script', function () {
         return gulp
-            .src([
-                'src/js/options/app.js',
-                'src/js/options/models/tab_modifier.model.js',
-                'src/js/options/models/rule.model.js',
-                'src/js/options/controllers/tab_rules.controller.js',
-                'src/js/options/controllers/settings.controller.js',
-                'src/js/options/controllers/help.controller.js'
-            ])
+            .src(['src/js/options/**/*.js'])
             .pipe(concat('options.js'))
             .pipe(uglify())
             .pipe(rename({
@@ -76,13 +71,7 @@
 
     gulp.task('build_options_html', function () {
         return gulp
-            .src([
-                'src/html/options.html',
-                'src/html/tab_rules.html',
-                'src/html/form.html',
-                'src/html/settings.html',
-                'src/html/help.html'
-            ])
+            .src(['src/html/**/*.html'])
             .pipe(minifyHTML())
             .pipe(rename({
                 suffix: '.min'
@@ -92,9 +81,29 @@
 
     // ------------------------------------------------------------------------------------------------------
 
-    gulp.task('tests', function() {
-        return qunit('tests/index.html');
+    // gulp unit_tests --coverage=html
+    gulp.task('tests', function (done) {
+        var reporters = ['spec'],
+            coverage_reporter = { type: 'text', dir: 'coverage/' };
+
+        if (args.coverage) {
+            reporters.push('coverage');
+
+            if (typeof args.coverage === 'string') {
+                coverage_reporter.type = args.coverage;
+            }
+        }
+
+        new Server({
+            configFile: __dirname + '/karma.conf.js',
+            reporters: reporters,
+            coverageReporter: coverage_reporter
+        }, done).start();
     });
+
+    //gulp.task('tests', function() {
+    //    return qunit('tests/index.html');
+    //});
 
     gulp.task('build', [
         'build_core',
