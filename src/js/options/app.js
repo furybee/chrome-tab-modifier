@@ -95,16 +95,16 @@ app.directive('onReadFile', ['$parse', function ($parse) {
     };
 }]);
 
-app.directive('inputFileButton', function() {
+app.directive('inputFileButton', function () {
     return {
         restrict: 'E',
         link: function (scope, elem, attrs) {
-            var button = elem.find('button');
-            var input = elem.find('input');
+            var button = elem.find('button'),
+                input = elem.find('input');
 
-            input.css({ display:'none' });
+            input.css({ display: 'none' });
 
-            button.bind('click', function() {
+            button.bind('click', function () {
                 input[0].click();
             });
         }
