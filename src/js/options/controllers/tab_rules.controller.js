@@ -61,21 +61,21 @@ app.controller('FormModalController', ['$scope', '$mdDialog', 'rule', function (
         }
     });
 
-    $scope.$watch('rule.title', function () {
-        if (rule.title === '' || rule.title === undefined) {
-            rule.setModel({ title: null });
+    $scope.$watch('rule.tab.title', function () {
+        if (rule.tab.title === '' || rule.tab.title === undefined) {
+            rule.tab.title = null;
         }
     });
 
-    $scope.$watch('rule.icon', function () {
-        if (rule.icon === '' || rule.icon === undefined) {
-            rule.setModel({ icon: null });
+    $scope.$watch('rule.tab.icon', function () {
+        if (rule.tab.icon === '' || rule.tab.icon === undefined) {
+            rule.tab.icon = null;
         }
     });
 
-    $scope.$watch('rule.url_matcher', function () {
-        if (rule.url_matcher === '' || rule.url_matcher === undefined) {
-            rule.setModel({ url_matcher: null });
+    $scope.$watch('rule.tab.url_matcher', function () {
+        if (rule.tab.url_matcher === '' || rule.tab.url_matcher === undefined) {
+            rule.tab.url_matcher = null;
         }
     });
 
