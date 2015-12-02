@@ -7,7 +7,9 @@ app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdTheming
 
     // Load icons list by name
     $mdIconProvider
-        .icon('information-outline', '/icons/information-outline.svg')
+        .icon('alert', '/icons/alert.svg')
+        .icon('file-import', '/icons/file-import.svg')
+        .icon('file-export', '/icons/file-export.svg')
         .icon('file-outline', '/icons/file-outline.svg')
         .icon('options-vertical', '/icons/dots-vertical.svg')
         .icon('close', '/icons/close.svg')
@@ -90,3 +92,19 @@ app.directive('onReadFile', ['$parse', function ($parse) {
         }
     };
 }]);
+
+app.directive('inputFileButton', function() {
+    return {
+        restrict: 'E',
+        link: function (scope, elem, attrs) {
+            var button = elem.find('button');
+            var input = elem.find('input');
+
+            input.css({ display:'none' });
+
+            button.bind('click', function() {
+                input[0].click();
+            });
+        }
+    };
+});
