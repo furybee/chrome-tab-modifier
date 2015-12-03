@@ -25,7 +25,11 @@ module.exports = function(config) {
             'https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc5/angular-material.min.js',
             'src/js/options/app.js',
             'src/js/options/**/*.js',
-            'tests/**/*.js'
+            'tests/**/*.js',
+            {
+                pattern: 'tests/**/*.json',
+                included: false
+            }
         ],
 
         // list of files to exclude

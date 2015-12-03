@@ -1,5 +1,4 @@
 .idea
-old_settings.json
 node_modules/
 coverage/
 tests_copy/
