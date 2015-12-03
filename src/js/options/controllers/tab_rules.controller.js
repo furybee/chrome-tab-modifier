@@ -1,4 +1,4 @@
-app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', 'Rule', 'TabModifier', function ($scope, $mdDialog, $mdMedia, Rule, TabModifier) {
+app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', '$mdToast', 'Rule', 'TabModifier', function ($scope, $mdDialog, $mdMedia, $mdToast, Rule, TabModifier) {
 
     var tab_modifier = new TabModifier();
 
@@ -16,6 +16,7 @@ app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', 'Rule',
 
     $scope.tab_modifier = tab_modifier;
 
+    // Show modal form
     $scope.showForm = function (evt, rule) {
         var index = (rule === undefined) ? null : tab_modifier.rules.indexOf(rule);
 
@@ -31,18 +32,33 @@ app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', 'Rule',
                 }
             }
         }).then(function (rule) {
+            // Save a rule
             tab_modifier.save(rule, index);
 
             tab_modifier.setLocalData();
+
+            $mdToast.show(
+                $mdToast.simple()
+                    .textContent('Your rule has been successfully saved')
+                    .position('top right')
+            );
         });
     };
 
+    // Duplicate a rule
     $scope.duplicate = function (rule) {
         tab_modifier.save(new Rule(rule));
 
         tab_modifier.setLocalData();
+
+        $mdToast.show(
+            $mdToast.simple()
+                .textContent('Your rule has been successfully duplicated')
+                .position('top right')
+        );
     };
 
+    // Delete a rule
     $scope.delete = function (evt, rule) {
         var confirm = $mdDialog
             .confirm()
@@ -58,6 +74,12 @@ app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', 'Rule',
             tab_modifier.removeRule(rule);
 
             tab_modifier.setLocalData();
+
+            $mdToast.show(
+                $mdToast.simple()
+                    .textContent('Your rule has been successfully deleted')
+                    .position('top right')
+            );
         });
     };
 
