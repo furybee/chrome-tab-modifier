@@ -119,7 +119,6 @@ chrome.runtime.sendMessage({
                     tab_id: response.tab_id
                 });
             }
-
         }
     }
 });
