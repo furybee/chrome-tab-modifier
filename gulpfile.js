@@ -30,22 +30,11 @@
     // Core
     // ------------------------------------------------------------------------------------------------------
 
-    gulp.task('build_core', ['build_background_script', 'build_content_script']);
+    gulp.task('build_core', ['build_background_and_content_scripts']);
 
-    gulp.task('build_background_script', function () {
+    gulp.task('build_background_and_content_scripts', function () {
         return gulp
-            .src(['src/js/background.js'])
-            .pipe(uglify())
-            .pipe(rename({
-                suffix: '.min'
-            }))
-            .pipe(gulp.dest('dist/js'));
-    });
-
-    gulp.task('build_content_script', function () {
-        return gulp
-            .src(['src/js/Tab.js', 'src/js/content.js'])
-            .pipe(concat('content.js'))
+            .src(['src/js/background.js', 'src/js/content.js'])
             .pipe(uglify())
             .pipe(rename({
                 suffix: '.min'
