@@ -46,42 +46,36 @@ app.factory('TabModifier', ['Rule', function (Rule) {
         localStorage.tab_modifier = JSON.stringify(this);
     };
 
-    TabModifier.prototype.checkOldSettings = function () {
-        var self = this, old_settings, rule, i = 0;
+    TabModifier.prototype.migrateOldSettings = function (old_settings) {
+        var self = this, rule, i = 0;
 
-        if (localStorage.settings !== undefined) {
-            this.deleteRules();
+        this.deleteRules();
 
-            old_settings = JSON.parse(localStorage.settings);
+        old_settings = JSON.parse(old_settings);
 
-            for (var key in old_settings) {
-                if (old_settings.hasOwnProperty(key)) {
-                    rule = new Rule({
-                        name: 'Rule '+ (i + 1),
-                        url_fragment: key,
-                        tab: {
-                            title: old_settings[key].title || null,
-                            icon: old_settings[key].icon  || null,
-                            pinned: old_settings[key].pinned  || false,
-                            protected: old_settings[key].protected  || false,
-                            unique: old_settings[key].unique  || false,
-                            muted: old_settings[key].muted  || false,
-                            url_matcher: old_settings[key].url_matcher  || null
-                        }
-                    });
+        for (var key in old_settings) {
+            if (old_settings.hasOwnProperty(key)) {
+                rule = new Rule({
+                    name: 'Rule '+ (i + 1),
+                    url_fragment: key,
+                    tab: {
+                        title: old_settings[key].title || null,
+                        icon: old_settings[key].icon  || null,
+                        pinned: old_settings[key].pinned  || false,
+                        protected: old_settings[key].protected  || false,
+                        unique: old_settings[key].unique  || false,
+                        muted: old_settings[key].muted  || false,
+                        url_matcher: old_settings[key].url_matcher  || null
+                    }
+                });
 
-                    self.addRule(rule);
-                }
-
-                i++;
+                self.addRule(rule);
             }
 
-            localStorage.removeItem('settings');
-
-            return true;
-        } else {
-            return false;
+            i++;
         }
+
+        return true;
     };
 
     TabModifier.prototype.checkFileBeforeImport = function (json) {

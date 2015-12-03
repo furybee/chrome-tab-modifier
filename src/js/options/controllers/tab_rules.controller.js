@@ -3,7 +3,11 @@ app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', 'Rule',
     var tab_modifier = new TabModifier();
 
     // Avoid BC break
-    if (tab_modifier.checkOldSettings() === true) {
+    if (localStorage.settings !== undefined) {
+        tab_modifier.migrateOldSettings(localStorage.settings);
+
+        localStorage.removeItem('settings');
+
         tab_modifier.setLocalData();
     }
 
