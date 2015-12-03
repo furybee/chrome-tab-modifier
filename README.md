@@ -37,27 +37,27 @@ This Chrome extension allows you to **automatically** change some properties of 
 
 ## Examples
 
-You have infinite possibilities, are a some configurations:
+You have infinite possibilities, here are some configurations:
 
 Pin all tabs:
 
-* URL fragment: "http"
-* Pinned: ON
+* **URL fragment**: "http"
+* **Pinned**: ON
 
 Say hello to all Google websites:
 
-* URL fragment: "google.com"
-* Title: Hello Google: {title}
+* **URL fragment**: "google.com"
+* **Title**: Hello Google: {title}
 
 Prevent accidental tab closure:
 
-* URL fragment: "important-website.com"
-* Protected: ON
+* **URL fragment**: "important-website.com"
+* **Protected**: ON
 
 Get only one GMail tab opened at once:
 
-* URL fragment: "mail.google.com"
-* Unique: ON
+* **URL fragment**: "mail.google.com"
+* **Unique**: ON
 
 Build your own...
 
