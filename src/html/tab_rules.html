@@ -1,5 +1,10 @@
 <md-toolbar md-scroll-shrink>
-    <h1 class="md-toolbar-tools">Tab Rules</h1>
+    <nav class="md-toolbar-tools">
+        <md-button class="md-icon-button" ng-click="toggleAside()" aria-label="Toggle left menu" hide-gt-md>
+            <md-icon class="md-icon-title" md-svg-icon="menu"></md-icon>
+        </md-button>
+        <h1>Tab Rules</h1>
+    </nav>
 </md-toolbar>
 
 <md-subheader class="md-display-2">
@@ -13,6 +18,7 @@
 <md-divider></md-divider>
 
 <md-content class="md-padding" layout-align="center center" ng-if="tab_modifier.rules.length === 0">
+
     <md-card flex-offset="15" flex="70">
         <md-card-header class="md-primary">
             <md-card-avatar>
@@ -30,49 +36,18 @@
             </p>
         </md-card-content>
     </md-card>
+
 </md-content>
 
 <md-content class="md-padding" layout="row" layout-align="center start" ng-if="tab_modifier.rules.length > 0">
 
-    <!-- <md-card ng-repeat="item in items">
-        <md-card-header>
-
-            <md-card-avatar>
-                <md-icon class="md-icon-title" md-svg-icon="image"></md-icon>
-            </md-card-avatar>
-
-            <md-card-header-text>
-                <span class="md-title">Name</span>
-                <span class="md-subhead">URL fragment</span>
-            </md-card-header-text>
-        </md-card-header>
-
-        <md-card-actions layout="row" layout-align="center center">
-
-            <md-button class="md-icon-button" aria-label="Edit rule">
-                <md-icon md-svg-icon="edit"></md-icon>
-                <md-tooltip md-direction="bottom">Edit {{ item.title }}</md-tooltip>
-            </md-button>
-
-            <md-button class="md-icon-button" aria-label="Duplicate rule">
-                <md-icon md-svg-icon="duplicate"></md-icon>
-                <md-tooltip md-direction="bottom">Duplicate {{ item.title }}</md-tooltip>
-            </md-button>
-
-            <md-button class="md-icon-button" ng-click="confirmDeleteRule($event)" aria-label="Delete rule">
-                <md-icon md-svg-icon="delete"></md-icon>
-                <md-tooltip md-direction="bottom">Delete {{ item.title }}</md-tooltip>
-            </md-button>
-        </md-card-actions>
-    </md-card> -->
-
-    <md-list flex="70">
+    <md-list flex="100" flex-lg="80" flex-gt-lg="70">
         <md-list-item ng-repeat="rule in tab_modifier.rules | orderBy:'name'">
             <p flex="40" ng-bind="rule.name"></p>
 
-            <p flex="40" ng-bind="rule.url_fragment"></p>
+            <p flex="30" ng-bind="rule.url_fragment"></p>
 
-            <div flex="20" layout="row" layout-align="end center">
+            <div flex="30" layout="row" layout-align="end center">
                 <md-button class="md-icon-button" ng-click="showForm($event, rule)" aria-label="Edit rule">
                     <md-icon md-svg-icon="edit" md-menu-align-target></md-icon>
                     <md-tooltip md-direction="bottom">Edit</md-tooltip>

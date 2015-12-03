@@ -25,7 +25,7 @@ app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', '$mdToa
             templateUrl: '../html/form.min.html',
             targetEvent: evt,
             clickOutsideToClose: true,
-            fullscreen: $mdMedia('md'),
+            fullscreen: $mdMedia('sm'),
             resolve: {
                 rule: function () {
                     return (index === null) ? new Rule() : rule;

@@ -1,5 +1,8 @@
-app.controller('MainController', ['$scope', '$mdSidenav', function ($scope, $mdSidenav) {
+app.controller('MainController', ['$scope', '$mdSidenav', function($scope, $mdSidenav) {
 
-    console.log('main');
+    $scope.toggleAside = toggleAside;
 
+    function toggleAside() {
+        $mdSidenav('aside-left').toggle();
+    }
 }]);

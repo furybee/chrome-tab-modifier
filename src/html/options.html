@@ -78,7 +78,7 @@
     <body layout="row" ng-controller="MainController">
 
         <!-- Sidenav -->
-        <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="aside-left" md-is-locked-open="true" flex="15">
+        <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="aside-left" md-is-locked-open="$mdMedia('gt-md')" flex-lg="20" flex-gt-lg="15">
 
             <md-toolbar>
                 <h1 class="md-toolbar-tools">Tab Modifier</h1>
@@ -134,7 +134,7 @@
             </md-content>
         </md-sidenav>
 
-        <md-content flex="85" ng-view></md-content>
+        <md-content flex="100" flex-lg="80" flex-gt-lg="85" ng-view></md-content>
 
     </body>
 </html>
