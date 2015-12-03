@@ -10,7 +10,9 @@ app.controller('SettingsController', ['$scope', '$mdDialog', '$mdToast', 'TabMod
 
     // Import tab rules action
     $scope.import = function (content) {
-        if (tab_modifier.checkFileBeforeImport(content) === true) {
+        var result = tab_modifier.checkFileBeforeImport(content);
+
+        if (result === true) {
             document.getElementById('settings').value = '';
 
             localStorage.tab_modifier = content;
@@ -23,7 +25,7 @@ app.controller('SettingsController', ['$scope', '$mdDialog', '$mdToast', 'TabMod
         } else {
             var message;
 
-            switch (tab_modifier.import(content)) {
+            switch (result) {
                 case 'INVALID_JSON_FORMAT':
                     message = 'Invalid JSON file. Please check it on jsonlint.com.';
                 break;
