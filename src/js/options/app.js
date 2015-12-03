@@ -1,4 +1,4 @@
-var app = angular.module('TabModifier', ['ngRoute', 'ngAnimate', 'ngMaterial']);
+var app = angular.module('TabModifier', ['ngRoute', 'ngAnimate', 'ngAria', 'ngMaterial']);
 
 app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdThemingProvider', function ($routeProvider, $compileProvider, $mdIconProvider, $mdThemingProvider) {
 

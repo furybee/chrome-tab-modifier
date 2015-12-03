@@ -12,7 +12,7 @@
 
 <md-divider></md-divider>
 
-<md-content class="md-padding" layout-align="center center">
+<md-content class="md-padding" layout-align="center center" ng-if="tab_modifier.rules.length === 0">
     <md-card flex-offset="15" flex="70">
         <md-card-header class="md-primary">
             <md-card-avatar>
@@ -32,7 +32,7 @@
     </md-card>
 </md-content>
 
-<md-content class="md-padding" layout="row" layout-align="center start">
+<md-content class="md-padding" layout="row" layout-align="center start" ng-if="tab_modifier.rules.length > 0">
 
     <!-- <md-card ng-repeat="item in items">
         <md-card-header>
