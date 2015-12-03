@@ -11,7 +11,6 @@
         uglify     = require('gulp-uglify'),
         jscs       = require('gulp-jscs'),
         minifyHTML = require('gulp-minify-html'),
-        qunit      = require('node-qunit-phantomjs'),
         Server     = require('karma').Server;
 
     // Linter
@@ -70,7 +69,7 @@
 
     // ------------------------------------------------------------------------------------------------------
 
-    // gulp unit_tests --coverage=html
+    // gulp tests --coverage=html
     gulp.task('tests', function (done) {
         var reporters = ['spec'],
             coverage_reporter = { type: 'text', dir: 'coverage/' };
@@ -89,10 +88,6 @@
             coverageReporter: coverage_reporter
         }, done).start();
     });
-
-    //gulp.task('tests', function() {
-    //    return qunit('tests/index.html');
-    //});
 
     gulp.task('build', [
         'build_core',

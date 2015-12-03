@@ -12,15 +12,14 @@ This Chrome extension allows you to **automatically** change some properties of 
 * Pin the tab
 * Prevent tab closing
 * Unique tab
+* Mute the tab
 
 ## How to use?
 
 1. Download and install from the **[Chrome Web Store](https://chrome.google.com/webstore/detail/hcbgadmbdkiilgpifjgcakjehmafcjai/)**.
 2. Click on "Tab Modifier" icon in your toolbar to access Options.
-3. Copy the sample JSON below and paste it in Options.
+3. Configure your tab rules.
 4. Try & enjoy!
-
-_Tip: Keep a file like `tab_modifier.json` which contains your custom settings and consider it as a backup. Your settings are saved in your `localStorage`._
 
 ## Demo
 
@@ -36,108 +35,43 @@ _Tip: Keep a file like `tab_modifier.json` which contains your custom settings a
 * My Website tabs have been modified: use a prefix in title.
 * Twitter tab has been modified: use default Chrome icon (white paper) and renamed to "I'm working hard!".
 
-You can achieve this with the file below.
-
-### Settings file (sample)
-
-```json
-{
-    ".local": {
-        "title": "[DEV] {title}"
-    },
-    "domain.com": {
-        "title": "[PROD] {title}"
-    },
-    "youtube.com": {
-        "icon": "https://www.google.com/favicon.ico",
-        "pinned": true
-    },
-    "twitter.com": {
-        "title": "I'm working hard!",
-        "icon": "{default}",
-        "protected": true
-    },
-    "mail.google.com": {
-        "unique": true
-    },
-    "pinterest.com/search" : {
-      "title" : "$1 | Pinterest",
-      "url_matcher" : "q=([^&]+)"
-    },
-    "github.com": {
-        "title": "{title} | $2 by $1",
-        "url_matcher": "github\\.com\/([A-Za-z0-9\\-\\_]+)\/([A-Za-z0-9\\-\\_]+)"
-    }
-}
-```
-
-## File format
-
-```json
-{
-    "string to match the URL": {
-        "title": "...",
-        "icon": "http://...",
-        "pinned": true,
-        "protected": true,
-        "unique": true,
-        "url_matcher": "<regexp>"
-    }
-}
-```
-
-| Property      | Description                                               |
-| :------------ | :-------------------------------------------------------- |
-| `title`       | The new title you want to display. You can use use `{title}` inside to append the current website title. |
-| `icon`        | URL for the new favicon. For removing the default favicon website, use `{default}` to append the Default Chrome favicon (white paper). |
-| `pinned`      | `true` to pin the tab, otherwise nothing happens. |
-| `protected`   | `true` will ask you before closing the tab. |
-| `unique`      | `true` will prevent for opening a new tab if it is already opened. |
-| `url_matcher` | Regular expression to search string fragment(s) and use it inside the `title` property. |
-
 ## Examples
+
+You have infinite possibilities, are a some configurations:
 
 Pin all tabs:
 
-```json
-{
-    "http": {
-        "pinned": true
-    }
-}
-```
+* URL fragment: "http"
+* Pinned: ON
 
 Say hello to all Google websites:
 
-```json
-{
-    "google.com": {
-        "title": "Hello Google: {title}"
-    }
-}
-```
+* URL fragment: "google.com"
+* Title: Hello Google: {title}
 
 Prevent accidental tab closure:
 
-```json
-{
-    "important-website.com": {
-        "protected": true
-    }
-}
-```
+* URL fragment: "important-website.com"
+* Protected: ON
 
 Get only one GMail tab opened at once:
 
-```json
-{
-    "mail.google.com": {
-        "unique": true
-    }
-}
-```
+* URL fragment: "mail.google.com"
+* Unique: ON
 
-## Options page
+Build your own...
+
+## Options
+
+### Tab Rules
+
+<img src="screenshots/options.png" alt="options">
+
+### Settings
+
+<img src="screenshots/options.png" alt="options">
+
+### Help
 
 <img src="screenshots/options.png" alt="options">
 
@@ -176,4 +110,3 @@ Click on "Load unpacked extension..." and select the project `dist/` folder.
 ## License
 
 See [license](LICENSE.md) file.
-
