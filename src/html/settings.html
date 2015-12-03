@@ -25,11 +25,11 @@
                 <md-list-item class="md-2-line">
                     <div class="md-list-item-text">
                         <h3>Import tab rules</h3>
-                        <p>Restore your tab rules settings from external file.</p>
+                        <p>Restore your tab rules settings from external JSON file.</p>
                     </div>
 
                     <input-file-button>
-                        <md-button class="md-primary md-secondary" aria-label="Upload a file">
+                        <md-button class="md-primary md-secondary md-raised" aria-label="Upload a file">
                             <md-icon class="md-icon-title" md-svg-icon="file-import"></md-icon>
                             Import tab rules
                         </md-button>
@@ -42,10 +42,10 @@
                 <md-list-item class="md-2-line">
                     <div class="md-list-item-text">
                         <h3>Export tab rules</h3>
-                        <p>Export all your tab rules settings.</p>
+                        <p>Export your tab rules for backup purpose or for sharing with friend.</p>
                     </div>
 
-                    <md-button class="md-primary md-secondary" ng-href="{{ json_url }}" download="tab_modifier.json" arial-label="Export tab rules">
+                    <md-button class="md-primary md-secondary md-raised" ng-href="{{ json_url }}" download="tab_modifier.json" arial-label="Export tab rules">
                         <md-icon class="md-icon-title" md-svg-icon="file-export"></md-icon>
                         Export tab rules
                     </md-button>
@@ -68,11 +68,11 @@
             <md-list>
                 <md-list-item class="md-2-line">
                     <div class="md-list-item-text">
-                        <h3>Delete all</h3>
-                        <p>Once you delete all tab rules, there is no going back. Please be certain.</p>
+                        <h3>Delete all tab rules</h3>
+                        <p>Your tab rules are stored locally, you will erase all of them.</p>
                     </div>
 
-                    <md-button class="md-warn md-secondary" ng-click="deleteRules()">
+                    <md-button class="md-warn md-secondary md-raised" ng-click="deleteRules($event)">
                         <md-icon class="md-icon-title" md-svg-icon="delete"></md-icon>
                         Delete all
                     </md-button>

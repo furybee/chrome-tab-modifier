@@ -29,7 +29,7 @@ app.factory('TabModifier', ['Rule', function (Rule) {
     TabModifier.prototype.build = function (data) {
         var self = this;
 
-        this.rules = [];
+        this.deleteRules();
 
         angular.forEach(data.rules, function (rule) {
             self.addRule(new Rule(rule));
@@ -50,7 +50,7 @@ app.factory('TabModifier', ['Rule', function (Rule) {
         var self = this, old_settings, rule, i = 0;
 
         if (localStorage.settings !== undefined) {
-            this.rules = [];
+            this.deleteRules();
 
             old_settings = JSON.parse(localStorage.settings);
 
@@ -84,21 +84,22 @@ app.factory('TabModifier', ['Rule', function (Rule) {
         }
     };
 
-    TabModifier.prototype.import = function (json) {
-        try {
-            var settings = JSON.parse(json);
-            console.log(settings);
+    TabModifier.prototype.checkFileBeforeImport = function (json) {
+        if (json !== undefined) {
+            try {
+                var settings = JSON.parse(json);
 
-            if ('rules' in settings === false) {
-                return 'INVALID_SETTINGS';
+                if ('rules' in settings === false) {
+                    return 'INVALID_SETTINGS';
+                }
+            } catch (e) {
+                return 'INVALID_JSON_FORMAT';
             }
-        } catch (e) {
-            return 'INVALID_JSON_FORMAT';
+
+            return true;
+        } else {
+            return false;
         }
-
-        localStorage.tab_modifier = json;
-
-        return true;
     };
 
     TabModifier.prototype.export = function () {
