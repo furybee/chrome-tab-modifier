@@ -49,17 +49,33 @@ Say hello to all Google websites:
 * **URL fragment**: "google.com"
 * **Title**: Hello Google: {title}
 
+Disguise GitHub as Google
+
+* **URL fragment**: "github.com"
+* **Title**: Google
+* **Icon**: https://www.google.com/favicon.ico
+
 Prevent accidental tab closure:
 
 * **URL fragment**: "important-website.com"
 * **Protected**: ON
+
+Mute all Youtube videos by default:
+
+* **URL fragment**: "youtube.com"
+* **Mute**: ON
+
+Set blank icon on Pinterest:
+
+* **URL fragment**: "pinterest.com"
+* **Icon**: {default}
 
 Get only one GMail tab opened at once:
 
 * **URL fragment**: "mail.google.com"
 * **Unique**: ON
 
-Build your own...
+Build your own... :muscle:
 
 ## Options
 
