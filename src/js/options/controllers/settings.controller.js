@@ -5,6 +5,8 @@ app.controller('SettingsController', ['$scope', '$mdDialog', '$mdToast', 'TabMod
     // Load saved data
     tab_modifier.getLocalData();
 
+    $scope.tab_modifier = tab_modifier;
+
     // Generate JSON url
     $scope.json_url = tab_modifier.export();
 

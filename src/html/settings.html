@@ -77,7 +77,7 @@
                         <p>Your tab rules are stored locally, you will erase all of them.</p>
                     </div>
 
-                    <md-button class="md-warn md-secondary md-raised" ng-click="deleteRules($event)">
+                    <md-button class="md-warn md-secondary md-raised" ng-click="deleteRules($event)" ng-disabled="tab_modifier.rules.length === 0">
                         <md-icon class="md-icon-title" md-svg-icon="delete"></md-icon>
                         Delete all
                     </md-button>
