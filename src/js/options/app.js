@@ -94,5 +94,3 @@ app.run(['$rootScope', '$location', 'Analytics', function ($rootScope, $location
     });
 
 }]);
-
-

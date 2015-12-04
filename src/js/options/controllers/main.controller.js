@@ -1,4 +1,4 @@
-app.controller('MainController', ['$scope', '$mdSidenav', 'Analytics', function($scope, $mdSidenav, Analytics) {
+app.controller('MainController', ['$scope', '$mdSidenav', 'Analytics', function ($scope, $mdSidenav, Analytics) {
 
     $scope.toggleSideNav = function () {
         $mdSidenav('aside-left').toggle();
