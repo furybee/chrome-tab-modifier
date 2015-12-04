@@ -7,9 +7,11 @@ app.controller('MainController', ['$scope', '$mdSidenav', 'Analytics', function 
     };
 
     $scope.closeSideNav = function () {
-        $mdSidenav('aside-left').close();
+        if ($mdSidenav('aside-left').isOpen() === true) {
+            $mdSidenav('aside-left').close();
 
-        Analytics.trackEvent('sidenav', 'close');
+            Analytics.trackEvent('sidenav', 'close');
+        }
     };
 
 }]);
