@@ -90,7 +90,9 @@ app.run(['$rootScope', '$location', 'Analytics', function ($rootScope, $location
     };
 
     $rootScope.$on('$routeChangeSuccess', function (event, current) {
-        $rootScope.page.title = current.page.title;
+        if (current && current.page) {
+            $rootScope.page.title = current.page.title;
+        }
     });
 
 }]);
