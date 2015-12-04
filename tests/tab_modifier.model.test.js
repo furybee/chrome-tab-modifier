@@ -1,4 +1,4 @@
-describe('[TabModifier]', function () {
+describe('TabModifier model', function () {
 
     beforeEach(module('TabModifier'));
 
@@ -144,6 +144,14 @@ describe('[TabModifier]', function () {
         expect(tab_modifier.rules[6].tab.unique).toBe(false);
         expect(tab_modifier.rules[6].tab.muted).toBe(false);
         expect(tab_modifier.rules[6].tab.url_matcher).toBe('github\\\\.com\\/([A-Za-z0-9\\\\-\\\\_]+)\\/([A-Za-z0-9\\\\-\\\\_]+)');
+    });
+
+    it('Get local data', function () {
+        pending();
+    });
+
+    it('Set local data', function () {
+        pending();
     });
 
     it('Migrate old settings', function () {

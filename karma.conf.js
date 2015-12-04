@@ -23,6 +23,7 @@ module.exports = function(config) {
             'https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js',
             'node_modules/angular-mocks/angular-mocks.js',
             'https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc5/angular-material.min.js',
+            'dist/js/libs/angular-google-analytics.min.js',
             'src/js/options/app.js',
             'src/js/options/**/*.js',
             'tests/**/*.js',

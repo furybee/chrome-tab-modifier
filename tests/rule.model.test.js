@@ -1,4 +1,4 @@
-describe('[Rule]', function () {
+describe('Rule model', function () {
 
     beforeEach(module('TabModifier'));
 
