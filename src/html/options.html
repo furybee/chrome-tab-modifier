@@ -73,6 +73,7 @@
         <!-- Angular Material Javascript  -->
         <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc5/angular-material.min.js"></script>
 
+        <script src="../js/libs/angular-google-analytics.min.js"></script>
         <script src="../js/options.min.js"></script>
     </head>
     <body layout="row" ng-controller="MainController">
@@ -117,7 +118,7 @@
 
                     <!-- Chrome Web Store link -->
                     <md-menu-item>
-                        <md-button class="md-button" href="https://chrome.google.com/webstore/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai" target="_blank" aria-label="Chrome Web Store Project" ng-click="closeSideNav()">
+                        <md-button class="md-button" href="https://chrome.google.com/webstore/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai" target="_blank" aria-label="Chrome Web Store Project" ng-click="closeSideNav()" ga-track-event="['resources', 'chrome-web-store-click']">
                             <md-icon class="md-icon-title" md-svg-icon="google-chrome"></md-icon>
                             Chrome Web Store
                         </md-button>
@@ -125,7 +126,7 @@
 
                     <!-- Github link -->
                     <md-menu-item>
-                        <md-button class="md-button" href="https://github.com/sylouuu/chrome-tab-modifier" target="_blank" aria-label="GitHub Project" ng-click="closeSideNav()">
+                        <md-button class="md-button" href="https://github.com/sylouuu/chrome-tab-modifier" target="_blank" aria-label="GitHub Project" ng-click="closeSideNav()" ga-track-event="['resources', 'github-click']">
                             <md-icon class="md-icon-title" md-svg-icon="github-circle"></md-icon>
                             GitHub
                         </md-button>

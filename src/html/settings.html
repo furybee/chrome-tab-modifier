@@ -34,7 +34,7 @@
                     </div>
 
                     <input-file-button>
-                        <md-button class="md-primary md-secondary md-raised" aria-label="Upload a file">
+                        <md-button class="md-primary md-secondary md-raised" aria-label="Upload a file" ga-track-event="['tab-rules', 'import']">
                             <md-icon class="md-icon-title" md-svg-icon="file-import"></md-icon>
                             Import tab rules
                         </md-button>
@@ -50,7 +50,7 @@
                         <p>Export your tab rules for backup purpose or for sharing with friend.</p>
                     </div>
 
-                    <md-button class="md-primary md-secondary md-raised" ng-href="{{ json_url }}" download="tab_modifier.json" arial-label="Export tab rules">
+                    <md-button class="md-primary md-secondary md-raised" ng-href="{{ json_url }}" download="tab_modifier.json" arial-label="Export tab rules" ga-track-event="['tab-rules', 'export']">
                         <md-icon class="md-icon-title" md-svg-icon="file-export"></md-icon>
                         Export tab rules
                     </md-button>

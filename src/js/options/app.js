@@ -1,6 +1,6 @@
-var app = angular.module('TabModifier', ['ngRoute', 'ngAnimate', 'ngAria', 'ngMaterial']);
+var app = angular.module('TabModifier', ['ngRoute', 'ngAnimate', 'ngAria', 'ngMaterial', 'angular-google-analytics']);
 
-app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdThemingProvider', function ($routeProvider, $compileProvider, $mdIconProvider, $mdThemingProvider) {
+app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdThemingProvider', 'AnalyticsProvider', function ($routeProvider, $compileProvider, $mdIconProvider, $mdThemingProvider, AnalyticsProvider) {
 
     // Allow "chrome-extension" protocol
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(blob|http|https|chrome-extension):/);
@@ -45,6 +45,11 @@ app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdTheming
             default: '500'
         });
 
+    // Analytics config
+    AnalyticsProvider.setAccount('UA-27524593-7');
+    AnalyticsProvider.setHybridMobileSupport(true);
+    AnalyticsProvider.setDomainName('none');
+
     var routes = {
         '/': {
             templateUrl: '/html/tab_rules.min.html',
@@ -68,6 +73,6 @@ app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdTheming
 
 }]);
 
-app.run(['$rootScope', '$location', function ($rootScope, $location) {
+app.run(['$rootScope', '$location', 'Analytics', function ($rootScope, $location, Analytics) {
     $rootScope.location = $location;
 }]);

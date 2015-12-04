@@ -96,9 +96,11 @@
             </div>
         </md-dialog-content>
 
-        <!-- Rule's form actions -->
+        <!-- Save -->
         <md-dialog-actions layout="row">
-            <md-button class="md-raised md-accent" type="submit"><md-icon md-svg-icon="save"></md-icon>&nbsp;Save</md-button>
+            <md-button class="md-raised md-accent" type="submit" ga-track-event="['tab-rules', 'save-rule']">
+                <md-icon md-svg-icon="save"></md-icon>&nbsp;Save
+            </md-button>
         </md-dialog-actions>
     </form>
 </md-dialog>

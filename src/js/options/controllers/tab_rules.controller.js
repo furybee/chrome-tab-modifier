@@ -1,4 +1,4 @@
-app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', '$mdToast', 'Rule', 'TabModifier', function ($scope, $mdDialog, $mdMedia, $mdToast, Rule, TabModifier) {
+app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', '$mdToast', 'Rule', 'TabModifier', 'Analytics', function ($scope, $mdDialog, $mdMedia, $mdToast, Rule, TabModifier, Analytics) {
 
     var tab_modifier = new TabModifier();
 
@@ -42,6 +42,8 @@ app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', '$mdToa
                     .textContent('Your rule has been successfully saved')
                     .position('top right')
             );
+        }, function () {
+            Analytics.trackEvent('tab-rules', 'close-form');
         });
     };
 
@@ -102,7 +104,8 @@ app.controller('FormModalController', ['$scope', '$mdDialog', 'rule', function (
     });
 
     $scope.$watch('rule.tab.icon', function () {
-        if (rule.tab.icon === '' || rule.tab.icon === undefined) {
+        // Don't check undefined because of input type="url"
+        if (rule.tab.icon === '') {
             rule.tab.icon = null;
         }
     });

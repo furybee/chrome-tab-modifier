@@ -1,4 +1,4 @@
-app.controller('SettingsController', ['$scope', '$mdDialog', '$mdToast', 'TabModifier', function ($scope, $mdDialog, $mdToast, TabModifier) {
+app.controller('SettingsController', ['$scope', '$mdDialog', '$mdToast', 'TabModifier', 'Analytics', function ($scope, $mdDialog, $mdToast, TabModifier, Analytics) {
 
     var tab_modifier = new TabModifier();
 
@@ -22,15 +22,21 @@ app.controller('SettingsController', ['$scope', '$mdDialog', '$mdToast', 'TabMod
                     .textContent('Your tab rules have been successfully imported')
                     .position('top right')
             );
+
+            Analytics.trackEvent('tab-rules', 'import-success');
         } else {
             var message;
 
             switch (result) {
                 case 'INVALID_JSON_FORMAT':
                     message = 'Invalid JSON file. Please check it on jsonlint.com.';
+
+                    Analytics.trackEvent('tab-rules', 'import-error-json');
                 break;
                 case 'INVALID_SETTINGS':
                     message = 'Invalid settings file. Is this file comes from Tab Modifier?';
+
+                    Analytics.trackEvent('tab-rules', 'import-error-format');
                 break;
             }
 
@@ -67,6 +73,8 @@ app.controller('SettingsController', ['$scope', '$mdDialog', '$mdToast', 'TabMod
                     .textContent('Your tab rules have been successfully deleted')
                     .position('top right')
             );
+
+            Analytics.trackEvent('tab-rules', 'delete-all');
         });
     };
 
