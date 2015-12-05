@@ -8,7 +8,7 @@
 </md-toolbar>
 
 <md-subheader class="md-display-2">
-    List of rules
+    List of rules <span ng-bind="'('+ tab_modifier.rules.length +')'"></span>
     <md-button class="md-accent md-fab md-fab-bottom-right" ng-click="showForm($event)" ga-track-event="['tab-rules', 'create-rule']">
         <md-icon md-svg-icon="plus"></md-icon>
         <md-tooltip md-direction="left">Add a new rule</md-tooltip>
