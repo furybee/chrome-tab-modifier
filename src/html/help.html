@@ -21,6 +21,8 @@
 
         <p>Take control of your browser tabs! With this extension you are able to change some behaviors on any website.</p>
 
+        <p>All of your data are stored on your computer, I don't have any access to it.</p>
+
         <md-divider></md-divider>
 
         <h2 class="md-headline">What behaviors?</h2>
@@ -56,16 +58,16 @@
         <ul>
             <li>the new <strong>title</strong> for the website, add <code>{title}</code> to append the website title, e.g. Hello {title}</li>
             <li>the new <strong>icon</strong>, select a neutral one called <code>{default}</code> or set a valid image URL</li>
-            <li>the state of <strong>pinned</strong> (ON/OFF)</li>
-            <li>the state of <strong>protect</strong> (ON/OFF)</li>
-            <li>the state of <strong>unique</strong> (ON/OFF)</li>
-            <li>the state of <strong>mute</strong> (ON/OFF)</li>
-            <li>the <strong>URL matcher</strong> to identify some URL parts and use them inside the title (advanced usage)</li>
+            <li>the <strong>pinned</strong> state (ON/OFF)</li>
+            <li>the <strong>protected</strong> state  (ON/OFF)</li>
+            <li>the <strong>unique</strong> state  (ON/OFF)</li>
+            <li>the <strong>muted</strong> state (ON/OFF)</li>
+            <li>the <strong>URL matcher</strong> to identify some URL parts and use them inside the title (advanced usage), enter a regular expression like <code>q=([^&]+)</code> and use <code>$1</code> in <strong>title</strong></li>
         </ul>
 
         <p>You can now go to the <a href="#/">Tab Rules</a> section and create your first rule...</p>
 
-        <p>Note: after creating or editing a rule, refresh the tab(s) to view the changes.</p>
+        <p><i>Important: after creating or editing a rule, refresh the tab(s) to view the changes.</i></p>
 
         <md-divider></md-divider>
 
@@ -81,11 +83,11 @@
 
         <p><strong>Solution:</strong> I create a new Table Rule called "The GMail hell" with the URL fragment "<strong>mail.google.com</strong>". I enable "Protected" and "Unique" and I save it. Closing all GMail tabs and reopen a new one, all done!</p>
 
-        <p>The extension know when to apply my actions because the URL of GMail <strong>contains</strong> "mail.google.com".</p>
+        <p>The extension knows when to apply my actions because the GMail URL <strong>contains</strong> "mail.google.com".</p>
 
         <h3>Second example</h3>
 
-        <p><strong>Problem:</strong> Now... I'm usually having more than 20 tabs opened in my browser, I'm losing so much space! OK, what about pin them all? But I'm too lazy to do a right click on each tab.</p>
+        <p><strong>Problem:</strong> I'm usually having more than 20 tabs opened in my browser, I'm losing so much space! OK, what about pin them all? But I'm too lazy to do a right click on each tab.</p>
 
         <p><strong>Solution:</strong> I create a new Table Rule called "Pin them all" with the URL fragment "<strong>http</strong>" (because almost all website URLs <strong>contain</strong> the word "http"). I enable "Pin" and I save it. Closing the browser and reopen it, all tabs are now pinned!</p>
 
