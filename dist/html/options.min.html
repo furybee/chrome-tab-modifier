@@ -5,6 +5,17 @@
                 font-size: 14px;
             }
 
+            strong,
+            b,
+            h1,
+            h2,
+            h3,
+            h4,
+            h5,
+            h6 {
+                font-weight: 500;
+            }
+
             .md-subheader .md-button.md-fab.md-fab-bottom-right {
                 bottom: -50px;
             }
@@ -38,17 +49,18 @@
             }
 
             md-card-header.md-primary {
-                color: rgb(255,255,255);
-                background-color: rgb(96,125,139);
+                color: rgb(255, 255, 255);
+                background-color: rgb(96, 125, 139);
             }
 
             md-card-header.md-warn {
-                color: rgb(255,255,255);
-                background-color: rgb(244,67,54);
+                color: rgb(255, 255, 255);
+                background-color: rgb(244, 67, 54);
             }
 
             md-input-container .md-caption {
                 display: inline-block;
                 padding: 6px 0;
             }
+
         </style><script src=https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js></script><script src=https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-route.min.js></script><script src=https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-animate.min.js></script><script src=https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular-aria.min.js></script><script src=https://ajax.googleapis.com/ajax/libs/angular_material/1.0.0-rc5/angular-material.min.js></script><script src=../js/libs/angular-google-analytics.min.js></script><script src=../js/options.min.js></script></head><body layout=row ng-controller=MainController><md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id=aside-left md-is-locked-open="$mdMedia('gt-md')" flex-lg=20 flex-gt-lg=15><md-toolbar><h1 class=md-toolbar-tools>Tab Modifier</h1></md-toolbar><md-content><md-list><md-subheader class="md-no-sticky md-display-2">Sections</md-subheader><md-menu-item><md-button class=md-button ng-class="{ 'md-focused': page.location.path() === '/' }" href="#/" aria-label=Tabs ng-click=closeSideNav()><md-icon class=md-icon-title md-svg-icon=tab></md-icon>Tab Rules</md-button></md-menu-item><md-menu-item><md-button class=md-button ng-class="{ 'md-focused': page.location.path() === '/settings' }" href=#/settings aria-label=Settings ng-click=closeSideNav()><md-icon class=md-icon-title md-svg-icon=settings></md-icon>Settings</md-button></md-menu-item><md-menu-item><md-button class=md-button ng-class="{ 'md-focused': page.location.path() === '/help' }" href=#/help aria-label=Help ng-click=closeSideNav()><md-icon class=md-icon-title md-svg-icon=help></md-icon>Help</md-button></md-menu-item><md-subheader class="md-no-sticky md-display-2">Resources</md-subheader><md-menu-item><md-button class=md-button href=https://chrome.google.com/webstore/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai target=_blank aria-label="Chrome Web Store Project" ng-click=closeSideNav() ga-track-event="['resources', 'chrome-web-store-click']"><md-icon class=md-icon-title md-svg-icon=google-chrome></md-icon>Chrome Web Store</md-button></md-menu-item><md-menu-item><md-button class=md-button href=https://github.com/sylouuu/chrome-tab-modifier target=_blank aria-label="GitHub Project" ng-click=closeSideNav() ga-track-event="['resources', 'github-click']"><md-icon class=md-icon-title md-svg-icon=github-circle></md-icon>GitHub</md-button></md-menu-item></md-list></md-content></md-sidenav><md-content flex=100 flex-lg=80 flex-gt-lg=85 ng-view></md-content></body></html>
