@@ -15,97 +15,81 @@
 
 <md-content class="md-padding">
 
-    <md-list flex="100" flex-offset-gt-lg="15" flex-gt-lg="70">
+    <section flex="100" flex-offset-gt-lg="15" flex-gt-lg="70">
 
         <h2 class="md-headline">Concept</h2>
-        <md-list-item class="md-2-line">
-            <div class="md-list-item-text">
-                <p>Take control of your browser tabs! With this extension you are able to change some behaviors on any website.</p>
-            </div>
-        </md-list-item>
+
+        <p>Take control of your browser tabs! With this extension you are able to change some behaviors on any website.</p>
+
         <md-divider></md-divider>
 
         <h2 class="md-headline">What behaviors?</h2>
-        <md-list-item class="md-3-line md-long-text">
-            <div class="md-list-item-text">
-                <ul>
-                    <li>You can <strong>rename</strong> a tab title, <abbr title="prefix and suffix">partially</abbr> or totally.</li>
-                    <li>You can set a new <strong>favicon</strong> or decide to apply a neutral one.</li>
-                    <li>You can <strong>pin</strong> a website without effort.</li>
-                    <li>You can <strong>protect</strong> some websites from accidental closure with a confirm box.</li>
-                    <li>You can avoid duplicate tabs by setting up the <strong>unique</strong> property.</li>
-                    <li>You can <strong>mute</strong> the sound of any websites before they can play it.</li>
-                </ul>
 
-                <p>
-                    And the icing on the cake... Combine all of them!
-                </p>
-            </div>
-        </md-list-item>
+        <ul>
+            <li>You can <strong>rename</strong> a tab title, <abbr title="prefix and suffix">partially</abbr> or totally.</li>
+            <li>You can set a new <strong>favicon</strong> or decide to apply a neutral one.</li>
+            <li>You can <strong>pin</strong> a website without effort.</li>
+            <li>You can <strong>protect</strong> some websites from accidental closure with a confirm box.</li>
+            <li>You can avoid duplicate tabs by setting up the <strong>unique</strong> property.</li>
+            <li>You can <strong>mute</strong> the sound of any websites before they can play it.</li>
+        </ul>
+
+        <p>
+            And the icing on the cake... Combine all of them!
+        </p>
+
         <md-divider></md-divider>
 
         <h2 class="md-headline">How?</h2>
-        <md-list-item class="md-3-line md-long-text">
-            <div class="md-list-item-text">
-                <p>You have to create a record called a "<strong>Tab Rule</strong>".</p>
 
-                <p>A <strong>Tab Rule</strong> has:</p>
+        <p>You have to create a record called a "<strong>Tab Rule</strong>".</p>
 
-                <ul>
-                    <li>a <strong>name</strong>, used for you</li>
-                    <li>a <strong>URL fragment</strong>, used by the extension to detect the website you want to apply actions (i.e. behaviors)</li>
-                </ul>
+        <p>A <strong>Tab Rule</strong> has:</p>
 
-                <p>After filling these info, you can now select some actions:</p>
+        <ul>
+            <li>a <strong>name</strong>, used for you</li>
+            <li>a <strong>URL fragment</strong>, used by the extension to detect the website you want to apply actions (i.e. behaviors)</li>
+        </ul>
 
-                <ul>
-                    <li>the new <strong>title</strong> for the website, add <code>{title}</code> to append the website title, e.g. Hello {title}</li>
-                    <li>the new <strong>icon</strong>, select a neutral one called <code>{default}</code> or set a valid image URL</li>
-                    <li>the state of <strong>pinned</strong> (ON/OFF)</li>
-                    <li>the state of <strong>protect</strong> (ON/OFF)</li>
-                    <li>the state of <strong>unique</strong> (ON/OFF)</li>
-                    <li>the state of <strong>mute</strong> (ON/OFF)</li>
-                    <li>the <strong>URL matcher</strong> to identify some URL parts and use them inside the title (advanced usage)</li>
-                </ul>
+        <p>After filling these info, you can now select some actions:</p>
 
-                <p>You can now go to the <a href="#/">Tab Rules</a> section and create your first rule...</p>
+        <ul>
+            <li>the new <strong>title</strong> for the website, add <code>{title}</code> to append the website title, e.g. Hello {title}</li>
+            <li>the new <strong>icon</strong>, select a neutral one called <code>{default}</code> or set a valid image URL</li>
+            <li>the state of <strong>pinned</strong> (ON/OFF)</li>
+            <li>the state of <strong>protect</strong> (ON/OFF)</li>
+            <li>the state of <strong>unique</strong> (ON/OFF)</li>
+            <li>the state of <strong>mute</strong> (ON/OFF)</li>
+            <li>the <strong>URL matcher</strong> to identify some URL parts and use them inside the title (advanced usage)</li>
+        </ul>
 
-                <p>Note: after creating or editing a rule, refresh the tab(s) to view the changes.</p>
-            </div>
-        </md-list-item>
+        <p>You can now go to the <a href="#/">Tab Rules</a> section and create your first rule...</p>
+
+        <p>Note: after creating or editing a rule, refresh the tab(s) to view the changes.</p>
+
         <md-divider></md-divider>
 
         <h2 class="md-headline">"URL fragment"? Meh?</h2>
-        <md-list-item class="md-3-line md-long-text">
-            <div class="md-list-item-text">
-                <p>In case you don't still understand what's going on here...</p>
 
-                <p>The <strong>URL fragment</strong> value is the key for the extension. Let's see 2 examples.</p>
+        <p>In case you don't still understand what's going on here...</p>
 
-                <br>
+        <p>The <strong>URL fragment</strong> value is the key for the extension. Let's see 2 examples.</p>
 
-                <h3>First example</h3>
+        <h3>First example</h3>
 
-                <br>
+        <p><strong>Problem:</strong> I use GMail everyday and this tab is so important, I'm so mad when I accidentally close it and after few hours of working I can see that I have many GMail tabs opened, what a mess!</p>
 
-                <p><strong>Problem:</strong> I use GMail everyday and this tab is so important, I'm so mad when I accidentally close it and after few hours of working I can see that I have many GMail tabs opened, what a mess!</p>
+        <p><strong>Solution:</strong> I create a new Table Rule called "The GMail hell" with the URL fragment "<strong>mail.google.com</strong>". I enable "Protected" and "Unique" and I save it. Closing all GMail tabs and reopen a new one, all done!</p>
 
-                <p><strong>Solution:</strong> I create a new Table Rule called "The GMail hell" with the URL fragment "<strong>mail.google.com</strong>". I enable "Protected" and "Unique" and I save it. Closing all GMail tabs and reopen a new one, all done!</p>
+        <p>The extension know when to apply my actions because the URL of GMail <strong>contains</strong> "mail.google.com".</p>
 
-                <p>The extension know when to apply my actions because the URL of GMail <strong>contains</strong> "mail.google.com".</p>
+        <h3>Second example</h3>
 
-                <br>
+        <p><strong>Problem:</strong> Now... I'm usually having more than 20 tabs opened in my browser, I'm losing so much space! OK, what about pin them all? But I'm too lazy to do a right click on each tab.</p>
 
-                <h3>Second example</h3>
+        <p><strong>Solution:</strong> I create a new Table Rule called "Pin them all" with the URL fragment "<strong>http</strong>" (because almost all website URLs <strong>contain</strong> the word "http"). I enable "Pin" and I save it. Closing the browser and reopen it, all tabs are now pinned!</p>
 
-                <br>
+        <p>I hope you now understand how the <strong>URL fragment</strong> value works.</p>
 
-                <p><strong>Problem:</strong> Now... I'm usually having more than 20 tabs opened in my browser, I'm losing so much space! OK, what about pin them all? But I'm too lazy to do a right click on each tab.</p>
-
-                <p><strong>Solution:</strong> I create a new Table Rule called "Pin them all" with the URL fragment "<strong>http</strong>" (because almost all website URLs <strong>contain</strong> the word "http"). I enable "Pin" and I save it. Closing the browser and reopen it, all tabs are now pinned!</p>
-
-                <p>I hope you now understand how the <strong>URL fragment</strong> value works.</p>
-            </div>
-        </md-list-item>
-    </md-list>
+    </section>
 </md-content>
