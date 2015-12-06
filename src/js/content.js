@@ -107,7 +107,7 @@ chrome.runtime.sendMessage({
             if (rule.tab.unique === true) {
                 chrome.runtime.sendMessage({
                     method: 'setUnique',
-                    url_fragment: tab_modifier.url_fragment(),
+                    url_fragment: rule.url_fragment,
                     tab_id: response.tab_id
                 });
             }
