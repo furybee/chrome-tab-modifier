@@ -53,24 +53,15 @@ app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdTheming
     var routes = {
         '/': {
             templateUrl: '/html/tab_rules.min.html',
-            controller: 'TabRulesController',
-            page: {
-                title: 'Tab Rules'
-            }
+            controller: 'TabRulesController'
         },
         '/settings': {
             templateUrl: '/html/settings.min.html',
-            controller: 'SettingsController',
-            page: {
-                title: 'Settings'
-            }
+            controller: 'SettingsController'
         },
         '/help': {
             templateUrl: '/html/help.min.html',
-            controller: 'HelpController',
-            page: {
-                title: 'Help'
-            }
+            controller: 'HelpController'
         }
     };
 
@@ -84,15 +75,6 @@ app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdTheming
 
 app.run(['$rootScope', '$location', 'Analytics', function ($rootScope, $location, Analytics) {
 
-    $rootScope.page = {
-        title: '',
-        location: $location
-    };
-
-    $rootScope.$on('$routeChangeSuccess', function (event, current) {
-        if (current && current.page) {
-            $rootScope.page.title = current.page.title;
-        }
-    });
+    $rootScope.location = $location;
 
 }]);
