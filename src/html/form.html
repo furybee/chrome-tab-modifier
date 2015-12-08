@@ -43,51 +43,35 @@
                 <!-- Icon -->
                 <div layout="row">
 
+                    <!-- Select icon -->
                     <md-input-container flex="20">
-                        <label>Select Icon</label>
-                        <md-select ng-model="ule.tab.icon">
+                        <label>Select icon</label>
+                        <md-select ng-model="rule.tab.icon">
                             <md-optgroup label="Chrome">
-                                <md-option>
-                                    <md-icon class="md-icon-title md-icon-16x" md-svg-icon="file-outline"></md-icon>
-                                    Neutral Icon
+                                <md-option layout="row" layout-align="start center" ng-repeat="icon in icon_list | filter: { category: 'chrome' }:true | orderBy: 'name'" ng-value="icon.value">
+                                    <img class="md-icon-title md-img-select md-icon-16x" ng-src="../img/{{ icon.value }}" alt="{{ icon.name }}"> {{ icon.name }}
                                 </md-option>
                             </md-optgroup>
+
                             <md-optgroup label="Color">
-                                <md-option layout="row" layout-align="start center">
-                                    <img class="md-icon-title md-img-select md-icon-16x" src="../img/bullets/bullet-amber.png" alt="Amber Icon"> Amber
-                                </md-option>
-
-                                <md-option>
-                                    <img class="md-icon-title md-img-select md-icon-16x" src="../img/bullets/bullet-blue-grey.png" alt="Blue Grey Icon"> Blue Grey
-                                </md-option>
-
-                                <md-option>
-                                    <img class="md-icon-title md-img-select md-icon-16x" src="../img/bullets/bullet-cyan.png" alt="Cyan Icon"> Cyan
-                                </md-option>
-
-                                <md-option>
-                                    <img class="md-icon-title md-img-select md-icon-16x" src="../img/bullets/bullet-pink.png" alt="Pink Icon"> Pink
+                                <md-option layout="row" layout-align="start center" ng-repeat="icon in icon_list | filter: { category: 'color' }:true | orderBy: 'name'" ng-value="icon.value">
+                                    <img class="md-icon-title md-img-select md-icon-16x" ng-src="../img/{{ icon.value }}" alt="{{ icon.name }}"> {{ icon.name }}
                                 </md-option>
                             </md-optgroup>
-                            <md-optgroup label="Custom">
-                                <md-option>Custom Icon URL</md-option>
+
+                            <md-optgroup label="Color Alt">
+                                <md-option layout="row" layout-align="start center" ng-repeat="icon in icon_list | filter: { category: 'color-alt' }:true | orderBy: 'name'" ng-value="icon.value">
+                                    <img class="md-icon-title md-img-select md-icon-16x" ng-src="../img/{{ icon.value }}" alt="{{ icon.name }}"> {{ icon.name }}
+                                </md-option>
                             </md-optgroup>
                         </md-select>
                     </md-input-container>
 
-                    <!-- Default Icon -->
-                    <!-- <md-switch class="md-accent md-2-line" ng-model="rule.tab.icon" ng-true-value="'{default}'" ng-false-value="null" aria-label="Default Icon" flex="25">
-                        <p>Neutral icon</p>
-                        <span class="md-caption">
-                            <md-icon class="md-icon-title" md-svg-icon="file-outline"></md-icon>
-                        </span>
-                    </md-switch> -->
-
                     <!-- URL Icon -->
                     <md-input-container flex-offset="5" flex="70">
                         <label for="rule_icon" class="md-body-1">Icon</label>
-                        <input id="rule_icon" type="url" ng-model="rule.tab.icon" ng-disabled="rule.tab.icon === '{default}'" placeholder="e.g. https://google.com/favicon.ico">
-                        <span class="md-caption">URL for the new favicon, no local file accepted</span>
+                        <input id="rule_icon" type="text" ng-model="rule.tab.icon" placeholder="e.g. https://google.com/favicon.ico">
+                        <span class="md-caption">You can set a custom URL for the new favicon, no local file accepted</span>
                     </md-input-container>
                 </div>
 

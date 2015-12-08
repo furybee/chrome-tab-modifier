@@ -60,14 +60,18 @@ app.factory('TabModifier', ['Rule', function (Rule) {
                     url_fragment: key,
                     tab: {
                         title: old_settings[key].title || null,
-                        icon: old_settings[key].icon  || null,
-                        pinned: old_settings[key].pinned  || false,
-                        protected: old_settings[key].protected  || false,
-                        unique: old_settings[key].unique  || false,
-                        muted: old_settings[key].muted  || false,
-                        url_matcher: old_settings[key].url_matcher  || null
+                        icon: old_settings[key].icon || null,
+                        pinned: old_settings[key].pinned || false,
+                        protected: old_settings[key].protected || false,
+                        unique: old_settings[key].unique || false,
+                        muted: old_settings[key].muted || false,
+                        url_matcher: old_settings[key].url_matcher || null
                     }
                 });
+
+                if (old_settings[key].icon === '{default}') {
+                    rule.tab.icon = 'chrome/default.png';
+                }
 
                 self.addRule(rule);
             }

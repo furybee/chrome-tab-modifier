@@ -85,7 +85,8 @@ chrome.runtime.sendMessage({
                     node.parentNode.removeChild(node);
                 });
 
-                icon = (rule.tab.icon === '{default}') ? chrome.extension.getURL('/img/default_favicon.png') : rule.tab.icon;
+                // Set preconfigured or custom ("http" catched) icon
+                icon = (rule.tab.icon.indexOf('http') === -1) ? chrome.extension.getURL('/img/'+ rule.tab.icon) : rule.tab.icon;
 
                 // Create new favicon
                 link      = document.createElement('link');

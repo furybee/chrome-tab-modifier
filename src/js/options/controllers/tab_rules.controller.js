@@ -1,6 +1,6 @@
-app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', '$mdToast', 'Rule', 'TabModifier', 'Analytics', function ($scope, $mdDialog, $mdMedia, $mdToast, Rule, TabModifier, Analytics) {
+app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', '$mdToast', 'Rule', 'TabModifier', 'Analytics', '$http', function ($scope, $mdDialog, $mdMedia, $mdToast, Rule, TabModifier, Analytics, $http) {
 
-    var tab_modifier = new TabModifier();
+    var tab_modifier = new TabModifier(), icon_list = [];
 
     // Avoid BC break
     if (localStorage.settings !== undefined) {
@@ -16,6 +16,11 @@ app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', '$mdToa
 
     $scope.tab_modifier = tab_modifier;
 
+    // Load icon list
+    $http.get('/js/icons.min.json').then(function (request) {
+        icon_list = request.data;
+    });
+
     // Show modal form
     $scope.showForm = function (evt, rule) {
         var index = (rule === undefined) ? null : tab_modifier.rules.indexOf(rule);
@@ -27,6 +32,9 @@ app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', '$mdToa
             clickOutsideToClose: true,
             fullscreen: $mdMedia('sm'),
             resolve: {
+                icon_list: function () {
+                    return icon_list;
+                },
                 rule: function () {
                     return (index === null) ? new Rule() : rule;
                 }
@@ -87,9 +95,10 @@ app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', '$mdToa
 
 }]);
 
-app.controller('FormModalController', ['$scope', '$mdDialog', 'rule', function ($scope, $mdDialog, rule) {
+app.controller('FormModalController', ['$scope', '$mdDialog', 'rule', 'icon_list', function ($scope, $mdDialog, rule, icon_list) {
 
-    $scope.rule = rule;
+    $scope.rule      = rule;
+    $scope.icon_list = icon_list;
 
     $scope.$watch('rule.url_fragment', function () {
         if (rule.url_fragment === '' || rule.url_fragment === undefined) {
@@ -104,8 +113,7 @@ app.controller('FormModalController', ['$scope', '$mdDialog', 'rule', function (
     });
 
     $scope.$watch('rule.tab.icon', function () {
-        // Don't check undefined because of input type="url"
-        if (rule.tab.icon === '') {
+        if (rule.tab.icon === '' || rule.tab.title === undefined) {
             rule.tab.icon = null;
         }
     });

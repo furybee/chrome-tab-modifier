@@ -11,6 +11,7 @@
         uglify     = require('gulp-uglify'),
         jscs       = require('gulp-jscs'),
         minifyHTML = require('gulp-minify-html'),
+        jsonminify = require('gulp-jsonminify'),
         Server     = require('karma').Server;
 
     // Linter
@@ -44,13 +45,23 @@
     // Options
     // ------------------------------------------------------------------------------------------------------
 
-    gulp.task('build_options', ['build_options_script', 'build_options_html']);
+    gulp.task('build_options', ['build_options_script', 'build_options_html', 'build_options_icons']);
 
     gulp.task('build_options_script', function () {
         return gulp
             .src(['src/js/options/**/*.js'])
             .pipe(concat('options.js'))
             .pipe(uglify())
+            .pipe(rename({
+                suffix: '.min'
+            }))
+            .pipe(gulp.dest('dist/js'));
+    });
+
+    gulp.task('build_options_icons', function () {
+        return gulp
+            .src(['src/js/options/icons.json'])
+            .pipe(jsonminify())
             .pipe(rename({
                 suffix: '.min'
             }))
