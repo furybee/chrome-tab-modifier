@@ -30,7 +30,7 @@ app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', '$mdToa
             templateUrl: '../html/form.min.html',
             targetEvent: evt,
             clickOutsideToClose: true,
-            fullscreen: $mdMedia('sm'),
+            fullscreen: $mdMedia('xs'),
             resolve: {
                 icon_list: function () {
                     return icon_list;

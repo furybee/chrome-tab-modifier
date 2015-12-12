@@ -1,6 +1,6 @@
 <md-toolbar>
     <nav class="md-toolbar-tools">
-        <md-button class="md-icon-button" ng-click="toggleSideNav()" aria-label="Toggle left menu" hide-gt-md>
+        <md-button class="md-icon-button" ng-click="toggleSideNav()" aria-label="Toggle left menu" hide-gt-sm>
             <md-icon class="md-icon-title" md-svg-icon="menu"></md-icon>
         </md-button>
         <h1>Tab Rules</h1>
@@ -41,7 +41,7 @@
 
 <md-content class="md-padding" layout="row" layout-align="center start" ng-if="tab_modifier.rules.length > 0">
 
-    <md-list flex="100" flex-lg="80" flex-gt-lg="70">
+    <md-list flex="100" flex-md="80" flex-gt-md="70">
         <md-list-item ng-repeat="rule in tab_modifier.rules | orderBy:'name'">
             <p flex="40" ng-bind="rule.name"></p>
 
