@@ -3,8 +3,6 @@
 [![Build Status](http://img.shields.io/travis/sylouuu/chrome-tab-modifier.svg?style=flat)](https://travis-ci.org/sylouuu/chrome-tab-modifier)
 [![devDependency Status](http://img.shields.io/david/dev/sylouuu/chrome-tab-modifier.svg?style=flat)](https://david-dm.org/sylouuu/chrome-tab-modifier#info=devDependencies)
 
-_Note that this extension is still "work in progress" and I want to improve it to be more user-friendly and accessible for non-developer users. Keep in touch for next releases!_
-
 This Chrome extension allows you to **automatically** change some properties of your tabs:
 
 * Rename the tab
