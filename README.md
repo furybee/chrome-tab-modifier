@@ -81,15 +81,19 @@ Build your own... :muscle:
 
 ### Tab Rules
 
-<img src="screenshots/options.png" alt="options">
+<img src="screenshots/tab_rules.png" alt="tab_rules">
+
+### Tab Rules Form
+
+<img src="screenshots/tab_rules_form.png" alt="tab_rules_form">
 
 ### Settings
 
-<img src="screenshots/options.png" alt="options">
+<img src="screenshots/settings.png" alt="settings">
 
 ### Help
 
-<img src="screenshots/options.png" alt="options">
+<img src="screenshots/help.png" alt="help">
 
 ## Known issues
 
