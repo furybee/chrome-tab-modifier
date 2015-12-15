@@ -47,7 +47,7 @@ app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdTheming
         });
 
     // Analytics config
-    AnalyticsProvider.setAccount('UA-27524593-6');
+    AnalyticsProvider.setAccount('UA-27524593-7');
     AnalyticsProvider.setHybridMobileSupport(true);
     AnalyticsProvider.setDomainName('none');
 
