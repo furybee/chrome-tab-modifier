@@ -12,7 +12,7 @@
         "url": "https://github.com/sylouuu/chrome-tab-modifier/issues"
     },
     "devDependencies": {
-        "angular-mocks": "1.4.8",
+        "angular-mocks": "1.4.9",
         "gulp": "~3.9.0",
         "gulp-concat": "~2.6.0",
         "gulp-jscs": "~3.0.0",
@@ -29,9 +29,9 @@
         "karma-jasmine": "~0.3.6",
         "karma-jasmine-jquery": "~0.1.1",
         "karma-jasmine-matchers": "2.0.0-beta2",
-        "karma-phantomjs-launcher": "~0.2.1",
+        "karma-phantomjs-launcher": "~1.0.0",
         "karma-spec-reporter": "~0.0.20",
-        "phantomjs": "~1.9.19",
-        "yargs": "~3.31.0"
+        "phantomjs-prebuilt": "~2.1.0",
+        "yargs": "~3.32.0"
     }
 }
