@@ -34,12 +34,12 @@ app.controller('SettingsController', ['$scope', '$mdDialog', '$mdToast', 'TabMod
                     message = 'Invalid JSON file. Please check it on jsonlint.com.';
 
                     Analytics.trackEvent('tab-rules', 'import-error-json');
-                break;
+                    break;
                 case 'INVALID_SETTINGS':
                     message = 'Invalid settings file. Is this file comes from Tab Modifier?';
 
                     Analytics.trackEvent('tab-rules', 'import-error-format');
-                break;
+                    break;
             }
 
             $mdDialog.show(
