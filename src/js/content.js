@@ -18,10 +18,8 @@ chrome.runtime.sendMessage({
         if (rule !== null) {
             // Process new title depending on current URL & current title
             var processTitle = function (current_url, current_title) {
-                var title = rule.tab.title;
-
                 // Handle {title}
-                title = (rule.tab.title.indexOf('{title}') !== -1) ? rule.tab.title.replace('{title}', current_title) : rule.tab.title;
+                var title = (rule.tab.title.indexOf('{title}') !== -1) ? rule.tab.title.replace('{title}', current_title) : rule.tab.title;
 
                 // Handle url_matcher
                 if (rule.tab.url_matcher !== null) {

@@ -7,45 +7,47 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
                 tab_id: sender.tab.id,
                 tab_modifier: localStorage.tab_modifier
             });
-        break;
+            break;
         case 'setUnique':
-            chrome.tabs.get(message.tab_id, function (current_tab) {
-                var tab;
+            chrome.tabs.getCurrent(function (current_tab) {
+                if (current_tab !== undefined) {
+                    var tab;
 
-                chrome.tabs.query({}, function (tabs) {
-                    for (var i = 0; i < tabs.length; i++) {
-                        tab = tabs[i];
+                    chrome.tabs.query({}, function (tabs) {
+                        for (var i = 0; i < tabs.length; i++) {
+                            tab = tabs[i];
 
-                        if (tab.url.indexOf(message.url_fragment) !== -1) {
-                            chrome.tabs.update(tab.id, {
-                                highlighted: true
-                            });
-
-                            if (tab.id !== current_tab.id) {
-                                chrome.tabs.executeScript(current_tab.id, {
-                                    code: 'window.onbeforeunload = function () {};'
-                                }, function () {
-                                    chrome.tabs.remove(current_tab.id);
+                            if (tab.url.indexOf(message.url_fragment) !== -1) {
+                                chrome.tabs.update(tab.id, {
+                                    highlighted: true
                                 });
+
+                                if (tab.id !== current_tab.id) {
+                                    chrome.tabs.executeScript(current_tab.id, {
+                                        code: 'window.onbeforeunload = function () {};'
+                                    }, function () {
+                                        chrome.tabs.remove(current_tab.id);
+                                    });
+                                }
                             }
                         }
-                    }
-                });
+                    });
+                }
             });
-        break;
+            break;
         case 'setPinned':
             chrome.tabs.update(message.tab_id, {
                 pinned: true
             });
-        break;
+            break;
         case 'setMuted':
             chrome.tabs.update(message.tab_id, {
                 muted: true
             });
-        break;
+            break;
         default:
             sendResponse({ });
-        break;
+            break;
     }
 });
 
