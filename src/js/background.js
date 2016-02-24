@@ -9,7 +9,7 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
             });
             break;
         case 'setUnique':
-            chrome.tabs.getCurrent(function (current_tab) {
+            chrome.tabs.get(message.tab_id, function (current_tab) {
                 if (current_tab !== undefined) {
                     var tab;
 
