@@ -44,7 +44,7 @@
             "url_fragment": "twitter.com",
             "tab": {
                 "title": "I'm working hard!",
-                "icon": "{default}",
+                "icon": "chrome/default.png",
                 "pinned": false,
                 "protected": true,
                 "unique": false,

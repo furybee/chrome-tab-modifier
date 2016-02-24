@@ -108,7 +108,7 @@ describe('TabModifier model', function () {
         expect(tab_modifier.rules[3].name).toBe('Twitter');
         expect(tab_modifier.rules[3].url_fragment).toBe('twitter.com');
         expect(tab_modifier.rules[3].tab.title).toBe('I\'m working hard!');
-        expect(tab_modifier.rules[3].tab.icon).toBe('{default}');
+        expect(tab_modifier.rules[3].tab.icon).toBe('chrome/default.png');
         expect(tab_modifier.rules[3].tab.pinned).toBe(false);
         expect(tab_modifier.rules[3].tab.protected).toBe(true);
         expect(tab_modifier.rules[3].tab.unique).toBe(false);
