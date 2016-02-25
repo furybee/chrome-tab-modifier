@@ -42,7 +42,7 @@
 <md-content class="md-padding" layout="row" layout-align="center start" ng-if="tab_modifier.rules.length > 0">
 
     <md-list flex="100" flex-md="80" flex-gt-md="70">
-        <md-list-item ng-repeat="rule in tab_modifier.rules | orderBy:'name'">
+        <md-list-item ng-repeat="rule in tab_modifier.rules">
             <p flex="40" ng-bind="rule.name"></p>
 
             <p flex="30" ng-bind="rule.url_fragment"></p>
