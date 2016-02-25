@@ -57,7 +57,7 @@ app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', '$mdToa
 
     // Duplicate a rule
     $scope.duplicate = function (rule) {
-        tab_modifier.save(new Rule(rule));
+        tab_modifier.save(new Rule(angular.copy(rule)));
 
         tab_modifier.setLocalData();
 
