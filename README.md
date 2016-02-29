@@ -66,7 +66,7 @@ Mute all Youtube videos by default:
 Set blank icon on Pinterest:
 
 * **URL fragment**: "pinterest.com"
-* **Icon**: {default}
+* **Icon**: select "Chrome > Default"
 
 Get only one GMail tab opened at once:
 
