@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "Tab Modifier",
     "version": "0.9.3",
-    "description": "Modify your tabs in Chrome",
+    "description": "Take control of your tabs",
     "homepage_url": "https://github.com/sylouuu/chrome-tab-modifier",
 
     "icons": {
