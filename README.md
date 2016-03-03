@@ -15,7 +15,7 @@ Take control of your tabs:
 ## How to use?
 
 1. Download and install from the **[Chrome Web Store](https://chrome.google.com/webstore/detail/hcbgadmbdkiilgpifjgcakjehmafcjai/)**.
-2. Click on "Tab Modifier" icon in your toolbar to access Options.
+2. Click on "<img src="dist/img/icon_16.png" alt="icon"> Tab Modifier" icon in your toolbar to access Options.
 3. Configure your tab rules.
 4. Try & enjoy!
 
