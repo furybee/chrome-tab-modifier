@@ -14,7 +14,7 @@ Take control of your tabs:
 
 ## How to use?
 
-1. Download and install from the **[Chrome Web Store](https://chrome.google.com/webstore/detail/hcbgadmbdkiilgpifjgcakjehmafcjai/)**.
+1. Install from the **[Chrome Web Store](https://chrome.google.com/webstore/detail/hcbgadmbdkiilgpifjgcakjehmafcjai/)**.
 2. Click on the <img src="dist/img/icon_16.png" alt="icon"> icon to open Options.
 3. Create your tab rules.
 4. Try & enjoy!
