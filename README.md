@@ -33,6 +33,24 @@ Take control of your tabs:
 * My Website tabs have been modified: use a prefix in title.
 * Twitter tab has been modified: use default Chrome icon (white paper) and renamed to "I'm working hard!".
 
+## Options
+
+### Tab Rules
+
+<img src="screenshots/tab_rules.png" alt="tab_rules">
+
+### Tab Rules Form
+
+<img src="screenshots/tab_rules_form.png" alt="tab_rules_form">
+
+### Settings
+
+<img src="screenshots/settings.png" alt="settings">
+
+### Help
+
+<img src="screenshots/help.png" alt="help">
+
 ## Examples
 
 You have infinite possibilities, here are some configurations:
@@ -74,24 +92,6 @@ Get only one GMail tab opened at once:
 * **Unique**: ON
 
 Build your own... :muscle:
-
-## Options
-
-### Tab Rules
-
-<img src="screenshots/tab_rules.png" alt="tab_rules">
-
-### Tab Rules Form
-
-<img src="screenshots/tab_rules_form.png" alt="tab_rules_form">
-
-### Settings
-
-<img src="screenshots/settings.png" alt="settings">
-
-### Help
-
-<img src="screenshots/help.png" alt="help">
 
 ## Known issues
 
