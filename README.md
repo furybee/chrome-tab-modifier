@@ -97,6 +97,7 @@ Build your own... :muscle:
 
 * The extension can't access to Chrome pages `chrome://` ([#11](https://github.com/sylouuu/chrome-tab-modifier/issues/11)).
 * Dynamic favicons are not supported ([#16](https://github.com/sylouuu/chrome-tab-modifier/issues/16)).
+* On some Linux distributions, you can see an option blank page because of the missing **Fira Sans** web font ([#19](https://github.com/sylouuu/chrome-tab-modifier/issues/19)).
 
 ## Changelog
 
