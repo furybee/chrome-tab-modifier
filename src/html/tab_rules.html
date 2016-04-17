@@ -45,7 +45,7 @@
         <md-list-item ng-repeat="rule in tab_modifier.rules">
             <p flex="40" ng-bind="rule.name"></p>
 
-            <p flex="30" ng-bind="rule.url_fragment"></p>
+            <p class="text-nowrap" flex="30" ng-bind="rule.url_fragment"></p>
 
             <div flex="30" layout="row" layout-align="end center">
                 <md-button class="md-icon-button" ng-click="showForm($event, rule)" aria-label="Edit rule" ga-track-event="['tab-rules', 'edit-rule']">
