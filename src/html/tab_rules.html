@@ -43,7 +43,9 @@
 
     <md-list flex="100" flex-md="80" flex-gt-md="70">
         <md-list-item ng-repeat="rule in tab_modifier.rules">
-            <p flex="40" ng-bind="rule.name"></p>
+            <p class="text-nowrap" flex="40" ng-bind="rule.name">
+                <md-tooltip md-direction="bottom">{{ rule.name }}</md-tooltip>
+            </p>
 
             <p class="text-nowrap" flex="30" ng-bind="rule.url_fragment">
                 <md-tooltip md-direction="bottom">{{ rule.url_fragment }}</md-tooltip>
