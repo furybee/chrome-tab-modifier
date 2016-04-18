@@ -1,7 +1,7 @@
 {
     "name": "chrome-tab-modifier",
-    "version": "0.9.3",
-    "description": "Modify your tabs in Chrome",
+    "version": "0.9.4",
+    "description": "Take control of your tabs",
     "repository": {
         "type": "git",
         "url": "https://github.com/sylouuu/chrome-tab-modifier.git"
