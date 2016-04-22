@@ -56,7 +56,7 @@ app.factory('TabModifier', ['Rule', function (Rule) {
         for (var key in old_settings) {
             if (old_settings.hasOwnProperty(key)) {
                 rule = new Rule({
-                    name: 'Rule '+ (i + 1),
+                    name: 'Rule ' + (i + 1),
                     url_fragment: key,
                     tab: {
                         title: old_settings[key].title || null,

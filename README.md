@@ -95,9 +95,37 @@ Build your own... :muscle:
 
 ## Known issues
 
-* The extension can't access to Chrome pages `chrome://` ([#11](https://github.com/sylouuu/chrome-tab-modifier/issues/11)).
-* Dynamic favicons are not supported ([#16](https://github.com/sylouuu/chrome-tab-modifier/issues/16)).
-* On some Linux distributions, you can see an option blank page because of the missing **Fira Sans** web font ([#19](https://github.com/sylouuu/chrome-tab-modifier/issues/19)).
+### Local icon path doesn't work
+
+Related issue: [#5](https://github.com/sylouuu/chrome-tab-modifier/issues/5)
+
+Due to browser security restrictions, this path won't work: `file://<path>/icon.png`.
+Your icon will not be shown by Chrome.
+
+Alternatively, you can upload your icon somewhere like [imgur.com](http://imgur.com/) and paste the direct link in your rule.
+
+### Chrome system pages `chrome://`
+
+Related issues: [#11](https://github.com/sylouuu/chrome-tab-modifier/issues/11), [#14](https://github.com/sylouuu/chrome-tab-modifier/issues/14)
+
+Pages that start with `chrome://` URL are protected. No content script can be injected then Tab Modifier will not work on these pages.
+
+### Dynamic favicon
+
+Related issue: [#16](https://github.com/sylouuu/chrome-tab-modifier/issues/16)
+
+The extension does not detect website with dynamic favicon.
+
+For example, you set a custom favicon on a website, on the page reload, the default favicon will be replaced by yours.
+In case the website wants to replace the favicon by a new one in Javascript, like prepending with "(1)", e.g. a notification,
+Tab Modifier will not detect this change.
+
+### Blank option page
+
+Related issues: [#19](https://github.com/sylouuu/chrome-tab-modifier/issues/19), [#20](https://github.com/sylouuu/chrome-tab-modifier/issues/20)
+
+On some Linux distributions, you can see an option blank page because of the missing **Fira Sans** web font. You have to install it. 
+For more info, refer to the related issue.
 
 ## Changelog
 

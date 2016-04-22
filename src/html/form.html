@@ -37,7 +37,7 @@
                 <md-input-container>
                     <label for="rule_title" class="md-body-1">Title</label>
                     <input id="rule_title" type="text" ng-model="rule.tab.title" placeholder="e.g. Hey {title}">
-                    <span class="md-caption">The new title you want to display, use <code>{title}</code> to insert the website title</span>
+                    <span class="md-caption">The new title you want to display in the tab.<br>You can inject any DOM content with <code>{selector}</code>. Examples: <code>{title}</code> for website title, <code>{h1}</code>, <code>{#id}</code>, <code>{.class}</code>, etc.</span>
                 </md-input-container>
 
                 <!-- Icon -->

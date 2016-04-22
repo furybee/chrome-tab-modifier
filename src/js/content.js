@@ -16,18 +16,64 @@ chrome.runtime.sendMessage({
 
         // A rule is available
         if (rule !== null) {
-            // Process new title depending on current URL & current title
-            var processTitle = function (current_url, current_title) {
-                // Handle {title}
-                var title = (rule.tab.title.indexOf('{title}') !== -1) ? rule.tab.title.replace('{title}', current_title) : rule.tab.title;
+            var getTextBySelector, updateTitle, processTitle;
+
+            /**
+             * Returns the text related to the given CSS selector
+             * @param selector
+             * @returns {string}
+             */
+            getTextBySelector = function (selector) {
+                var el = document.querySelector(selector), value = '';
+
+                if (el !== null) {
+                    value = el.innerText || el.textContent;
+                }
+
+                return value.trim();
+            };
+
+            /**
+             * Update title string by replacing given tag by value
+             * @param title
+             * @param tag
+             * @param value
+             * @returns {*}
+             */
+            updateTitle = function (title, tag, value) {
+                if (value === '') {
+                    return title;
+                }
+
+                return title.replace(tag, value);
+            };
+
+            /**
+             * Process new title depending on current URL & current title
+             * @param current_url
+             * @returns {*}
+             */
+            processTitle = function (current_url) {
+                var title = rule.tab.title, matches = title.match(/\{([^}]+)}/g), i;
+
+                // Handle curly braces tags inside title
+                if (matches !== null) {
+                    var selector, text;
+
+                    for (i = 0; i < matches.length; i++) {
+                        selector = matches[i].substring(1, matches[i].length - 1);
+                        text     = getTextBySelector(selector);
+                        title    = updateTitle(title, matches[i], text);
+                    }
+                }
 
                 // Handle url_matcher
                 if (rule.tab.url_matcher !== null) {
                     var matcher = current_url.match(rule.tab.url_matcher);
 
                     if (matcher !== null) {
-                        for (var i = 0; i <= matcher.length; i++) {
-                            title = title.replace('$'+ i, matcher[i] || '');
+                        for (i = 0; i <= matcher.length; i++) {
+                            title = title.replace('$' + i, matcher[i] || '');
                         }
                     }
                 }
@@ -37,7 +83,7 @@ chrome.runtime.sendMessage({
 
             // Set title
             if (rule.tab.title !== null) {
-                document.title = processTitle(location.href, document.title);
+                document.title = processTitle(location.href);
             }
 
             var changed_by_me = false, observer;
@@ -47,9 +93,9 @@ chrome.runtime.sendMessage({
                 if (changed_by_me === true) {
                     changed_by_me = false;
                 } else {
-                    mutations.forEach(function (mutation) {
+                    mutations.forEach(function () {
                         if (rule.tab.title !== null) {
-                            document.title = processTitle(location.href, mutation.target.textContent);
+                            document.title = processTitle(location.href);
                         }
 
                         changed_by_me = true;
@@ -84,7 +130,7 @@ chrome.runtime.sendMessage({
                 });
 
                 // Set preconfigured or custom ("http" catched) icon
-                icon = (rule.tab.icon.indexOf('http') === -1) ? chrome.extension.getURL('/img/'+ rule.tab.icon) : rule.tab.icon;
+                icon = (rule.tab.icon.indexOf('http') === -1) ? chrome.extension.getURL('/img/' + rule.tab.icon) : rule.tab.icon;
 
                 // Create new favicon
                 link      = document.createElement('link');

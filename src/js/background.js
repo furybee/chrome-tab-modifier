@@ -46,15 +46,15 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
             });
             break;
         default:
-            sendResponse({ });
+            sendResponse({});
             break;
     }
 });
 
 chrome.browserAction.onClicked.addListener(function (tab) {
     var relative_options_page_file = 'html/options.min.html',
-        options_url = chrome.extension.getURL(relative_options_page_file),
-        found = false;
+        options_url                = chrome.extension.getURL(relative_options_page_file),
+        found                      = false;
 
     chrome.tabs.query({}, function (tabs) {
         for (var i = 0; i < tabs.length; i++) {

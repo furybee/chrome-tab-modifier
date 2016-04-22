@@ -28,8 +28,8 @@
         <h2 class="md-headline">What behaviors?</h2>
 
         <ul>
-            <li>You can <strong>rename</strong> a tab title, <abbr title="prefix and suffix">partially</abbr> or totally.</li>
-            <li>You can set a new <strong>favicon</strong> or decide to apply a neutral one.</li>
+            <li>You can <strong>rename</strong> a tab.</li>
+            <li>You can set a new <strong>favicon</strong>.</li>
             <li>You can <strong>pin</strong> a website without effort.</li>
             <li>You can <strong>protect</strong> some websites from accidental closure with a confirm box.</li>
             <li>You can avoid duplicate tabs by setting up the <strong>unique</strong> property.</li>
@@ -56,11 +56,11 @@
         <p>After filling these info, you can now select some actions:</p>
 
         <ul>
-            <li>the new <strong>title</strong> for the website, add <code>{title}</code> to append the website title, e.g. Hello {title}</li>
-            <li>the new <strong>icon</strong>, select a preconfigured one or set a valid image URL</li>
+            <li>the new <strong>title</strong> for the website, you can inject variables like <code>{title}</code> as <code>title</code> is a valid CSS selector parsed with <code>document.querySelector()</code></li>
+            <li>the new <strong>icon</strong>, select one or set a valid image URL</li>
             <li>the <strong>pinned</strong> state (ON/OFF)</li>
-            <li>the <strong>protected</strong> state  (ON/OFF)</li>
-            <li>the <strong>unique</strong> state  (ON/OFF)</li>
+            <li>the <strong>protected</strong> state (ON/OFF)</li>
+            <li>the <strong>unique</strong> state (ON/OFF)</li>
             <li>the <strong>muted</strong> state (ON/OFF)</li>
             <li>the <strong>URL matcher</strong> to identify some URL parts and use them inside the title (advanced usage), enter a regular expression like <code>q=([^&]+)</code> and use <code>$1</code> in <strong>title</strong></li>
         </ul>
