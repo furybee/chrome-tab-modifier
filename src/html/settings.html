@@ -27,19 +27,20 @@
         </md-card-header>
         <md-card-content>
             <md-list>
-                <md-list-item class="md-2-line">
+                <md-list-item class="md-2-line _md-no-proxy">
                     <div class="md-list-item-text">
                         <h3>Import tab rules</h3>
                         <p>Restore your tab rules settings from external JSON file.</p>
                     </div>
 
-                    <input-file-button>
-                        <md-button class="md-primary md-secondary md-raised" aria-label="Upload a file" ga-track-event="['tab-rules', 'import']">
-                            <md-icon md-svg-icon="file-import"></md-icon>
-                            Import tab rules
-                        </md-button>
-                        <input id="settings" type="file" on-read-file="import($fileContent)" accept="application/json">
-                    </input-file-button>
+                     <div class="md-secondary">
+                         <input-file-button>
+                             <md-button class="md-primary md-raised" aria-label="Upload a file" ga-track-event="['tab-rules', 'import']">
+                                 <md-icon md-svg-icon="file-import"></md-icon> Import tab rules
+                             </md-button>
+                             <input id="settings" type="file" on-read-file="import($fileContent)" accept="application/json">
+                         </input-file-button>
+                     </div>
                 </md-list-item>
 
                 <md-divider></md-divider>
