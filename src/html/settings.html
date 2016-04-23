@@ -1,7 +1,7 @@
 <md-toolbar>
     <nav class="md-toolbar-tools">
         <md-button class="md-icon-button" ng-click="toggleSideNav()" aria-label="Toggle left menu" hide-gt-sm>
-            <md-icon class="md-icon-title" md-svg-icon="menu"></md-icon>
+            <md-icon md-svg-icon="menu"></md-icon>
         </md-button>
         <h1>Settings</h1>
     </nav>
@@ -19,7 +19,7 @@
     <md-card flex="100" flex-offset-gt-md="15" flex-gt-md="70">
         <md-card-header class="md-primary">
             <md-card-avatar>
-                <md-icon class="md-icon-title" md-svg-icon="backup-restore"></md-icon>
+                <md-icon md-svg-icon="backup-restore"></md-icon>
             </md-card-avatar>
             <md-card-header-text class="md-title-only" layout-align="center start">
                 <h2 class="md-title">Backup zone</h2>
@@ -35,7 +35,7 @@
 
                     <input-file-button>
                         <md-button class="md-primary md-secondary md-raised" aria-label="Upload a file" ga-track-event="['tab-rules', 'import']">
-                            <md-icon class="md-icon-title" md-svg-icon="file-import"></md-icon>
+                            <md-icon md-svg-icon="file-import"></md-icon>
                             Import tab rules
                         </md-button>
                         <input id="settings" type="file" on-read-file="import($fileContent)" accept="application/json">
@@ -51,7 +51,7 @@
                     </div>
 
                     <md-button class="md-primary md-secondary md-raised" ng-href="{{ json_url }}" download="tab_modifier.json" arial-label="Export tab rules" ga-track-event="['tab-rules', 'export']">
-                        <md-icon class="md-icon-title" md-svg-icon="file-export"></md-icon>
+                        <md-icon md-svg-icon="file-export"></md-icon>
                         Export tab rules
                     </md-button>
                 </md-list-item>
@@ -63,7 +63,7 @@
     <md-card flex="100" flex-offset-gt-md="15" flex-gt-md="70">
         <md-card-header class="md-warn">
             <md-card-avatar>
-                <md-icon class="md-icon-title" md-svg-icon="alert"></md-icon>
+                <md-icon md-svg-icon="alert"></md-icon>
             </md-card-avatar>
             <md-card-header-text class="md-title-only" layout-align="center start">
                 <h2 class="md-title">Danger zone</h2>
@@ -78,7 +78,7 @@
                     </div>
 
                     <md-button class="md-warn md-secondary md-raised" ng-click="deleteRules($event)" ng-disabled="tab_modifier.rules.length === 0">
-                        <md-icon class="md-icon-title" md-svg-icon="delete"></md-icon>
+                        <md-icon md-svg-icon="delete"></md-icon>
                         Delete all
                     </md-button>
                 </md-list-item>

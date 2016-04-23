@@ -49,19 +49,19 @@
                         <md-select ng-model="rule.tab.icon">
                             <md-optgroup label="Chrome">
                                 <md-option layout="row" layout-align="start center" ng-repeat="icon in icon_list | filter: { category: 'chrome' }:true | orderBy: 'name'" ng-value="icon.value">
-                                    <img class="md-icon-title md-img-select md-icon-16x" ng-src="../img/{{ icon.value }}" alt="{{ icon.name }}"> {{ icon.name }}
+                                    <img class="md-img-select md-icon-16x" ng-src="../img/{{ icon.value }}" alt="{{ icon.name }}"> {{ icon.name }}
                                 </md-option>
                             </md-optgroup>
 
                             <md-optgroup label="Color">
                                 <md-option layout="row" layout-align="start center" ng-repeat="icon in icon_list | filter: { category: 'color' }:true | orderBy: 'name'" ng-value="icon.value">
-                                    <img class="md-icon-title md-img-select md-icon-16x" ng-src="../img/{{ icon.value }}" alt="{{ icon.name }}"> {{ icon.name }}
+                                    <img class="md-img-select md-icon-16x" ng-src="../img/{{ icon.value }}" alt="{{ icon.name }}"> {{ icon.name }}
                                 </md-option>
                             </md-optgroup>
 
                             <md-optgroup label="Color Alt">
                                 <md-option layout="row" layout-align="start center" ng-repeat="icon in icon_list | filter: { category: 'color-alt' }:true | orderBy: 'name'" ng-value="icon.value">
-                                    <img class="md-icon-title md-img-select md-icon-16x" ng-src="../img/{{ icon.value }}" alt="{{ icon.name }}"> {{ icon.name }}
+                                    <img class="md-img-select md-icon-16x" ng-src="../img/{{ icon.value }}" alt="{{ icon.name }}"> {{ icon.name }}
                                 </md-option>
                             </md-optgroup>
                         </md-select>

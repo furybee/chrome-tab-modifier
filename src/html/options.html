@@ -6,7 +6,7 @@
 
         <title>Tab Modifier</title>
 
-        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.5/angular-material.min.css">
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc4/angular-material.min.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Fira+Sans:300,400,500">
 
         <style>
@@ -38,10 +38,6 @@
 
             .md-subheader .md-button.md-fab.md-fab-bottom-right {
                 bottom: -50px;
-            }
-
-            .md-icon-title {
-                margin-right: 1rem;
             }
 
             .md-img-select {
@@ -102,7 +98,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
 
         <!-- Angular Material Javascript  -->
-        <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.0.5/angular-material.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc4/angular-material.min.js"></script>
 
         <script src="../js/libs/angular-google-analytics.min.js"></script>
         <script src="../js/options.min.js"></script>
@@ -124,7 +120,7 @@
                     <!-- Rules link -->
                     <md-menu-item>
                         <md-button class="md-button" ng-class="{ 'md-focused': location.path() === '/' }" href="#/" aria-label="Tabs" ng-click="closeSideNav()">
-                            <md-icon class="md-icon-title" md-svg-icon="tab"></md-icon>
+                            <md-icon md-svg-icon="tab"></md-icon>
                             Tab Rules
                         </md-button>
                     </md-menu-item>
@@ -132,7 +128,7 @@
                     <!-- Settings link -->
                     <md-menu-item>
                         <md-button class="md-button" ng-class="{ 'md-focused': location.path() === '/settings' }" href="#/settings" aria-label="Settings" ng-click="closeSideNav()">
-                            <md-icon class="md-icon-title" md-svg-icon="settings"></md-icon>
+                            <md-icon md-svg-icon="settings"></md-icon>
                             Settings
                         </md-button>
                     </md-menu-item>
@@ -140,7 +136,7 @@
                     <!-- Help link -->
                     <md-menu-item>
                         <md-button class="md-button" ng-class="{ 'md-focused': location.path() === '/help' }" href="#/help" aria-label="Help" ng-click="closeSideNav()">
-                            <md-icon class="md-icon-title" md-svg-icon="help"></md-icon>
+                            <md-icon md-svg-icon="help"></md-icon>
                             Help
                         </md-button>
                     </md-menu-item>
@@ -150,7 +146,7 @@
                     <!-- Chrome Web Store link -->
                     <md-menu-item>
                         <md-button class="md-button" href="https://chrome.google.com/webstore/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai" target="_blank" aria-label="Chrome Web Store Project" ng-click="closeSideNav()" ga-track-event="['resources', 'chrome-web-store-click']">
-                            <md-icon class="md-icon-title" md-svg-icon="google-chrome"></md-icon>
+                            <md-icon md-svg-icon="google-chrome"></md-icon>
                             Chrome Web Store
                         </md-button>
                     </md-menu-item>
@@ -158,7 +154,7 @@
                     <!-- Github link -->
                     <md-menu-item>
                         <md-button class="md-button" href="https://github.com/sylouuu/chrome-tab-modifier" target="_blank" aria-label="GitHub Project" ng-click="closeSideNav()" ga-track-event="['resources', 'github-click']">
-                            <md-icon class="md-icon-title" md-svg-icon="github-circle"></md-icon>
+                            <md-icon md-svg-icon="github-circle"></md-icon>
                             GitHub
                         </md-button>
                     </md-menu-item>
