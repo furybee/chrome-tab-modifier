@@ -57,38 +57,38 @@ You have infinite possibilities, here are some configurations:
 
 Pin all tabs:
 
-* **URL fragment**: "http"
+* **URL fragment**: http
 * **Pinned**: ON
 
 Say hello to all Google websites:
 
-* **URL fragment**: "google.com"
+* **URL fragment**: google.com
 * **Title**: Hello Google: {title}
 
 Disguise GitHub as Google
 
-* **URL fragment**: "github.com"
+* **URL fragment**: github.com
 * **Title**: Google
 * **Icon**: https://www.google.com/favicon.ico
 
 Prevent accidental tab closure:
 
-* **URL fragment**: "important-website.com"
+* **URL fragment**: important-website.com
 * **Protected**: ON
 
 Mute all Youtube videos by default:
 
-* **URL fragment**: "youtube.com"
+* **URL fragment**: youtube.com
 * **Mute**: ON
 
 Set blank icon on Pinterest:
 
-* **URL fragment**: "pinterest.com"
+* **URL fragment**: pinterest.com
 * **Icon**: select "Chrome > Default"
 
 Get only one GMail tab opened at once:
 
-* **URL fragment**: "mail.google.com"
+* **URL fragment**: mail.google.com
 * **Unique**: ON
 
 Build your own... :muscle:
