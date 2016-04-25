@@ -94,7 +94,8 @@ Get only one GMail tab opened at once:
 Customize title with HTML selector and Regexp:
 
 * **URL fragment**: github.com
-* **title**: {title} | $2 by $1
+* **Title**: {title} | $2 by $1
+* **URL matcher**: github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)
 
 Tab title will be: "sylouuu/chrome-tab-modifier: Take control of your tabs | chrome-tab-modifier by sylouuu"
 
@@ -131,7 +132,7 @@ Tab Modifier will not detect this change.
 
 Related issues: [#19](https://github.com/sylouuu/chrome-tab-modifier/issues/19), [#20](https://github.com/sylouuu/chrome-tab-modifier/issues/20)
 
-On some Linux distributions, you can see an option blank page because of the missing **Fira Sans** web font. You have to install it. 
+On some Linux distributions, you can see an option blank page because of the missing **Fira Sans** web font. You have to install it.
 For more info, refer to the related issue.
 
 ## Changelog
