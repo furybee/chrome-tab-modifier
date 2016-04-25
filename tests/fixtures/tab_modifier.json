@@ -88,7 +88,7 @@
                 "protected": false,
                 "unique": false,
                 "muted": false,
-                "url_matcher": "github\\\\.com\\/([A-Za-z0-9\\\\-\\\\_]+)\\/([A-Za-z0-9\\\\-\\\\_]+)"
+                "url_matcher": "github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)"
             }
         }
     ]

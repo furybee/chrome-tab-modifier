@@ -143,7 +143,7 @@ describe('TabModifier model', function () {
         expect(tab_modifier.rules[6].tab.protected).toBe(false);
         expect(tab_modifier.rules[6].tab.unique).toBe(false);
         expect(tab_modifier.rules[6].tab.muted).toBe(false);
-        expect(tab_modifier.rules[6].tab.url_matcher).toBe('github\\\\.com\\/([A-Za-z0-9\\\\-\\\\_]+)\\/([A-Za-z0-9\\\\-\\\\_]+)');
+        expect(tab_modifier.rules[6].tab.url_matcher).toBe('github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)');
     });
 
     it('Get local data', function () {
@@ -229,7 +229,7 @@ describe('TabModifier model', function () {
         expect(tab_modifier.rules[6].tab.protected).toBe(false);
         expect(tab_modifier.rules[6].tab.unique).toBe(false);
         expect(tab_modifier.rules[6].tab.muted).toBe(false);
-        expect(tab_modifier.rules[6].tab.url_matcher).toBe('github\\.com\/([A-Za-z0-9\\-\\_]+)\/([A-Za-z0-9\\-\\_]+)');
+        expect(tab_modifier.rules[6].tab.url_matcher).toBe('github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)');
     });
 
     it('Check file before import', function () {

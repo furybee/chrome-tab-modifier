@@ -69,12 +69,16 @@ chrome.runtime.sendMessage({
 
                 // Handle url_matcher
                 if (rule.tab.url_matcher !== null) {
-                    var matcher = current_url.match(rule.tab.url_matcher);
+                    try {
+                        matches = current_url.match(new RegExp(rule.tab.url_matcher), 'g');
 
-                    if (matcher !== null) {
-                        for (i = 0; i <= matcher.length; i++) {
-                            title = title.replace('$' + i, matcher[i] || '');
+                        if (matches !== null) {
+                            for (i = 0; i < matches.length; i++) {
+                                title = updateTitle(title, '$' + i, matches[i]);
+                            }
                         }
+                    } catch (e) {
+                        console.log(e);
                     }
                 }
 
