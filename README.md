@@ -91,7 +91,14 @@ Get only one GMail tab opened at once:
 * **URL fragment**: mail.google.com
 * **Unique**: ON
 
-Build your own... :muscle:
+Customize title with HTML selector and Regexp:
+
+* **URL fragment**: github.com
+* **title**: {title} | $2 by $1
+
+Tab title will be: "sylouuu/chrome-tab-modifier: Take control of your tabs | chrome-tab-modifier by sylouuu"
+
+And now, build your own... :muscle:
 
 ## Known issues
 
