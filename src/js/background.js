@@ -18,10 +18,6 @@ chrome.runtime.onMessage.addListener(function (message, sender, sendResponse) {
                             tab = tabs[i];
 
                             if (tab.url.indexOf(message.url_fragment) !== -1) {
-                                chrome.tabs.update(tab.id, {
-                                    highlighted: true
-                                });
-
                                 if (tab.id !== current_tab.id) {
                                     chrome.tabs.executeScript(current_tab.id, {
                                         code: 'window.onbeforeunload = function () {};'
