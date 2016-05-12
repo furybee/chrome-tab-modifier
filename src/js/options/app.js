@@ -31,7 +31,8 @@ app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdTheming
         .icon('edit', '/icons/pencil.svg')
         .icon('google-chrome', '/icons/google-chrome.svg')
         .icon('github-circle', '/icons/github-circle.svg')
-        .icon('help', '/icons/help-circle.svg');
+        .icon('help', '/icons/help-circle.svg')
+        .icon('credit-card', '/icons/credit-card.svg');
 
     // Configure default theme
     $mdThemingProvider
