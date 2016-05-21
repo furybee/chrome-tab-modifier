@@ -1,15 +1,20 @@
-app.controller('SettingsController', ['$scope', '$mdDialog', '$mdToast', 'TabModifier', 'Analytics', function ($scope, $mdDialog, $mdToast, TabModifier, Analytics) {
+app.controller('SettingsController', ['$scope', '$mdDialog', '$mdToast', '$location', 'TabModifier', 'Analytics', function ($scope, $mdDialog, $mdToast, $location, TabModifier, Analytics) {
 
     var tab_modifier = new TabModifier();
 
-    // Load saved data
-    tab_modifier.getLocalData();
+    chrome.storage.sync.get('tab_modifier', function (items) {
+        if (items.tab_modifier === undefined) {
+            return;
+        }
 
-    $scope.tab_modifier = tab_modifier;
+        tab_modifier.build(items.tab_modifier);
 
-    // Generate JSON url
-    $scope.json_url = tab_modifier.export();
+        $scope.tab_modifier = tab_modifier;
 
+        // Generate JSON url
+        $scope.json_url = tab_modifier.export();
+    });
+    
     // Import tab rules action
     $scope.import = function (content) {
         var result = tab_modifier.checkFileBeforeImport(content);
@@ -17,7 +22,9 @@ app.controller('SettingsController', ['$scope', '$mdDialog', '$mdToast', 'TabMod
         if (result === true) {
             document.getElementById('settings').value = '';
 
-            localStorage.tab_modifier = content;
+            tab_modifier.import(content).sync();
+
+            $location.path('/');
 
             $mdToast.show(
                 $mdToast.simple()
@@ -66,9 +73,7 @@ app.controller('SettingsController', ['$scope', '$mdDialog', '$mdToast', 'TabMod
             .cancel('Cancel');
 
         $mdDialog.show(confirm).then(function () {
-            tab_modifier.deleteRules();
-
-            tab_modifier.setLocalData();
+            tab_modifier.deleteRules().sync();
 
             $mdToast.show(
                 $mdToast.simple()

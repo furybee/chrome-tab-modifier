@@ -146,92 +146,10 @@ describe('TabModifier model', function () {
         expect(tab_modifier.rules[6].tab.url_matcher).toBe('github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)');
     });
 
-    it('Get local data', function () {
+    it('Sync data', function () {
         pending();
     });
-
-    it('Set local data', function () {
-        pending();
-    });
-
-    it('Migrate old settings', function () {
-        var tab_modifier = new TabModifier();
-
-        tab_modifier.migrateOldSettings(JSON.stringify(getJSONFixture('old_settings.json')));
-
-        expect(tab_modifier.rules).toBeArrayOfSize(7);
-
-        expect(tab_modifier.rules[0].name).toBe('Rule 1');
-        expect(tab_modifier.rules[0].url_fragment).toBe('.local');
-        expect(tab_modifier.rules[0].tab.title).toBe('[DEV] {title}');
-        expect(tab_modifier.rules[0].tab.icon).toBe(null);
-        expect(tab_modifier.rules[0].tab.pinned).toBe(false);
-        expect(tab_modifier.rules[0].tab.protected).toBe(false);
-        expect(tab_modifier.rules[0].tab.unique).toBe(false);
-        expect(tab_modifier.rules[0].tab.muted).toBe(false);
-        expect(tab_modifier.rules[0].tab.url_matcher).toBe(null);
-
-        expect(tab_modifier.rules[1].name).toBe('Rule 2');
-        expect(tab_modifier.rules[1].url_fragment).toBe('domain.com');
-        expect(tab_modifier.rules[1].tab.title).toBe('[PROD] {title}');
-        expect(tab_modifier.rules[1].tab.icon).toBe(null);
-        expect(tab_modifier.rules[1].tab.pinned).toBe(false);
-        expect(tab_modifier.rules[1].tab.protected).toBe(false);
-        expect(tab_modifier.rules[1].tab.unique).toBe(false);
-        expect(tab_modifier.rules[1].tab.muted).toBe(false);
-        expect(tab_modifier.rules[1].tab.url_matcher).toBe(null);
-
-        expect(tab_modifier.rules[2].name).toBe('Rule 3');
-        expect(tab_modifier.rules[2].url_fragment).toBe('youtube.com');
-        expect(tab_modifier.rules[2].tab.title).toBe(null);
-        expect(tab_modifier.rules[2].tab.icon).toBe('https://www.google.com/favicon.ico');
-        expect(tab_modifier.rules[2].tab.pinned).toBe(true);
-        expect(tab_modifier.rules[2].tab.protected).toBe(false);
-        expect(tab_modifier.rules[2].tab.unique).toBe(false);
-        expect(tab_modifier.rules[2].tab.muted).toBe(false);
-        expect(tab_modifier.rules[2].tab.url_matcher).toBe(null);
-
-        expect(tab_modifier.rules[3].name).toBe('Rule 4');
-        expect(tab_modifier.rules[3].url_fragment).toBe('twitter.com');
-        expect(tab_modifier.rules[3].tab.title).toBe('I\'m working hard!');
-        expect(tab_modifier.rules[3].tab.icon).toBe('chrome/default.png');
-        expect(tab_modifier.rules[3].tab.pinned).toBe(false);
-        expect(tab_modifier.rules[3].tab.protected).toBe(true);
-        expect(tab_modifier.rules[3].tab.unique).toBe(false);
-        expect(tab_modifier.rules[3].tab.muted).toBe(false);
-        expect(tab_modifier.rules[3].tab.url_matcher).toBe(null);
-
-        expect(tab_modifier.rules[4].name).toBe('Rule 5');
-        expect(tab_modifier.rules[4].url_fragment).toBe('mail.google.com');
-        expect(tab_modifier.rules[4].tab.title).toBe(null);
-        expect(tab_modifier.rules[4].tab.icon).toBe(null);
-        expect(tab_modifier.rules[4].tab.pinned).toBe(false);
-        expect(tab_modifier.rules[4].tab.protected).toBe(false);
-        expect(tab_modifier.rules[4].tab.unique).toBe(true);
-        expect(tab_modifier.rules[4].tab.muted).toBe(false);
-        expect(tab_modifier.rules[4].tab.url_matcher).toBe(null);
-
-        expect(tab_modifier.rules[5].name).toBe('Rule 6');
-        expect(tab_modifier.rules[5].url_fragment).toBe('pinterest.com/search');
-        expect(tab_modifier.rules[5].tab.title).toBe('$1 | Pinterest');
-        expect(tab_modifier.rules[5].tab.icon).toBe(null);
-        expect(tab_modifier.rules[5].tab.pinned).toBe(false);
-        expect(tab_modifier.rules[5].tab.protected).toBe(false);
-        expect(tab_modifier.rules[5].tab.unique).toBe(false);
-        expect(tab_modifier.rules[5].tab.muted).toBe(false);
-        expect(tab_modifier.rules[5].tab.url_matcher).toBe('q=([^&]+)');
-
-        expect(tab_modifier.rules[6].name).toBe('Rule 7');
-        expect(tab_modifier.rules[6].url_fragment).toBe('github.com');
-        expect(tab_modifier.rules[6].tab.title).toBe('{title} | $2 by $1');
-        expect(tab_modifier.rules[6].tab.icon).toBe(null);
-        expect(tab_modifier.rules[6].tab.pinned).toBe(false);
-        expect(tab_modifier.rules[6].tab.protected).toBe(false);
-        expect(tab_modifier.rules[6].tab.unique).toBe(false);
-        expect(tab_modifier.rules[6].tab.muted).toBe(false);
-        expect(tab_modifier.rules[6].tab.url_matcher).toBe('github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)');
-    });
-
+    
     it('Check file before import', function () {
         var tab_modifier = new TabModifier();
 

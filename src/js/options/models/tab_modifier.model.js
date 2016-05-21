@@ -36,52 +36,10 @@ app.factory('TabModifier', ['Rule', function (Rule) {
         });
     };
 
-    TabModifier.prototype.getLocalData = function () {
-        if (localStorage.tab_modifier !== undefined) {
-            this.build(JSON.parse(localStorage.tab_modifier));
-        }
+    TabModifier.prototype.sync = function () {
+        chrome.storage.sync.set({ 'tab_modifier' : this });
     };
-
-    TabModifier.prototype.setLocalData = function () {
-        localStorage.tab_modifier = JSON.stringify(this);
-    };
-
-    TabModifier.prototype.migrateOldSettings = function (old_settings) {
-        var self = this, rule, i = 0;
-
-        this.deleteRules();
-
-        old_settings = JSON.parse(old_settings);
-
-        for (var key in old_settings) {
-            if (old_settings.hasOwnProperty(key)) {
-                rule = new Rule({
-                    name: 'Rule ' + (i + 1),
-                    url_fragment: key,
-                    tab: {
-                        title: old_settings[key].title || null,
-                        icon: old_settings[key].icon || null,
-                        pinned: old_settings[key].pinned || false,
-                        protected: old_settings[key].protected || false,
-                        unique: old_settings[key].unique || false,
-                        muted: old_settings[key].muted || false,
-                        url_matcher: old_settings[key].url_matcher || null
-                    }
-                });
-
-                if (old_settings[key].icon === '{default}') {
-                    rule.tab.icon = 'chrome/default.png';
-                }
-
-                self.addRule(rule);
-            }
-
-            i++;
-        }
-
-        return true;
-    };
-
+    
     TabModifier.prototype.checkFileBeforeImport = function (json) {
         if (json !== undefined) {
             try {
@@ -100,6 +58,12 @@ app.factory('TabModifier', ['Rule', function (Rule) {
         }
     };
 
+    TabModifier.prototype.import = function (json) {
+        this.build(JSON.parse(json));
+
+        return this;
+    };
+
     TabModifier.prototype.export = function () {
         var blob = new Blob([JSON.stringify(this, null, 4)], { type: 'text/plain' });
 
@@ -108,6 +72,8 @@ app.factory('TabModifier', ['Rule', function (Rule) {
 
     TabModifier.prototype.deleteRules = function () {
         this.setModel({ rules: [] });
+
+        return this;
     };
 
     return TabModifier;

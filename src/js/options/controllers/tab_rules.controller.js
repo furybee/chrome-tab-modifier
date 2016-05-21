@@ -2,23 +2,26 @@ app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', '$mdToa
 
     var tab_modifier = new TabModifier(), icon_list = [];
 
-    // Avoid BC break
-    if (localStorage.settings !== undefined) {
-        tab_modifier.migrateOldSettings(localStorage.settings);
-
-        localStorage.removeItem('settings');
-
-        tab_modifier.setLocalData();
-    }
-
-    // Load saved data
-    tab_modifier.getLocalData();
-
-    $scope.tab_modifier = tab_modifier;
-
     // Load icon list
     $http.get('/js/icons.min.json').then(function (request) {
         icon_list = request.data;
+    });
+
+    chrome.storage.sync.get('tab_modifier', function (items) {
+        if (items.tab_modifier === undefined) {
+            return;
+        }
+
+        tab_modifier.build(items.tab_modifier);
+
+        $scope.tab_modifier = tab_modifier;
+
+        // Avoid BC break
+        if (localStorage.tab_modifier !== undefined) {
+            tab_modifier.import(localStorage.tab_modifier).sync();
+
+            localStorage.removeItem('tab_modifier');
+        }
     });
 
     // Show modal form
@@ -43,7 +46,7 @@ app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', '$mdToa
             // Save a rule
             tab_modifier.save(rule, index);
 
-            tab_modifier.setLocalData();
+            tab_modifier.sync();
 
             $mdToast.show(
                 $mdToast.simple()
@@ -59,7 +62,7 @@ app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', '$mdToa
     $scope.duplicate = function (rule) {
         tab_modifier.save(new Rule(angular.copy(rule)));
 
-        tab_modifier.setLocalData();
+        tab_modifier.sync();
 
         $mdToast.show(
             $mdToast.simple()
@@ -83,7 +86,7 @@ app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', '$mdToa
         $mdDialog.show(confirm).then(function () {
             tab_modifier.removeRule(rule);
 
-            tab_modifier.setLocalData();
+            tab_modifier.sync();
 
             $mdToast.show(
                 $mdToast.simple()
