@@ -37,9 +37,9 @@ app.factory('TabModifier', ['Rule', function (Rule) {
     };
 
     TabModifier.prototype.sync = function () {
-        chrome.storage.sync.set({ 'tab_modifier' : this });
+        chrome.storage.sync.set({ tab_modifier: this });
     };
-    
+
     TabModifier.prototype.checkFileBeforeImport = function (json) {
         if (json !== undefined) {
             try {
