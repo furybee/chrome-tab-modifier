@@ -8,13 +8,9 @@ app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', '$mdToa
     });
 
     chrome.storage.sync.get('tab_modifier', function (items) {
-        if (items.tab_modifier === undefined) {
-            return;
+        if (items.tab_modifier !== undefined) {
+            tab_modifier.build(items.tab_modifier);
         }
-
-        tab_modifier.build(items.tab_modifier);
-
-        $scope.tab_modifier = tab_modifier;
 
         // Avoid BC break
         if (localStorage.tab_modifier !== undefined) {
@@ -22,6 +18,8 @@ app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', '$mdToa
 
             localStorage.removeItem('tab_modifier');
         }
+
+        $scope.tab_modifier = tab_modifier;
     });
 
     // Show modal form
