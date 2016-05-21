@@ -17,7 +17,7 @@ app.controller('MainController', ['$scope', '$mdSidenav', '$q', 'Analytics', 'Ta
     $q.all([TabModifierService.getManifestFile(), GitHubService.getLatestRelease()]).then(function (request) {
         $scope.version = {
             current: request[0].data.version,
-            latest: request[1].data.tag_name,
+            latest: request[1].data.tag_name
         };
     });
 
