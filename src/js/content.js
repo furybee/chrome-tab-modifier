@@ -5,7 +5,7 @@ chrome.storage.sync.get('tab_modifier', function (items) {
         return;
     }
 
-    var tab_modifier = items.tab_modifier;
+    var tab_modifier = items.tab_modifier, rule = null;
 
     // Check if a rule is available
     for (var i = 0; i < tab_modifier.rules.length; i++) {
