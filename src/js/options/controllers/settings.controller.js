@@ -2,7 +2,7 @@ app.controller('SettingsController', ['$scope', '$mdDialog', '$mdToast', '$locat
 
     var tab_modifier = new TabModifier();
 
-    chrome.storage.sync.get('tab_modifier', function (items) {
+    chrome.storage.local.get('tab_modifier', function (items) {
         if (items.tab_modifier === undefined) {
             return;
         }
@@ -14,7 +14,7 @@ app.controller('SettingsController', ['$scope', '$mdDialog', '$mdToast', '$locat
         // Generate JSON url
         $scope.json_url = tab_modifier.export();
     });
-    
+
     // Import tab rules action
     $scope.import = function (content) {
         var result = tab_modifier.checkFileBeforeImport(content);

@@ -1,6 +1,6 @@
 var w = window;
 
-chrome.storage.sync.get('tab_modifier', function (items) {
+chrome.storage.local.get('tab_modifier', function (items) {
     if (items.tab_modifier === undefined) {
         return;
     }

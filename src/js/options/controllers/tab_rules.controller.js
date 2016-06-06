@@ -7,16 +7,19 @@ app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', '$mdToa
         icon_list = request.data;
     });
 
+    // Avoid BC break
     chrome.storage.sync.get('tab_modifier', function (items) {
-        if (items.tab_modifier !== undefined) {
+        if (items.tab_modifier !== undefined && items.tab_modifier !== null) {
             tab_modifier.build(items.tab_modifier);
+            tab_modifier.sync();
         }
 
-        // Avoid BC break
-        if (localStorage.tab_modifier !== undefined) {
-            tab_modifier.import(localStorage.tab_modifier).sync();
+        chrome.storage.sync.clear();
+    });
 
-            localStorage.removeItem('tab_modifier');
+    chrome.storage.local.get('tab_modifier', function (items) {
+        if (items.tab_modifier !== undefined) {
+            tab_modifier.build(items.tab_modifier);
         }
 
         $scope.tab_modifier = tab_modifier;
