@@ -128,13 +128,6 @@ For example, you set a custom favicon on a website, on the page reload, the defa
 In case the website wants to replace the favicon by a new one in Javascript, like prepending with "(1)", e.g. a notification,
 Tab Modifier will not detect this change.
 
-### Blank option page
-
-Related issues: [#19](https://github.com/sylouuu/chrome-tab-modifier/issues/19), [#20](https://github.com/sylouuu/chrome-tab-modifier/issues/20)
-
-On some Linux distributions, you can see an option blank page because of the missing **Fira Sans** web font. You have to install it.
-For more info, refer to the related issue.
-
 ## Changelog
 
 See [releases](https://github.com/sylouuu/chrome-tab-modifier/releases) section.
