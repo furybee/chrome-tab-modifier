@@ -38,25 +38,14 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
     }
 });
 
-chrome.browserAction.onClicked.addListener(function (tab) {
+chrome.browserAction.onClicked.addListener(function () {
     var relative_options_page_file = 'html/options.min.html',
-        options_url                = chrome.extension.getURL(relative_options_page_file),
-        found                      = false;
+        options_url                = chrome.extension.getURL(relative_options_page_file);
 
-    chrome.tabs.query({}, function (tabs) {
-        for (var i = 0; i < tabs.length; i++) {
-            tab = tabs[i];
-
-            if (tab.url.indexOf(options_url) !== -1) {
-                chrome.tabs.get(tab.id, function (tab) {
-                    chrome.tabs.highlight({ tabs: tab.index });
-                });
-
-                found = true;
-            }
-        }
-
-        if (found === false) {
+    chrome.tabs.query({ url: options_url }, function (tabs) {
+        if (tabs.length > 0) {
+            chrome.tabs.update(tabs[0].id, { active: true, highlighted: true });
+        } else {
             chrome.tabs.create({ url: relative_options_page_file });
         }
     });
