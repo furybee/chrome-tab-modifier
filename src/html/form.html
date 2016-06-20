@@ -28,8 +28,8 @@
                 </md-input-container>
             </div>
 
-            <p class="md-accent md-margin-0" ng-if="rule.url_fragment === null">The URL fragment is required by the extension to detect when to apply your actions</p>
-            <p class="md-accent md-margin-0" ng-if="rule.url_fragment !== null">The following actions will be applied when the URL contains <strong><code ng-bind="rule.url_fragment"></code></strong>:</p>
+            <p class="md-primary md-margin-0" ng-if="rule.url_fragment === null">The URL fragment is required by the extension to detect when to apply your actions</p>
+            <p class="md-primary md-margin-0" ng-if="rule.url_fragment !== null">The following actions will be applied when the URL contains <strong><code ng-bind="rule.url_fragment"></code></strong>:</p>
 
             <div ng-if="rule.url_fragment !== null" layout="column">
 

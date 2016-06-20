@@ -37,14 +37,14 @@ app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdTheming
     // Configure default theme
     $mdThemingProvider
         .theme('default')
-        .primaryPalette('blue-grey', {
-            default: '500'
+        .primaryPalette('blue', {
+            default: '600'
         })
-        .accentPalette('pink', {
-            default: '400'
+        .accentPalette('yellow', {
+            default: '700'
         })
         .warnPalette('red', {
-            default: '500'
+            default: 'A700'
         });
 
     // Analytics config
