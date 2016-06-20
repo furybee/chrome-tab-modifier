@@ -26,7 +26,7 @@ app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdTheming
         .icon('list-plus', '/icons/playlist-plus.svg')
         .icon('clear', '/icons/eraser.svg')
         .icon('settings', '/icons/settings.svg')
-        .icon('duplicate', '/icons/content-copy.svg')
+        .icon('content-duplicate', '/icons/content-duplicate.svg')
         .icon('delete', '/icons/delete.svg')
         .icon('edit', '/icons/pencil.svg')
         .icon('google-chrome', '/icons/google-chrome.svg')
