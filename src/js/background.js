@@ -39,14 +39,13 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
 });
 
 var openOptionsPage = function (hash) {
-    var relative_options_page_file = 'html/options.min.html',
-        options_url                = chrome.extension.getURL(relative_options_page_file);
+    var options_url = chrome.extension.getURL('html/options.min.html');
 
     chrome.tabs.query({ url: options_url }, function (tabs) {
         if (tabs.length > 0) {
             chrome.tabs.update(tabs[0].id, { active: true, highlighted: true });
         } else {
-            chrome.tabs.create({ url: (hash !== undefined) ? relative_options_page_file + '#' + hash : relative_options_page_file });
+            chrome.tabs.create({ url: (hash !== undefined) ? options_url + '#' + hash : options_url });
         }
     });
 };
