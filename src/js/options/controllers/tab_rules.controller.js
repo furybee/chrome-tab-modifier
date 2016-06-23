@@ -104,10 +104,10 @@ app.controller('TabRulesController', ['$scope', '$routeParams', '$http', '$mdDia
     if ($routeParams.event === 'install') {
         var confirm = $mdDialog
             .confirm()
-            .clickOutsideToClose(false)
+            .clickOutsideToClose(true)
             .title('Greetings')
             .textContent('Hello, thank you for installing Tab Modifier, start by creating your first rule!')
-            .ariaLabel('Create rule')
+            .ariaLabel('Greetings')
             .targetEvent()
             .ok('Create my first rule')
             .cancel('Close');
@@ -122,7 +122,7 @@ app.controller('TabRulesController', ['$scope', '$routeParams', '$http', '$mdDia
         $mdToast.show({
             hideDelay: 0,
             position: 'top right',
-            controller: 'ToastNewVersionCtrl',
+            controller: 'ToastNewVersionController',
             templateUrl: '../html/toast_new_version.min.html',
             locals: {
                 version: $routeParams.version
@@ -132,7 +132,7 @@ app.controller('TabRulesController', ['$scope', '$routeParams', '$http', '$mdDia
 
 }]);
 
-app.controller('ToastNewVersionCtrl', ['$scope', '$mdToast', '$location', 'version', function ($scope, $mdToast, $location, version) {
+app.controller('ToastNewVersionController', ['$scope', '$location', '$mdToast', 'version', function ($scope, $location, $mdToast, version) {
     $scope.version = version;
 
     $scope.closeToast = function () {
