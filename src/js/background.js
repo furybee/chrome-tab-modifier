@@ -38,7 +38,7 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
     }
 });
 
-chrome.browserAction.onClicked.addListener(function () {
+var openOptionsPage = function (hash) {
     var relative_options_page_file = 'html/options.min.html',
         options_url                = chrome.extension.getURL(relative_options_page_file);
 
@@ -46,7 +46,24 @@ chrome.browserAction.onClicked.addListener(function () {
         if (tabs.length > 0) {
             chrome.tabs.update(tabs[0].id, { active: true, highlighted: true });
         } else {
-            chrome.tabs.create({ url: relative_options_page_file });
+            chrome.tabs.create({ url: (hash !== undefined) ? relative_options_page_file + '#' + hash : relative_options_page_file });
         }
     });
+};
+
+chrome.browserAction.onClicked.addListener(function () {
+    openOptionsPage();
+});
+
+chrome.runtime.onInstalled.addListener(function (details) {
+    switch (details.reason) {
+        case 'install':
+            openOptionsPage('install');
+            break;
+        case 'update':
+            if (details.previousVersion !== chrome.runtime.getManifest().version) {
+                openOptionsPage('update/' + chrome.runtime.getManifest().version);
+            }
+            break;
+    }
 });

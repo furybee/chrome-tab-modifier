@@ -53,10 +53,6 @@ app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdTheming
     AnalyticsProvider.setDomainName('none');
 
     var routes = {
-        '/': {
-            templateUrl: '/html/tab_rules.min.html',
-            controller: 'TabRulesController'
-        },
         '/settings': {
             templateUrl: '/html/settings.min.html',
             controller: 'SettingsController'
@@ -64,6 +60,10 @@ app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdTheming
         '/help': {
             templateUrl: '/html/help.min.html',
             controller: 'HelpController'
+        },
+        '/:event?/:version?': {
+            templateUrl: '/html/tab_rules.min.html',
+            controller: 'TabRulesController'
         }
     };
 

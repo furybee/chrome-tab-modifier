@@ -1,4 +1,4 @@
-app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', '$mdToast', 'Rule', 'TabModifier', 'Analytics', '$http', function ($scope, $mdDialog, $mdMedia, $mdToast, Rule, TabModifier, Analytics, $http) {
+app.controller('TabRulesController', ['$scope', '$routeParams', '$http', '$mdDialog', '$mdMedia', '$mdToast', 'Rule', 'TabModifier', 'Analytics', function ($scope, $routeParams, $http, $mdDialog, $mdMedia, $mdToast, Rule, TabModifier, Analytics) {
 
     var tab_modifier = new TabModifier(), icon_list = [];
 
@@ -97,6 +97,55 @@ app.controller('TabRulesController', ['$scope', '$mdDialog', '$mdMedia', '$mdToa
         });
     };
 
+    // --------------------------------------------------------------------------------------------------------
+    // Events
+
+    // New install
+    if ($routeParams.event === 'install') {
+        var confirm = $mdDialog
+            .confirm()
+            .clickOutsideToClose(false)
+            .title('Greetings')
+            .textContent('Hello, thank you for installing Tab Modifier, start by creating your first rule!')
+            .ariaLabel('Create rule')
+            .targetEvent()
+            .ok('Create my first rule')
+            .cancel('Close');
+
+        $mdDialog.show(confirm).then(function () {
+            $scope.showForm();
+        });
+    }
+
+    // New version
+    if ($routeParams.event === 'update' && $routeParams.version !== undefined) {
+        $mdToast.show({
+            hideDelay: 0,
+            position: 'top right',
+            controller: 'ToastNewVersionCtrl',
+            templateUrl: '../html/toast_new_version.min.html',
+            locals: {
+                version: $routeParams.version
+            }
+        });
+    }
+
+}]);
+
+app.controller('ToastNewVersionCtrl', ['$scope', '$mdToast', '$location', 'version', function ($scope, $mdToast, $location, version) {
+    $scope.version = version;
+
+    $scope.closeToast = function () {
+        $mdToast.hide().then(function () {
+            $location.path('/');
+        });
+    };
+
+    $scope.openGitHubReleases = function () {
+        chrome.tabs.create({ url: 'https://github.com/sylouuu/chrome-tab-modifier/releases' });
+
+        $scope.closeToast();
+    };
 }]);
 
 app.controller('FormModalController', ['$scope', '$mdDialog', 'rule', 'icon_list', function ($scope, $mdDialog, rule, icon_list) {
