@@ -14,11 +14,11 @@ Take control of your tabs.
 * Unique tab
 * Mute the tab
 
-## Why
+## Why?
 
 I needed a quick UI element in Chrome to know the environment of the tab, as a Web developer I use local website, the pre-production and the production versions.
 
-Not easy to find the appropriate tab when your 3 tabs are called "My awesome website".
+Not easy to find the appropriate tab when you have multiple tabs are called "My awesome website".
 
 I created Tab Modifier to add prefixes to website titles with a specific match.
 
