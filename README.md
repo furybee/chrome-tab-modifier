@@ -1,9 +1,11 @@
 # <img src="dist/img/icon_32.png" alt="icon"> Tab Modifier
 
+Take control of your tabs.
+
 [![Build Status](http://img.shields.io/travis/sylouuu/chrome-tab-modifier.svg?style=flat)](https://travis-ci.org/sylouuu/chrome-tab-modifier)
 [![devDependency Status](http://img.shields.io/david/dev/sylouuu/chrome-tab-modifier.svg?style=flat)](https://david-dm.org/sylouuu/chrome-tab-modifier#info=devDependencies)
 
-Take control of your tabs:
+## Features
 
 * Rename the tab
 * Change the tab icon
@@ -12,12 +14,29 @@ Take control of your tabs:
 * Unique tab
 * Mute the tab
 
-## How to use?
+## Why
 
-1. Install from the **[Chrome Web Store](https://chrome.google.com/webstore/detail/hcbgadmbdkiilgpifjgcakjehmafcjai/)**.
-2. Click on the <img src="dist/img/icon_16.png" alt="icon"> icon to open Options.
-3. Create your tab rules.
-4. Try & enjoy!
+I needed a quick UI element in Chrome to know the environment of the tab, as a Web developer I use local website, the pre-production and the production versions.
+
+Not easy to find the appropriate tab when your 3 tabs are called "My awesome website".
+
+I created Tab Modifier to add prefixes to website titles with a specific match.
+
+* [DEV] My awesome website: `.local.domain.com`
+* [PREPROD] My awesome website: `.preprod.domain.com`
+* [PROD] My awesome website: `.domain.com`
+
+After that, I have added more features like "auto-pin", custom favicons and more.
+
+## Installation
+
+Install from the **[Chrome Web Store](https://chrome.google.com/webstore/detail/hcbgadmbdkiilgpifjgcakjehmafcjai/)**.
+
+## Usage
+
+* Click on the <img src="dist/img/icon_16.png" alt="icon"> icon to open Options.
+* Create your tab rules.
+* Try & enjoy!
 
 ## Demo
 
