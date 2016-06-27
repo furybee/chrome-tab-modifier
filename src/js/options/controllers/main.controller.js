@@ -1,4 +1,4 @@
-app.controller('MainController', ['$scope', '$mdSidenav', '$q', 'Analytics', 'TabModifierService', 'GitHubService', function ($scope, $mdSidenav, $q, Analytics, TabModifierService, GitHubService) {
+app.controller('MainController', ['$scope', '$mdSidenav', '$q', 'Analytics', function ($scope, $mdSidenav, $q, Analytics) {
 
     $scope.toggleSideNav = function () {
         $mdSidenav('aside-left').toggle();
@@ -13,12 +13,5 @@ app.controller('MainController', ['$scope', '$mdSidenav', '$q', 'Analytics', 'Ta
             Analytics.trackEvent('sidenav', 'close');
         }
     };
-
-    // $q.all([TabModifierService.getManifestFile(), GitHubService.getLatestRelease()]).then(function (request) {
-    //     $scope.version = {
-    //         current: request[0].data.version,
-    //         latest: request[1].data.tag_name
-    //     };
-    // });
 
 }]);
