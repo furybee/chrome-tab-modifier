@@ -1,7 +1,10 @@
 app.factory('TabModifier', ['Rule', function (Rule) {
 
     var TabModifier = function (properties) {
-        this.rules = [];
+        this.settings = {
+            enable_new_version_notification: false
+        };
+        this.rules    = [];
 
         angular.extend(this, properties);
     };
@@ -28,6 +31,10 @@ app.factory('TabModifier', ['Rule', function (Rule) {
 
     TabModifier.prototype.build = function (data) {
         var self = this;
+
+        if (data.settings !== undefined) {
+            this.settings = data.settings;
+        }
 
         this.deleteRules();
 

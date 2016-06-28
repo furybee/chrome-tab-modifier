@@ -15,15 +15,16 @@ describe('TabModifier model', function () {
         var tab_modifier = new TabModifier();
 
         expect(tab_modifier instanceof TabModifier).toBe(true);
+        expect(tab_modifier.settings.enable_new_version_notification).toBe(false);
         expect(tab_modifier.rules).toBeEmptyArray();
     });
 
     it('Modify a tab modifier', function () {
         var tab_modifier = new TabModifier();
 
-        tab_modifier.setModel({ new_prop: true });
+        tab_modifier.setModel({ settings: { enable_new_version_notification: true } });
 
-        expect(tab_modifier.new_prop).toBe(true);
+        expect(tab_modifier.settings.enable_new_version_notification).toBe(true);
     });
 
     it('Add a rule', function () {
@@ -149,7 +150,7 @@ describe('TabModifier model', function () {
     it('Sync data', function () {
         pending();
     });
-    
+
     it('Check file before import', function () {
         var tab_modifier = new TabModifier();
 

@@ -15,6 +15,30 @@
 
 <md-content class="md-padding">
 
+    <!-- Notification zone -->
+    <md-card flex="100" flex-offset-gt-md="15" flex-gt-md="70">
+        <md-card-header class="md-primary">
+            <md-card-avatar>
+                <md-icon md-svg-icon="bell-ring-outline"></md-icon>
+            </md-card-avatar>
+            <md-card-header-text class="md-title-only" layout-align="center start">
+                <h2 class="md-title">Notification zone</h2>
+            </md-card-header-text>
+        </md-card-header>
+        <md-card-content>
+            <md-list>
+                <md-list-item class="md-2-line _md-no-proxy md-padding-0">
+                    <div class="md-list-item-text">
+                        <h3>Enable "New version" toast</h3>
+                        <p>In case you worry about extension changes, a tab is opened on each new version with a link to the changelog.</p>
+                    </div>
+
+                    <md-switch class="md-accent md-secondary" ng-model="tab_modifier.settings.enable_new_version_notification" aria-label="Enable toast" ng-change="tab_modifier.sync()"></md-switch>
+                </md-list-item>
+            </md-list>
+        </md-card-content>
+    </md-card>
+
     <!-- Backup zone -->
     <md-card flex="100" flex-offset-gt-md="15" flex-gt-md="70">
         <md-card-header class="md-primary">

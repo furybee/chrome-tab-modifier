@@ -60,9 +60,15 @@ chrome.runtime.onInstalled.addListener(function (details) {
             openOptionsPage('install');
             break;
         case 'update':
-            if (details.previousVersion !== chrome.runtime.getManifest().version) {
-                openOptionsPage('update/' + chrome.runtime.getManifest().version);
-            }
+            chrome.storage.local.get('tab_modifier', function (items) {
+                if (items.tab_modifier === undefined) {
+                    return;
+                }
+
+                if (items.tab_modifier.settings.enable_new_version_notification === true && details.previousVersion !== chrome.runtime.getManifest().version) {
+                    openOptionsPage('update/' + chrome.runtime.getManifest().version);
+                }
+            });
             break;
     }
 });
