@@ -23,6 +23,8 @@ app.controller('TabRulesController', ['$scope', '$routeParams', '$http', '$mdDia
         }
 
         $scope.tab_modifier = tab_modifier;
+
+        $scope.$apply();
     });
 
     // Show modal form
@@ -113,7 +115,11 @@ app.controller('TabRulesController', ['$scope', '$routeParams', '$http', '$mdDia
             .cancel('Close');
 
         $mdDialog.show(confirm).then(function () {
+            Analytics.trackEvent('greetings-dialog', 'close');
+
             $scope.showForm();
+        }, function () {
+            Analytics.trackEvent('greetings-dialog', 'show-form');
         });
     }
 

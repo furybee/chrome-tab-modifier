@@ -13,6 +13,8 @@ app.controller('SettingsController', ['$scope', '$mdDialog', '$mdToast', '$locat
 
         // Generate JSON url
         $scope.json_url = tab_modifier.export();
+
+        $scope.$apply();
     });
 
     // Import tab rules action

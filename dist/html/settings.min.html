@@ -1,1 +1,89 @@
-<md-toolbar><nav class=md-toolbar-tools><md-button class=md-icon-button ng-click=toggleSideNav() aria-label="Toggle left menu" hide-gt-sm><md-icon md-svg-icon=menu></md-icon></md-button><h1>Settings</h1></nav></md-toolbar><md-subheader class=md-display-2>Settings zones</md-subheader><md-divider></md-divider><md-content class=md-padding><md-card flex=100 flex-offset-gt-md=15 flex-gt-md=70><md-card-header class=md-primary><md-card-avatar><md-icon md-svg-icon=backup-restore></md-icon></md-card-avatar><md-card-header-text class=md-title-only layout-align="center start"><h2 class=md-title>Backup zone</h2></md-card-header-text></md-card-header><md-card-content><md-list><md-list-item class="md-2-line _md-no-proxy"><div class=md-list-item-text><h3>Import tab rules</h3><p>Restore your tab rules settings from an external JSON file.</p></div><div class=md-secondary><input-file-button><md-button class="md-primary md-raised" aria-label="Upload a file" ga-track-event="['tab-rules', 'import']"><md-icon md-svg-icon=file-import></md-icon>Import tab rules</md-button><input id=settings type=file on-read-file=import($fileContent) accept=application/json></input-file-button></div></md-list-item><md-divider></md-divider><md-list-item class=md-2-line><div class=md-list-item-text><h3>Export tab rules</h3><p>Export your tab rules for backup purpose or for sharing with friend.</p></div><md-button class="md-primary md-secondary md-raised" ng-href="{{ json_url }}" download=tab_modifier.json arial-label="Export tab rules" ga-track-event="['tab-rules', 'export']"><md-icon md-svg-icon=file-export></md-icon>Export tab rules</md-button></md-list-item></md-list></md-card-content></md-card><md-card flex=100 flex-offset-gt-md=15 flex-gt-md=70><md-card-header class=md-warn><md-card-avatar><md-icon md-svg-icon=alert></md-icon></md-card-avatar><md-card-header-text class=md-title-only layout-align="center start"><h2 class=md-title>Danger zone</h2></md-card-header-text></md-card-header><md-card-content><md-list><md-list-item class=md-2-line><div class=md-list-item-text><h3>Delete all tab rules</h3><p>Erase all of your tab rules.</p></div><md-button class="md-warn md-secondary md-raised" ng-click=deleteRules($event) ng-disabled="tab_modifier.rules.length === 0"><md-icon md-svg-icon=delete></md-icon>Delete all</md-button></md-list-item></md-list></md-card-content></md-card></md-content>
+<md-toolbar>
+    <nav class="md-toolbar-tools">
+        <md-button class="md-icon-button" ng-click="toggleSideNav()" aria-label="Toggle left menu" hide-gt-sm>
+            <md-icon md-svg-icon="menu"></md-icon>
+        </md-button>
+        <h1>Settings</h1>
+    </nav>
+</md-toolbar>
+
+<md-subheader class="md-display-2">
+    Settings zones
+</md-subheader>
+
+<md-divider></md-divider>
+
+<md-content class="md-padding">
+
+    <!-- Backup zone -->
+    <md-card flex="100" flex-offset-gt-md="15" flex-gt-md="70">
+        <md-card-header class="md-primary">
+            <md-card-avatar>
+                <md-icon md-svg-icon="backup-restore"></md-icon>
+            </md-card-avatar>
+            <md-card-header-text class="md-title-only" layout-align="center start">
+                <h2 class="md-title">Backup zone</h2>
+            </md-card-header-text>
+        </md-card-header>
+        <md-card-content>
+            <md-list>
+                <md-list-item class="md-2-line _md-no-proxy">
+                    <div class="md-list-item-text">
+                        <h3>Import tab rules</h3>
+                        <p>Restore your tab rules settings from an external JSON file.</p>
+                    </div>
+
+                     <div class="md-secondary">
+                         <input-file-button>
+                             <md-button class="md-primary md-raised" aria-label="Upload a file" ga-track-event="['tab-rules', 'import']">
+                                 <md-icon md-svg-icon="file-import"></md-icon> Import tab rules
+                             </md-button>
+                             <input id="settings" type="file" on-read-file="import($fileContent)" accept="application/json">
+                         </input-file-button>
+                     </div>
+                </md-list-item>
+
+                <md-divider></md-divider>
+
+                <md-list-item class="md-2-line">
+                    <div class="md-list-item-text">
+                        <h3>Export tab rules</h3>
+                        <p>Export your tab rules for backup purpose or for sharing with friend.</p>
+                    </div>
+
+                    <md-button class="md-primary md-secondary md-raised" ng-href="{{ json_url }}" download="tab_modifier.json" arial-label="Export tab rules" ga-track-event="['tab-rules', 'export']">
+                        <md-icon md-svg-icon="file-export"></md-icon>
+                        Export tab rules
+                    </md-button>
+                </md-list-item>
+            </md-list>
+        </md-card-content>
+    </md-card>
+
+    <!-- Danger zone -->
+    <md-card flex="100" flex-offset-gt-md="15" flex-gt-md="70">
+        <md-card-header class="md-warn">
+            <md-card-avatar>
+                <md-icon md-svg-icon="alert"></md-icon>
+            </md-card-avatar>
+            <md-card-header-text class="md-title-only" layout-align="center start">
+                <h2 class="md-title">Danger zone</h2>
+            </md-card-header-text>
+        </md-card-header>
+        <md-card-content>
+            <md-list>
+                <md-list-item class="md-2-line">
+                    <div class="md-list-item-text">
+                        <h3>Delete all tab rules</h3>
+                        <p>Erase all of your tab rules.</p>
+                    </div>
+
+                    <md-button class="md-warn md-secondary md-raised" ng-click="deleteRules($event)" ng-disabled="tab_modifier.rules.length === 0">
+                        <md-icon md-svg-icon="delete"></md-icon>
+                        Delete all
+                    </md-button>
+                </md-list-item>
+            </md-list>
+        </md-card-content>
+    </md-card>
+</md-content>

@@ -35,7 +35,7 @@
     gulp.task('build_background_and_content_scripts', function () {
         return gulp
             .src(['src/js/background.js', 'src/js/content.js'])
-            .pipe(uglify())
+            // .pipe(uglify())
             .pipe(rename({
                 suffix: '.min'
             }))
@@ -51,7 +51,7 @@
         return gulp
             .src(['src/js/options/**/*.js'])
             .pipe(concat('options.js'))
-            .pipe(uglify())
+            // .pipe(uglify())
             .pipe(rename({
                 suffix: '.min'
             }))
@@ -71,7 +71,7 @@
     gulp.task('build_options_html', function () {
         return gulp
             .src(['src/html/**/*.html'])
-            .pipe(minifyHTML())
+            // .pipe(minifyHTML())
             .pipe(rename({
                 suffix: '.min'
             }))
