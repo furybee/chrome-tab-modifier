@@ -61,7 +61,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
             break;
         case 'update':
             chrome.storage.local.get('tab_modifier', function (items) {
-                if (items.tab_modifier === undefined) {
+                if (items.tab_modifier === undefined && items.tab_modifier.settings === undefined) {
                     return;
                 }
 
