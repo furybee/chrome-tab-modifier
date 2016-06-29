@@ -18,7 +18,7 @@ Take control of your tabs.
 
 I needed a quick UI element in Chrome to know the environment of the tab, as a Web developer I often use multiple versions of the same website: local, pre-production and production.
 
-Not easy to find the appropriate tab when you have multiple tabs are called "My awesome website".
+Not easy to find the appropriate tab when you have multiple tabs called "My awesome website".
 
 I created Tab Modifier to add prefixes to website titles with a specific match.
 
