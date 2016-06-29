@@ -65,7 +65,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
                     return;
                 }
 
-                if (items.tab_modifier.settings.enable_new_version_notification === true && details.previousVersion !== chrome.runtime.getManifest().version) {
+                if (items.tab_modifier.settings !== undefined && items.tab_modifier.settings.enable_new_version_notification === true && details.previousVersion !== chrome.runtime.getManifest().version) {
                     openOptionsPage('update/' + chrome.runtime.getManifest().version);
                 }
             });
