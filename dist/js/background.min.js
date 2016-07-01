@@ -1,5 +1,29 @@
 /*jshint loopfunc: true */
 
+var options_url = chrome.extension.getURL('html/options.min.html');
+
+// --------------------------------------------------------------------------------------------------------
+// Functions
+
+var openOptionsPage = function (hash) {
+    chrome.tabs.query({ url: options_url }, function (tabs) {
+        if (tabs.length > 0) {
+            chrome.tabs.update(tabs[0].id, { active: true, highlighted: true });
+        } else {
+            chrome.tabs.create({ url: (hash !== undefined) ? options_url + '#' + hash : options_url });
+        }
+    });
+};
+
+var getStorage = function (callback) {
+    chrome.storage.local.get('tab_modifier', function (items) {
+        callback(items.tab_modifier);
+    });
+};
+
+// --------------------------------------------------------------------------------------------------------
+// Events
+
 chrome.runtime.onMessage.addListener(function (message, sender) {
     switch (message.action) {
         case 'setUnique':
@@ -38,18 +62,6 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
     }
 });
 
-var openOptionsPage = function (hash) {
-    var options_url = chrome.extension.getURL('html/options.min.html');
-
-    chrome.tabs.query({ url: options_url }, function (tabs) {
-        if (tabs.length > 0) {
-            chrome.tabs.update(tabs[0].id, { active: true, highlighted: true });
-        } else {
-            chrome.tabs.create({ url: (hash !== undefined) ? options_url + '#' + hash : options_url });
-        }
-    });
-};
-
 chrome.browserAction.onClicked.addListener(function () {
     openOptionsPage();
 });
@@ -60,12 +72,12 @@ chrome.runtime.onInstalled.addListener(function (details) {
             openOptionsPage('install');
             break;
         case 'update':
-            chrome.storage.local.get('tab_modifier', function (items) {
-                if (items.tab_modifier === undefined && items.tab_modifier.settings === undefined) {
+            getStorage(function (tab_modifier) {
+                if (tab_modifier === undefined && tab_modifier.settings === undefined) {
                     return;
                 }
 
-                if (items.tab_modifier.settings !== undefined && items.tab_modifier.settings.enable_new_version_notification === true && details.previousVersion !== chrome.runtime.getManifest().version) {
+                if (tab_modifier.settings !== undefined && tab_modifier.settings.enable_new_version_notification === true && details.previousVersion !== chrome.runtime.getManifest().version) {
                     openOptionsPage('update/' + chrome.runtime.getManifest().version);
                 }
             });
