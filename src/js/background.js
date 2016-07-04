@@ -1,11 +1,11 @@
 /*jshint loopfunc: true */
 
-var options_url = chrome.extension.getURL('html/options.min.html');
+var options_url = chrome.extension.getURL('html/options.min.html'), openOptionsPage, getStorage;
 
 // --------------------------------------------------------------------------------------------------------
 // Functions
 
-var openOptionsPage = function (hash) {
+openOptionsPage = function (hash) {
     chrome.tabs.query({ url: options_url }, function (tabs) {
         if (tabs.length > 0) {
             chrome.tabs.update(tabs[0].id, { active: true, highlighted: true });
@@ -15,7 +15,7 @@ var openOptionsPage = function (hash) {
     });
 };
 
-var getStorage = function (callback) {
+getStorage = function (callback) {
     chrome.storage.local.get('tab_modifier', function (items) {
         callback(items.tab_modifier);
     });
