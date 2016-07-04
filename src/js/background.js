@@ -73,7 +73,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
             break;
         case 'update':
             getStorage(function (tab_modifier) {
-                if (tab_modifier === undefined && tab_modifier.settings === undefined) {
+                if (tab_modifier === undefined || tab_modifier.settings === undefined) {
                     return;
                 }
 
