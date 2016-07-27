@@ -112,11 +112,13 @@ chrome.storage.local.get('tab_modifier', function (items) {
     });
 
     // Observe when the website has changed the title
-    observer.observe(document.querySelector('head > title'), {
-        subtree: true,
-        characterresponse: true,
-        childList: true
-    });
+    if (document.querySelector('head > title') !== null) {
+        observer.observe(document.querySelector('head > title'), {
+            subtree: true,
+            characterresponse: true,
+            childList: true
+        });
+    }
 
     // Pin the tab
     if (rule.tab.pinned === true) {
