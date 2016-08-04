@@ -169,7 +169,7 @@ Clone the project and install dependencies with `npm install`.
 
 Type `gulp` to watch your changes inside `src/` folder or type `gulp build` after each change.
 
-### Load your local extension in Chrome
+### Load local extension in Chrome
 
 Go to `chrome://extensions/` and enable the "Developer mode".
 

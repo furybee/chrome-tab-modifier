@@ -1,6 +1,6 @@
 /*jshint loopfunc: true */
 
-var options_url = chrome.extension.getURL('html/options.min.html'), openOptionsPage, getStorage;
+var options_url = chrome.extension.getURL('html/options.html'), openOptionsPage, getStorage;
 
 // --------------------------------------------------------------------------------------------------------
 // Functions

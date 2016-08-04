@@ -1,7 +1,7 @@
 ﻿{
     "manifest_version": 2,
     "name": "Tab Modifier",
-    "version": "0.14.3",
+    "version": "0.14.4",
     "description": "Take control of your tabs",
     "homepage_url": "https://github.com/sylouuu/chrome-tab-modifier",
 
@@ -18,10 +18,10 @@
 
     "content_security_policy": "script-src 'self' https://ajax.googleapis.com https://www.google-analytics.com; object-src 'self'",
 
-    "options_page": "html/options.min.html",
+    "options_page": "html/options.html",
 
     "background": {
-        "scripts": ["js/background.min.js"],
+        "scripts": ["js/background.js"],
         "persistent": false
     },
 
@@ -32,7 +32,7 @@
             "file://*/*"
         ],
         "js": [
-            "js/content.min.js"
+            "js/content.js"
         ]
     }],
 

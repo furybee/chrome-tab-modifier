@@ -33,7 +33,7 @@ app.controller('TabRulesController', ['$scope', '$routeParams', '$http', '$mdDia
 
         $mdDialog.show({
             controller: 'FormModalController',
-            templateUrl: '../html/form.min.html',
+            templateUrl: '../html/form.html',
             targetEvent: evt,
             clickOutsideToClose: true,
             fullscreen: $mdMedia('xs'),
@@ -129,7 +129,7 @@ app.controller('TabRulesController', ['$scope', '$routeParams', '$http', '$mdDia
             hideDelay: 0,
             position: 'top right',
             controller: 'ToastNewVersionController',
-            templateUrl: '../html/toast_new_version.min.html',
+            templateUrl: '../html/toast_new_version.html',
             locals: {
                 version: $routeParams.version
             }

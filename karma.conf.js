@@ -17,10 +17,10 @@ module.exports = function(config) {
 
         // list of files / patterns to load in the browser
         files: [
-            'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js',
-            'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.min.js',
-            'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js',
-            'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js',
+            'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js',
+            'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-route.min.js',
+            'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.min.js',
+            'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.min.js',
             'node_modules/angular-mocks/angular-mocks.js',
             'https://ajax.googleapis.com/ajax/libs/angular_material/1.0.5/angular-material.min.js',
             'dist/js/libs/angular-google-analytics.min.js',

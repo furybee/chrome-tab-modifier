@@ -55,15 +55,15 @@ app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdTheming
 
     var routes = {
         '/settings': {
-            templateUrl: '/html/settings.min.html',
+            templateUrl: '/html/settings.html',
             controller: 'SettingsController'
         },
         '/help': {
-            templateUrl: '/html/help.min.html',
+            templateUrl: '/html/help.html',
             controller: 'HelpController'
         },
         '/:event?/:version?': {
-            templateUrl: '/html/tab_rules.min.html',
+            templateUrl: '/html/tab_rules.html',
             controller: 'TabRulesController'
         }
     };

@@ -1,4 +1,4 @@
-(function() {
+(function () {
 
     'use strict';
 
@@ -8,9 +8,7 @@
         jshint     = require('gulp-jshint'),
         concat     = require('gulp-concat'),
         rename     = require('gulp-rename'),
-        uglify     = require('gulp-uglify'),
         jscs       = require('gulp-jscs'),
-        minifyHTML = require('gulp-minify-html'),
         jsonminify = require('gulp-jsonminify'),
         Server     = require('karma').Server;
 
@@ -35,10 +33,6 @@
     gulp.task('build_background_and_content_scripts', function () {
         return gulp
             .src(['src/js/background.js', 'src/js/content.js'])
-            // .pipe(uglify())
-            .pipe(rename({
-                suffix: '.min'
-            }))
             .pipe(gulp.dest('dist/js'));
     });
 
@@ -51,10 +45,6 @@
         return gulp
             .src(['src/js/options/**/*.js'])
             .pipe(concat('options.js'))
-            // .pipe(uglify())
-            .pipe(rename({
-                suffix: '.min'
-            }))
             .pipe(gulp.dest('dist/js'));
     });
 
@@ -71,10 +61,6 @@
     gulp.task('build_options_html', function () {
         return gulp
             .src(['src/html/**/*.html'])
-            .pipe(minifyHTML())
-            .pipe(rename({
-                suffix: '.min'
-            }))
             .pipe(gulp.dest('dist/html'));
     });
 
@@ -82,7 +68,7 @@
 
     // gulp tests --coverage=html
     gulp.task('tests', function (done) {
-        var reporters = ['spec'],
+        var reporters         = ['spec'],
             coverage_reporter = { type: 'text', dir: 'coverage/' };
 
         if (args.coverage) {
@@ -106,7 +92,7 @@
         'lint'
     ]);
 
-    gulp.task('watch', function() {
+    gulp.task('watch', function () {
         gulp.watch('src/**/*', ['build_core', 'build_options']);
     });
 

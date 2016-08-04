@@ -55,15 +55,15 @@ app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdTheming
 
     var routes = {
         '/settings': {
-            templateUrl: '/html/settings.min.html',
+            templateUrl: '/html/settings.html',
             controller: 'SettingsController'
         },
         '/help': {
-            templateUrl: '/html/help.min.html',
+            templateUrl: '/html/help.html',
             controller: 'HelpController'
         },
         '/:event?/:version?': {
-            templateUrl: '/html/tab_rules.min.html',
+            templateUrl: '/html/tab_rules.html',
             controller: 'TabRulesController'
         }
     };
@@ -230,7 +230,7 @@ app.controller('TabRulesController', ['$scope', '$routeParams', '$http', '$mdDia
 
         $mdDialog.show({
             controller: 'FormModalController',
-            templateUrl: '../html/form.min.html',
+            templateUrl: '../html/form.html',
             targetEvent: evt,
             clickOutsideToClose: true,
             fullscreen: $mdMedia('xs'),
@@ -326,7 +326,7 @@ app.controller('TabRulesController', ['$scope', '$routeParams', '$http', '$mdDia
             hideDelay: 0,
             position: 'top right',
             controller: 'ToastNewVersionController',
-            templateUrl: '../html/toast_new_version.min.html',
+            templateUrl: '../html/toast_new_version.html',
             locals: {
                 version: $routeParams.version
             }
