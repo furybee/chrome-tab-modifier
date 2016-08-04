@@ -7,12 +7,12 @@ Take control of your tabs.
 
 ## Features
 
-* Rename the tab
-* Change the tab icon
-* Pin the tab
+* Rename tab
+* Change tab icon
+* Pin tab
 * Prevent tab closing
 * Unique tab
-* Mute the tab
+* Mute tab
 
 ## Why?
 
