@@ -1,1 +1,9 @@
-<md-toast><span class=md-toast-text flex ng-bind="'Tab Modifier has been updated to '+ version +' version'"></span><md-button class=md-highlight ng-click=openGitHubReleases() ga-track-event="['toast-new-version', 'open-changelog']">Open changelog</md-button><md-button ng-click=closeToast() ga-track-event="['toast-new-version', 'close']">Close</md-button></md-toast>
+<md-toast>
+    <span class="md-toast-text" flex ng-bind="'Tab Modifier has been updated to '+ version +' version'"></span>
+    <md-button class="md-highlight" ng-click="openGitHubReleases()" ga-track-event="['toast-new-version', 'open-changelog']">
+        Open changelog
+    </md-button>
+    <md-button ng-click="closeToast()" ga-track-event="['toast-new-version', 'close']">
+        Close
+    </md-button>
+</md-toast>

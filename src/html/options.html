@@ -95,6 +95,19 @@
                 padding: 6px 0;
             }
 
+            .my-icon-button {
+                padding: 7px !important;
+                min-width: 0;
+                min-height: 0;
+                line-height: normal;
+            }
+
+            .my-icon-button img {
+                width: 20px;
+                padding-top: 7px;
+                padding-left: 11px;
+                padding-right: 18px;
+            }
         </style>
 
         <!-- Angular Material Dependencies -->
@@ -170,6 +183,16 @@
                         <md-button class="md-button" href="https://www.paypal.me/svalienne/5" target="_blank" aria-label="Donate" ga-track-event="['resources', 'donate-click']">
                             <md-icon md-svg-icon="credit-card"></md-icon>
                             Donate
+                        </md-button>
+                    </md-menu-item>
+
+                    <md-divider></md-divider>
+
+                    <!-- Open Tabs link -->
+                    <md-menu-item>
+                        <md-button class="md-button my-icon-button" href="https://chrome.google.com/webstore/detail/open-tabs/cepfpldhbcfaklnnldhoaahgliijehap" target="_blank" aria-label="Go to Open Tabs" ga-track-event="['resources', 'open-tabs-click']">
+                            <img src="/img/open_tabs_32.png" alt="open-tabs-icon"></img>
+                            Open Tabs
                         </md-button>
                     </md-menu-item>
                 </md-list>

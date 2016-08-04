@@ -1,4 +1,14 @@
-<!doctype html><html lang=en ng-app=TabModifier><head><meta charset=utf-8><meta name=viewport content="width=device-width, initial-scale=1.0"><title>Tab Modifier</title><link rel=stylesheet href=https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc.5/angular-material.min.css><style>
+<!doctype html>
+<html lang="en" ng-app="TabModifier">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <title>Tab Modifier</title>
+
+        <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc.5/angular-material.min.css">
+
+        <style>
             html,
             body {
                 font-size: 14px;
@@ -85,4 +95,111 @@
                 padding: 6px 0;
             }
 
-        </style><script src=https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js></script><script src=https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.min.js></script><script src=https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-animate.min.js></script><script src=https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-aria.min.js></script><script src=https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc.5/angular-material.min.js></script><script src=../js/libs/angular-google-analytics.min.js></script><script src=../js/options.min.js></script></head><body layout=row ng-controller=MainController><md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id=aside-left md-is-locked-open="$mdMedia('gt-sm')" flex-md=20 flex-gt-md=15><md-toolbar><h1 class=md-toolbar-tools>Tab Modifier</h1></md-toolbar><md-content><md-list><md-subheader class="md-no-sticky md-display-2">Sections</md-subheader><md-menu-item><md-button class=md-button ng-class="{ 'md-focused': location.path() === '/' }" href="#/" aria-label=Tabs ng-click=closeSideNav()><md-icon md-svg-icon=tab></md-icon>Tab Rules</md-button></md-menu-item><md-menu-item><md-button class=md-button ng-class="{ 'md-focused': location.path() === '/settings' }" href=#/settings aria-label=Settings ng-click=closeSideNav()><md-icon md-svg-icon=settings></md-icon>Settings</md-button></md-menu-item><md-menu-item><md-button class=md-button ng-class="{ 'md-focused': location.path() === '/help' }" href=#/help aria-label=Help ng-click=closeSideNav()><md-icon md-svg-icon=help></md-icon>Help</md-button></md-menu-item><md-subheader class="md-no-sticky md-display-2">Resources</md-subheader><md-menu-item><md-button class=md-button href=https://chrome.google.com/webstore/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai target=_blank aria-label="Chrome Web Store Project" ng-click=closeSideNav() ga-track-event="['resources', 'chrome-web-store-click']"><md-icon md-svg-icon=google-chrome></md-icon>Chrome Web Store</md-button></md-menu-item><md-menu-item><md-button class=md-button href=https://github.com/sylouuu/chrome-tab-modifier target=_blank aria-label="GitHub Project" ng-click=closeSideNav() ga-track-event="['resources', 'github-click']"><md-icon md-svg-icon=github-circle></md-icon>GitHub</md-button></md-menu-item><md-menu-item><md-button class=md-button href=https://www.paypal.me/svalienne/5 target=_blank aria-label=Donate ga-track-event="['resources', 'donate-click']"><md-icon md-svg-icon=credit-card></md-icon>Donate</md-button></md-menu-item></md-list></md-content></md-sidenav><md-content flex=100 flex-md=80 flex-gt-md=85 ng-view></md-content></body></html>
+            .my-icon-button {
+                padding: 7px !important;
+                min-width: 0;
+                min-height: 0;
+                line-height: normal;
+            }
+
+            .my-icon-button img {
+                width: 20px;
+                padding-top: 7px;
+                padding-left: 11px;
+                padding-right: 18px;
+            }
+        </style>
+
+        <!-- Angular Material Dependencies -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-route.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-animate.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular-aria.min.js"></script>
+
+        <!-- Angular Material Javascript  -->
+        <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc.5/angular-material.min.js"></script>
+
+        <script src="../js/libs/angular-google-analytics.min.js"></script>
+        <script src="../js/options.min.js"></script>
+    </head>
+    <body layout="row" ng-controller="MainController">
+
+        <!-- Sidenav -->
+        <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-component-id="aside-left" md-is-locked-open="$mdMedia('gt-sm')" flex-md="20" flex-gt-md="15">
+
+            <md-toolbar>
+                <h1 class="md-toolbar-tools">Tab Modifier</h1>
+            </md-toolbar>
+
+            <!-- Menu -->
+            <md-content>
+                <md-list>
+                    <md-subheader class="md-no-sticky md-display-2">Sections</md-subheader>
+
+                    <!-- Rules link -->
+                    <md-menu-item>
+                        <md-button class="md-button" ng-class="{ 'md-focused': location.path() === '/' }" href="#/" aria-label="Tabs" ng-click="closeSideNav()">
+                            <md-icon md-svg-icon="tab"></md-icon>
+                            Tab Rules
+                        </md-button>
+                    </md-menu-item>
+
+                    <!-- Settings link -->
+                    <md-menu-item>
+                        <md-button class="md-button" ng-class="{ 'md-focused': location.path() === '/settings' }" href="#/settings" aria-label="Settings" ng-click="closeSideNav()">
+                            <md-icon md-svg-icon="settings"></md-icon>
+                            Settings
+                        </md-button>
+                    </md-menu-item>
+
+                    <!-- Help link -->
+                    <md-menu-item>
+                        <md-button class="md-button" ng-class="{ 'md-focused': location.path() === '/help' }" href="#/help" aria-label="Help" ng-click="closeSideNav()">
+                            <md-icon md-svg-icon="help"></md-icon>
+                            Help
+                        </md-button>
+                    </md-menu-item>
+
+                    <md-subheader class="md-no-sticky md-display-2">Resources</md-subheader>
+
+                    <!-- Chrome Web Store link -->
+                    <md-menu-item>
+                        <md-button class="md-button" href="https://chrome.google.com/webstore/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai" target="_blank" aria-label="Chrome Web Store Project" ng-click="closeSideNav()" ga-track-event="['resources', 'chrome-web-store-click']">
+                            <md-icon md-svg-icon="google-chrome"></md-icon>
+                            Chrome Web Store
+                        </md-button>
+                    </md-menu-item>
+
+                    <!-- Github link -->
+                    <md-menu-item>
+                        <md-button class="md-button" href="https://github.com/sylouuu/chrome-tab-modifier" target="_blank" aria-label="GitHub Project" ng-click="closeSideNav()" ga-track-event="['resources', 'github-click']">
+                            <md-icon md-svg-icon="github-circle"></md-icon>
+                            GitHub
+                        </md-button>
+                    </md-menu-item>
+
+                    <!-- Donate link -->
+                    <md-menu-item>
+                        <md-button class="md-button" href="https://www.paypal.me/svalienne/5" target="_blank" aria-label="Donate" ga-track-event="['resources', 'donate-click']">
+                            <md-icon md-svg-icon="credit-card"></md-icon>
+                            Donate
+                        </md-button>
+                    </md-menu-item>
+
+                    <md-divider></md-divider>
+
+                    <!-- Open Tabs link -->
+                    <md-menu-item>
+                        <md-button class="md-button my-icon-button" href="https://chrome.google.com/webstore/detail/open-tabs/cepfpldhbcfaklnnldhoaahgliijehap" target="_blank" aria-label="Go to Open Tavs" ga-track-event="['resources', 'open-tabs-click']">
+                            <img src="/img/open_tabs_32.png" alt="open-tabs-icon"></img>
+                            Open Tabs
+                        </md-button>
+                    </md-menu-item>
+                </md-list>
+            </md-content>
+        </md-sidenav>
+
+        <md-content flex="100" flex-md="80" flex-gt-md="85" ng-view></md-content>
+
+    </body>
+</html>
