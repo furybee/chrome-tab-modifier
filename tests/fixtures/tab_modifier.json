@@ -2,6 +2,7 @@
     "rules": [
         {
             "name": "Local dev",
+            "detection": "CONTAINS",
             "url_fragment": ".local",
             "tab": {
                 "title": "[DEV] {title}",
@@ -15,6 +16,7 @@
         },
         {
             "name": "Production",
+            "detection": "CONTAINS",
             "url_fragment": "domain.com",
             "tab": {
                 "title": "[PROD] {title}",
@@ -28,6 +30,7 @@
         },
         {
             "name": "Youtube",
+            "detection": "CONTAINS",
             "url_fragment": "youtube.com",
             "tab": {
                 "title": null,
@@ -41,6 +44,7 @@
         },
         {
             "name": "Twitter",
+            "detection": "CONTAINS",
             "url_fragment": "twitter.com",
             "tab": {
                 "title": "I'm working hard!",
@@ -54,7 +58,8 @@
         },
         {
             "name": "Unique GMail",
-            "url_fragment": "mail.google.com",
+            "detection": "STARTS",
+            "url_fragment": "https://mail.google.com",
             "tab": {
                 "title": null,
                 "icon": null,
@@ -66,6 +71,7 @@
             }
         },
         {
+            "detection": "CONTAINS",
             "name": "Pinterest search",
             "url_fragment": "pinterest.com/search",
             "tab": {
@@ -80,6 +86,7 @@
         },
         {
             "name": "GitHub",
+            "detection": "CONTAINS",
             "url_fragment": "github.com",
             "tab": {
                 "title": "{title} | $2 by $1",

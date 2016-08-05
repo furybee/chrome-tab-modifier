@@ -76,42 +76,56 @@ You have infinite possibilities, here are some configurations:
 
 Pin all tabs:
 
+* **Detection**: Contains
 * **URL fragment**: http
 * **Pinned**: ON
 
 Say hello to all Google websites:
 
+* **Detection**: Contains
 * **URL fragment**: google.com
 * **Title**: Hello Google: {title}
 
 Disguise GitHub as Google
 
+* **Detection**: Contains
 * **URL fragment**: github.com
 * **Title**: Google
 * **Icon**: https://www.google.com/favicon.ico
 
 Prevent accidental tab closure:
 
+* **Detection**: Contains
 * **URL fragment**: important-website.com
 * **Protected**: ON
 
 Mute all Youtube videos by default:
 
+* **Detection**: Contains
 * **URL fragment**: youtube.com
 * **Mute**: ON
 
 Set blank icon on Pinterest:
 
+* **Detection**: Contains
 * **URL fragment**: pinterest.com
 * **Icon**: select "Chrome > Default"
 
 Get only one GMail tab opened at once:
 
-* **URL fragment**: mail.google.com
+* **Detection**: Starts with
+* **URL fragment**: https://mail.google.com
 * **Unique**: ON
+
+Pin all PNG images (useless):
+
+* **Detection**: Ends with
+* **URL fragment**: .png
+* **Pinned**: ON
 
 Customize title with HTML selector and Regexp:
 
+* **Detection**: Contains
 * **URL fragment**: github.com
 * **Title**: {title} | $2 by $1
 * **URL matcher**: github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)
