@@ -1,4 +1,4 @@
-var app = angular.module('TabModifier', ['ngRoute', 'ngAnimate', 'ngAria', 'ngMaterial', 'angular-google-analytics']);
+var app = angular.module('TabModifier', ['ngRoute', 'ngAnimate', 'ngAria', 'ngMaterial', 'angular-google-analytics', 'md.data.table']);
 
 app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdThemingProvider', 'AnalyticsProvider', function ($routeProvider, $compileProvider, $mdIconProvider, $mdThemingProvider, AnalyticsProvider) {
 
@@ -434,6 +434,7 @@ app.factory('Rule', function () {
 
     var Rule = function (properties) {
         this.name         = null;
+        this.detection    = 'CONTAINS';
         this.url_fragment = null;
         this.tab          = {
             title: null,

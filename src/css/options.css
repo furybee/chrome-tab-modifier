@@ -1,0 +1,99 @@
+html,
+body {
+    font-size: 14px;
+}
+
+strong,
+b,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 500;
+}
+
+md-content {
+    overflow-x: hidden;
+}
+
+.md-icon-16x {
+    width: 16px;
+    height: 16px;
+}
+
+.md-select-value:first-child .md-icon-title {
+    transform: none;
+}
+
+.md-subheader .md-button.md-fab.md-fab-bottom-right {
+    bottom: -50px;
+}
+
+.md-img-select {
+    margin-bottom: -2px;
+}
+
+.md-title-only .md-title {
+    font-size: 16px;
+}
+
+.md-2-line p {
+    margin: 0;
+    line-height: 1.6em;
+    font-weight: 500;
+    letter-spacing: .01em;
+}
+
+.md-margin-0 {
+    margin: 0;
+}
+
+.md-padding-0 {
+    padding: 0 !important;
+}
+
+.md-margin-bottom-0 {
+    margin-bottom: 0;
+}
+
+.text-nowrap {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+p.md-primary,
+span.md-primary {
+    color: #1E88E5;
+}
+
+md-card-header.md-primary {
+    color: rgb(255, 255, 255);
+    background-color: #1E88E5;
+}
+
+md-card-header.md-warn {
+    color: rgb(255, 255, 255);
+    background-color: #D50000;
+}
+
+md-input-container .md-caption {
+    display: inline-block;
+    padding: 6px 0;
+}
+
+.my-icon-button {
+    padding: 7px !important;
+    min-width: 0;
+    min-height: 0;
+    line-height: normal;
+}
+
+.my-icon-button img {
+    width: 20px;
+    padding-top: 7px;
+    padding-left: 11px;
+    padding-right: 18px;
+}

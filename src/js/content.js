@@ -9,9 +9,26 @@ chrome.storage.local.get('tab_modifier', function (items) {
 
     // Check if a rule is available
     for (var i = 0; i < tab_modifier.rules.length; i++) {
-        if (location.href.indexOf(tab_modifier.rules[i].url_fragment) !== -1) {
-            rule = tab_modifier.rules[i];
-            break;
+        if (tab_modifier.rules[i].detection === undefined || tab_modifier.rules[i].detection === 'CONTAINS') {
+            if (location.href.indexOf(tab_modifier.rules[i].url_fragment) !== -1) {
+                rule = tab_modifier.rules[i];
+                break;
+            }
+        } else {
+            switch (tab_modifier.rules[i].detection) {
+                case 'STARTS':
+                    if (location.href.startsWith(tab_modifier.rules[i].url_fragment) === true) {
+                        rule = tab_modifier.rules[i];
+                        break;
+                    }
+                    break;
+                case 'ENDS':
+                    if (location.href.endsWith(tab_modifier.rules[i].url_fragment) === true) {
+                        rule = tab_modifier.rules[i];
+                        break;
+                    }
+                    break;
+            }
         }
     }
 

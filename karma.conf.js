@@ -22,10 +22,9 @@ module.exports = function(config) {
             'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.min.js',
             'https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-aria.min.js',
             'node_modules/angular-mocks/angular-mocks.js',
-            'https://ajax.googleapis.com/ajax/libs/angular_material/1.0.5/angular-material.min.js',
-            'dist/js/libs/angular-google-analytics.min.js',
-            'src/js/options/app.js',
-            'src/js/options/**/*.js',
+            'https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0-rc.5/angular-material.min.js',
+            'dist/js/libs/libs.min.js',
+            'dist/js/options.js',
             'tests/**/*.js',
             {
                 pattern: 'tests/**/*.json',

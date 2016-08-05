@@ -2,6 +2,7 @@ app.factory('Rule', function () {
 
     var Rule = function (properties) {
         this.name         = null;
+        this.detection    = 'CONTAINS';
         this.url_fragment = null;
         this.tab          = {
             title: null,

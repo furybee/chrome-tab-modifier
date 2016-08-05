@@ -39,7 +39,24 @@
     // Options
     // ------------------------------------------------------------------------------------------------------
 
-    gulp.task('build_options', ['build_options_script', 'build_options_html', 'build_options_icons']);
+    gulp.task('build_options', ['build_options_styles', 'build_options_libs', 'build_options_script', 'build_options_html', 'build_options_icons']);
+
+    gulp.task('build_options_styles', function () {
+        return gulp
+            .src(['src/css/libs/**/*.css', 'src/css/options.css'])
+            .pipe(concat('options.css'))
+            .pipe(gulp.dest('dist/css'));
+    });
+
+    gulp.task('build_options_libs', function () {
+        return gulp
+            .src(['src/js/libs/**/*.js'])
+            .pipe(concat('libs.js'))
+            .pipe(rename({
+                suffix: '.min'
+            }))
+            .pipe(gulp.dest('dist/js/libs'));
+    });
 
     gulp.task('build_options_script', function () {
         return gulp
