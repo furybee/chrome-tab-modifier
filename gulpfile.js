@@ -17,7 +17,7 @@
 
     gulp.task('lint', function () {
         return gulp
-            .src('src/js/**/*.js')
+            .src(['src/js/**/*.js', '!src/js/libs/*.js'])
             .pipe(jscs())
             .pipe(jscs.reporter())
             .pipe(jscs.reporter('fail'))

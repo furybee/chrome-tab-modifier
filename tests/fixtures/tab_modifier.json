@@ -58,8 +58,8 @@
         },
         {
             "name": "Unique GMail",
-            "detection": "CONTAINS",
-            "url_fragment": "mail.google.com",
+            "detection": "STARTS",
+            "url_fragment": "https://mail.google.com",
             "tab": {
                 "title": null,
                 "icon": null,

@@ -121,8 +121,8 @@ describe('TabModifier model', function () {
         expect(tab_modifier.rules[3].tab.url_matcher).toBe(null);
 
         expect(tab_modifier.rules[4].name).toBe('Unique GMail');
-        expect(tab_modifier.rules[4].detection).toBe('CONTAINS');
-        expect(tab_modifier.rules[4].url_fragment).toBe('mail.google.com');
+        expect(tab_modifier.rules[4].detection).toBe('STARTS');
+        expect(tab_modifier.rules[4].url_fragment).toBe('https://mail.google.com');
         expect(tab_modifier.rules[4].tab.title).toBe(null);
         expect(tab_modifier.rules[4].tab.icon).toBe(null);
         expect(tab_modifier.rules[4].tab.pinned).toBe(false);
