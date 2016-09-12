@@ -82,6 +82,162 @@ app.run(['$rootScope', '$location', 'Analytics', function ($rootScope, $location
 
 }]);
 
+app.factory('Rule', function () {
+
+    var Rule = function (properties) {
+        this.name         = null;
+        this.detection    = 'CONTAINS';
+        this.url_fragment = null;
+        this.tab          = {
+            title: null,
+            icon: null,
+            pinned: false,
+            protected: false,
+            unique: false,
+            muted: false,
+            url_matcher: null
+        };
+
+        angular.extend(this, properties);
+    };
+
+    Rule.prototype.setModel = function (obj) {
+        angular.extend(this, obj);
+    };
+
+    return Rule;
+
+});
+
+app.factory('TabModifier', ['Rule', function (Rule) {
+
+    var TabModifier = function (properties) {
+        this.settings = {
+            enable_new_version_notification: false
+        };
+        this.rules    = [];
+
+        angular.extend(this, properties);
+    };
+
+    TabModifier.prototype.setModel = function (obj) {
+        angular.extend(this, obj);
+    };
+
+    TabModifier.prototype.addRule = function (rule) {
+        this.rules.push(rule);
+    };
+
+    TabModifier.prototype.removeRule = function (rule) {
+        this.rules.splice(this.rules.indexOf(rule), 1);
+    };
+
+    TabModifier.prototype.save = function (rule, index) {
+        if (index === null || index === undefined) {
+            this.addRule(rule);
+        } else {
+            this.rules[index] = rule;
+        }
+    };
+
+    TabModifier.prototype.build = function (data) {
+        var self = this;
+
+        if (data.settings !== undefined) {
+            this.settings = data.settings;
+        }
+
+        this.deleteRules();
+
+        angular.forEach(data.rules, function (rule) {
+            self.addRule(new Rule(rule));
+        });
+    };
+
+    TabModifier.prototype.sync = function () {
+        chrome.storage.local.set({ tab_modifier: this });
+    };
+
+    TabModifier.prototype.checkFileBeforeImport = function (json) {
+        if (json !== undefined) {
+            try {
+                var settings = JSON.parse(json);
+
+                if ('rules' in settings === false) {
+                    return 'INVALID_SETTINGS';
+                }
+            } catch (e) {
+                return 'INVALID_JSON_FORMAT';
+            }
+
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    TabModifier.prototype.import = function (json) {
+        this.build(JSON.parse(json));
+
+        return this;
+    };
+
+    TabModifier.prototype.export = function () {
+        var blob = new Blob([JSON.stringify(this, null, 4)], { type: 'text/plain' });
+
+        return (window.URL || window.webkitURL).createObjectURL(blob);
+    };
+
+    TabModifier.prototype.deleteRules = function () {
+        this.setModel({ rules: [] });
+
+        return this;
+    };
+
+    return TabModifier;
+
+}]);
+
+app.directive('inputFileButton', function () {
+    return {
+        restrict: 'E',
+        link: function (scope, elem) {
+            var button = elem.find('button'),
+                input  = elem.find('input');
+
+            input.css({ display: 'none' });
+
+            button.bind('click', function () {
+                input[0].click();
+            });
+        }
+    };
+});
+
+app.directive('onReadFile', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        scope: false,
+        link: function (scope, element, attrs) {
+            var fn = $parse(attrs.onReadFile);
+
+            element.on('change', function (onChangeEvent) {
+                var reader = new FileReader();
+
+                reader.onload = function (onLoadEvent) {
+                    scope.$apply(function () {
+                        fn(scope, {
+                            $fileContent: onLoadEvent.target.result
+                        });
+                    });
+                };
+
+                reader.readAsText((onChangeEvent.srcElement || onChangeEvent.target).files[0]);
+            });
+        }
+    };
+}]);
+
 app.controller('HelpController', function () {
 
 });
@@ -387,161 +543,5 @@ app.controller('FormModalController', ['$scope', '$mdDialog', 'rule', 'icon_list
     $scope.save = function (rule) {
         $mdDialog.hide(rule);
     };
-
-}]);
-
-app.directive('inputFileButton', function () {
-    return {
-        restrict: 'E',
-        link: function (scope, elem) {
-            var button = elem.find('button'),
-                input  = elem.find('input');
-
-            input.css({ display: 'none' });
-
-            button.bind('click', function () {
-                input[0].click();
-            });
-        }
-    };
-});
-
-app.directive('onReadFile', ['$parse', function ($parse) {
-    return {
-        restrict: 'A',
-        scope: false,
-        link: function (scope, element, attrs) {
-            var fn = $parse(attrs.onReadFile);
-
-            element.on('change', function (onChangeEvent) {
-                var reader = new FileReader();
-
-                reader.onload = function (onLoadEvent) {
-                    scope.$apply(function () {
-                        fn(scope, {
-                            $fileContent: onLoadEvent.target.result
-                        });
-                    });
-                };
-
-                reader.readAsText((onChangeEvent.srcElement || onChangeEvent.target).files[0]);
-            });
-        }
-    };
-}]);
-
-app.factory('Rule', function () {
-
-    var Rule = function (properties) {
-        this.name         = null;
-        this.detection    = 'CONTAINS';
-        this.url_fragment = null;
-        this.tab          = {
-            title: null,
-            icon: null,
-            pinned: false,
-            protected: false,
-            unique: false,
-            muted: false,
-            url_matcher: null
-        };
-
-        angular.extend(this, properties);
-    };
-
-    Rule.prototype.setModel = function (obj) {
-        angular.extend(this, obj);
-    };
-
-    return Rule;
-
-});
-
-app.factory('TabModifier', ['Rule', function (Rule) {
-
-    var TabModifier = function (properties) {
-        this.settings = {
-            enable_new_version_notification: false
-        };
-        this.rules    = [];
-
-        angular.extend(this, properties);
-    };
-
-    TabModifier.prototype.setModel = function (obj) {
-        angular.extend(this, obj);
-    };
-
-    TabModifier.prototype.addRule = function (rule) {
-        this.rules.push(rule);
-    };
-
-    TabModifier.prototype.removeRule = function (rule) {
-        this.rules.splice(this.rules.indexOf(rule), 1);
-    };
-
-    TabModifier.prototype.save = function (rule, index) {
-        if (index === null || index === undefined) {
-            this.addRule(rule);
-        } else {
-            this.rules[index] = rule;
-        }
-    };
-
-    TabModifier.prototype.build = function (data) {
-        var self = this;
-
-        if (data.settings !== undefined) {
-            this.settings = data.settings;
-        }
-
-        this.deleteRules();
-
-        angular.forEach(data.rules, function (rule) {
-            self.addRule(new Rule(rule));
-        });
-    };
-
-    TabModifier.prototype.sync = function () {
-        chrome.storage.local.set({ tab_modifier: this });
-    };
-
-    TabModifier.prototype.checkFileBeforeImport = function (json) {
-        if (json !== undefined) {
-            try {
-                var settings = JSON.parse(json);
-
-                if ('rules' in settings === false) {
-                    return 'INVALID_SETTINGS';
-                }
-            } catch (e) {
-                return 'INVALID_JSON_FORMAT';
-            }
-
-            return true;
-        } else {
-            return false;
-        }
-    };
-
-    TabModifier.prototype.import = function (json) {
-        this.build(JSON.parse(json));
-
-        return this;
-    };
-
-    TabModifier.prototype.export = function () {
-        var blob = new Blob([JSON.stringify(this, null, 4)], { type: 'text/plain' });
-
-        return (window.URL || window.webkitURL).createObjectURL(blob);
-    };
-
-    TabModifier.prototype.deleteRules = function () {
-        this.setModel({ rules: [] });
-
-        return this;
-    };
-
-    return TabModifier;
 
 }]);
