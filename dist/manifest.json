@@ -37,7 +37,7 @@
     }],
 
     "web_accessible_resources": [
-        "img/*.png"
+        "img/*"
     ],
 
     "permissions": [
