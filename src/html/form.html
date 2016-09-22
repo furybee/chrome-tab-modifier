@@ -27,6 +27,7 @@
                         <md-option value="STARTS">Starts with</md-option>
                         <md-option value="CONTAINS">Contains</md-option>
                         <md-option value="ENDS">Ends with</md-option>
+                        <md-option value="REGEXP">RegExp</md-option>
                     </md-select>
                 </md-input-container>
 
@@ -34,7 +35,8 @@
                 <md-input-container flex="50">
                     <label for="rule_url_fragment" class="md-body-1">URL fragment</label>
                     <input id="rule_url_fragment" type="text" ng-model="rule.url_fragment" placeholder="e.g. mail.google.com to catch GMail" required>
-                    <span class="md-caption">URL fragment to find</span>
+                    <span class="md-caption" ng-if="rule.detection !== 'REGEXP'">URL fragment to find</span>
+                    <span class="md-caption" ng-if="rule.detection === 'REGEXP'">Regular expression to match</span>
                 </md-input-container>
             </div>
 

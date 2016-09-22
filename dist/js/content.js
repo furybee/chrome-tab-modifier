@@ -28,6 +28,14 @@ chrome.storage.local.get('tab_modifier', function (items) {
                         break;
                     }
                     break;
+                case 'REGEXP':
+                    var regexp = new RegExp(tab_modifier.rules[i].url_fragment);
+    
+                    if (regexp.test(location.href) === true) {
+                        rule = tab_modifier.rules[i];
+                        break;
+                    }
+                    break;
             }
         }
     }
