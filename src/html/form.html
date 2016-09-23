@@ -46,6 +46,7 @@
                 <u ng-if="rule.detection === 'STARTS'">starts with</u>
                 <u ng-if="rule.detection === 'CONTAINS'">contains</u>
                 <u ng-if="rule.detection === 'ENDS'">ends with</u>
+                <u ng-if="rule.detection === 'REGEXP'">matches the regex</u>
                 <strong><code ng-bind="rule.url_fragment"></code></strong>:
             </p>
 
