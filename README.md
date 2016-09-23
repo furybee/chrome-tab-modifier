@@ -132,6 +132,12 @@ Customize title with HTML selector and Regexp:
 
 Tab title will be: "sylouuu/chrome-tab-modifier: Take control of your tabs | chrome-tab-modifier by sylouuu"
 
+Match GitHub repositories:
+
+* **Detection**: RegExp
+* **URL fragment**: github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)
+* **Title**: I got you GitHub!
+
 And now, build your own... :muscle:
 
 ## Known issues
