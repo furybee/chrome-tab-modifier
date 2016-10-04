@@ -40,17 +40,24 @@
 <md-content class="md-padding" layout="row" layout-align="center start" ng-if="tab_modifier.rules.length > 0">
 
     <md-table-container flex="100" flex-md="80" flex-gt-md="70">
-        <table md-table>
+        <table md-table ui-tree>
             <thead md-head>
                 <tr md-row>
+                    <th md-column><span>Sort</span></th>
                     <th md-column><span>Name</span></th>
                     <th md-column><span>Detection</span></th>
                     <th md-column><span>URL fragment</span></th>
                     <th md-column md-numeric></th>
                 </tr>
             </thead>
-            <tbody md-body>
-                <tr md-row ng-repeat="rule in tab_modifier.rules">
+            <tbody md-body ui-tree-nodes>
+                <tr md-row ng-repeat="rule in tab_modifier.rules" ui-tree-node>
+                    <td md-cell>
+                        <md-button class="md-icon-button" ui-tree-handle aria-label="Sort rule">
+                            <md-icon md-svg-icon="content-duplicate" md-menu-align-target></md-icon>
+                            <md-tooltip md-direction="bottom">Sort</md-tooltip>
+                        </md-button>
+                    </td>
                     <td md-cell ng-bind="rule.name"></td>
                     <td md-cell>
                         <span ng-if="rule.detection === 'STARTS'">Starts with</span>

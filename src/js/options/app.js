@@ -1,4 +1,4 @@
-var app = angular.module('TabModifier', ['ngRoute', 'ngAnimate', 'ngAria', 'ngMaterial', 'angular-google-analytics', 'md.data.table']);
+var app = angular.module('TabModifier', ['ngRoute', 'ngAnimate', 'ngAria', 'ngMaterial', 'angular-google-analytics', 'md.data.table', 'ui.tree']);
 
 app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdThemingProvider', 'AnalyticsProvider', function ($routeProvider, $compileProvider, $mdIconProvider, $mdThemingProvider, AnalyticsProvider) {
 
