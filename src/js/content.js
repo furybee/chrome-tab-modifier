@@ -197,6 +197,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
     
     processPage();
     
-    w.onhashchange = processPage;
+    // Reverted #39
+    // w.onhashchange = processPage;
     
 });
