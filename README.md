@@ -140,6 +140,11 @@ Match GitHub repositories:
 
 And now, build your own... :muscle:
 
+## Ideas
+
+* Reorder rules with drag-and-drop.
+* Require password after inactivity.
+
 ## Known issues
 
 ### Local icon path doesn't work
