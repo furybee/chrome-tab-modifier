@@ -16,6 +16,13 @@ app.controller('TabRulesController', ['$scope', '$routeParams', '$http', '$mdDia
 
         chrome.storage.sync.clear();
     });
+    
+    // Table options (events)
+    $scope.tree_options = {
+        dropped: function () {
+            tab_modifier.sync();
+        }
+    };
 
     chrome.storage.local.get('tab_modifier', function (items) {
         if (items.tab_modifier !== undefined) {

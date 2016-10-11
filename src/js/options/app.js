@@ -1,4 +1,4 @@
-var app = angular.module('TabModifier', ['ngRoute', 'ngAnimate', 'ngAria', 'ngMaterial', 'angular-google-analytics', 'md.data.table', 'ui.tree']);
+var app = angular.module('TabModifier', ['ngRoute', 'ngAnimate', 'ngAria', 'ngMaterial', 'angular-google-analytics', 'ui.tree']);
 
 app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdThemingProvider', 'AnalyticsProvider', function ($routeProvider, $compileProvider, $mdIconProvider, $mdThemingProvider, AnalyticsProvider) {
 
@@ -33,6 +33,7 @@ app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdTheming
         .icon('github-circle', '/icons/github-circle.svg')
         .icon('help', '/icons/help-circle.svg')
         .icon('credit-card', '/icons/credit-card.svg')
+        .icon('swap-vertical', '/icons/swap-vertical.svg')
         .icon('bell-ring-outline', '/icons/bell-ring-outline.svg');
 
     // Configure default theme

@@ -39,43 +39,44 @@
 
 <md-content class="md-padding" layout="row" layout-align="center start" ng-if="tab_modifier.rules.length > 0">
 
-    <md-table-container flex="100" flex-md="80" flex-gt-md="70">
-        <table md-table ui-tree>
-            <thead md-head>
-                <tr md-row>
-                    <th md-column><span>Sort</span></th>
-                    <th md-column><span>Name</span></th>
-                    <th md-column><span>Detection</span></th>
-                    <th md-column><span>URL fragment</span></th>
-                    <th md-column md-numeric></th>
+    <div class="table-container">
+        <table ui-tree="tree_options">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Detection</th>
+                    <th>URL fragment</th>
+                    <th></th>
                 </tr>
             </thead>
-            <tbody md-body ui-tree-nodes>
-                <tr md-row ng-repeat="rule in tab_modifier.rules" ui-tree-node>
-                    <td md-cell>
-                        <md-button class="md-icon-button" ui-tree-handle aria-label="Sort rule">
-                            <md-icon md-svg-icon="content-duplicate" md-menu-align-target></md-icon>
-                            <md-tooltip md-direction="bottom">Sort</md-tooltip>
-                        </md-button>
+            <tbody ui-tree-nodes ng-model="tab_modifier.rules">
+                <tr ng-repeat="rule in tab_modifier.rules" ui-tree-node>
+                    <td>
+                        <div ui-tree-handle>
+                            <md-button class="md-icon-button" aria-label="Order rule">
+                                <md-icon md-svg-icon="swap-vertical" md-menu-align-target></md-icon>
+                            </md-button>
+                        </div>
                     </td>
-                    <td md-cell ng-bind="rule.name"></td>
-                    <td md-cell>
+                    <td ng-bind="rule.name"></td>
+                    <td>
                         <span ng-if="rule.detection === 'STARTS'">Starts with</span>
                         <span ng-if="rule.detection === 'CONTAINS'">Contains</span>
                         <span ng-if="rule.detection === 'ENDS'">Ends with</span>
                         <span ng-if="rule.detection === 'REGEXP'">Regular Expression</span>
                     </td>
-                    <td md-cell ng-bind="rule.url_fragment"></td>
-                    <td md-cell>
-                        <md-button class="md-icon-button" ng-click="showForm($event, rule)" aria-label="Edit rule" ga-track-event="['tab-rules', 'edit-rule']">
+                    <td ng-bind="rule.url_fragment"></td>
+                    <td style="text-align: right;">
+                        <md-button data-nodrag class="md-icon-button" ng-click="showForm($event, rule)" aria-label="Edit rule" ga-track-event="['tab-rules', 'edit-rule']">
                             <md-icon md-svg-icon="edit" md-menu-align-target></md-icon>
                             <md-tooltip md-direction="bottom">Edit</md-tooltip>
                         </md-button>
-                        <md-button class="md-icon-button" ng-click="duplicate(rule)" aria-label="Duplicate rule" ga-track-event="['tab-rules', 'duplicate-rule']">
+                        <md-button data-nodrag class="md-icon-button" ng-click="duplicate(rule)" aria-label="Duplicate rule" ga-track-event="['tab-rules', 'duplicate-rule']">
                             <md-icon md-svg-icon="content-duplicate" md-menu-align-target></md-icon>
                             <md-tooltip md-direction="bottom">Duplicate</md-tooltip>
                         </md-button>
-                        <md-button class="md-icon-button" ng-click="delete($event, rule)" aria-label="Delete rule" ga-track-event="['tab-rules', 'delete-rule']">
+                        <md-button data-nodrag class="md-icon-button" ng-click="delete($event, rule)" aria-label="Delete rule" ga-track-event="['tab-rules', 'delete-rule']">
                             <md-icon md-svg-icon="delete" md-menu-align-target></md-icon>
                             <md-tooltip md-direction="bottom">Delete</md-tooltip>
                         </md-button>
@@ -83,6 +84,6 @@
                 </tr>
             </tbody>
         </table>
-    </md-table-container>
+    </div>
 
 </md-content>
