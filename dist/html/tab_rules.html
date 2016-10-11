@@ -37,9 +37,9 @@
 
 </md-content>
 
-<md-content class="md-padding" layout="row" layout-align="center start" ng-if="tab_modifier.rules.length > 0">
+<md-content class="md-padding" ng-if="tab_modifier.rules.length > 0">
 
-    <div class="table-container">
+    <section flex="100" flex-offset-gt-md="15" flex-gt-md="70">
         <table ui-tree="tree_options">
             <thead>
                 <tr>
@@ -53,11 +53,7 @@
             <tbody ui-tree-nodes ng-model="tab_modifier.rules">
                 <tr ng-repeat="rule in tab_modifier.rules" ui-tree-node>
                     <td>
-                        <div ui-tree-handle>
-                            <md-button class="md-icon-button" aria-label="Order rule">
-                                <md-icon md-svg-icon="swap-vertical" md-menu-align-target></md-icon>
-                            </md-button>
-                        </div>
+                        <md-icon md-svg-icon="swap-vertical" md-menu-align-target ui-tree-handle aria-label="Move rule"></md-icon>
                     </td>
                     <td ng-bind="rule.name"></td>
                     <td>
@@ -84,6 +80,6 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+    </section>
 
 </md-content>
