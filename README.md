@@ -28,6 +28,12 @@ I created Tab Modifier to add prefixes to website titles with a specific match.
 
 After that, I have added more features like "auto-pin", custom favicons and more.
 
+## Focused scope
+
+Tab Modifier is based on user *rules* and act on the tabs that match the first seen rule.
+
+Aware of that, there is no reason to include a feature that is not "rule-based". Prefer to install specific extensions.
+
 ## Installation
 
 Install from the **[Chrome Web Store](https://chrome.google.com/webstore/detail/hcbgadmbdkiilgpifjgcakjehmafcjai/)**.
@@ -142,7 +148,6 @@ And now, build your own... :muscle:
 
 ## Ideas
 
-* Reorder rules with drag-and-drop.
 * Require password after inactivity.
 
 ## Known issues
