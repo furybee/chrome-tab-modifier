@@ -11,6 +11,9 @@
     "bugs": {
         "url": "https://github.com/sylouuu/chrome-tab-modifier/issues"
     },
+    "scripts": {
+         "test": "./node_modules/karma/bin/karma start tests/*.js"
+    },
     "devDependencies": {
         "angular-mocks": "1.5.8",
         "gulp": "~3.9.0",
