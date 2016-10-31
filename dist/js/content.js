@@ -191,17 +191,39 @@ chrome.storage.local.get('tab_modifier', function (items) {
                 if (icon_changed_by_me === true) {
                     icon_changed_by_me = false;
                 } else {
-                    mutations.forEach(function () {
-                        processIcon(rule.tab.icon);
+                    mutations.forEach(function (mutation) {
+                        // Handle favicon changes
+                        if (mutation.target.type === 'image/x-icon') {
+                            processIcon(rule.tab.icon);
+                            
+                            icon_changed_by_me = true;
+                        }
                         
-                        icon_changed_by_me = true;
+                        mutation.addedNodes.forEach(function (added_node) {
+                            // Detect added favicon
+                            if (added_node.type === 'image/x-icon') {
+                                processIcon(rule.tab.icon);
+                                
+                                icon_changed_by_me = true;
+                            }
+                        });
+                        
+                        mutation.removedNodes.forEach(function (removed_node) {
+                            // Detect removed favicon
+                            if (removed_node.type === 'image/x-icon') {
+                                processIcon(rule.tab.icon);
+                                
+                                icon_changed_by_me = true;
+                            }
+                        });
                     });
                 }
             });
             
-            // Observe when the website has changed the favicon
+            // Observe when the website has changed the head so the script
+            // will detect favicon manipulation (add/remove)
             if (document.querySelector('head link[rel*="icon"]') !== null) {
-                observer_icon.observe(document.querySelector('head link[rel*="icon"]'), {
+                observer_icon.observe(document.querySelector('head'), {
                     attributes: true,
                     childList: true,
                     characterData: true,
