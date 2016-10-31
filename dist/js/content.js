@@ -46,7 +46,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
             return;
         }
         
-        var getTextBySelector, updateTitle, processTitle;
+        var getTextBySelector, updateTitle, processTitle, processIcon;
         
         /**
          * Returns the text related to the given CSS selector
@@ -115,31 +115,60 @@ chrome.storage.local.get('tab_modifier', function (items) {
             return title;
         };
         
+        /**
+         * Remove existing favicon(s) and create a new one
+         * @param new_icon
+         * @returns {boolean}
+         */
+        processIcon = function (new_icon) {
+            var el, icon, link;
+            
+            el = document.querySelectorAll('head link[rel*="icon"]');
+            
+            // Remove existing favicons
+            Array.prototype.forEach.call(el, function (node) {
+                node.parentNode.removeChild(node);
+            });
+            
+            // Set preconfigured or custom (http|https|data) icon
+            icon = (/^(https?|data):/.test(new_icon) === true) ? new_icon : chrome.extension.getURL('/img/' + new_icon);
+            
+            // Create new favicon
+            link      = document.createElement('link');
+            link.type = 'image/x-icon';
+            link.rel  = 'icon';
+            link.href = icon;
+            
+            document.getElementsByTagName('head')[0].appendChild(link);
+            
+            return true;
+        };
+        
         // Set title
         if (rule.tab.title !== null) {
             document.title = processTitle(location.href);
         }
         
-        var changed_by_me = false, observer;
+        var title_changed_by_me = false, observer_title;
         
         // Set up a new observer
-        observer = new window.WebKitMutationObserver(function (mutations) {
-            if (changed_by_me === true) {
-                changed_by_me = false;
+        observer_title = new window.WebKitMutationObserver(function (mutations) {
+            if (title_changed_by_me === true) {
+                title_changed_by_me = false;
             } else {
                 mutations.forEach(function () {
                     if (rule.tab.title !== null) {
                         document.title = processTitle(location.href);
                     }
                     
-                    changed_by_me = true;
+                    title_changed_by_me = true;
                 });
             }
         });
         
         // Observe when the website has changed the title
         if (document.querySelector('head > title') !== null) {
-            observer.observe(document.querySelector('head > title'), {
+            observer_title.observe(document.querySelector('head > title'), {
                 subtree: true,
                 characterresponse: true,
                 childList: true
@@ -153,25 +182,34 @@ chrome.storage.local.get('tab_modifier', function (items) {
         
         // Set new icon
         if (rule.tab.icon !== null) {
-            var el, icon, link;
+            processIcon(rule.tab.icon);
             
-            el = document.querySelectorAll('head link[rel*="icon"]');
+            var icon_changed_by_me = false, observer_icon;
             
-            // Remove existing favicons
-            Array.prototype.forEach.call(el, function (node) {
-                node.parentNode.removeChild(node);
+            // Set up a new observer
+            observer_icon = new window.WebKitMutationObserver(function (mutations) {
+                if (icon_changed_by_me === true) {
+                    icon_changed_by_me = false;
+                } else {
+                    mutations.forEach(function () {
+                        processIcon(rule.tab.icon);
+                        
+                        icon_changed_by_me = true;
+                    });
+                }
             });
             
-            // Set preconfigured or custom (http|https|data) icon
-            icon = (/^(https?|data):/.test(rule.tab.icon) === true) ? rule.tab.icon : chrome.extension.getURL('/img/' + rule.tab.icon);
-            
-            // Create new favicon
-            link      = document.createElement('link');
-            link.type = 'image/x-icon';
-            link.rel  = 'icon';
-            link.href = icon;
-            
-            document.getElementsByTagName('head')[0].appendChild(link);
+            // Observe when the website has changed the favicon
+            if (document.querySelector('head link[rel*="icon"]') !== null) {
+                observer_icon.observe(document.querySelector('head link[rel*="icon"]'), {
+                    attributes: true,
+                    childList: true,
+                    characterData: true,
+                    subtree: true,
+                    attributeOldValue: true,
+                    characterDataOldValue: true
+                });
+            }
         }
         
         // Protect the tab
