@@ -167,16 +167,6 @@ Related issues: [#11](https://github.com/sylouuu/chrome-tab-modifier/issues/11),
 
 Pages that start with `chrome://` URL are protected. No content script can be injected then Tab Modifier will not work on these pages.
 
-### Dynamic favicon
-
-Related issue: [#16](https://github.com/sylouuu/chrome-tab-modifier/issues/16)
-
-The extension does not detect website with dynamic favicon.
-
-For example, you set a custom favicon on a website, on the page reload, the default favicon will be replaced by yours.
-In case the website wants to replace the favicon by a new one in Javascript, like prepending with "(1)", e.g. a notification,
-Tab Modifier will not detect this change.
-
 ## Changelog
 
 See [releases](https://github.com/sylouuu/chrome-tab-modifier/releases) section.
