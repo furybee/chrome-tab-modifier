@@ -22,41 +22,6 @@
         <script src="/js/libs/libs.min.js"></script>
 
         <script src="/js/options.js"></script>
-
-        <style>
-            table {
-                width: 100%;
-                border-spacing: 0;
-                overflow: hidden;
-            }
-
-            table > thead > tr {
-                height: 56px;
-            }
-
-            table > thead > tr > th {
-                text-align: left;
-                color: rgba(0,0,0,.54);
-                font-size: 12px;
-                font-weight: 700;
-                white-space: nowrap;
-            }
-
-            table > tbody > tr {
-                height: 48px;
-            }
-
-            table > tbody > tr > td {
-                text-align: left;
-                color: rgba(0,0,0,.87);
-                font-size: 13px;
-                border-top: 1px rgba(0,0,0,.12) solid;
-            }
-
-            table > tbody > tr > td:first-child {
-                padding-left: 14px;
-            }
-        </style>
     </head>
     <body layout="row" ng-controller="MainController">
 
@@ -128,7 +93,7 @@
                     <md-menu-item>
                         <md-button class="md-button my-icon-button" href="https://chrome.google.com/webstore/detail/open-tabs/cepfpldhbcfaklnnldhoaahgliijehap" target="_blank" aria-label="Go to Open Tabs" ga-track-event="['resources', 'open-tabs-click']">
                             <img src="/img/open_tabs_32.png" alt="open-tabs-icon"></img>
-                            Open Tabs
+                            <span>Open Tabs</span>
                         </md-button>
                     </md-menu-item>
                 </md-list>

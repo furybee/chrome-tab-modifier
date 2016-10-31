@@ -99,3 +99,42 @@ md-input-container .md-caption {
     padding-left: 11px;
     padding-right: 18px;
 }
+
+.my-icon-button span {
+    position: absolute;
+    top: 15px;
+    padding-left: 5px;
+}
+
+table {
+    width: 100%;
+    border-spacing: 0;
+    overflow: hidden;
+}
+
+table > thead > tr {
+    height: 56px;
+}
+
+table > thead > tr > th {
+    text-align: left;
+    color: rgba(0,0,0,.54);
+    font-size: 12px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+table > tbody > tr {
+    height: 48px;
+}
+
+table > tbody > tr > td {
+    text-align: left;
+    color: rgba(0,0,0,.87);
+    font-size: 13px;
+    border-top: 1px rgba(0,0,0,.12) solid;
+}
+
+table > tbody > tr > td:first-child {
+    padding-left: 14px;
+}
