@@ -156,7 +156,7 @@ And now, build your own... :muscle:
 
 ### Local icon path doesn't work
 
-Related issue: [#5](https://github.com/sylouuu/chrome-tab-modifier/issues/5)
+Related issue: [#5](https://github.com/sylouuu/chrome-tab-modifier/issues/5), [#13](https://github.com/sylouuu/chrome-tab-modifier/issues/13)
 
 Due to browser security restrictions, this path won't work: `file://<path>/icon.png`.
 Your icon will not be shown by Chrome.
