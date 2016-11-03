@@ -163,6 +163,8 @@ Your icon will not be shown by Chrome.
 
 Alternatively, you can upload your icon somewhere like [imgur.com](http://imgur.com/) and paste the direct link in your rule.
 
+An other solution consists in transform your image in the DataURI format. Go to http://duri.me/ and drag & drop your icon, then click on "Copy as DataURI" and paste it (the long text) in the icon input on your rule.
+
 ### Chrome system pages `chrome://`
 
 Related issues: [#11](https://github.com/sylouuu/chrome-tab-modifier/issues/11), [#14](https://github.com/sylouuu/chrome-tab-modifier/issues/14)
