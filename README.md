@@ -38,6 +38,8 @@ Aware of that, there is no reason to include a feature that is not "rule-based".
 
 Install from the **[Chrome Web Store](https://chrome.google.com/webstore/detail/hcbgadmbdkiilgpifjgcakjehmafcjai/)**.
 
+Also available for **[Opera Browser](https://addons.opera.com/fr/extensions/details/tab-modifier/)**.
+
 ## Usage
 
 * Click on the <img src="dist/img/icon_16.png" alt="icon"> icon to open Options.
