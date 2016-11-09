@@ -74,10 +74,6 @@ Also available for **[Opera Browser](https://addons.opera.com/fr/extensions/deta
 
 <img src="screenshots/settings.png" alt="settings">
 
-### Help
-
-<img src="screenshots/help.png" alt="help">
-
 ## Examples
 
 You have infinite possibilities, here are some configurations:
@@ -156,7 +152,7 @@ And now, build your own... :muscle:
 
 ### Local icon path doesn't work
 
-Related issues: [#5](https://github.com/sylouuu/chrome-tab-modifier/issues/5), [#13](https://github.com/sylouuu/chrome-tab-modifier/issues/13)
+Related issue: [#5](https://github.com/sylouuu/chrome-tab-modifier/issues/5)
 
 Due to browser security restrictions, this path won't work: `file://<path>/icon.png`.
 Your icon will not be shown by Chrome.
@@ -170,6 +166,12 @@ Another solution consists in transform your image in the [Data URI format](https
 Related issues: [#11](https://github.com/sylouuu/chrome-tab-modifier/issues/11), [#14](https://github.com/sylouuu/chrome-tab-modifier/issues/14)
 
 Pages that start with `chrome://` URL are protected. No content script can be injected then Tab Modifier will not work on these pages.
+
+### Local files `file:///`
+
+Related issue: [#13](https://github.com/sylouuu/chrome-tab-modifier/issues/13)
+
+By default, extensions don't have access to local files. You have to opt-in "Allow access to file URLs" from `chrome://extensions/`.
 
 ## Changelog
 
