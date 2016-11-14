@@ -15,85 +15,114 @@
 
 <md-content class="md-padding">
 
-    <section flex="100" flex-offset-gt-md="15" flex-gt-md="70">
+    <md-card flex-offset="15" flex="70">
+        <md-card-content>
 
-        <h2 class="md-headline">Concept</h2>
+            <h2 class="md-headline">Concept</h2>
 
-        <p>Take control of your browser tabs! With this extension you are able to change some behaviors on any website.</p>
+            <p>Take control of your browser tabs! With this extension you are able to change some behaviors on any website. Define your rules and let the extension makes the job automatically.</p>
 
-        <p>All of your data are stored on your computer, I don't have any access to it.</p>
+            <p>All of your data are stored on your computer, I don't have any access to it.</p>
 
-        <md-divider></md-divider>
+            <md-divider></md-divider>
 
-        <h2 class="md-headline">What behaviors?</h2>
+            <h2 class="md-headline">Features</h2>
 
-        <ul>
-            <li>You can <strong>rename</strong> a tab.</li>
-            <li>You can set a new <strong>favicon</strong>.</li>
-            <li>You can <strong>pin</strong> a website without effort.</li>
-            <li>You can <strong>protect</strong> some websites from accidental closure with a confirm box.</li>
-            <li>You can avoid duplicate tabs by setting up the <strong>unique</strong> property.</li>
-            <li>You can <strong>mute</strong> the sound of any websites before they can play it (you have to enable this: <i>chrome://flags/#enable-tab-audio-muting</i>).</li>
-        </ul>
+            <ul>
+                <li>You can <strong>rename</strong> a tab.</li>
+                <li>You can change any tab <strong>(fav)icon</strong>.</li>
+                <li>You can <strong>pin</strong> a website without effort.</li>
+                <li>You can <strong>protect</strong> some websites from accidental closure with a confirm box.</li>
+                <li>You can avoid duplicate tabs by setting up the <strong>unique</strong> property.</li>
+                <li>You can <strong>mute</strong> the sound of any website before it plays it.</li>
+            </ul>
 
-        <p>
-            And the icing on the cake... Combine all of them!
-        </p>
+            <p>
+                And the icing on the cake... Combine all of them!
+            </p>
 
-        <md-divider></md-divider>
+            <md-divider></md-divider>
 
-        <h2 class="md-headline">How?</h2>
+            <h2 class="md-headline">Tab Rules</h2>
 
-        <p>You have to create a record called a "<strong>Tab Rule</strong>".</p>
+            <p>You have to create a "tab rule". A tab rule has:</p>
 
-        <p>A <strong>Tab Rule</strong> has:</p>
+            <h3>Name</h3>
 
-        <ul>
-            <li>a <strong>name</strong>, used for you</li>
-            <li>a <strong>detection</strong> type, either "Starts with", "Contains", "Ends with" or "RegExp"</li>
-            <li>a <strong>URL fragment</strong>, used by the extension to detect the website you want to apply actions (i.e. behaviors), enter a regular expression if you have selected the "RegExp" detection type</li>
-        </ul>
+            <p>This name is used for you, just to find your rule among others.</p>
 
-        <p>After filling these info, you can now select some actions:</p>
+            <h3>Detection</h3>
 
-        <ul>
-            <li>the new <strong>title</strong> for the website, you can inject variables like <code>{title}</code> as <code>title</code> is a valid CSS selector parsed with <code>document.querySelector()</code></li>
-            <li>the new <strong>icon</strong>, select one or set a valid image URL</li>
-            <li>the <strong>pinned</strong> state (ON/OFF)</li>
-            <li>the <strong>protected</strong> state (ON/OFF)</li>
-            <li>the <strong>unique</strong> state (ON/OFF)</li>
-            <li>the <strong>muted</strong> state (ON/OFF)</li>
-            <li>the <strong>URL matcher</strong> to identify some URL parts and use them inside the title (advanced usage), enter a regular expression like <code>q=([^&]+)</code> and use <code>$1</code> in <strong>title</strong></li>
-        </ul>
+            <p>Choices are either "Starts with", "Contains", "Ends with" or "RegExp". The extension must to know how to apply your rule depending on the detection you need. You may need to catch a word inside the URL so you will select "Contains" or catch only PNG files so you will select "Ends with", etc. Most of the time, "Contains" does what you want, this is the default selected detection.</p>
 
-        <p>You can now go to the <a class="md-primary" href="#/">Tab Rules</a> section and create your first rule...</p>
+            <h3>URL fragment</h3>
 
-        <p><i>Important: after creating or editing a rule, refresh the tab(s) to view the changes.</i></p>
-        <p><i>Important (2): the order of your rules is important, the first match is used. You can reorder your rules anyway.</i></p>
+            <p>This is the key of your rule. It will determine if your rule will be applied or not. You want to catch GMail? You can set your rule with "Contains" detection and "mail.google.com" URL fragment. Another solution could be to set "Starts with" detection and "https://mail.google.com". Try any combination to achieve what you want.</p>
 
-        <md-divider></md-divider>
+            <p>If you are familiar with regular expressions, select "RegExp" detection and enter the expression in the URL fragment input. Try to match GitHub with "github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)".</p>
 
-        <h2 class="md-headline">"URL fragment"? Meh?</h2>
+            <p><u><b>After defining the core of your rule you can select some actions listed below.</b></u></p>
 
-        <p>In case you don't still understand what's going on here...</p>
+            <h3>Title</h3>
 
-        <p>The <strong>URL fragment</strong> value is the key for the extension. Let's see 2 examples.</p>
+            <p>This action will rewrite the website title.</p>
 
-        <h3>First example</h3>
+            <p>Define the new titile in the input. Sometimes, you want to inject variables inside the title. As the extension has access to the HTML document, almost everything can be injected in the title. Use the braces syntax, example: if you need to inject website title, add <code>{title}</code> as <code>title</code> is a valid CSS selector parsed with <code>document.querySelector()</code> (developers will understand). So you can inject <code>{h1}</code>, <code>{#id}</code>, <code>{.class}</code> etc. Obviously, if there is more than one <code>{h1}</code> in the document, the first one is selected.</p>
 
-        <p><strong>Problem:</strong> I use GMail everyday and this tab is so important, I'm so mad when I accidentally close it and after few hours of working I can see that I have many GMail tabs opened, what a mess!</p>
+            <p>Another advanced usage can be used with the title, you can inject some parts of the URL with the dollar syntax. This feature is linked to the "URL matcher" action, see afterwards. Use <code>$1</code>, <code>$2</code>, etc. depending on your regular expression defined in "URL matcher".</p>
 
-        <p><strong>Solution:</strong> I create a new Table Rule called "The GMail hell" with the URL fragment "<strong>mail.google.com</strong>". I enable "Protected" and "Unique" and I save it. Closing all GMail tabs and reopen a new one, all done!</p>
+            <h3>Icon</h3>
 
-        <p>The extension knows when to apply my actions because the GMail URL <strong>contains</strong> "mail.google.com".</p>
+            <p>This action will replace the website (fav)icon.</p>
 
-        <h3>Second example</h3>
+            <p>You can select an icon provided by the extension.</p>
 
-        <p><strong>Problem:</strong> I'm usually having more than 20 tabs opened in my browser, I'm losing so much space! OK, what about pin them all? But I'm too lazy to do a right click on each tab.</p>
+            <p>Otherwise, you can define an icon URL in the input like "https://www.google.com/favicon.ico".</p>
 
-        <p><strong>Solution:</strong> I create a new Table Rule called "Pin them all" with the URL fragment "<strong>http</strong>" (because almost all website URLs <strong>contain</strong> the word "http"). I enable "Pin" and I save it. Closing the browser and reopen it, all tabs are now pinned!</p>
+            <p>In case you want to define a local icon from your computer, you have 2 solutions:</p>
 
-        <p>I hope you now understand how the <strong>URL fragment</strong> value works.</p>
+            <ul>
+                <li>upload your icon somewhere like <a href="http://imgur.com/upload" target="_blank">imgur.com</a> and paste the direct link</li>
+                <li>go to <a href="http://duri.me/" target="_blank">duri.me</a> and drag & drop your icon, then click on "Copy as DataURI" and paste it. This is your icon transformed in the <a href="https://en.wikipedia.org/wiki/Data_URI_scheme" target="_blank">Data URI format</a></li>
+            </ul>
 
-    </section>
+            <h3>Pinned</h3>
+
+            <p>This action will pin the tab.</p>
+
+            <h3>Protected</h3>
+
+            <p>This action will ask you before closing the tab.</p>
+
+            <p><i>Note: the confirm box will be triggered if you (or the website itself) refresh the tab, as the extension can't differenciate closure and refresh.</i></p>
+
+            <h3>Unique</h3>
+
+            <p>This action will automatically close duplicate tabs. Besides the extension will not focus the original tab after closing the duplicate one.</p>
+
+            <p>Scenario: create a rule based on GMail with unique action. Open GMail, open another GMail, the last one will be closed.</p>
+
+            <h3>Muted</h3>
+
+            <p>This action will prevent the tab for playing sounds.</p>
+
+            <p>To work, this feature requires that you enable this flag: <i>chrome://flags/#enable-tab-audio-muting</i> then restart your browser.</p>
+
+            <h3>URL matcher</h3>
+
+            <p>An advanced usage, enter a regular expression to identify some URL parts and use them inside the title, like <code>q=([^&]+)</code> and use <code>$1</code> in  the title input to inject the variable.</p>
+
+            <md-divider></md-divider>
+
+            <h2 class="md-headline">Additional notes</h2>
+
+            <p>After creating or editing a rule, refresh the tab(s) to apply the changes.</p>
+
+            <p>The order of your rules is important, if an URL triggers more than one rule, the first one will be applied. You can reorder your rules anyway.</p>
+
+            <p>Some interesting tab rules are listed <a href="https://github.com/sylouuu/chrome-tab-modifier#examples" target="_blank">there</a> for inspiration purpose.</p>
+
+        </md-card-content>
+    </md-card>
+
 </md-content>

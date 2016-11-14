@@ -17,9 +17,9 @@
 
 <md-divider></md-divider>
 
-<md-content class="md-padding" layout-align="center center" ng-if="tab_modifier.rules.length === 0">
+<md-content class="md-padding">
 
-    <md-card flex-offset="15" flex="70">
+    <md-card flex-offset="15" flex="70" ng-if="tab_modifier.rules.length === 0">
         <md-card-header class="md-primary">
             <md-card-avatar>
                 <md-icon md-svg-icon="information-outline"></md-icon>
@@ -35,51 +35,49 @@
         </md-card-content>
     </md-card>
 
-</md-content>
-
-<md-content class="md-padding" ng-if="tab_modifier.rules.length > 0">
-
-    <section flex="100" flex-offset-gt-md="15" flex-gt-md="70">
-        <table ui-tree="tree_options">
-            <thead>
-                <tr>
-                    <th></th>
-                    <th>Name</th>
-                    <th>Detection</th>
-                    <th>URL fragment</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody ui-tree-nodes ng-model="tab_modifier.rules">
-                <tr ng-repeat="rule in tab_modifier.rules" ui-tree-node>
-                    <td>
-                        <md-icon md-svg-icon="swap-vertical" md-menu-align-target ui-tree-handle aria-label="Move rule"></md-icon>
-                    </td>
-                    <td ng-bind="rule.name"></td>
-                    <td>
-                        <span ng-if="rule.detection === 'STARTS'">Starts with</span>
-                        <span ng-if="rule.detection === 'CONTAINS'">Contains</span>
-                        <span ng-if="rule.detection === 'ENDS'">Ends with</span>
-                        <span ng-if="rule.detection === 'REGEXP'">Regular Expression</span>
-                    </td>
-                    <td ng-bind="rule.url_fragment"></td>
-                    <td style="text-align: right;">
-                        <md-button data-nodrag class="md-icon-button" ng-click="showForm($event, rule)" aria-label="Edit rule" ga-track-event="['tab-rules', 'edit-rule']">
-                            <md-icon md-svg-icon="edit" md-menu-align-target></md-icon>
-                            <md-tooltip md-direction="bottom">Edit</md-tooltip>
-                        </md-button>
-                        <md-button data-nodrag class="md-icon-button" ng-click="duplicate(rule)" aria-label="Duplicate rule" ga-track-event="['tab-rules', 'duplicate-rule']">
-                            <md-icon md-svg-icon="content-duplicate" md-menu-align-target></md-icon>
-                            <md-tooltip md-direction="bottom">Duplicate</md-tooltip>
-                        </md-button>
-                        <md-button data-nodrag class="md-icon-button" ng-click="delete($event, rule)" aria-label="Delete rule" ga-track-event="['tab-rules', 'delete-rule']">
-                            <md-icon md-svg-icon="delete" md-menu-align-target></md-icon>
-                            <md-tooltip md-direction="bottom">Delete</md-tooltip>
-                        </md-button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+    <md-card flex-offset="15" flex="70" ng-if="tab_modifier.rules.length > 0">
+        <md-card-content>
+            <table ui-tree="tree_options">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>Name</th>
+                        <th>Detection</th>
+                        <th>URL fragment</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody ui-tree-nodes ng-model="tab_modifier.rules">
+                    <tr ng-repeat="rule in tab_modifier.rules" ui-tree-node>
+                        <td>
+                            <md-icon md-svg-icon="swap-vertical" md-menu-align-target ui-tree-handle aria-label="Move rule"></md-icon>
+                        </td>
+                        <td ng-bind="rule.name"></td>
+                        <td>
+                            <span ng-if="rule.detection === 'STARTS'">Starts with</span>
+                            <span ng-if="rule.detection === 'CONTAINS'">Contains</span>
+                            <span ng-if="rule.detection === 'ENDS'">Ends with</span>
+                            <span ng-if="rule.detection === 'REGEXP'">Regular Expression</span>
+                        </td>
+                        <td ng-bind="rule.url_fragment"></td>
+                        <td style="text-align: right;">
+                            <md-button data-nodrag class="md-icon-button" ng-click="showForm($event, rule)" aria-label="Edit rule" ga-track-event="['tab-rules', 'edit-rule']">
+                                <md-icon md-svg-icon="edit" md-menu-align-target></md-icon>
+                                <md-tooltip md-direction="bottom">Edit</md-tooltip>
+                            </md-button>
+                            <md-button data-nodrag class="md-icon-button" ng-click="duplicate(rule)" aria-label="Duplicate rule" ga-track-event="['tab-rules', 'duplicate-rule']">
+                                <md-icon md-svg-icon="content-duplicate" md-menu-align-target></md-icon>
+                                <md-tooltip md-direction="bottom">Duplicate</md-tooltip>
+                            </md-button>
+                            <md-button data-nodrag class="md-icon-button" ng-click="delete($event, rule)" aria-label="Delete rule" ga-track-event="['tab-rules', 'delete-rule']">
+                                <md-icon md-svg-icon="delete" md-menu-align-target></md-icon>
+                                <md-tooltip md-direction="bottom">Delete</md-tooltip>
+                            </md-button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </md-card-content>
+    </md-card>
 
 </md-content>
