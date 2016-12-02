@@ -32,16 +32,18 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
                     return;
                 }
 
-                var tab;
+                var tab, existingTab;
 
                 chrome.tabs.query({}, function (tabs) {
                     for (var i = 0; i < tabs.length; i++) {
                         tab = tabs[i];
 
                         if (tab.url.indexOf(message.url_fragment) !== -1 && tab.id !== current_tab.id) {
+                            existingTab = tab.id;
                             chrome.tabs.executeScript(current_tab.id, {
                                 code: 'window.onbeforeunload = function () {};'
                             }, function () {
+                                chrome.tabs.update(existingTab, {selected: true});
                                 chrome.tabs.remove(current_tab.id);
                             });
                         }
