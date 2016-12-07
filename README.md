@@ -40,6 +40,8 @@ Install from the **[Chrome Web Store](https://chrome.google.com/webstore/detail/
 
 Also available for **[Opera Browser](https://addons.opera.com/fr/extensions/details/tab-modifier/)**.
 
+Not available for **Firefox**, refer to [#46](https://github.com/sylouuu/chrome-tab-modifier/issues/46).
+
 ## Usage
 
 * Click on the <img src="dist/img/icon_16.png" alt="icon"> icon to open Options.
