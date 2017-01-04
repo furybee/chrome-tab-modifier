@@ -1,7 +1,7 @@
 ﻿{
     "manifest_version": 2,
     "name": "Tab Modifier",
-    "version": "0.17.3",
+    "version": "0.17.4",
     "description": "Take control of your tabs",
     "homepage_url": "https://github.com/sylouuu/chrome-tab-modifier",
 
@@ -37,6 +37,8 @@
     ],
 
     "permissions": [
+        "http://*/*",
+        "https://*/*",
         "tabs",
         "storage"
     ]

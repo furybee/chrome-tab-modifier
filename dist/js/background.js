@@ -32,17 +32,24 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
                     return;
                 }
 
-                var tab;
+                var tab, tab_id;
 
                 chrome.tabs.query({}, function (tabs) {
                     for (var i = 0; i < tabs.length; i++) {
                         tab = tabs[i];
 
                         if (tab.url.indexOf(message.url_fragment) !== -1 && tab.id !== current_tab.id) {
+                            tab_id = tab.id;
+                            
                             chrome.tabs.executeScript(current_tab.id, {
-                                code: 'window.onbeforeunload = function () {};'
+                                code: 'window.onbeforeunload = null;'
                             }, function () {
                                 chrome.tabs.remove(current_tab.id);
+    
+                                chrome.tabs.update(tab_id, {
+                                    url: current_tab.url,
+                                    highlighted: true
+                                });
                             });
                         }
                     }
