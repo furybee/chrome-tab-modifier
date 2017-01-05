@@ -30,7 +30,7 @@ After that, I have added more features like "auto-pin", custom favicons and more
 
 ## Focused scope
 
-Tab Modifier is based on user *rules* and act on the tabs that match the first seen rule.
+Tab Modifier is based on user *rules* and act on the tab URL that matches the first seen rule.
 
 Aware of that, there is no reason to include a feature that is not "rule-based". Prefer to install specific extensions.
 
