@@ -1,11 +1,11 @@
 var app = angular.module('TabModifier', ['ngRoute', 'ngAnimate', 'ngAria', 'ngMaterial', 'angular-google-analytics', 'ui.tree']);
 
 app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdThemingProvider', 'AnalyticsProvider', function ($routeProvider, $compileProvider, $mdIconProvider, $mdThemingProvider, AnalyticsProvider) {
-
+    
     // Allow "chrome-extension" protocol
     $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|chrome-extension|file|blob):/);
     $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|chrome-extension|file|blob):|data:image\//);
-
+    
     // Load icons list by name
     $mdIconProvider
         .icon('menu', '/icons/menu.svg')
@@ -35,7 +35,7 @@ app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdTheming
         .icon('credit-card', '/icons/credit-card.svg')
         .icon('swap-vertical', '/icons/swap-vertical.svg')
         .icon('bell-ring-outline', '/icons/bell-ring-outline.svg');
-
+    
     // Configure default theme
     $mdThemingProvider
         .theme('default')
@@ -48,12 +48,12 @@ app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdTheming
         .warnPalette('red', {
             default: 'A700'
         });
-
+    
     // Analytics config
     AnalyticsProvider.setAccount('UA-27524593-7');
     AnalyticsProvider.setHybridMobileSupport(true);
     AnalyticsProvider.setDomainName('none');
-
+    
     var routes = {
         '/settings': {
             templateUrl: '/html/settings.html',
@@ -68,17 +68,17 @@ app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdTheming
             controller: 'TabRulesController'
         }
     };
-
+    
     for (var path in routes) {
         if (routes.hasOwnProperty(path)) {
             $routeProvider.when(path, routes[path]);
         }
     }
-
+    
 }]);
 
 app.run(['$rootScope', '$location', 'Analytics', function ($rootScope, $location, Analytics) {
-
+    
     $rootScope.location = $location;
-
+    
 }]);

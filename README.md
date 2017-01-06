@@ -144,6 +144,16 @@ Match GitHub repositories:
 * **URL fragment**: github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)
 * **Title**: I got you GitHub!
 
+Customize GMail title with Title matcher and URL matcher:
+
+* **Detection**: Contains
+* **URL fragment**: mail.google.com
+* **Title**: @0 | $0
+* **Title matcher**: [a-z]*@gmail.com
+* **URL matcher**: [a-z]*.google.com
+
+Tab title will be: "youremail@gmail.com | mail.google.com"
+
 And now, build your own... :muscle:
 
 ## Ideas

@@ -31,13 +31,13 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
                 if (current_tab === undefined) {
                     return;
                 }
-
+                
                 var tab, tab_id;
-
+                
                 chrome.tabs.query({}, function (tabs) {
                     for (var i = 0; i < tabs.length; i++) {
                         tab = tabs[i];
-
+                        
                         if (tab.url.indexOf(message.url_fragment) !== -1 && tab.id !== current_tab.id) {
                             tab_id = tab.id;
                             
@@ -45,7 +45,7 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
                                 code: 'window.onbeforeunload = null;'
                             }, function () {
                                 chrome.tabs.remove(current_tab.id);
-    
+                                
                                 chrome.tabs.update(tab_id, {
                                     url: current_tab.url,
                                     highlighted: true
@@ -83,7 +83,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
                 if (tab_modifier === undefined || tab_modifier.settings === undefined) {
                     return;
                 }
-
+                
                 if (tab_modifier.settings !== undefined && tab_modifier.settings.enable_new_version_notification === true && details.previousVersion !== chrome.runtime.getManifest().version) {
                     openOptionsPage('update/' + chrome.runtime.getManifest().version);
                 }

@@ -69,7 +69,9 @@
 
             <p>Define the new titile in the input. Sometimes, you want to inject variables inside the title. As the extension has access to the HTML document, almost everything can be injected in the title. Use the braces syntax, example: if you need to inject website title, add <code>{title}</code> as <code>title</code> is a valid CSS selector parsed with <code>document.querySelector()</code> (developers will understand). So you can inject <code>{h1}</code>, <code>{#id}</code>, <code>{.class}</code> etc. Obviously, if there is more than one <code>{h1}</code> in the document, the first one is selected.</p>
 
-            <p>Another advanced usage can be used with the title, you can inject some parts of the URL with the dollar syntax. This feature is linked to the "URL matcher" action, see afterwards. Use <code>$1</code>, <code>$2</code>, etc. depending on your regular expression defined in "URL matcher".</p>
+            <p>Another advanced usage can be used with the title, you can inject some parts of the URL with the dollar syntax. This feature is linked to the "URL matcher" action, see afterwards. Use <code>$0</code>, <code>$1</code>, etc. depending on your regular expression defined in "URL matcher".</p>
+
+            <p>As you can scan the URL, you can also scan the title and inject some parts of it with the "at (@)" syntax. This feature is linked to the "Title matcher" action, see afterwards. Use <code>@0</code>, <code>@1</code>, etc. depending on your regular expression defined in "Title matcher".</p>
 
             <h3>Icon</h3>
 
@@ -108,9 +110,13 @@
 
             <p>To work, this feature requires that you enable this flag: <i>chrome://flags/#enable-tab-audio-muting</i> then restart your browser.</p>
 
+            <h3>Title matcher</h3>
+
+            <p>An advanced usage, enter a regular expression to identify some title parts and use them inside the title itself, this is useful to reorder words or exclude some parts of the title, like <code>[a-z]*@gmail.com</code> and use <code>@0</code> in the title input to inject the variable.</p>
+
             <h3>URL matcher</h3>
 
-            <p>An advanced usage, enter a regular expression to identify some URL parts and use them inside the title, like <code>q=([^&]+)</code> and use <code>$1</code> in  the title input to inject the variable.</p>
+            <p>An advanced usage, enter a regular expression to identify some URL parts and use them inside the title, like <code>q=([^&]+)</code> and use <code>$0</code> in the title input to inject the variable.</p>
 
             <md-divider></md-divider>
 

@@ -82,9 +82,10 @@ chrome.storage.local.get('tab_modifier', function (items) {
         /**
          * Process new title depending on current URL & current title
          * @param current_url
+         * @param current_title
          * @returns {*}
          */
-        processTitle = function (current_url) {
+        processTitle = function (current_url, current_title) {
             var title = rule.tab.title, matches = title.match(/\{([^}]+)}/g), i;
             
             // Handle curly braces tags inside title
@@ -95,6 +96,21 @@ chrome.storage.local.get('tab_modifier', function (items) {
                     selector = matches[i].substring(1, matches[i].length - 1);
                     text     = getTextBySelector(selector);
                     title    = updateTitle(title, matches[i], text);
+                }
+            }
+            
+            // Handle title_matcher
+            if (rule.tab.title_matcher !== null) {
+                try {
+                    matches = current_title.match(new RegExp(rule.tab.title_matcher), 'g');
+                    
+                    if (matches !== null) {
+                        for (i = 0; i < matches.length; i++) {
+                            title = updateTitle(title, '@' + i, matches[i]);
+                        }
+                    }
+                } catch (e) {
+                    console.log(e);
                 }
             }
             
@@ -147,7 +163,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
         
         // Set title
         if (rule.tab.title !== null) {
-            document.title = processTitle(location.href);
+            document.title = processTitle(location.href, document.title);
         }
         
         var title_changed_by_me = false, observer_title;
@@ -159,7 +175,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
             } else {
                 mutations.forEach(function () {
                     if (rule.tab.title !== null) {
-                        document.title = processTitle(location.href);
+                        document.title = processTitle(location.href, document.title);
                     }
                     
                     title_changed_by_me = true;
