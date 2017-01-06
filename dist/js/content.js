@@ -57,6 +57,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
             var el = document.querySelector(selector), value = '';
             
             if (el !== null) {
+                el    = el.childNodes[0];
                 value = el.innerText || el.textContent;
             }
             
