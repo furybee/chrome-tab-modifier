@@ -57,8 +57,15 @@ chrome.storage.local.get('tab_modifier', function (items) {
             var el = document.querySelector(selector), value = '';
             
             if (el !== null) {
-                el    = el.childNodes[0];
-                value = el.innerText || el.textContent;
+                el = el.childNodes[0];
+                
+                if (el.tagName === 'input') {
+                    value = el.value;
+                } else if (el.tagName === 'select') {
+                    value = el.options[el.selectedIndex].text;
+                } else {
+                    value = el.innerText || el.textContent;
+                }
             }
             
             return value.trim();
