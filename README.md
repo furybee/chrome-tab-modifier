@@ -213,6 +213,15 @@ Go to `chrome://extensions/` and enable the "Developer mode".
 
 Click on "Load unpacked extension..." and select the project `dist/` folder.
 
+## Donators
+
+A huge thanks to:
+
+* Fabian L. `5,00 EUR`
+* Brent M. `5,00 EUR`
+
+If you like my work and you want to support me, visit the [PayPal link](https://www.paypal.me/svalienne/5). ;)
+
 ## License
 
 See [license](LICENSE.md) file.
