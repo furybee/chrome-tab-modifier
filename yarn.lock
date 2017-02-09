@@ -17,6 +17,10 @@ accepts@1.3.3:
     mime-types "~2.1.11"
     negotiator "0.6.1"
 
+add-matchers@0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/add-matchers/-/add-matchers-0.4.0.tgz#fd2cf6331167827ef321c52a02cc4ef48e940821"
+
 after@0.8.2:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/after/-/after-0.8.2.tgz#fedb394f9f0e02aa9768e702bda23b505fae7e1f"
@@ -2164,15 +2168,11 @@ jasmine-core@~2.5.0:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-2.5.2.tgz#6f61bd79061e27f43e6f9355e44b3c6cab6ff297"
 
-jasmine-expect@3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/jasmine-expect/-/jasmine-expect-3.2.0.tgz#f337dd24f246f5d91953102f11ac8ed7f9ae6dbc"
+jasmine-expect@3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/jasmine-expect/-/jasmine-expect-3.6.0.tgz#61b7f65958154e2b93365e46b247795dab8a9097"
   dependencies:
-    jasmine-matchers-loader "0.1.0"
-
-jasmine-matchers-loader@0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/jasmine-matchers-loader/-/jasmine-matchers-loader-0.1.0.tgz#dda23db8a3ff99ec3b635be085d875d52f0f0050"
+    add-matchers "0.4.0"
 
 jodid25519@^1.0.0:
   version "1.0.2"
@@ -2319,11 +2319,11 @@ karma-jasmine-jquery@~0.1.1:
     bower "^1.3.9"
     bower-installer "git://github.com/bessdsv/bower-installer.git#temp"
 
-karma-jasmine-matchers@~3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/karma-jasmine-matchers/-/karma-jasmine-matchers-3.2.0.tgz#dbfff74acc85d8617ce56aa209638263aa0a5a86"
+karma-jasmine-matchers@~3.6.0:
+  version "3.6.0"
+  resolved "https://registry.yarnpkg.com/karma-jasmine-matchers/-/karma-jasmine-matchers-3.6.0.tgz#79340065b53cc59851b31db4e84ef6cc3799ce90"
   dependencies:
-    jasmine-expect "3.2.0"
+    jasmine-expect "3.6.0"
 
 karma-jasmine@~1.1.0:
   version "1.1.0"
@@ -2852,13 +2852,9 @@ multipipe@^0.1.2:
   dependencies:
     duplexer2 "0.0.2"
 
-mute-stream@0.0.4:
+mute-stream@0.0.4, mute-stream@~0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.4.tgz#a9219960a6d5d5d046597aee51252c6655f7177e"
-
-mute-stream@~0.0.4:
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-0.0.6.tgz#48962b19e169fd1dfc240b3f1e7317627bbc47db"
 
 nan@^2.3.0:
   version "2.4.0"
@@ -3321,7 +3317,7 @@ qjobs@^1.1.4:
   version "1.1.5"
   resolved "https://registry.yarnpkg.com/qjobs/-/qjobs-1.1.5.tgz#659de9f2cf8dcc27a1481276f205377272382e73"
 
-qs@6.2.0:
+qs@6.2.0, qs@~6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.2.0.tgz#3b7848c03c2dece69a9522b0fae8c4126d745f3b"
 
@@ -3332,10 +3328,6 @@ qs@~1.2.0:
 qs@~2.3.1:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/qs/-/qs-2.3.3.tgz#e9e85adbe75da0bbe4c8e0476a086290f863b404"
-
-qs@~6.2.0:
-  version "6.2.1"
-  resolved "https://registry.yarnpkg.com/qs/-/qs-6.2.1.tgz#ce03c5ff0935bc1d9d69a9f14cbd18e568d67625"
 
 qs@~6.3.0:
   version "6.3.0"
@@ -3704,17 +3696,17 @@ semver-diff@^0.1.0:
   dependencies:
     semver "^2.2.1"
 
-"semver@2 || 3 || 4", "semver@2 || 3 || 4 || 5", semver@^4.1.0, semver@~4.3.3:
+"semver@2 || 3 || 4", semver@^4.1.0, semver@~4.3.3:
   version "4.3.6"
   resolved "https://registry.yarnpkg.com/semver/-/semver-4.3.6.tgz#300bc6e0e86374f7ba61068b5b1ecd57fc6532da"
+
+"semver@2 || 3 || 4 || 5", semver@^5.0.1, semver@~5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-5.3.0.tgz#9b2ce5d3de02d17c6012ad326aa6b4d0cf54f94f"
 
 semver@^2.2.1, semver@~2.3.0:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/semver/-/semver-2.3.2.tgz#b9848f25d6cf36333073ec9ef8856d42f1233e52"
-
-semver@^5.0.1, semver@~5.3.0:
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-5.3.0.tgz#9b2ce5d3de02d17c6012ad326aa6b4d0cf54f94f"
 
 sequencify@~0.0.7:
   version "0.0.7"
