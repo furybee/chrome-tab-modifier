@@ -17,9 +17,9 @@ accepts@1.3.3:
     mime-types "~2.1.11"
     negotiator "0.6.1"
 
-add-matchers@0.4.0:
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/add-matchers/-/add-matchers-0.4.0.tgz#fd2cf6331167827ef321c52a02cc4ef48e940821"
+add-matchers@0.5.0:
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/add-matchers/-/add-matchers-0.5.0.tgz#502190e4750cd5721618393268b61a157366e765"
 
 after@0.8.2:
   version "0.8.2"
@@ -99,7 +99,7 @@ argh@~0.1.4:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/argh/-/argh-0.1.4.tgz#3eb4d612973fc6b6dc6ef338f56f759f2ac5c3a6"
 
-argparse@^1.0.2, argparse@^1.0.7:
+argparse@^1.0.2:
   version "1.0.9"
   resolved "https://registry.yarnpkg.com/argparse/-/argparse-1.0.9.tgz#73d83bc263f86e97f8cc4f6bae1b0e90a7d22c86"
   dependencies:
@@ -500,7 +500,7 @@ chainsaw@~0.1.0:
   dependencies:
     traverse ">=0.3.0 <0.4"
 
-chalk@0.5.0:
+chalk@0.5.0, chalk@^0.5.0:
   version "0.5.0"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-0.5.0.tgz#375dfccbc21c0a60a8b61bc5b78f3dc2a55c212f"
   dependencies:
@@ -510,7 +510,7 @@ chalk@0.5.0:
     strip-ansi "^0.3.0"
     supports-color "^0.2.0"
 
-chalk@^0.5.0, chalk@^0.5.1:
+chalk@^0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/chalk/-/chalk-0.5.1.tgz#663b3a648b68b55d04690d49167aa837858f2174"
   dependencies:
@@ -1177,10 +1177,6 @@ esprima@2.7.x, esprima@^2.6.0, esprima@^2.7.1:
   version "2.7.3"
   resolved "https://registry.yarnpkg.com/esprima/-/esprima-2.7.3.tgz#96e3b70d5779f6ad49cd032673d1c312767ba581"
 
-esprima@^3.1.1:
-  version "3.1.3"
-  resolved "https://registry.yarnpkg.com/esprima/-/esprima-3.1.3.tgz#fdca51cee6133895e3c88d535ce49dbff62a4633"
-
 esprima@~1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/esprima/-/esprima-1.0.4.tgz#9f557e08fc3b4d26ece9dd34f8fbf476b62585ad"
@@ -1682,16 +1678,16 @@ gulp-rename@~1.2.0:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/gulp-rename/-/gulp-rename-1.2.2.tgz#3ad4428763f05e2764dec1c67d868db275687817"
 
-gulp-uglify@~2.0.0:
-  version "2.0.1"
-  resolved "https://registry.yarnpkg.com/gulp-uglify/-/gulp-uglify-2.0.1.tgz#e8cfb831014fc9ff2e055e33785861830d499365"
+gulp-uglify@~2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/gulp-uglify/-/gulp-uglify-2.1.0.tgz#3b0e3e0d89151863d24627cf924aac070bbb5cb1"
   dependencies:
     gulplog "^1.0.0"
     has-gulplog "^0.1.0"
     lodash "^4.13.1"
     make-error-cause "^1.1.1"
     through2 "^2.0.0"
-    uglify-js "2.7.5"
+    uglify-js "~2.8.10"
     uglify-save-license "^0.4.1"
     vinyl-sourcemaps-apply "^0.2.0"
 
@@ -2172,11 +2168,11 @@ jasmine-core@~2.5.0:
   version "2.5.2"
   resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-2.5.2.tgz#6f61bd79061e27f43e6f9355e44b3c6cab6ff297"
 
-jasmine-expect@3.6.0:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/jasmine-expect/-/jasmine-expect-3.6.0.tgz#61b7f65958154e2b93365e46b247795dab8a9097"
+jasmine-expect@3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/jasmine-expect/-/jasmine-expect-3.7.0.tgz#841e1382f4bff0258c8dc96eca27c4fbc6ae4887"
   dependencies:
-    add-matchers "0.4.0"
+    add-matchers "0.5.0"
 
 jodid25519@^1.0.0:
   version "1.0.2"
@@ -2184,14 +2180,7 @@ jodid25519@^1.0.0:
   dependencies:
     jsbn "~0.1.0"
 
-js-yaml@3.x, js-yaml@^3.1.0:
-  version "3.8.2"
-  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.8.2.tgz#02d3e2c0f6beab20248d412c352203827d786721"
-  dependencies:
-    argparse "^1.0.7"
-    esprima "^3.1.1"
-
-js-yaml@~3.4.0:
+js-yaml@3.x, js-yaml@^3.1.0, js-yaml@~3.4.0:
   version "3.4.6"
   resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.4.6.tgz#6be1b23f6249f53d293370fd4d1aaa63ce1b4eb0"
   dependencies:
@@ -2330,11 +2319,11 @@ karma-jasmine-jquery@~0.1.1:
     bower "^1.3.9"
     bower-installer "git://github.com/bessdsv/bower-installer.git#temp"
 
-karma-jasmine-matchers@~3.6.0:
-  version "3.6.0"
-  resolved "https://registry.yarnpkg.com/karma-jasmine-matchers/-/karma-jasmine-matchers-3.6.0.tgz#79340065b53cc59851b31db4e84ef6cc3799ce90"
+karma-jasmine-matchers@~3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/karma-jasmine-matchers/-/karma-jasmine-matchers-3.7.0.tgz#3772fdab641ff477505e10a91a0b527be2c8e3ea"
   dependencies:
-    jasmine-expect "3.6.0"
+    jasmine-expect "3.7.0"
 
 karma-jasmine@~1.1.0:
   version "1.1.0"
@@ -2996,7 +2985,7 @@ oauth-sign@~0.8.1:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/oauth-sign/-/oauth-sign-0.8.2.tgz#46a6ab7f0aead8deae9ec0565780b7d4efeb9d43"
 
-object-assign@4.1.0:
+object-assign@4.1.0, object-assign@^4.0.1, object-assign@^4.1.0:
   version "4.1.0"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.0.tgz#7a3b3d0e98063d43f4c03f2e8ae6cd51a86883a0"
 
@@ -3015,10 +3004,6 @@ object-assign@^2.0.0:
 object-assign@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-3.0.0.tgz#9bedd5ca0897949bca47e7ff408062d549f587f2"
-
-object-assign@^4.0.1, object-assign@^4.1.0:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
 
 object-component@0.0.3:
   version "0.0.3"
@@ -3696,17 +3681,17 @@ semver-diff@^0.1.0:
   dependencies:
     semver "^2.2.1"
 
-"semver@2 || 3 || 4", "semver@2 || 3 || 4 || 5", semver@^4.1.0, semver@~4.3.3:
+"semver@2 || 3 || 4", semver@^4.1.0, semver@~4.3.3:
   version "4.3.6"
   resolved "https://registry.yarnpkg.com/semver/-/semver-4.3.6.tgz#300bc6e0e86374f7ba61068b5b1ecd57fc6532da"
+
+"semver@2 || 3 || 4 || 5", semver@^5.0.1, semver@~5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-5.3.0.tgz#9b2ce5d3de02d17c6012ad326aa6b4d0cf54f94f"
 
 semver@^2.2.1, semver@~2.3.0:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/semver/-/semver-2.3.2.tgz#b9848f25d6cf36333073ec9ef8856d42f1233e52"
-
-semver@^5.0.1, semver@~5.3.0:
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-5.3.0.tgz#9b2ce5d3de02d17c6012ad326aa6b4d0cf54f94f"
 
 sequencify@~0.0.7:
   version "0.0.7"
@@ -4131,7 +4116,7 @@ typedarray@~0.0.5:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
 
-uglify-js@2.7.5, uglify-js@^2.6:
+uglify-js@^2.6:
   version "2.7.5"
   resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-2.7.5.tgz#4612c0c7baaee2ba7c487de4904ae122079f2ca8"
   dependencies:
@@ -4147,6 +4132,14 @@ uglify-js@~2.3:
     async "~0.2.6"
     optimist "~0.3.5"
     source-map "~0.1.7"
+
+uglify-js@~2.8.10:
+  version "2.8.13"
+  resolved "https://registry.yarnpkg.com/uglify-js/-/uglify-js-2.8.13.tgz#d0cdf02f3c661484fac601b7e723207b735a374c"
+  dependencies:
+    source-map "~0.5.1"
+    uglify-to-browserify "~1.0.0"
+    yargs "~3.10.0"
 
 uglify-save-license@^0.4.1:
   version "0.4.1"

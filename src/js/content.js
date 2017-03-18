@@ -1,52 +1,60 @@
-var w = window;
+/*jshint esversion: 6 */
+
+let w = window;
 
 chrome.storage.local.get('tab_modifier', function (items) {
     if (items.tab_modifier === undefined) {
         return;
     }
     
-    var tab_modifier = items.tab_modifier, rule = null, processPage;
+    let tab_modifier = items.tab_modifier, processPage;
     
     processPage = function () {
-        // Check if a rule is available
-        for (var i = 0; i < tab_modifier.rules.length; i++) {
-            if (tab_modifier.rules[i].detection === undefined || tab_modifier.rules[i].detection === 'CONTAINS') {
-                if (location.href.indexOf(tab_modifier.rules[i].url_fragment) !== -1) {
-                    rule = tab_modifier.rules[i];
-                    break;
-                }
-            } else {
-                switch (tab_modifier.rules[i].detection) {
-                    case 'STARTS':
-                        if (location.href.startsWith(tab_modifier.rules[i].url_fragment) === true) {
-                            rule = tab_modifier.rules[i];
-                            break;
-                        }
+        
+        let getRule, getTextBySelector, updateTitle, processTitle, processIcon, default_icon, triggerActions;
+        
+        default_icon = document.querySelectorAll('head link[rel*="icon"]')[0].href;
+        
+        getRule = function (href) {
+            let rule = null;
+            
+            // Check if a rule is available
+            for (let i = 0; i < tab_modifier.rules.length; i++) {
+                if (tab_modifier.rules[i].detection === undefined || tab_modifier.rules[i].detection === 'CONTAINS') {
+                    if (href.indexOf(tab_modifier.rules[i].url_fragment) !== -1) {
+                        rule = tab_modifier.rules[i];
                         break;
-                    case 'ENDS':
-                        if (location.href.endsWith(tab_modifier.rules[i].url_fragment) === true) {
-                            rule = tab_modifier.rules[i];
+                    }
+                } else {
+                    switch (tab_modifier.rules[i].detection) {
+                        case 'STARTS':
+                            if (href.startsWith(tab_modifier.rules[i].url_fragment) === true) {
+                                rule = tab_modifier.rules[i];
+                                break;
+                            }
                             break;
-                        }
-                        break;
-                    case 'REGEXP':
-                        var regexp = new RegExp(tab_modifier.rules[i].url_fragment);
-                        
-                        if (regexp.test(location.href) === true) {
-                            rule = tab_modifier.rules[i];
+                        case 'ENDS':
+                            if (href.endsWith(tab_modifier.rules[i].url_fragment) === true) {
+                                rule = tab_modifier.rules[i];
+                                break;
+                            }
                             break;
-                        }
-                        break;
+                        case 'REGEXP':
+                            let regexp = new RegExp(tab_modifier.rules[i].url_fragment);
+                            
+                            if (regexp.test(href) === true) {
+                                rule = tab_modifier.rules[i];
+                                break;
+                            }
+                            break;
+                    }
                 }
             }
-        }
+            
+            return rule;
+        };
         
-        // No rule available
-        if (rule === null) {
-            return;
-        }
-        
-        var getTextBySelector, updateTitle, processTitle, processIcon;
+        let rule = getRule(location.href);
         
         /**
          * Returns the text related to the given CSS selector
@@ -54,7 +62,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
          * @returns {string}
          */
         getTextBySelector = function (selector) {
-            var el = document.querySelector(selector), value = '';
+            let el = document.querySelector(selector), value = '';
             
             if (el !== null) {
                 el = el.childNodes[0];
@@ -87,17 +95,19 @@ chrome.storage.local.get('tab_modifier', function (items) {
         };
         
         /**
-         * Process new title depending on current URL & current title
+         * Process new title depending on current rule, URL & title
+         * @param rule
          * @param current_url
          * @param current_title
          * @returns {*}
          */
-        processTitle = function (current_url, current_title) {
-            var title = rule.tab.title, matches = title.match(/\{([^}]+)}/g), i;
+        processTitle = function (rule, current_url, current_title) {
+            // console.log(current_url, current_title);
+            let title = rule.tab.title, matches = title.match(/\{([^}]+)}/g), i;
             
             // Handle curly braces tags inside title
             if (matches !== null) {
-                var selector, text;
+                let selector, text;
                 
                 for (i = 0; i < matches.length; i++) {
                     selector = matches[i].substring(1, matches[i].length - 1);
@@ -113,7 +123,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
                     
                     if (matches !== null) {
                         for (i = 0; i < matches.length; i++) {
-                            title = updateTitle(title, '@' + i, matches[i]);
+                            title = updateTitle(title, '@' + i, decodeURIComponent(matches[i]));
                         }
                     }
                 } catch (e) {
@@ -128,7 +138,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
                     
                     if (matches !== null) {
                         for (i = 0; i < matches.length; i++) {
-                            title = updateTitle(title, '$' + i, matches[i]);
+                            title = updateTitle(title, '$' + i, decodeURIComponent(matches[i]));
                         }
                     }
                 } catch (e) {
@@ -145,7 +155,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
          * @returns {boolean}
          */
         processIcon = function (new_icon) {
-            var el, icon, link;
+            let el, icon, link;
             
             el = document.querySelectorAll('head link[rel*="icon"]');
             
@@ -154,7 +164,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
                 node.parentNode.removeChild(node);
             });
             
-            // Set preconfigured or custom (http|https|data) icon
+            // Set pre-configured or custom (http|https|data) icon
             icon = (/^(https?|data):/.test(new_icon) === true) ? new_icon : chrome.extension.getURL('/img/' + new_icon);
             
             // Create new favicon
@@ -167,28 +177,131 @@ chrome.storage.local.get('tab_modifier', function (items) {
             
             return true;
         };
-        
-        // Set title
-        if (rule.tab.title !== null) {
-            if (document.title !== null && document.title !== '') {
-                document.title = processTitle(location.href, document.title);
+    
+        /**
+         * Trigger every actions
+         * @param rule
+         * @param url
+         * @param title
+         */
+        triggerActions = function (rule, url, title) {
+            // No rule available
+            if (rule === null) {
+                return;
             }
-        }
+            
+            // Set title
+            if (rule.tab.title !== null) {
+                if (title !== null && title !== '') {
+                    document.title = processTitle(rule, url, title);
+                }
+            }
+            
+            // Pin the tab
+            if (rule.tab.pinned === true) {
+                chrome.runtime.sendMessage({ action: 'setPinned' });
+            }
+            
+            // Set new icon
+            if (rule.tab.icon !== null) {
+                processIcon(rule.tab.icon);
+                
+                let icon_changed_by_me = false, observer_icon;
+                
+                // Set up a new observer
+                observer_icon = new window.WebKitMutationObserver(function (mutations) {
+                    if (icon_changed_by_me === true) {
+                        icon_changed_by_me = false;
+                    } else {
+                        mutations.forEach(function (mutation) {
+                            // Handle favicon changes
+                            if (mutation.target.type === 'image/x-icon') {
+                                processIcon(rule.tab.icon);
+                                
+                                icon_changed_by_me = true;
+                            }
+                            
+                            mutation.addedNodes.forEach(function (added_node) {
+                                // Detect added favicon
+                                if (added_node.type === 'image/x-icon') {
+                                    processIcon(rule.tab.icon);
+                                    
+                                    icon_changed_by_me = true;
+                                }
+                            });
+                            
+                            mutation.removedNodes.forEach(function (removed_node) {
+                                // Detect removed favicon
+                                if (removed_node.type === 'image/x-icon') {
+                                    processIcon(rule.tab.icon);
+                                    
+                                    icon_changed_by_me = true;
+                                }
+                            });
+                        });
+                    }
+                });
+                
+                // Observe when the website has changed the head so the script
+                // will detect favicon manipulation (add/remove)
+                if (document.querySelector('head link[rel*="icon"]') !== null) {
+                    observer_icon.observe(document.querySelector('head link[rel*="icon"]'), {
+                        attributes: true,
+                        childList: true,
+                        characterData: true,
+                        subtree: true,
+                        attributeOldValue: true,
+                        characterDataOldValue: true
+                    });
+                }
+            }
+            
+            // Protect the tab
+            if (rule.tab.protected === true) {
+                w.onbeforeunload = function () {
+                    return '';
+                };
+            }
+            
+            // Keep this tab unique
+            if (rule.tab.unique === true) {
+                chrome.runtime.sendMessage({
+                    action: 'setUnique',
+                    url_fragment: rule.url_fragment
+                });
+            }
+            
+            // Mute the tab
+            if (rule.tab.muted === true) {
+                chrome.runtime.sendMessage({ action: 'setMuted' });
+            }
+        };
         
-        var title_changed_by_me = false, observer_title;
+        let changed_by_me = false, observer_title;
         
         // Set up a new observer
-        observer_title = new window.WebKitMutationObserver(function (mutations) {
-            if (title_changed_by_me === true) {
-                title_changed_by_me = false;
-            } else {
-                mutations.forEach(function () {
-                    if (rule.tab.title !== null) {
-                        document.title = processTitle(location.href, document.title);
+        observer_title = new window.WebKitMutationObserver(function () {
+            rule = getRule(location.href);
+            
+            if (changed_by_me === true) {
+                changed_by_me = false;
+                
+                if (rule !== null) {
+                    if (rule.tab.icon !== null) {
+                        processIcon(rule.tab.icon);
                     }
-                    
-                    title_changed_by_me = true;
-                });
+                } else {
+                    processIcon(default_icon);
+                }
+                
+            } else {
+                if (rule !== null) {
+                    triggerActions(rule, location.href, document.title);
+                } else {
+                    processIcon(default_icon);
+                }
+                
+                changed_by_me = true;
             }
         });
         
@@ -201,84 +314,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
             });
         }
         
-        // Pin the tab
-        if (rule.tab.pinned === true) {
-            chrome.runtime.sendMessage({ action: 'setPinned' });
-        }
-        
-        // Set new icon
-        if (rule.tab.icon !== null) {
-            processIcon(rule.tab.icon);
-            
-            var icon_changed_by_me = false, observer_icon;
-            
-            // Set up a new observer
-            observer_icon = new window.WebKitMutationObserver(function (mutations) {
-                if (icon_changed_by_me === true) {
-                    icon_changed_by_me = false;
-                } else {
-                    mutations.forEach(function (mutation) {
-                        // Handle favicon changes
-                        if (mutation.target.type === 'image/x-icon') {
-                            processIcon(rule.tab.icon);
-                            
-                            icon_changed_by_me = true;
-                        }
-                        
-                        mutation.addedNodes.forEach(function (added_node) {
-                            // Detect added favicon
-                            if (added_node.type === 'image/x-icon') {
-                                processIcon(rule.tab.icon);
-                                
-                                icon_changed_by_me = true;
-                            }
-                        });
-                        
-                        mutation.removedNodes.forEach(function (removed_node) {
-                            // Detect removed favicon
-                            if (removed_node.type === 'image/x-icon') {
-                                processIcon(rule.tab.icon);
-                                
-                                icon_changed_by_me = true;
-                            }
-                        });
-                    });
-                }
-            });
-            
-            // Observe when the website has changed the head so the script
-            // will detect favicon manipulation (add/remove)
-            if (document.querySelector('head link[rel*="icon"]') !== null) {
-                observer_icon.observe(document.querySelector('head'), {
-                    attributes: true,
-                    childList: true,
-                    characterData: true,
-                    subtree: true,
-                    attributeOldValue: true,
-                    characterDataOldValue: true
-                });
-            }
-        }
-        
-        // Protect the tab
-        if (rule.tab.protected === true) {
-            w.onbeforeunload = function () {
-                return '';
-            };
-        }
-        
-        // Keep this tab unique
-        if (rule.tab.unique === true) {
-            chrome.runtime.sendMessage({
-                action: 'setUnique',
-                url_fragment: rule.url_fragment
-            });
-        }
-        
-        // Mute the tab
-        if (rule.tab.muted === true) {
-            chrome.runtime.sendMessage({ action: 'setMuted' });
-        }
+        triggerActions(rule, location.href, document.title);
     };
     
     processPage();

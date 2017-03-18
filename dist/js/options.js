@@ -83,6 +83,46 @@ app.run(['$rootScope', '$location', 'Analytics', function ($rootScope, $location
     
 }]);
 
+app.directive('inputFileButton', function () {
+    return {
+        restrict: 'E',
+        link: function (scope, elem) {
+            var button = elem.find('button'),
+                input  = elem.find('input');
+            
+            input.css({ display: 'none' });
+            
+            button.bind('click', function () {
+                input[0].click();
+            });
+        }
+    };
+});
+
+app.directive('onReadFile', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        scope: false,
+        link: function (scope, element, attrs) {
+            var fn = $parse(attrs.onReadFile);
+            
+            element.on('change', function (onChangeEvent) {
+                var reader = new FileReader();
+                
+                reader.onload = function (onLoadEvent) {
+                    scope.$apply(function () {
+                        fn(scope, {
+                            $fileContent: onLoadEvent.target.result
+                        });
+                    });
+                };
+                
+                reader.readAsText((onChangeEvent.srcElement || onChangeEvent.target).files[0]);
+            });
+        }
+    };
+}]);
+
 app.controller('HelpController', function () {
     
 });
@@ -396,46 +436,6 @@ app.controller('FormModalController', ['$scope', '$mdDialog', 'rule', 'icon_list
         $mdDialog.hide(rule);
     };
     
-}]);
-
-app.directive('inputFileButton', function () {
-    return {
-        restrict: 'E',
-        link: function (scope, elem) {
-            var button = elem.find('button'),
-                input  = elem.find('input');
-            
-            input.css({ display: 'none' });
-            
-            button.bind('click', function () {
-                input[0].click();
-            });
-        }
-    };
-});
-
-app.directive('onReadFile', ['$parse', function ($parse) {
-    return {
-        restrict: 'A',
-        scope: false,
-        link: function (scope, element, attrs) {
-            var fn = $parse(attrs.onReadFile);
-            
-            element.on('change', function (onChangeEvent) {
-                var reader = new FileReader();
-                
-                reader.onload = function (onLoadEvent) {
-                    scope.$apply(function () {
-                        fn(scope, {
-                            $fileContent: onLoadEvent.target.result
-                        });
-                    });
-                };
-                
-                reader.readAsText((onChangeEvent.srcElement || onChangeEvent.target).files[0]);
-            });
-        }
-    };
 }]);
 
 app.factory('Rule', function () {
