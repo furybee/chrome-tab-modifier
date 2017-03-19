@@ -1,6 +1,6 @@
-/*jshint loopfunc: true */
+/*jshint esversion: 6, loopfunc: true */
 
-var options_url = chrome.extension.getURL('html/options.html'), openOptionsPage, getStorage;
+let options_url = chrome.extension.getURL('html/options.html'), openOptionsPage, getStorage;
 
 // --------------------------------------------------------------------------------------------------------
 // Functions
@@ -32,10 +32,10 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
                     return;
                 }
                 
-                var tab, tab_id;
+                let tab, tab_id;
                 
                 chrome.tabs.query({}, function (tabs) {
-                    for (var i = 0; i < tabs.length; i++) {
+                    for (let i = 0; i < tabs.length; i++) {
                         tab = tabs[i];
                         
                         if (tab.url.indexOf(message.url_fragment) !== -1 && tab.id !== current_tab.id) {

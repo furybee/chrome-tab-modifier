@@ -308,8 +308,6 @@ chrome.storage.local.get('tab_modifier', function (items) {
         // Observe when the website has changed the title
         if (document.querySelector('head > title') !== null) {
             observer_title.observe(document.querySelector('head > title'), {
-                subtree: true,
-                characterresponse: true,
                 childList: true
             });
         }
