@@ -52,7 +52,7 @@
                         <td>
                             <md-icon md-svg-icon="swap-vertical" md-menu-align-target ui-tree-handle aria-label="Move rule"></md-icon>
                         </td>
-                        <td ng-bind="rule.name"></td>
+                        <td class="text-nowrap" ng-bind="rule.name"></td>
                         <td>
                             <span ng-if="rule.detection === 'STARTS'">Starts with</span>
                             <span ng-if="rule.detection === 'CONTAINS'">Contains</span>
