@@ -103,8 +103,13 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
         let title = prompt('Enter the new title, a Tab rule will be automatically created for you based on current URL');
         
         getStorage(function (tab_modifier) {
-            if (tab_modifier === undefined || tab_modifier.settings === undefined) {
-                return;
+            if (tab_modifier === undefined) {
+                tab_modifier = {
+                    settings: {
+                        enable_new_version_notification: false
+                    },
+                    rules: []
+                };
             }
             
             let rule = {
