@@ -194,6 +194,10 @@ app.controller('FormModalController', ['$scope', '$mdDialog', 'rule', 'icon_list
         $mdDialog.cancel();
     };
     
+    $scope.clearIcon = function () {
+        rule.tab.icon = null;
+    };
+    
     $scope.save = function (rule) {
         $mdDialog.hide(rule);
     };
