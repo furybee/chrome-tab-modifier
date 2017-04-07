@@ -18,9 +18,21 @@ md-content {
     overflow-x: hidden;
 }
 
+.md-button-20x {
+    width: 20px;
+    height: 20px;
+    margin-top: 20px;
+    min-width: 25px !important;
+}
+
 .md-icon-16x {
     width: 16px;
     height: 16px;
+}
+
+.md-icon-min16x {
+    min-width: 16px;
+    min-height: 16px;
 }
 
 .md-select-value:first-child .md-icon-title {
