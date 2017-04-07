@@ -65,29 +65,35 @@
                     <!-- Select icon -->
                     <md-input-container flex="20">
                         <label>Select icon</label>
-                        <md-select ng-model="rule.tab.icon">
-                            <md-optgroup label="Chrome">
-                                <md-option layout="row" layout-align="start center" ng-repeat="icon in icon_list | filter: { category: 'chrome' }:true | orderBy: 'name'" ng-value="icon.value">
-                                    <img class="md-img-select md-icon-16x" ng-src="../img/{{ icon.value }}" alt="{{ icon.name }}"> {{ icon.name }}
-                                </md-option>
-                            </md-optgroup>
+                        <div layout="row">
+                            <md-select ng-model="rule.tab.icon">
+                                <md-optgroup label="Chrome">
+                                    <md-option layout="row" layout-align="start center" ng-repeat="icon in icon_list | filter: { category: 'chrome' }:true | orderBy: 'name'" ng-value="icon.value">
+                                        <img class="md-img-select md-icon-16x" ng-src="../img/{{ icon.value }}" alt="{{ icon.name }}"> {{ icon.name }}
+                                    </md-option>
+                                </md-optgroup>
 
-                            <md-optgroup label="Color">
-                                <md-option layout="row" layout-align="start center" ng-repeat="icon in icon_list | filter: { category: 'color' }:true | orderBy: 'name'" ng-value="icon.value">
-                                    <img class="md-img-select md-icon-16x" ng-src="../img/{{ icon.value }}" alt="{{ icon.name }}"> {{ icon.name }}
-                                </md-option>
-                            </md-optgroup>
+                                <md-optgroup label="Color">
+                                    <md-option layout="row" layout-align="start center" ng-repeat="icon in icon_list | filter: { category: 'color' }:true | orderBy: 'name'" ng-value="icon.value">
+                                        <img class="md-img-select md-icon-16x" ng-src="../img/{{ icon.value }}" alt="{{ icon.name }}"> {{ icon.name }}
+                                    </md-option>
+                                </md-optgroup>
 
-                            <md-optgroup label="Color Alt">
-                                <md-option layout="row" layout-align="start center" ng-repeat="icon in icon_list | filter: { category: 'color-alt' }:true | orderBy: 'name'" ng-value="icon.value">
-                                    <img class="md-img-select md-icon-16x" ng-src="../img/{{ icon.value }}" alt="{{ icon.name }}"> {{ icon.name }}
-                                </md-option>
-                            </md-optgroup>
-                        </md-select>
+                                <md-optgroup label="Color Alt">
+                                    <md-option layout="row" layout-align="start center" ng-repeat="icon in icon_list | filter: { category: 'color-alt' }:true | orderBy: 'name'" ng-value="icon.value">
+                                        <img class="md-img-select md-icon-16x" ng-src="../img/{{ icon.value }}" alt="{{ icon.name }}"> {{ icon.name }}
+                                    </md-option>
+                                </md-optgroup>
+                            </md-select>
+                            <md-button ng-if="rule.tab.icon.length" class="md-button-20x md-padding-0"
+                                    ng-click="clearIcon()">
+                                    <md-icon class="md-icon-16x md-icon-min16x md-margin-0 md-padding-0" md-svg-icon="close"></md-icon>
+                            </md-button>
+                        </div>
                     </md-input-container>
 
                     <!-- URL Icon -->
-                    <md-input-container flex-offset="5" flex="70">
+                    <md-input-container flex-offset="20" flex="70">
                         <label for="rule_icon" class="md-body-1">Icon</label>
                         <input id="rule_icon" type="text" ng-model="rule.tab.icon" placeholder="e.g. https://google.com/favicon.ico">
                         <span class="md-caption">You can set a custom URL or data URI for the new icon, no local path <a class="md-primary" href="https://github.com/sylouuu/chrome-tab-modifier#local-icon-path-doesnt-work" target="_blank">accepted</a></span>
