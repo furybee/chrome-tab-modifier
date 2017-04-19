@@ -170,7 +170,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
         
         // Set title
         if (rule.tab.title !== null) {
-            if (document.title !== null && document.title !== '') {
+            if (document.title !== null) {
                 document.title = processTitle(location.href, document.title);
             }
         }
