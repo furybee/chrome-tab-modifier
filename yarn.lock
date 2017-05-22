@@ -2573,9 +2573,9 @@ istanbul@^0.4.0:
     which "^1.1.1"
     wordwrap "^1.0.0"
 
-jasmine-core@~2.5.0:
-  version "2.5.2"
-  resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-2.5.2.tgz#6f61bd79061e27f43e6f9355e44b3c6cab6ff297"
+jasmine-core@~2.6.0:
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-2.6.2.tgz#74ea1f7cf428691af201107d631234027a09daab"
 
 jasmine-expect@3.7.0:
   version "3.7.0"
@@ -2789,9 +2789,9 @@ karma-spec-reporter@~0.0.20:
   dependencies:
     colors "^1.1.2"
 
-karma@~1.6.0:
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/karma/-/karma-1.6.0.tgz#0e871d4527d5eac56c41d181f03c5c0a7e6dbf3e"
+karma@~1.7.0:
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/karma/-/karma-1.7.0.tgz#6f7a1a406446fa2e187ec95398698f4cee476269"
   dependencies:
     bluebird "^3.3.0"
     body-parser "^1.16.1"
@@ -4223,15 +4223,15 @@ right-align@^0.1.1:
   dependencies:
     align-text "^0.1.1"
 
-rimraf@2, rimraf@2.x.x, rimraf@^2.2.8, rimraf@^2.6.0:
+rimraf@2, rimraf@2.x.x, rimraf@^2.2.8, rimraf@~2.2.0:
+  version "2.2.8"
+  resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
+
+rimraf@^2.6.0:
   version "2.6.1"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.6.1.tgz#c2338ec643df7a1b7fe5c54fa86f57428a55f33d"
   dependencies:
     glob "^7.0.5"
-
-rimraf@~2.2.0:
-  version "2.2.8"
-  resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
 
 rimraf@~2.5.1, rimraf@~2.5.4:
   version "2.5.4"
@@ -4263,17 +4263,17 @@ semver-diff@^0.1.0:
   dependencies:
     semver "^2.2.1"
 
-"semver@2 || 3 || 4", semver@^4.1.0, semver@~4.3.3:
+"semver@2 || 3 || 4", "semver@2 || 3 || 4 || 5", semver@^4.1.0, semver@~4.3.3:
   version "4.3.6"
   resolved "https://registry.yarnpkg.com/semver/-/semver-4.3.6.tgz#300bc6e0e86374f7ba61068b5b1ecd57fc6532da"
-
-"semver@2 || 3 || 4 || 5", semver@^5.0.1, semver@~5.3.0:
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/semver/-/semver-5.3.0.tgz#9b2ce5d3de02d17c6012ad326aa6b4d0cf54f94f"
 
 semver@^2.2.1, semver@~2.3.0:
   version "2.3.2"
   resolved "https://registry.yarnpkg.com/semver/-/semver-2.3.2.tgz#b9848f25d6cf36333073ec9ef8856d42f1233e52"
+
+semver@^5.0.1, semver@~5.3.0:
+  version "5.3.0"
+  resolved "https://registry.yarnpkg.com/semver/-/semver-5.3.0.tgz#9b2ce5d3de02d17c6012ad326aa6b4d0cf54f94f"
 
 sequencify@~0.0.7:
   version "0.0.7"
