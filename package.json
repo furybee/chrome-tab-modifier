@@ -20,7 +20,7 @@
     "gulp-jsonminify": "~1.0.0",
     "gulp-minify-html": "~1.0.0",
     "gulp-rename": "~1.2.0",
-    "gulp-uglify": "~2.1.0",
+    "gulp-uglify": "~3.0.0",
     "jasmine-core": "~2.6.0",
     "jshint": "~2.9.0",
     "karma": "~1.7.0",
