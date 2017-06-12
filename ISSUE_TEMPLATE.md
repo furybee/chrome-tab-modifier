@@ -1,9 +1,11 @@
 _In case of bug report, please fill this template and remove italic lines_
-_However, clear all :)_
+_Otherwise, clear all and type :)_
 
 ### Tab Modifier version
 
-`X.Y.Z`
+**Browser:** `Chrome` or `Opera`
+
+**Extension version:** `X.Y.Z`
 
 _Can be found here: chrome://extensions/?id=hcbgadmbdkiilgpifjgcakjehmafcjai_
 
@@ -17,7 +19,7 @@ _What actually happen?_
 
 ### Steps to reproduce the behavior
 
-_Please describe the steps to help me to reproduce the behavior_
+_Please describe the steps to help me to reproduce the actual behavior_
 
 1.
 2.
