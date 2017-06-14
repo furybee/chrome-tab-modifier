@@ -104,6 +104,9 @@ chrome.storage.local.get('tab_modifier', function (items) {
                     text     = getTextBySelector(selector);
                     title    = updateTitle(title, matches[i], text);
                 }
+
+                // Remove unmatched selectors from title
+                title = title.replace(/\{([^}]+)}/g, '');
             }
             
             // Handle title_matcher
