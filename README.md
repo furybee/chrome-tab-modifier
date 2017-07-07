@@ -14,6 +14,8 @@ Take control of your tabs.
 * Unique tab
 * Mute tab
 
+Quick rename can be done by right-clicking anywhere in the page and click on "Rename Tab".
+
 ## Why?
 
 I needed a quick UI element in Chrome to know the environment of the tab, as a Web developer I often use multiple versions of the same website: local, pre-production and production.

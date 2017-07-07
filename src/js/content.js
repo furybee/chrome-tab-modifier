@@ -37,6 +37,12 @@ chrome.storage.local.get('tab_modifier', function (items) {
                             break;
                         }
                         break;
+                    case 'EXACT':
+                        if (location.href === tab_modifier.rules[i].url_fragment) {
+                            rule = tab_modifier.rules[i];
+                            break;
+                        }
+                        break;
                 }
             }
         }

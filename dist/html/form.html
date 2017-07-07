@@ -26,6 +26,7 @@
                     <md-select ng-model="rule.detection" required>
                         <md-option value="STARTS">Starts with</md-option>
                         <md-option value="CONTAINS">Contains</md-option>
+                        <md-option value="EXACT">Exact</md-option>
                         <md-option value="ENDS">Ends with</md-option>
                         <md-option value="REGEXP">RegExp</md-option>
                     </md-select>
@@ -45,6 +46,7 @@
                 The following actions will be applied when the URL
                 <u ng-if="rule.detection === 'STARTS'">starts with</u>
                 <u ng-if="rule.detection === 'CONTAINS'">contains</u>
+                <u ng-if="rule.detection === 'EXACT'">equals</u>
                 <u ng-if="rule.detection === 'ENDS'">ends with</u>
                 <u ng-if="rule.detection === 'REGEXP'">matches the regex</u>
                 <strong><code ng-bind="rule.url_fragment"></code></strong>:
