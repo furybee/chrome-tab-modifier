@@ -187,6 +187,12 @@ Related issue: [#13](https://github.com/sylouuu/chrome-tab-modifier/issues/13)
 
 By default, extensions don't have access to local files. You have to opt-in "Allow access to file URLs" from `chrome://extensions/?id=hcbgadmbdkiilgpifjgcakjehmafcjai`.
 
+### Protected action is not triggered
+
+Related issue: [#95](https://github.com/sylouuu/chrome-tab-modifier/issues/95)
+
+Since Chrome 90, the JS event that triggers a refresh or a closure has been reworked. See related issue.
+
 ## Changelog
 
 See [releases](https://github.com/sylouuu/chrome-tab-modifier/releases) section.
