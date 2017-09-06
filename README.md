@@ -225,7 +225,7 @@ Click on "Load unpacked extension..." and select the project `dist/` folder.
 
 A huge thanks to:
 
-_Fabian L., Brent M., Artur S., Sebastian M., Alex B., Dirk H., Christopher S., Rachel M._
+_Fabian L., Brent M., Artur S., Sebastian M., Alex B., Dirk H., Christopher S., Rachel M., Richard D._
 
 If you like my work and you want to support me, visit the [PayPal link](https://www.paypal.me/svalienne/5). ;)
 
