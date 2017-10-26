@@ -106,6 +106,15 @@ app.controller('TabRulesController', ['$scope', '$routeParams', '$http', '$mdDia
         });
     };
     
+    // Get icon URL for the table
+    $scope.getIconUrl = function (icon) {
+        if (icon === null) {
+            return null;
+        }
+        
+        return (/^(https?|data):/.test(icon) === true) ? icon : chrome.extension.getURL('/img/' + icon);
+    };
+    
     // --------------------------------------------------------------------------------------------------------
     // Events
     

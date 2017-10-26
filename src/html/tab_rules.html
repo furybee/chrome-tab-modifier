@@ -44,6 +44,7 @@
                         <th>Name</th>
                         <th>Detection</th>
                         <th>URL fragment</th>
+                        <th>Icon</th>
                         <th></th>
                     </tr>
                 </thead>
@@ -61,6 +62,10 @@
                             <span ng-if="rule.detection === 'REGEXP'">Regular Expression</span>
                         </td>
                         <td class="text-nowrap" ng-bind="rule.url_fragment"></td>
+                        <td ng-if="rule.tab.icon !== null">
+                            <img ng-src="{{ getIconUrl(rule.tab.icon) }}" alt="" style="width:24px;">
+                        </td>
+                        <td ng-if="rule.tab.icon === null">Default</td>
                         <td style="text-align: right;">
                             <md-button data-nodrag class="md-icon-button" ng-click="showForm($event, rule)" aria-label="Edit rule" ga-track-event="['tab-rules', 'edit-rule']">
                                 <md-icon md-svg-icon="edit" md-menu-align-target></md-icon>
