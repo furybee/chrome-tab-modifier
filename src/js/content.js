@@ -5,7 +5,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
         return;
     }
     
-    var tab_modifier = items.tab_modifier, rule = null, processPage;
+    var tab_modifier = items.tab_modifier, rule = null, processPage, MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
     
     processPage = function () {
         // Check if a rule is available
@@ -154,7 +154,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
             var el, icon, link;
             
             el = document.querySelectorAll('head link[rel*="icon"]');
-            
+
             // Remove existing favicons
             Array.prototype.forEach.call(el, function (node) {
                 node.parentNode.removeChild(node);
@@ -182,9 +182,9 @@ chrome.storage.local.get('tab_modifier', function (items) {
         }
         
         var title_changed_by_me = false, observer_title;
-        
+
         // Set up a new observer
-        observer_title = new window.WebKitMutationObserver(function (mutations) {
+        observer_title = new MutationObserver(function (mutations) {
             if (title_changed_by_me === true) {
                 title_changed_by_me = false;
             } else {
@@ -219,7 +219,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
             var icon_changed_by_me = false, observer_icon;
             
             // Set up a new observer
-            observer_icon = new window.WebKitMutationObserver(function (mutations) {
+            observer_icon = new MutationObserver(function (mutations) {
                 if (icon_changed_by_me === true) {
                     icon_changed_by_me = false;
                 } else {
