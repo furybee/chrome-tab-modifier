@@ -268,7 +268,16 @@ chrome.storage.local.get('tab_modifier', function (items) {
         
         // Protect the tab
         if (rule.tab.protected === true) {
-            w.onbeforeunload = function () {
+            //FF, IE, Safari
+            w.onbeforeunload = function (e) {
+                e = e || window.event;
+
+                // For IE and Firefox
+                if (e) {
+                    e.returnValue = '';
+                }
+
+                // For Safari
                 return '';
             };
         }
