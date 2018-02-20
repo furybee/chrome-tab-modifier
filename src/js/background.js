@@ -101,14 +101,12 @@ chrome.runtime.onInstalled.addListener(function (details) {
 
 chrome.contextMenus.create({
     id: 'rename-tab',
-    title: 'Rename Tab',
+    title: 'Create new rule',
     contexts: ['all']
 });
 
 chrome.contextMenus.onClicked.addListener(function (info, tab) {
     if (info.menuItemId === 'rename-tab') {
-        let title = prompt('Enter the new title, a Tab rule will be automatically created for you based on current URL');
-        
         getStorage(function (tab_modifier) {
             if (tab_modifier === undefined) {
                 tab_modifier = {
@@ -124,7 +122,7 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
                 detection: 'CONTAINS',
                 url_fragment: tab.url,
                 tab: {
-                    title: title,
+                    title: tab.title,
                     icon: null,
                     pinned: false,
                     protected: false,
@@ -138,8 +136,8 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
             tab_modifier.rules.push(rule);
             
             chrome.storage.local.set({ tab_modifier: tab_modifier });
-            
-            chrome.tabs.reload(tab.id);
+
+            openOptionsPage('edit-rule/' + tab_modifier.rules.indexOf(rule));
         });
     }
 });
