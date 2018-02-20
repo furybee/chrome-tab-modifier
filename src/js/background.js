@@ -7,12 +7,17 @@ let options_url = chrome.extension.getURL('html/options.html'), openOptionsPage,
 
 openOptionsPage = function (hash) {
     chrome.tabs.query({ url: options_url }, function (tabs) {
+        let tabOptions = {
+            url: (hash !== undefined) ? options_url + '#' + hash : options_url
+        };
         if (tabs.length > 0) {
-            chrome.tabs.update(tabs[0].id, { active: true, highlighted: true }, function (current_tab) {
+            tabOptions.active = true;
+            // if(isChrome || isOpera)  tabOptions.highighted = true;
+            chrome.tabs.update(tabs[0].id, tabOptions, function (current_tab) {
                 chrome.windows.update(current_tab.windowId, { focused: true });
             });
         } else {
-            chrome.tabs.create({ url: (hash !== undefined) ? options_url + '#' + hash : options_url });
+            chrome.tabs.create(tabOptions);
         }
     });
 };
