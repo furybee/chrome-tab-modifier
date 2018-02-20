@@ -9,7 +9,7 @@ app.controller('TabRulesController', ['$scope', '$routeParams', '$http', '$mdDia
     
     // Avoid BC break
     chrome.storage.sync.get('tab_modifier', function (items) {
-        if (items.tab_modifier !== undefined && items.tab_modifier !== null) {
+        if (items !== undefined && items.tab_modifier !== undefined && items.tab_modifier !== null) {
             tab_modifier.build(items.tab_modifier);
             tab_modifier.sync();
         }
@@ -25,7 +25,7 @@ app.controller('TabRulesController', ['$scope', '$routeParams', '$http', '$mdDia
     };
     
     chrome.storage.local.get('tab_modifier', function (items) {
-        if (items.tab_modifier !== undefined) {
+        if (items !== undefined && items.tab_modifier !== undefined) {
             tab_modifier.build(items.tab_modifier);
         }
         
