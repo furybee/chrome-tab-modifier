@@ -38,25 +38,27 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
                 if (current_tab === undefined) {
                     return;
                 }
-                
+
                 let tab, tab_id;
-                
+
                 chrome.tabs.query({}, function (tabs) {
                     for (let i = 0; i < tabs.length; i++) {
                         tab = tabs[i];
-                        
+
                         if (tab.url.indexOf(message.url_fragment) !== -1 && tab.id !== current_tab.id) {
                             tab_id = tab.id;
-                            
+
                             chrome.tabs.executeScript(current_tab.id, {
                                 code: 'window.onbeforeunload = null;'
                             }, function () {
-                                chrome.tabs.remove(current_tab.id);
-                                
                                 chrome.tabs.update(tab_id, {
                                     url: current_tab.url,
-                                    highlighted: true
+                                    active: true
+                                    //if(isChrome || isOpera) highlighted: true
                                 });
+                                chrome.windows.update(tab_id, { focused: true });
+
+                                chrome.tabs.remove(current_tab.id);
                             });
                         }
                     }
@@ -90,7 +92,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
                 if (tab_modifier === undefined || tab_modifier.settings === undefined) {
                     return;
                 }
-                
+
                 if (tab_modifier.settings !== undefined && tab_modifier.settings.enable_new_version_notification === true && details.previousVersion !== chrome.runtime.getManifest().version) {
                     openOptionsPage('update/' + chrome.runtime.getManifest().version);
                 }
@@ -116,7 +118,7 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
                     rules: []
                 };
             }
-            
+
             let rule = {
                 name: 'Rule created from right-click (' + tab.url.replace(/(^\w+:|^)\/\//, '').substring(0, 15) + '...)',
                 detection: 'CONTAINS',
@@ -132,9 +134,9 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
                     url_matcher: null
                 }
             };
-            
+
             tab_modifier.rules.push(rule);
-            
+
             chrome.storage.local.set({ tab_modifier: tab_modifier });
 
             openOptionsPage('edit-rule/' + tab_modifier.rules.indexOf(rule));
