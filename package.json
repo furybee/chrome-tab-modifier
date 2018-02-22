@@ -12,7 +12,14 @@
     "url": "https://github.com/sylouuu/chrome-tab-modifier/issues"
   },
   "devDependencies": {
-    "angular-mocks": "1.5.8",
+    "angular": "~1.6.0",
+    "angular-aria": "~1.6.0",
+    "angular-animate": "~1.6.0",
+    "angular-google-analytics":"~1.1.8",
+    "angular-material":"~1.1.7",
+    "angular-mocks": "~1.6.0",
+    "angular-route": "~1.6.0",
+    "angular-ui-tree":"~2.22.6",
     "gulp": "^3.9.1",
     "gulp-concat": "~2.6.0",
     "gulp-jscs": "~4.1.0",
