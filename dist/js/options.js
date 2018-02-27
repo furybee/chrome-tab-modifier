@@ -141,7 +141,8 @@ app.controller('SettingsController', ['$scope', '$mdDialog', '$mdToast', '$locat
     };
 
     // Import tab rules action
-    $scope.import = function (content, replaceExistingRules = true) {
+    $scope.import = function (content, replaceExistingRules) {
+        replaceExistingRules = typeof replaceExistingRules !== 'undefined' ? replaceExistingRules : true;
         var result = tab_modifier.checkFileBeforeImport(content);
 
         if (result === true) {
@@ -529,7 +530,8 @@ app.factory('TabModifier', ['Rule', function (Rule) {
         }
     };
 
-    TabModifier.prototype.build = function (data, replaceExistingRules = true) {
+    TabModifier.prototype.build = function (data, replaceExistingRules) {
+        replaceExistingRules = typeof replaceExistingRules !== 'undefined' ? replaceExistingRules : true;
         var self = this;
         
         if (data.settings !== undefined) {
@@ -567,7 +569,8 @@ app.factory('TabModifier', ['Rule', function (Rule) {
         }
     };
 
-    TabModifier.prototype.import = function (json, replaceExistingRules = true) {
+    TabModifier.prototype.import = function (json, replaceExistingRules) {
+        replaceExistingRules = typeof replaceExistingRules !== 'undefined' ? replaceExistingRules : true;
         this.build(JSON.parse(json), replaceExistingRules);
         
         return this;

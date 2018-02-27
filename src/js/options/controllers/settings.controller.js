@@ -33,7 +33,8 @@ app.controller('SettingsController', ['$scope', '$mdDialog', '$mdToast', '$locat
     };
 
     // Import tab rules action
-    $scope.import = function (content, replaceExistingRules = true) {
+    $scope.import = function (content, replaceExistingRules) {
+        replaceExistingRules = typeof replaceExistingRules !== 'undefined' ? replaceExistingRules : true;
         var result = tab_modifier.checkFileBeforeImport(content);
 
         if (result === true) {
