@@ -28,16 +28,18 @@ app.factory('TabModifier', ['Rule', function (Rule) {
             this.rules[index] = rule;
         }
     };
-    
-    TabModifier.prototype.build = function (data) {
+
+    TabModifier.prototype.build = function (data, replaceExistingRules = true) {
         var self = this;
         
         if (data.settings !== undefined) {
             this.settings = data.settings;
         }
-        
-        this.deleteRules();
-        
+
+        if (replaceExistingRules) {
+            this.deleteRules();
+        }
+
         angular.forEach(data.rules, function (rule) {
             self.addRule(new Rule(rule));
         });
@@ -64,9 +66,9 @@ app.factory('TabModifier', ['Rule', function (Rule) {
             return false;
         }
     };
-    
-    TabModifier.prototype.import = function (json) {
-        this.build(JSON.parse(json));
+
+    TabModifier.prototype.import = function (json, replaceExistingRules = true) {
+        this.build(JSON.parse(json), replaceExistingRules);
         
         return this;
     };

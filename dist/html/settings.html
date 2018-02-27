@@ -58,13 +58,10 @@
                     </div>
 
                     <div class="md-secondary">
-                        <input-file-button>
-                            <md-button class="md-primary md-raised" aria-label="Upload a file" ga-track-event="['tab-rules', 'import']">
-                                <md-icon md-svg-icon="file-import"></md-icon>
-                                Import tab rules
-                            </md-button>
-                            <input id="settings" type="file" on-read-file="import($fileContent)" accept="application/json">
-                        </input-file-button>
+                        <md-button class="md-primary md-raised" ng-click="showImportDialog($event)" ga-track-event="['tab-rules', 'import']">
+                            <md-icon md-svg-icon="file-import"></md-icon>
+                            Import tab rules
+                        </md-button>
                     </div>
                 </md-list-item>
 
