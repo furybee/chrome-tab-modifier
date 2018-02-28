@@ -141,15 +141,15 @@ app.controller('SettingsController', ['$scope', '$mdDialog', '$mdToast', '$locat
     };
 
     // Import tab rules action
-    $scope.import = function (content, replaceExistingRules) {
-        replaceExistingRules = typeof replaceExistingRules !== 'undefined' ? replaceExistingRules : true;
+    $scope.import = function (content, replace_existing_rules) {
+        replace_existing_rules = typeof replace_existing_rules !== 'undefined' ? replace_existing_rules : true;
         var result = tab_modifier.checkFileBeforeImport(content);
 
         if (result === true) {
-            var inputId = replaceExistingRules ? 'importReplace' : 'importAdd';
+            var inputId = replace_existing_rules ? 'importReplace' : 'importAdd';
             document.getElementById(inputId).value = '';
 
-            tab_modifier.import(content, replaceExistingRules).sync();
+            tab_modifier.import(content, replace_existing_rules).sync();
 
             $mdDialog.hide();
 
@@ -530,15 +530,15 @@ app.factory('TabModifier', ['Rule', function (Rule) {
         }
     };
 
-    TabModifier.prototype.build = function (data, replaceExistingRules) {
-        replaceExistingRules = typeof replaceExistingRules !== 'undefined' ? replaceExistingRules : true;
+    TabModifier.prototype.build = function (data, replace_existing_rules) {
+        replace_existing_rules = typeof replace_existing_rules !== 'undefined' ? replace_existing_rules : true;
         var self = this;
         
         if (data.settings !== undefined) {
             this.settings = data.settings;
         }
 
-        if (replaceExistingRules) {
+        if (replace_existing_rules) {
             this.deleteRules();
         }
 
@@ -569,9 +569,9 @@ app.factory('TabModifier', ['Rule', function (Rule) {
         }
     };
 
-    TabModifier.prototype.import = function (json, replaceExistingRules) {
-        replaceExistingRules = typeof replaceExistingRules !== 'undefined' ? replaceExistingRules : true;
-        this.build(JSON.parse(json), replaceExistingRules);
+    TabModifier.prototype.import = function (json, replace_existing_rules) {
+        replace_existing_rules = typeof replace_existing_rules !== 'undefined' ? replace_existing_rules : true;
+        this.build(JSON.parse(json), replace_existing_rules);
         
         return this;
     };

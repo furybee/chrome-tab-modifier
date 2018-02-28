@@ -29,15 +29,15 @@ app.factory('TabModifier', ['Rule', function (Rule) {
         }
     };
 
-    TabModifier.prototype.build = function (data, replaceExistingRules) {
-        replaceExistingRules = typeof replaceExistingRules !== 'undefined' ? replaceExistingRules : true;
+    TabModifier.prototype.build = function (data, replace_existing_rules) {
+        replace_existing_rules = typeof replace_existing_rules !== 'undefined' ? replace_existing_rules : true;
         var self = this;
         
         if (data.settings !== undefined) {
             this.settings = data.settings;
         }
 
-        if (replaceExistingRules) {
+        if (replace_existing_rules) {
             this.deleteRules();
         }
 
@@ -68,9 +68,9 @@ app.factory('TabModifier', ['Rule', function (Rule) {
         }
     };
 
-    TabModifier.prototype.import = function (json, replaceExistingRules) {
-        replaceExistingRules = typeof replaceExistingRules !== 'undefined' ? replaceExistingRules : true;
-        this.build(JSON.parse(json), replaceExistingRules);
+    TabModifier.prototype.import = function (json, replace_existing_rules) {
+        replace_existing_rules = typeof replace_existing_rules !== 'undefined' ? replace_existing_rules : true;
+        this.build(JSON.parse(json), replace_existing_rules);
         
         return this;
     };
