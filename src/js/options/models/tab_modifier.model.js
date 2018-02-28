@@ -37,7 +37,7 @@ app.factory('TabModifier', ['Rule', function (Rule) {
             this.settings = data.settings;
         }
 
-        if (replace_existing_rules) {
+        if (replace_existing_rules === true) {
             this.deleteRules();
         }
 
