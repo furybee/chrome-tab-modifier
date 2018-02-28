@@ -571,6 +571,7 @@ app.factory('TabModifier', ['Rule', function (Rule) {
 
     TabModifier.prototype.import = function (json, replace_existing_rules) {
         replace_existing_rules = typeof replace_existing_rules !== 'undefined' ? replace_existing_rules : true;
+
         this.build(JSON.parse(json), replace_existing_rules);
         
         return this;
