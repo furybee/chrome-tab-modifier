@@ -12,6 +12,7 @@ app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdTheming
         .icon('backup-restore', '/icons/backup-restore.svg')
         .icon('information-outline', '/icons/information-outline.svg')
         .icon('alert', '/icons/alert.svg')
+        .icon('file-add', '/icons/file-add.svg')
         .icon('file-import', '/icons/file-import.svg')
         .icon('file-export', '/icons/file-export.svg')
         .icon('file-outline', '/icons/file-outline.svg')
@@ -106,58 +107,77 @@ app.controller('MainController', ['$scope', '$mdSidenav', '$q', 'Analytics', fun
 }]);
 
 app.controller('SettingsController', ['$scope', '$mdDialog', '$mdToast', '$location', 'TabModifier', 'Analytics', function ($scope, $mdDialog, $mdToast, $location, TabModifier, Analytics) {
-    
+
     var tab_modifier = new TabModifier();
-    
+
     chrome.storage.local.get('tab_modifier', function (items) {
         if (items.tab_modifier === undefined) {
             tab_modifier.build(new TabModifier());
         } else {
             tab_modifier.build(items.tab_modifier);
         }
-        
+
         $scope.tab_modifier = tab_modifier;
-        
+
         // Generate JSON url
         $scope.json_url = tab_modifier.export();
-        
+
         $scope.$apply();
     });
-    
+
     // Import tab rules action
-    $scope.import = function (content) {
+    $scope.showImportDialog = function (evt) {
+        $mdDialog.show({
+            controller: 'SettingsController',
+            templateUrl: '../html/import_dialog.html',
+            parent: angular.element(document.body),
+            targetEvent: evt,
+            clickOutsideToClose: true
+        });
+    };
+
+    $scope.cancelDialog = function () {
+        $mdDialog.cancel();
+    };
+
+    // Import tab rules action
+    $scope.import = function (content, replace_existing_rules) {
+        replace_existing_rules = typeof replace_existing_rules !== 'undefined' ? replace_existing_rules : true;
         var result = tab_modifier.checkFileBeforeImport(content);
-        
+
         if (result === true) {
-            document.getElementById('settings').value = '';
-            
-            tab_modifier.import(content).sync();
-            
+            var inputId = replace_existing_rules ? 'importReplace' : 'importAdd';
+            document.getElementById(inputId).value = '';
+
+            tab_modifier.import(content, replace_existing_rules).sync();
+
+            $mdDialog.hide();
+
             $location.path('/');
-            
+
             $mdToast.show(
                 $mdToast.simple()
                     .textContent('Your tab rules have been successfully imported')
                     .position('top right')
             );
-            
+
             Analytics.trackEvent('tab-rules', 'import-success');
         } else {
             var message;
-            
+
             switch (result) {
                 case 'INVALID_JSON_FORMAT':
                     message = 'Invalid JSON file. Please check it on jsonlint.com.';
-                    
+
                     Analytics.trackEvent('tab-rules', 'import-error-json');
                     break;
                 case 'INVALID_SETTINGS':
                     message = 'Invalid settings file. Is this file comes from Tab Modifier?';
-                    
+
                     Analytics.trackEvent('tab-rules', 'import-error-format');
                     break;
             }
-            
+            $mdDialog.hide();
             $mdDialog.show(
                 $mdDialog.alert()
                     .clickOutsideToClose(true)
@@ -168,7 +188,7 @@ app.controller('SettingsController', ['$scope', '$mdDialog', '$mdToast', '$locat
             );
         }
     };
-    
+
     // Delete all tab rules action
     $scope.deleteRules = function (evt) {
         var confirm = $mdDialog
@@ -180,20 +200,20 @@ app.controller('SettingsController', ['$scope', '$mdDialog', '$mdToast', '$locat
             .targetEvent(evt)
             .ok('Delete all')
             .cancel('Cancel');
-        
+
         $mdDialog.show(confirm).then(function () {
             tab_modifier.deleteRules().sync();
-            
+
             $mdToast.show(
                 $mdToast.simple()
                     .textContent('Your tab rules have been successfully deleted')
                     .position('top right')
             );
-            
+
             Analytics.trackEvent('tab-rules', 'delete-all');
         });
     };
-    
+
 }]);
 
 app.controller('TabRulesController', ['$scope', '$routeParams', '$http', '$mdDialog', '$mdMedia', '$mdToast', 'Rule', 'TabModifier', 'Analytics', function ($scope, $routeParams, $http, $mdDialog, $mdMedia, $mdToast, Rule, TabModifier, Analytics) {
@@ -509,16 +529,19 @@ app.factory('TabModifier', ['Rule', function (Rule) {
             this.rules[index] = rule;
         }
     };
-    
-    TabModifier.prototype.build = function (data) {
+
+    TabModifier.prototype.build = function (data, replace_existing_rules) {
+        replace_existing_rules = typeof replace_existing_rules !== 'undefined' ? replace_existing_rules : true;
         var self = this;
         
         if (data.settings !== undefined) {
             this.settings = data.settings;
         }
-        
-        this.deleteRules();
-        
+
+        if (replace_existing_rules === true) {
+            this.deleteRules();
+        }
+
         angular.forEach(data.rules, function (rule) {
             self.addRule(new Rule(rule));
         });
@@ -545,9 +568,11 @@ app.factory('TabModifier', ['Rule', function (Rule) {
             return false;
         }
     };
-    
-    TabModifier.prototype.import = function (json) {
-        this.build(JSON.parse(json));
+
+    TabModifier.prototype.import = function (json, replace_existing_rules) {
+        replace_existing_rules = typeof replace_existing_rules !== 'undefined' ? replace_existing_rules : true;
+
+        this.build(JSON.parse(json), replace_existing_rules);
         
         return this;
     };
