@@ -93,9 +93,37 @@ amqplib@^0.5.2:
     readable-stream "1.x >=1.1.9"
     safe-buffer "^5.0.1"
 
-angular-mocks@1.5.8:
-  version "1.5.8"
-  resolved "https://registry.yarnpkg.com/angular-mocks/-/angular-mocks-1.5.8.tgz#2e9399056669f286a681396bc35ae0d7c5c70d16"
+angular-animate@~1.6.0:
+  version "1.6.9"
+  resolved "https://registry.yarnpkg.com/angular-animate/-/angular-animate-1.6.9.tgz#a0f926c1ba3190bd8929ef966a7fa79760682622"
+
+angular-aria@~1.6.0:
+  version "1.6.9"
+  resolved "https://registry.yarnpkg.com/angular-aria/-/angular-aria-1.6.9.tgz#150fa603ba7f604f48e3715b76ab3ec4b78971a6"
+
+angular-google-analytics@~1.1.8:
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/angular-google-analytics/-/angular-google-analytics-1.1.8.tgz#e497926c0f77cd6eec0c0cbdf0b20e58938cf8a0"
+
+angular-material@~1.1.7:
+  version "1.1.7"
+  resolved "https://registry.yarnpkg.com/angular-material/-/angular-material-1.1.7.tgz#b3ebe28bc884495285932fb9cf4f58ed6ce6f4ab"
+
+angular-mocks@~1.6.0:
+  version "1.6.9"
+  resolved "https://registry.yarnpkg.com/angular-mocks/-/angular-mocks-1.6.9.tgz#4fed8c8293a5080e0919a7ff0dcf0f704864b7ba"
+
+angular-route@~1.6.0:
+  version "1.6.9"
+  resolved "https://registry.yarnpkg.com/angular-route/-/angular-route-1.6.9.tgz#73c63cec6a8a6b924698aec635eac32aa41f5e2b"
+
+angular-ui-tree@~2.22.6:
+  version "2.22.6"
+  resolved "https://registry.yarnpkg.com/angular-ui-tree/-/angular-ui-tree-2.22.6.tgz#849727fdd1d13d84c1a590bb08934cc224e5a407"
+
+angular@~1.6.0:
+  version "1.6.9"
+  resolved "https://registry.yarnpkg.com/angular/-/angular-1.6.9.tgz#bc812932e18909038412d594a5990f4bb66c0619"
 
 ansi-cyan@^0.1.1:
   version "0.1.1"
@@ -3024,9 +3052,9 @@ istanbul@^0.4.0:
     which "^1.1.1"
     wordwrap "^1.0.0"
 
-jasmine-core@~2.9.0:
-  version "2.9.1"
-  resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-2.9.1.tgz#b6bbc1d8e65250d56f5888461705ebeeeb88f22f"
+jasmine-core@~3.1.0:
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/jasmine-core/-/jasmine-core-3.1.0.tgz#a4785e135d5df65024dfc9224953df585bd2766c"
 
 jasmine-expect@3.7.0:
   version "3.7.0"
