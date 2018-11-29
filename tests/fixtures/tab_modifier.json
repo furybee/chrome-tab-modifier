@@ -97,6 +97,20 @@
                 "muted": false,
                 "url_matcher": "github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)"
             }
+        },
+        {
+            "name": "GitHub fall through",
+            "detection": "CONTAINS",
+            "url_fragment": "github.com",
+            "tab": {
+                "title": "{title} | $1",
+                "icon": null,
+                "pinned": false,
+                "protected": false,
+                "unique": false,
+                "muted": false,
+                "url_matcher": "github[.]com/([A-Za-z0-9_-]+)"
+            }
         }
     ]
 }
