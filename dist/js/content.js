@@ -182,6 +182,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
             }
         }
         
+				/**
         var title_changed_by_me = false, observer_title;
         
         // Set up a new observer
@@ -213,6 +214,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
             chrome.runtime.sendMessage({ action: 'setPinned' });
         }
         
+				
         // Set new icon
         if (rule.tab.icon !== null) {
             processIcon(rule.tab.icon);
@@ -253,6 +255,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
                 }
             });
             
+						
             // Observe when the website has changed the head so the script
             // will detect favicon manipulation (add/remove)
             if (document.querySelector('head link[rel*="icon"]') !== null) {
@@ -266,6 +269,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
                 });
             }
         }
+				**/
         
         // Protect the tab
         if (rule.tab.protected === true) {
@@ -290,11 +294,12 @@ chrome.storage.local.get('tab_modifier', function (items) {
     };
     
 		
+	var runDelayed;
 	chrome.runtime.onMessage.addListener(function(request, sender, response) {
   if (request.type === 'onUpdated') {
 		console.log("onMessage");
-		setTimeout(processPage, 2000);
-		//processPage();
+		clearTimeout(runDelayed); //delete the old function waiting
+		runDelayed = setTimeout(processPage, 2000);
     response("yes");
   }
   return true;
