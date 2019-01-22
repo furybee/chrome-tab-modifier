@@ -8,6 +8,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
     var tab_modifier = items.tab_modifier, rule = null, processPage;
     
     processPage = function () {
+				console.log("run processPage()");
         // Check if a rule is available
         for (var i = 0; i < tab_modifier.rules.length; i++) {
             if (tab_modifier.rules[i].detection === undefined || tab_modifier.rules[i].detection === 'CONTAINS') {
@@ -285,9 +286,19 @@ chrome.storage.local.get('tab_modifier', function (items) {
         if (rule.tab.muted === true) {
             chrome.runtime.sendMessage({ action: 'setMuted' });
         }
+			console.log("finished processPage()");
     };
     
-    processPage();
+		
+	chrome.runtime.onMessage.addListener(function(request, sender, response) {
+  if (request.type === 'onUpdated') {
+		console.log("onMessage");
+		setTimeout(processPage, 2000);
+		//processPage();
+    response("yes");
+  }
+  return true;
+	});
     
     // Reverted #39
     // w.onhashchange = processPage;
