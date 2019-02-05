@@ -294,17 +294,32 @@ chrome.storage.local.get('tab_modifier', function (items) {
     };
     
 		
-	var runDelayed;
-	chrome.runtime.onMessage.addListener(function(request, sender, response) {
-  if (request.type === 'onUpdated') {
-		console.log("onMessage");
-		clearTimeout(runDelayed); //delete the old function waiting
-		runDelayed = setTimeout(processPage, 2000);
-    response("yes");
-  }
-  return true;
-	});
-    
+		// Best way to update title is onComplete
+		// plus a delay. Could even configure it in UI, to poll for change for X-times
+		// with increasing delay
+		// Alternative is using Mutation Observer: could even do it just for the specified DOM-selector
+		// Still would use considerable resources
+		// Or specify in options on which DOM-change it should be updated.
+		var runDelayed;
+		chrome.runtime.onMessage.addListener(function(request, sender, response) {
+		if (request.type === 'onUpdated') {
+			//console.log("onMessage");
+			clearTimeout(runDelayed); //delete the old function waiting
+			runDelayed = setTimeout(processPage, 3000);
+			response("yes");
+		}
+		return true;
+		});
+		
+		/*
+		var observer = new MutationObserver(function(mutations) {
+			console.log("Dom changed");
+			clearTimeout(runDelayed); //delete the old function waiting
+			//runDelayed = setTimeout(processPage, 5000);
+		});
+		observer.observe(document, { childList: true, subtree : true });
+		*/
+		
     // Reverted #39
     // w.onhashchange = processPage;
     

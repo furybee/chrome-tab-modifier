@@ -27,6 +27,7 @@ getStorage = function (callback) {
 // Events
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
+	// console.log(changeInfo);
   if (changeInfo.status === 'complete') {
     chrome.tabs.sendMessage(tabId, {type: 'onUpdated'}, function (doc) {
       //console.log(doc);
