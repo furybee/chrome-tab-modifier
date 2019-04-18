@@ -1,4 +1,4 @@
-var w = window;
+var w = window, retryCount = 1;
 
 chrome.storage.local.get('tab_modifier', function (items) {
     if (items.tab_modifier === undefined) {
@@ -100,7 +100,8 @@ chrome.storage.local.get('tab_modifier', function (items) {
          * @returns {*}
          */
         processTitle = function (current_url, current_title) {
-            var title = rule.tab.title, matches = title.match(/\{([^}]+)}/g), i;
+						var title = rule.tab.title, matches = title.match(/\{([^}]+)}/g), i;
+						var defaultTitle = title;
             
             // Handle curly braces tags inside title
             if (matches !== null) {
@@ -111,6 +112,12 @@ chrome.storage.local.get('tab_modifier', function (items) {
                     text     = getTextBySelector(selector);
                     title    = updateTitle(title, matches[i], text);
                 }
+								
+								// console.log("selector: "+selector+" || Extracted text: "+text+" || title: "+title);
+								if (selector && !text) { // selector is something and result is nothing, so failed
+										console.log("FAILED to extract text from selector");									
+										return null;
+								}
             }
             
             // Handle title_matcher
@@ -142,7 +149,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
                     console.log(e);
                 }
             }
-            
+						
             return title;
         };
         
@@ -178,11 +185,22 @@ chrome.storage.local.get('tab_modifier', function (items) {
         // Set title
         if (rule.tab.title !== null) {
             if (document.title !== null) {
-                document.title = processTitle(location.href, document.title);
+								console.log("OLD title: "+document.title);
+								var newTitle = processTitle(location.href, document.title);
+								if (newTitle == null) { // couldn't extract text from selector
+										console.log("RETRY in "+retryCount+"seconds to extract text from selector");
+										setTimeout(processPage, 1000*retryCount);
+										retryCount = retryCount*2;
+										return; //stop processPage() 
+								} else {
+										retryCount = 1;
+										console.log("NEW Title: "+newTitle);
+										// domObserver.disconnect(); // alternative Observer version
+								}
+                document.title = newTitle;
             }
         }
         
-				/**
         var title_changed_by_me = false, observer_title;
         
         // Set up a new observer
@@ -269,7 +287,6 @@ chrome.storage.local.get('tab_modifier', function (items) {
                 });
             }
         }
-				**/
         
         // Protect the tab
         if (rule.tab.protected === true) {
@@ -294,31 +311,45 @@ chrome.storage.local.get('tab_modifier', function (items) {
     };
     
 		
+		chrome.runtime.onMessage.addListener(function(request, sender, response) {
+			if (request.type === 'onUpdated') {
+				console.log("onUpdated");
+				processPage();
+				response("yes");
+			}
+			return true;
+		});
+		
 		// Best way to update title is onComplete
 		// plus a delay. Could even configure it in UI, to poll for change for X-times
 		// with increasing delay
 		// Alternative is using Mutation Observer: could even do it just for the specified DOM-selector
 		// Still would use considerable resources
 		// Or specify in options on which DOM-change it should be updated.
-		var runDelayed;
-		chrome.runtime.onMessage.addListener(function(request, sender, response) {
-		if (request.type === 'onUpdated') {
-			//console.log("onMessage");
-			clearTimeout(runDelayed); //delete the old function waiting
-			runDelayed = setTimeout(processPage, 3000);
-			response("yes");
-		}
-		return true;
-		});
+		// var runDelayed;
+		// chrome.runtime.onMessage.addListener(function(request, sender, response) {
+			// if (request.type === 'onUpdated') {
+				// console.log("onMessage - onUpdated");
+				// processAndObserve();
+				// response("yes");
+			// }
+			// return true;
+		// });
 		
-		/*
-		var observer = new MutationObserver(function(mutations) {
-			console.log("Dom changed");
-			clearTimeout(runDelayed); //delete the old function waiting
-			//runDelayed = setTimeout(processPage, 5000);
-		});
-		observer.observe(document, { childList: true, subtree : true });
-		*/
+		// function processAndObserve() {
+		//	clearTimeout(runDelayed); //delete the old function waiting
+			// runDelayed = setTimeout(processPage, 3000);	// If there are no Dom changes in the next 3s it will run processPage anyway
+			// domObserver.observe(document, {childList: true, subtree : true});
+		// }
+		
+		// var domObserver = new MutationObserver(function(mutations) {
+			// console.log("Dom changed");
+			// clearTimeout(runDelayed); //delete the old function waiting
+			// runDelayed = setTimeout(processPage, 3000);			
+			//remove domObserver when title was successfully changed 
+			//Sophisticated version > https://stackoverflow.com/questions/39301819/how-to-change-the-html-content-as-its-loading-on-the-page/39334319#39334319
+		// });
+		
 		
     // Reverted #39
     // w.onhashchange = processPage;

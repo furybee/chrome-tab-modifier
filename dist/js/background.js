@@ -104,7 +104,11 @@ chrome.runtime.onInstalled.addListener(function (details) {
     }
 });
 
-
+chrome.contextMenus.create({
+    id: 'rename-tab',
+    title: 'Rename Tab',
+    contexts: ['all']
+});
 
 chrome.contextMenus.onClicked.addListener(function (info, tab) {
     if (info.menuItemId === 'rename-tab') {
