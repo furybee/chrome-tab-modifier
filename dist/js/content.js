@@ -1,11 +1,11 @@
-var w = window, retryCount = 1;
+var w = window;
 
 chrome.storage.local.get('tab_modifier', function (items) {
     if (items.tab_modifier === undefined) {
         return;
     }
     
-    var tab_modifier = items.tab_modifier, rule = null, processPage;
+    var tab_modifier = items.tab_modifier, rule = null, processPage, retryCount = 1;
     
     processPage = function () {
 				console.log("run processPage()");
@@ -188,14 +188,14 @@ chrome.storage.local.get('tab_modifier', function (items) {
 								console.log("OLD title: "+document.title);
 								var newTitle = processTitle(location.href, document.title);
 								if (newTitle == null) { // couldn't extract text from selector
-										console.log("RETRY in "+retryCount+"seconds to extract text from selector");
-										setTimeout(processPage, 1000*retryCount);
+										console.log("RETRY to extract text from selector");
 										retryCount = retryCount*2;
+										startDomObserver();
 										return; //stop processPage() 
 								} else {
 										retryCount = 1;
 										console.log("NEW Title: "+newTitle);
-										// domObserver.disconnect(); // alternative Observer version
+										stopDomObserver();
 								}
                 document.title = newTitle;
             }
@@ -311,6 +311,22 @@ chrome.storage.local.get('tab_modifier', function (items) {
     };
     
 		
+		// chrome.runtime.onMessage.addListener(function(request, sender, response) {
+			// if (request.type === 'onUpdated') {
+				// console.log("onUpdated");
+				// processPage();
+				// response("yes");
+			// }
+			// return true;
+		// });
+		
+		// Best way to update title is onComplete
+		// plus a delay. Could even configure it in UI, to poll for change for X-times
+		// with increasing delay
+		// Alternative is using Mutation Observer: could even do it just for the specified DOM-selector
+		// Still would use considerable resources
+		// Or specify in options on which DOM-change it should be updated.
+		var runDelayed;
 		chrome.runtime.onMessage.addListener(function(request, sender, response) {
 			if (request.type === 'onUpdated') {
 				console.log("onUpdated");
@@ -319,37 +335,28 @@ chrome.storage.local.get('tab_modifier', function (items) {
 			}
 			return true;
 		});
-		
-		// Best way to update title is onComplete
-		// plus a delay. Could even configure it in UI, to poll for change for X-times
-		// with increasing delay
-		// Alternative is using Mutation Observer: could even do it just for the specified DOM-selector
-		// Still would use considerable resources
-		// Or specify in options on which DOM-change it should be updated.
-		// var runDelayed;
-		// chrome.runtime.onMessage.addListener(function(request, sender, response) {
-			// if (request.type === 'onUpdated') {
-				// console.log("onMessage - onUpdated");
-				// processAndObserve();
-				// response("yes");
-			// }
-			// return true;
-		// });
-		
-		// function processAndObserve() {
-		//	clearTimeout(runDelayed); //delete the old function waiting
-			// runDelayed = setTimeout(processPage, 3000);	// If there are no Dom changes in the next 3s it will run processPage anyway
-			// domObserver.observe(document, {childList: true, subtree : true});
-		// }
-		
-		// var domObserver = new MutationObserver(function(mutations) {
-			// console.log("Dom changed");
-			// clearTimeout(runDelayed); //delete the old function waiting
-			// runDelayed = setTimeout(processPage, 3000);			
-			//remove domObserver when title was successfully changed 
+
+		var domObserver = new MutationObserver(function(mutations) {
+			console.log("Dom changed");
+			clearTimeout(runDelayed); //delete the old function waiting
+			runDelayed = setTimeout(processPage, 1000*retryCount); // use timeout so it doesn't spam since lots of DOM updates can happen.
+			// don't forget to remove domObserver when title was successfully changed 
 			//Sophisticated version > https://stackoverflow.com/questions/39301819/how-to-change-the-html-content-as-its-loading-on-the-page/39334319#39334319
-		// });
+		});
 		
+		var domObserverIsRunning = false;
+		function startDomObserver() {
+				console.log("Dom observer running: "+domObserverIsRunning);
+				if (!domObserverIsRunning) {
+						domObserver.observe(document, {childList: true, subtree : true});
+						domObserverIsRunning = true;
+				}
+		}
+		
+		function stopDomObserver() {
+				clearTimeout(runDelayed); // if it's already running
+				domObserver.disconnect(); // alternative Observer version
+		}
 		
     // Reverted #39
     // w.onhashchange = processPage;
