@@ -23,17 +23,80 @@ getStorage = function (callback) {
     });
 };
 
+function triggerContentScript(tabId, rule) {
+		chrome.tabs.sendMessage(tabId, 'isContentScriptInjected', function (response) {
+				if (chrome.runtime.lastError || !response) {
+						// console.log("Content.js NOT injected yet in tabId "+tabId+". So inject now!");
+						chrome.tabs.executeScript(tabId, {file: 'js/content.js'}, function(results) {
+								chrome.tabs.sendMessage(tabId, {runRule: rule}); // wait until the script is injected and just then send run message
+						});
+				} else {
+						console.log("Content.js is already injected, so run with pages rule now.");
+						chrome.tabs.sendMessage(tabId, {runRule: rule});
+				}
+		});
+};
+
+function getRule(url, callback) {
+		var thisRule = null;
+		
+		getStorage(function (tab_modifier) {
+				if (tab_modifier === undefined) {
+						return callback(rule);
+				}				
+				for (var i = 0; i < tab_modifier.rules.length; i++) {
+						var listedRule = tab_modifier.rules[i];
+						if (listedRule.detection === undefined || listedRule.detection === 'CONTAINS') {
+								if (url.indexOf(listedRule.url_fragment) !== -1) {
+										thisRule = listedRule;
+										break;
+								}
+						} else {
+								switch (listedRule.detection) {
+										case 'STARTS':
+												if (url.startsWith(listedRule.url_fragment) === true) {
+														thisRule = listedRule;
+														break;
+												}
+												break;
+										case 'ENDS':
+												if (url.endsWith(listedRule.url_fragment) === true) {
+														thisRule = listedRule;
+														break;
+												}
+												break;
+										case 'REGEXP':
+												var regexp = new RegExp(listedRule.url_fragment);
+												
+												if (regexp.test(url) === true) {
+														thisRule = listedRule;
+														break;
+												}
+												break;
+										case 'EXACT':
+												if (url === listedRule.url_fragment) {
+														thisRule = listedRule;
+														break;
+												}
+												break;
+								}
+						}
+				};		
+				return callback(thisRule);
+		});
+};
+
 // --------------------------------------------------------------------------------------------------------
 // Events
 
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
-	// console.log(changeInfo);
-  if (changeInfo.status === 'complete') {
-    chrome.tabs.sendMessage(tabId, {type: 'onUpdated'}, function (doc) {
-      //console.log(doc);
-			return true;
-    });
-  }
+		if (changeInfo.status === 'complete') {
+				getRule(tab.url, function(rule) {
+						if (rule !== null) {
+								triggerContentScript(tabId, rule);
+						}
+				});
+		}
 });
 
 chrome.runtime.onMessage.addListener(function (message, sender) {
@@ -112,7 +175,7 @@ chrome.contextMenus.create({
 
 chrome.contextMenus.onClicked.addListener(function (info, tab) {
     if (info.menuItemId === 'rename-tab') {
-        let title = prompt('Enter the new title, a Tab rule will be automatically created for you based on current URL');
+        let title = prompt('Enter the new title, a Tab thisRule will be automatically created for you based on current URL');
         
         getStorage(function (tab_modifier) {
             if (tab_modifier === undefined) {
@@ -120,12 +183,12 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
                     settings: {
                         enable_new_version_notification: false
                     },
-                    rules: []
+                    thisRules: []
                 };
             }
             
-            let rule = {
-                name: 'Rule created from right-click (' + tab.url.replace(/(^\w+:|^)\/\//, '').substring(0, 15) + '...)',
+            let thisRule = {
+                name: 'thisRule created from right-click (' + tab.url.replace(/(^\w+:|^)\/\//, '').substring(0, 15) + '...)',
                 detection: 'CONTAINS',
                 url_fragment: tab.url,
                 tab: {
@@ -140,7 +203,7 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
                 }
             };
             
-            tab_modifier.rules.push(rule);
+            tab_modifier.thisRules.push(thisRule);
             
             chrome.storage.local.set({ tab_modifier: tab_modifier });
             
