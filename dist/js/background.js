@@ -42,7 +42,7 @@ function getRule(url, callback) {
 		
 		getStorage(function (tab_modifier) {
 				if (tab_modifier === undefined) {
-						return callback(rule);
+						return callback(thisRule);
 				}				
 				for (var i = 0; i < tab_modifier.rules.length; i++) {
 						var listedRule = tab_modifier.rules[i];
@@ -93,7 +93,7 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
 		if (changeInfo.status === 'complete') {
 				getRule(tab.url, function(rule) {
 						if (rule !== null) {
-								triggerContentScript(tabId, rule);
+								triggerContentScript(tab.id, rule);
 						}
 				});
 		}
@@ -149,6 +149,13 @@ chrome.browserAction.onClicked.addListener(function () {
 });
 
 chrome.runtime.onInstalled.addListener(function (details) {
+		// create on intall and add listener every time; see: https://stackoverflow.com/questions/26245888/adding-context-menu-item-on-a-non-persistent-background-script
+		chrome.contextMenus.create({
+				id: 'rename-tab',
+				title: 'Rename Tab',
+				contexts: ['all']
+		});
+		
     switch (details.reason) {
         case 'install':
             openOptionsPage('install');
@@ -167,15 +174,12 @@ chrome.runtime.onInstalled.addListener(function (details) {
     }
 });
 
-chrome.contextMenus.create({
-    id: 'rename-tab',
-    title: 'Rename Tab',
-    contexts: ['all']
-});
-
 chrome.contextMenus.onClicked.addListener(function (info, tab) {
     if (info.menuItemId === 'rename-tab') {
-        let title = prompt('Enter the new title, a Tab thisRule will be automatically created for you based on current URL');
+        let title = prompt('Enter the new title, a Tab rule will be automatically created for you based on current URL');
+				if (title === null) { 
+						return; // user pressed cancel
+				}
         
         getStorage(function (tab_modifier) {
             if (tab_modifier === undefined) {
@@ -183,12 +187,12 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
                     settings: {
                         enable_new_version_notification: false
                     },
-                    thisRules: []
+                    rules: []
                 };
             }
             
-            let thisRule = {
-                name: 'thisRule created from right-click (' + tab.url.replace(/(^\w+:|^)\/\//, '').substring(0, 15) + '...)',
+            let rule = {
+                name: 'Rule created from right-click (' + tab.url.replace(/(^\w+:|^)\/\//, '').substring(0, 15) + '...)',
                 detection: 'CONTAINS',
                 url_fragment: tab.url,
                 tab: {
@@ -203,7 +207,7 @@ chrome.contextMenus.onClicked.addListener(function (info, tab) {
                 }
             };
             
-            tab_modifier.thisRules.push(thisRule);
+            tab_modifier.rules.push(rule);
             
             chrome.storage.local.set({ tab_modifier: tab_modifier });
             
