@@ -28,10 +28,12 @@ function triggerContentScript(tabId, rule) {
 				if (chrome.runtime.lastError || !response) {
 						// console.log("Content.js NOT injected yet in tabId "+tabId+". So inject now!");
 						chrome.tabs.executeScript(tabId, {file: 'js/content.js'}, function(results) {
-								chrome.tabs.sendMessage(tabId, {runRule: rule}); // wait until the script is injected and just then send run message
+								if(!chrome.runtime.lastError){ // read possible error "Unchecked runtime.lastError: The tab was closed." so it doesn't get thrown
+									chrome.tabs.sendMessage(tabId, {runRule: rule}); // wait until the script is injected and just then send run message
+								}
 						});
 				} else {
-						console.log("Content.js is already injected, so run with pages rule now.");
+						// console.log("Content.js is already injected, so run with pages rule now.");
 						chrome.tabs.sendMessage(tabId, {runRule: rule});
 				}
 		});
