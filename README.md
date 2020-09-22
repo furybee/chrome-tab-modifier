@@ -179,7 +179,7 @@ Your icon will not be shown by Chrome.
 
 Alternatively, you can upload your icon somewhere like [imgur.com](http://imgur.com/) and paste the direct link in your rule.
 
-Another solution consists in transform your image in the [Data URI format](https://en.wikipedia.org/wiki/Data_URI_scheme). Go to [duri.me](http://duri.me) and drag & drop your icon, then click on "Copy as DataURI" and paste it (the long text) in the icon input on your rule.
+Another solution consists in transform your image in the [Data URI format](https://en.wikipedia.org/wiki/Data_URI_scheme). Go to [ezgif.com](https://ezgif.com/image-to-datauri) and paste the given output (the long text) in the icon input on your rule.
 
 ### Chrome system pages `chrome://`
 
@@ -229,9 +229,7 @@ Click on "Load unpacked extension..." and select the project `dist/` folder.
 
 ## Donators
 
-A huge thanks to:
-
-_Fabian L., Brent M., Artur S., Sebastian M., Alex B., Dirk H., Christopher S., Rachel M., Richard D., Daniel C., Clifford W._
+A huge thanks to all donators!
 
 If you like my work and you want to support me, visit the [PayPal link](https://www.paypal.me/svalienne/5). ;)
 
