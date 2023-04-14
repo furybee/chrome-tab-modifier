@@ -231,7 +231,7 @@ Click on "Load unpacked extension..." and select the project `dist/` folder.
 
 A huge thanks to all donators!
 
-If you like my work and you want to support me, visit the [PayPal link](https://www.paypal.me/svalienne/5). ;)
+If you like my work and you want to support me, visit the [PayPal link](https://www.paypal.me/sylvainvalienne/5). ;)
 
 ## License
 
