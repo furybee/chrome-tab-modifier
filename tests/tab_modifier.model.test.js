@@ -74,7 +74,7 @@ describe('TabModifier model', function () {
 
         tab_modifier.build(getJSONFixture('tab_modifier.json'));
 
-        expect(tab_modifier.rules).toBeArrayOfSize(7);
+        expect(tab_modifier.rules).toBeArrayOfSize(8);
 
         expect(tab_modifier.rules[0].name).toBe('Local dev');
         expect(tab_modifier.rules[0].detection).toBe('CONTAINS');
@@ -152,6 +152,17 @@ describe('TabModifier model', function () {
         expect(tab_modifier.rules[6].tab.unique).toBe(false);
         expect(tab_modifier.rules[6].tab.muted).toBe(false);
         expect(tab_modifier.rules[6].tab.url_matcher).toBe('github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)');
+
+        expect(tab_modifier.rules[7].name).toBe('GitHub fall through');
+        expect(tab_modifier.rules[7].detection).toBe('CONTAINS');
+        expect(tab_modifier.rules[7].url_fragment).toBe('github.com');
+        expect(tab_modifier.rules[7].tab.title).toBe('{title} | $1');
+        expect(tab_modifier.rules[7].tab.icon).toBe(null);
+        expect(tab_modifier.rules[7].tab.pinned).toBe(false);
+        expect(tab_modifier.rules[7].tab.protected).toBe(false);
+        expect(tab_modifier.rules[7].tab.unique).toBe(false);
+        expect(tab_modifier.rules[7].tab.muted).toBe(false);
+        expect(tab_modifier.rules[7].tab.url_matcher).toBe('github[.]com/([A-Za-z0-9_-]+)');
     });
 
     it('Sync data', function () {
