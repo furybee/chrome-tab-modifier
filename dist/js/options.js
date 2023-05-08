@@ -2,9 +2,9 @@ var app = angular.module('TabModifier', ['ngRoute', 'ngAnimate', 'ngAria', 'ngMa
 
 app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdThemingProvider', 'AnalyticsProvider', function ($routeProvider, $compileProvider, $mdIconProvider, $mdThemingProvider, AnalyticsProvider) {
     
-    // Allow "chrome-extension" protocol
-    $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|chrome-extension|file|blob):/);
-    $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|chrome-extension|file|blob):|data:image\//);
+    // Allow "chrome-extension" and "moz-extension" protocol
+    $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|chrome-extension|moz-extension|file|blob):/);
+    $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|chrome-extension|moz-extension|file|blob):|data:image\//);
     
     // Load icons list by name
     $mdIconProvider
@@ -227,7 +227,7 @@ app.controller('TabRulesController', ['$scope', '$routeParams', '$http', '$mdDia
     
     // Avoid BC break
     chrome.storage.sync.get('tab_modifier', function (items) {
-        if (items.tab_modifier !== undefined && items.tab_modifier !== null) {
+        if (items !== undefined && items.tab_modifier !== undefined && items.tab_modifier !== null) {
             tab_modifier.build(items.tab_modifier);
             tab_modifier.sync();
         }
@@ -241,15 +241,21 @@ app.controller('TabRulesController', ['$scope', '$routeParams', '$http', '$mdDia
             tab_modifier.sync();
         }
     };
-    
+
+    $scope.$routeParams = $routeParams;
+
     chrome.storage.local.get('tab_modifier', function (items) {
-        if (items.tab_modifier !== undefined) {
+        if (items !== undefined && items.tab_modifier !== undefined) {
             tab_modifier.build(items.tab_modifier);
         }
         
         $scope.tab_modifier = tab_modifier;
         
         $scope.$apply();
+
+        if ($scope.$routeParams.event === 'edit-rule') {
+            $scope.showForm(new Event('EditRule'), tab_modifier.rules[$scope.$routeParams.version]);
+        }
     });
     
     // Show modal form

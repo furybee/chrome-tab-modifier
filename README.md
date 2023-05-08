@@ -201,6 +201,12 @@ Since Chrome 90, the JS event that triggers a refresh or a closure has been rewo
 
 ## Changelog
 
+**v0.23.0** Firefox compatibility [#46](https://github.com/sylouuu/chrome-tab-modifier/issues/46)
+
+- Reworked the code to be cross-compatible between Chrome and Firefox
+- Side feature: Changed contextual menu item action because Firefox can't prompt from background. Now the contextual menu action directly open the new rule properties for edition.
+ 
+
 See [releases](https://github.com/sylouuu/chrome-tab-modifier/releases) section.
 
 ## Development

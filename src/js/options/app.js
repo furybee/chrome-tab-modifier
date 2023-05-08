@@ -2,9 +2,9 @@ var app = angular.module('TabModifier', ['ngRoute', 'ngAnimate', 'ngAria', 'ngMa
 
 app.config(['$routeProvider', '$compileProvider', '$mdIconProvider', '$mdThemingProvider', 'AnalyticsProvider', function ($routeProvider, $compileProvider, $mdIconProvider, $mdThemingProvider, AnalyticsProvider) {
     
-    // Allow "chrome-extension" protocol
-    $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|chrome-extension|file|blob):/);
-    $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|chrome-extension|file|blob):|data:image\//);
+    // Allow "chrome-extension" and "moz-extension" protocol
+    $compileProvider.aHrefSanitizationWhitelist(/^\s*(https?|chrome-extension|moz-extension|file|blob):/);
+    $compileProvider.imgSrcSanitizationWhitelist(/^\s*(https?|chrome-extension|moz-extension|file|blob):|data:image\//);
     
     // Load icons list by name
     $mdIconProvider
