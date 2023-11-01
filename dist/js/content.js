@@ -89,7 +89,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
                 return title;
             }
             
-            return title.replace(tag, value);
+            return title.replace(tag, decodeURI(value));
         };
         
         /**
