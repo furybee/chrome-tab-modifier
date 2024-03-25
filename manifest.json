@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "Tab Modifier",
+  "version": "1.0.0",
+  "description": "Take control of your tabs",
+  "homepage_url": "https://github.com/furybee/chrome-tab-modifier",
+  "action": {
+    "default_title": "Tab Modifier",
+    "default_popup": "index.html"
+  },
+  "background": {
+    "service_worker": "src/background.ts",
+    "type": "module"
+  },
+  "options_page": "options.html",
+  "web_accessible_resources": [{
+    "resources": [
+      "assets/*"
+    ],
+    "matches": [
+      "<all_urls>"
+    ]
+  }],
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": [
+      "src/content.js"
+    ]
+  }],
+  "permissions": [
+    "http://*/*",
+    "https://*/*",
+    "tabs",
+    "storage",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ]
+}
