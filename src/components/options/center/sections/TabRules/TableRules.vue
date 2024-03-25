@@ -59,10 +59,7 @@ const props = defineProps<{
 const emitter = inject('emitter');
 
 const editRule = (rule: Rule) => {
-  console.log('editRule', rule);
-
   emitter.emit(GLOBAL_EVENTS.OPEN_ADD_RULE_MODAL, rule);
-  // emitter.emit(GLOBAL_EVENTS.OPEN_ADD_RULE_MODAL, rule);
 };
 const duplicateRule = (rule: Rule) => {
   console.log('duplicateRule', rule);

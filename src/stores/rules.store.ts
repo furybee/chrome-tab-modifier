@@ -66,7 +66,7 @@ export const useRulesStore = defineStore('rules', {
                 console.error('Failed to load rules:', error);
             }
         },
-        setCurrentRule(rule: Rule) {
+        setCurrentRule(rule?: Rule) {
             this.currentRule = rule;
         },
         saveCurrentRule(rule: Rule) {

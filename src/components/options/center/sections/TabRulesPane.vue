@@ -39,6 +39,7 @@ const openAddRuleModal = (rule?: Rule) => {
   if (!addRuleModal.value) {
     return;
   }
+  console.log('openAddRuleModal', rule);
 
   rulesStore.setCurrentRule(rule);
 
