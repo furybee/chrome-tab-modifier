@@ -1,29 +1,42 @@
 <template>
   <div class="flex h-screen w-screen overflow-auto">
-    <div class="w-[350px] bg-base-300 p-4 flex flex-col gap-4">
-      <Menu :menuItems="sectionItems" title="Sections" @onMenuClicked="onMenuClicked"/>
+    <div class="drawer lg:drawer-open">
+      <input id="drawer-menu" class="drawer-toggle" type="checkbox" />
+      <div class="drawer-content flex flex-col items-center justify-center">
+        <div class="h-screen w-full">
+          <div class="navbar bg-base-200">
+            <div class="navbar-start">
+              <label class="btn btn-circle swap swap-rotate drawer-button lg:hidden" for="drawer-menu">
+                <input type="checkbox" />
+                <BurgerIcon />
+                <CloseIcon />
+                </label>
 
-      <Menu :menuItems="resourceItems" title="Resources" @onMenuClicked="onMenuClicked"/>
-    </div>
-    <div class="w-full overflow-auto">
-      <div class="navbar bg-base-200">
-        <div class="navbar-start">
-          <a class="btn btn-ghost text-xl">
-            {{ currentContent.title }}
-          </a>
-        </div>
+              <a class="btn btn-ghost text-xl">
+                {{ currentContent.title }}
+              </a>
+            </div>
 
-        <div class="navbar-end">
-          <a
-              v-if="currentContent.component === 'TabRulesPane'"
-              class="btn"
-              @click="openAddModal">
-            Add
-          </a>
+            <div class="navbar-end">
+              <a
+                  v-if="currentContent.component === 'TabRulesPane'"
+                  class="btn"
+                  @click="openAddModal">
+                Add
+              </a>
+            </div>
+          </div>
+
+          <component :is="panes[currentContent.component]" />
         </div>
       </div>
+      <div class="drawer-side bg-base-300">
+        <label aria-label="close sidebar" class="drawer-overlay" for="drawer-menu"></label>
+        <Menu :menuItems="sectionItems" title="Sections" @onMenuClicked="onMenuClicked"/>
 
-      <component :is="panes[currentContent.component]" />
+        <Menu :menuItems="resourceItems" title="Resources" @onMenuClicked="onMenuClicked"/>
+
+      </div>
     </div>
   </div>
 </template>
@@ -36,6 +49,8 @@ import TabRulesPane from "./components/options/center/sections/TabRulesPane.vue"
 import SettingsPane from "./components/options/center/sections/SettingsPane.vue";
 import HelpPane from "./components/options/center/sections/HelpPane.vue";
 import DonationPane from "./components/options/center/resources/DonationPane.vue";
+import BurgerIcon from "./icons/BurgerIcon.vue";
+import CloseIcon from "./icons/CloseIcon.vue";
 
 const emitter = inject('emitter');
 

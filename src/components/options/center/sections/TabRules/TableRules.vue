@@ -16,7 +16,7 @@
             <td>{{ rule.detection }}</td>
             <td>{{ rule.url_fragment }}</td>
             <td>{{ rule.tab.icon }}</td>
-            <td class="invisible group-hover:visible grid grid-cols-3 gap-2">
+            <td class="invisible group-hover:visible grid lg:grid-cols-3 gap-2">
               <button class="btn btn-xs btn-circle tooltip flex items-center justify-items-center"
                       data-tip="Edit"
                       @click="editRule(rule)"

@@ -1,5 +1,5 @@
 <template>
-  <ul class="menu bg-base-300 rounded-box">
+  <ul class="menu p-4 w-80 bg-base-300 text-base-content">
     <li>
       <h2 v-if="title" class="menu-title">{{ title }}</h2>
       <ul>
