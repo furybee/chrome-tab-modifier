@@ -74,6 +74,11 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
                 pinned: true
             });
             break;
+        case 'setGroup':
+            chrome.tabs.group(sender.tab.id, {
+                groupId: message.groupId
+            });
+            break;
         case 'setMuted':
             chrome.tabs.update(sender.tab.id, {
                 muted: true

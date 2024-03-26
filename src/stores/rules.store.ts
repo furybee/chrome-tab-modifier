@@ -12,7 +12,6 @@ export type Tab = {
 };
 
 export type Rule = {
-    $$hashKey?: string;
     detection: string;
     name: string;
     tab: Tab;
@@ -47,6 +46,7 @@ export const useRulesStore = defineStore('rules', {
     state: () => {
         return {
             currentRule: undefined as Rule | undefined,
+            currentIndex: undefined as number | undefined,
             rules: [] as Rule[],
             settings: {} as Settings
         }

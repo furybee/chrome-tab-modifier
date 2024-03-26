@@ -15,7 +15,8 @@
   "options_page": "options.html",
   "web_accessible_resources": [{
     "resources": [
-      "assets/*"
+      "assets/*",
+      "assets/*/*"
     ],
     "matches": [
       "<all_urls>"
@@ -31,8 +32,10 @@
     "http://*/*",
     "https://*/*",
     "tabs",
+    "tabGroups",
     "storage",
-    "contextMenus"
+    "contextMenus",
+    "extension"
   ],
   "host_permissions": [
     "http://*/*",

@@ -161,7 +161,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
             });
 
             // Set preconfigured or custom (http|https|data) icon
-            icon = (/^(https?|data):/.test(new_icon) === true) ? new_icon : chrome.extension.getURL('/img/' + new_icon);
+            icon = (/^(https?|data):/.test(new_icon) === true) ? new_icon : chrome.extension.getURL('/assets/' + new_icon);
 
             // Create new favicon
             link      = document.createElement('link');

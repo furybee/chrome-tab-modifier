@@ -188,6 +188,13 @@ chrome.storage.local.get(STORAGE_KEY, (items) => {
                 urlFragment: rule.url_fragment,
             });
         }
+
+        if (rule.tab.group_id) {
+            chrome.runtime.sendMessage({
+                action: 'setGroup',
+                groupId: rule.tab.group_id,
+            });
+        }
     }
 
     applyRule();

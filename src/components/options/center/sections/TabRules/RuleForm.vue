@@ -19,7 +19,7 @@
     <div class="flex gap-2">
       <label class="form-control w-full max-w-xs flex-1">
         <div class="label">
-          <span class="label-text text-xs">Name</span>
+          <span class="label-text text-sm">Name</span>
         </div>
         <input v-model="currentRule.name" class="input input-xs input-bordered w-full max-w-xs" placeholder="e.g. Pinned GMail" required type="text" />
         <div v-if="showHelp" class="label">
@@ -29,7 +29,7 @@
 
       <label class="form-control w-full max-w-xs flex-0">
         <div class="label">
-          <span class="label-text text-xs">Detection</span>
+          <span class="label-text text-sm">Detection</span>
         </div>
         <select v-model="currentRule.detection" class="select select-xs select-bordered">
           <option v-for="(detection, index) in detections" :key="index" :value="detection.value">
@@ -40,7 +40,7 @@
 
       <label class="form-control w-full max-w-xs flex-1">
         <div class="label">
-          <span class="label-text text-xs">URL Fragment</span>
+          <span class="label-text text-sm">URL Fragment</span>
         </div>
         <input v-model="currentRule.url_fragment" class="input input-xs input-bordered w-full max-w-xs" placeholder="e.g mail.google.com" required type="text" />
         <div v-if="showHelp" class="label">
@@ -54,7 +54,7 @@
 
       <label class="form-control w-full flex-1 mt-4">
         <div class="label">
-          <span class="label-text text-xs">Tab Title</span>
+          <span class="label-text text-sm">Tab Title</span>
         </div>
         <input v-model="currentRule.tab.title" class="input input-xs input-bordered w-full" placeholder="e.g. Hey {title}" required type="text" />
         <div class="label">
@@ -67,57 +67,78 @@
       <div class="flex gap-2">
         <label class="form-control w-full max-w-xs flex-0">
           <div class="label">
-            <span class="label-text text-xs">Icon</span>
+            <span class="label-text text-sm">Icon</span>
           </div>
-          <select v-model="currentRule.tab.icon" class="select select-xs select-bordered">
-            <option v-for="(icon, index) in icons" :key="index" :value="icon.value">
-              {{ icon.name }}
-            </option>
-          </select>
+
+          <div class="flex w-full gap-2">
+            <CustomSelect v-model="currentRule.tab.icon" :items="icons" />
+          </div>
+
         </label>
+
 
         <label class="form-control w-full flex-1">
           <div class="label">
-            <span class="label-text text-xs">Custom Icon</span>
+            <span class="label-text text-sm">Custom Icon</span>
           </div>
-          <input v-model="currentRule.tab.icon" class="input input-xs input-bordered w-full" placeholder="e.g. https://google.com/favicon.ico" required type="text" />
+          <input v-model="customIcon" class="input input-xs input-bordered w-full" placeholder="e.g. https://google.com/favicon.ico" required type="text" />
           <div v-if="showHelp" class="label">
             <span class="text-xs label-text-alt">You can set a custom URL or data URI for the new icon, no local path accepted</span>
           </div>
         </label>
       </div>
 
-      <div class="grid grid-cols-2 gap-2">
+      <div class="flex gap-2 mt-4">
+        <label class="form-control w-full max-w-xs flex-0">
+          <div class="label">
+            <span class="label-text text-sm">Group</span>
+          </div>
+
+          <CustomSelect v-model="currentRule.tab.group_id" :items="availableGroups" />
+        </label>
+
+        <label class="form-control w-full flex-1">
+          <div class="label">
+            <span class="label-text text-sm">Custom Group</span>
+          </div>
+          <input v-model="newGroup" class="input input-xs input-bordered w-full" placeholder="e.g. Personal/Work" required type="text" />
+          <div v-if="showHelp" class="label">
+            <span class="text-xs label-text-alt">You can set a new group for your tab</span>
+          </div>
+        </label>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 mt-6">
         <div class="form-control w-52">
           <label class="cursor-pointer label">
-            <span class="label-text text-xs">Pinned</span>
-            <input v-model="currentRule.tab.pinned" checked class="toggle toggle-sm toggle-accent" type="checkbox" />
+            <span class="label-text text-sm">Pinned</span>
+            <input v-model="currentRule.tab.pinned" :disabled="!!currentRule.tab.group_id"  checked class="toggle toggle-sm toggle-accent" type="checkbox" />
           </label>
         </div>
         <div class="form-control w-52">
           <label class="cursor-pointer label">
-            <span class="label-text text-xs">Ask before closing</span>
+            <span class="label-text text-sm">Ask before closing</span>
             <input v-model="currentRule.tab.protected" checked class="toggle toggle-sm toggle-accent" type="checkbox" />
           </label>
         </div>
         <div class="form-control w-52">
           <label class="cursor-pointer label">
-            <span class="label-text text-xs">Unique</span>
+            <span class="label-text text-sm">Unique</span>
             <input v-model="currentRule.tab.unique" checked class="toggle toggle-sm toggle-accent" type="checkbox" />
           </label>
         </div>
         <div class="form-control w-52">
           <label class="cursor-pointer label">
-            <span class="label-text text-xs">Muted</span>
+            <span class="label-text text-sm">Muted</span>
             <input v-model="currentRule.tab.muted" checked class="toggle toggle-sm toggle-accent" type="checkbox" />
           </label>
         </div>
       </div>
 
-      <div class="flex gap-2">
+      <div class="flex gap-2 mt-4">
         <label class="form-control w-full flex-1">
           <div class="label">
-            <span class="label-text text-xs">Title matcher</span>
+            <span class="label-text text-sm">Title matcher</span>
           </div>
           <input v-model="currentRule.tab.title_matcher" class="input input-xs input-bordered w-full max-w-xs" placeholder="Title matcher" required type="text" />
           <div class="label">
@@ -128,7 +149,7 @@
 
         <label class="form-control w-full flex-1">
           <div class="label">
-            <span class="label-text text-xs">URL matcher</span>
+            <span class="label-text text-sm">URL matcher</span>
           </div>
           <input v-model="currentRule.tab.url_matcher" class="input input-xs input-bordered w-full max-w-xs" placeholder="URL matcher" required type="text" />
           <div class="label">
@@ -138,9 +159,6 @@
         </label>
       </div>
     </div>
-
-<!--    <pre>{{ currentRule }}</pre>-->
-<!--    <pre>{{ rulesStore.currentRule }}</pre>-->
 
     <div class="modal-action">
       <p class="py-4">Press ESC key or </p>
@@ -152,7 +170,8 @@
 </template>
 <script lang="ts" setup>
 import { useRulesStore } from "../../../../../stores/rules.store.ts";
-import { computed, ref, watch } from "vue";
+import {computed, onMounted, ref, watch} from "vue";
+import CustomSelect from "../../../../global/CustomSelect.vue";
 
 const rulesStore = useRulesStore();
 
@@ -171,8 +190,13 @@ let defaultRule = {
     title_matcher: null,
     unique: false,
     url_matcher: null,
+    group_id: null,
   },
 };
+
+const newGroup = ref('');
+const customIcon = ref('');
+const iconUrl = ref('');
 
 if (rulesStore.currentRule) {
   defaultRule = { ...rulesStore.currentRule };
@@ -186,11 +210,56 @@ const isFirstPartFilled = computed(() => {
   return currentRule.value.name && currentRule.value.detection && currentRule.value.url_fragment;
 });
 
+const availableGroups = ref([]);
+
+onMounted(() => {
+  chrome.tabGroups.query({}, (groups) => {
+    availableGroups.value = groups.map((group) => {
+      return {
+        icon: null,
+        value: group.id,
+        label: group.title,
+      };
+    });
+  });
+});
 
 watch(
     () => rulesStore.currentRule,
     (newRule) => {
       currentRule.value = newRule ?? defaultRule;
+    }
+);
+
+watch(
+    () => customIcon.value,
+    (newIcon) => {
+      if (newIcon) {
+        currentRule.value.tab.icon = newIcon;
+      }
+    }
+);
+
+watch(
+    () => currentRule.value.tab.icon,
+    (newIcon) => {
+      if (newIcon.startsWith('http')) {
+        iconUrl.value = newIcon;
+
+        return;
+      }
+
+      iconUrl.value = chrome.runtime.getURL('/assets/' + newIcon);
+      customIcon.value = '';
+    }
+);
+
+watch(
+    () => currentRule.value.tab.group_id,
+    (newGroupId) => {
+      if (newGroupId) {
+        currentRule.value.tab.pinned = false;
+      }
     }
 );
 
@@ -210,15 +279,50 @@ const detections = [
   { name: "Regex", value: "REGEX" },
 ];
 
+const assets = chrome.runtime.getURL('/assets/');
+
 const icons = [
-  { name: "Chrome", value: "chrome/chrome.png", type: "internal" },
-  { name: "Bookmarks", value: "chrome/bookmarks.png", type: "internal" },
-  { name: "Downloads", value: "chrome/downloads.png", type: "internal" },
-  { name: "Extensions", value: "chrome/extensions.png", type: "internal" },
-  { name: "History", value: "chrome/history.png", type: "internal" },
-  { name: "New Tab", value: "chrome/newtab.png", type: "internal" },
-  { name: "Settings", value: "chrome/settings.png", type: "internal" },
-  { name: "Web Store", value: "chrome/webstore.png", type: "internal" },
+  { label: "Default", value: "chrome/default.png", icon: assets + "chrome/default.png" },
+  { label: "Chrome", value: "chrome/chrome.png", icon: assets + "chrome/chrome.png" },
+  { label: "Bookmarks", value: "chrome/bookmarks.png", icon: assets + "chrome/bookmarks.png" },
+  { label: "Downloads", value: "chrome/downloads.png", icon: assets + "chrome/downloads.png" },
+  { label: "Extensions", value: "chrome/extensions.png", icon: assets + "chrome/extensions.png" },
+  { label: "History", value: "chrome/history.png", icon: assets + "chrome/history.png" },
+  { label: "Settings", value: "chrome/settings.png", icon: assets + "chrome/settings.png" },
+  { label: "amber", value: "bullets/bullet-amber.png", icon: assets + "bullets/bullet-amber.png" },
+  { label: "amber-alt", value: "bullets/bullet-amber-alt.png", icon: assets + "bullets/bullet-amber-alt.png" },
+  { label: "blue", value: "bullets/bullet-blue.png", icon: assets + "bullets/bullet-blue.png" },
+  { label: "blue-alt", value: "bullets/bullet-blue-alt.png", icon: assets + "bullets/bullet-blue-alt.png" },
+  { label: "blue-grey", value: "bullets/bullet-blue-grey.png", icon: assets + "bullets/bullet-blue-grey.png" },
+  { label: "blue-grey-alt", value: "bullets/bullet-blue-grey-alt.png", icon: assets + "bullets/bullet-blue-grey-alt.png" },
+  { label: "cyan", value: "bullets/bullet-cyan.png", icon: assets + "bullets/bullet-cyan.png" },
+  { label: "cyan-alt", value: "bullets/bullet-cyan-alt.png", icon: assets + "bullets/bullet-cyan-alt.png" },
+  { label: "deep-orange", value: "bullets/bullet-deep-orange.png", icon: assets + "bullets/bullet-deep-orange.png" },
+  { label: "deep-orange-alt", value: "bullets/bullet-deep-orange-alt.png", icon: assets + "bullets/bullet-deep-orange-alt.png" },
+  { label: "green", value: "bullets/bullet-green.png", icon: assets + "bullets/bullet-green.png" },
+  { label: "green-alt", value: "bullets/bullet-green-alt.png", icon: assets + "bullets/bullet-green-alt.png" },
+  { label: "indigo", value: "bullets/bullet-indigo.png", icon: assets + "bullets/bullet-indigo.png" },
+  { label: "indigo-alt", value: "bullets/bullet-indigo-alt.png", icon: assets + "bullets/bullet-indigo-alt.png" },
+  { label: "pink", value: "bullets/bullet-pink.png", icon: assets + "bullets/bullet-pink.png" },
+  { label: "pink-alt", value: "bullets/bullet-pink-alt.png", icon: assets + "bullets/bullet-pink-alt.png" },
+  { label: "purple", value: "bullets/bullet-purple.png", icon: assets + "bullets/bullet-purple.png" },
+  { label: "purple-alt", value: "bullets/bullet-purple-alt.png", icon: assets + "bullets/bullet-purple-alt.png" },
+  { label: "red", value: "bullets/bullet-red.png", icon: assets + "bullets/bullet-red.png" },
+  { label: "red-alt", value: "bullets/bullet-red-alt.png", icon: assets + "bullets/bullet-red-alt.png" },
+  { label: "teal", value: "bullets/bullet-teal.png", icon: assets + "bullets/bullet-teal.png" },
+  { label: "teal-alt", value: "bullets/bullet-teal-alt.png", icon: assets + "bullets/bullet-teal-alt.png" },
 ];
+
+const getIconUrl = (icon?: string) => {
+  if (!icon) {
+    return '';
+  }
+
+  if (icon.startsWith('http')) {
+    return icon;
+  }
+
+  return assets + icon;
+};
 
 </script>
