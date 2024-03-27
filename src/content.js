@@ -54,15 +54,15 @@ function processTitle(currentUrl, currentTitle, rule) {
 }
 
 function processIcon(newIcon) {
-    // const icons = document.querySelectorAll('head link[rel*="icon"]');
-    // icons.forEach((icon) => icon.parentNode.removeChild(icon));
-    //
-    // const iconUrl = /^(https?|data):/.test(newIcon) ? newIcon : chrome.extension.getURL(`/img/${newIcon}`);
-    // const newIconLink = document.createElement('link');
-    // newIconLink.type = 'image/x-icon';
-    // newIconLink.rel = 'icon';
-    // newIconLink.href = iconUrl;
-    // document.head.appendChild(newIconLink);
+    const icons = document.querySelectorAll('head link[rel*="icon"]');
+    icons.forEach((icon) => icon.parentNode.removeChild(icon));
+
+    const iconUrl = /^(https?|data):/.test(newIcon) ? newIcon : chrome.runtime.getURL(`/assets/${newIcon}`);
+    const newIconLink = document.createElement('link');
+    newIconLink.type = 'image/x-icon';
+    newIconLink.rel = 'icon';
+    newIconLink.href = iconUrl;
+    document.head.appendChild(newIconLink);
 
     return true;
 }
@@ -127,11 +127,11 @@ chrome.storage.local.get(STORAGE_KEY, (items) => {
 
         // Pinning, muting handled through Chrome Runtime messages
         if (rule.tab.pinned) {
-            chrome.runtime.sendMessage({ action: 'setPinned' });
+            chrome.runtime.sendMessage({action: 'setPinned'});
         }
 
         if (rule.tab.muted) {
-            chrome.runtime.sendMessage({ action: 'setMuted' });
+            chrome.runtime.sendMessage({action: 'setMuted'});
         }
 
         let iconChangedByMe = false;
