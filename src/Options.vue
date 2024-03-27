@@ -1,8 +1,8 @@
 <template>
-  <div class="flex h-screen w-screen overflow-auto">
-    <div class="drawer lg:drawer-open">
+  <div class="flex h-screen w-screen overflow-hidden">
+    <div class="drawer lg:drawer-open overflow-hidden">
       <input id="drawer-menu" class="drawer-toggle" type="checkbox"/>
-      <div class="drawer-content flex flex-col items-center justify-center">
+      <div class="drawer-content flex flex-col items-center justify-center overflow-auto">
         <div class="h-screen w-full">
           <div class="navbar bg-base-200">
             <div class="navbar-start">
@@ -30,11 +30,14 @@
           <component :is="panes[currentContent.component]"/>
         </div>
       </div>
-      <div class="drawer-side bg-base-300">
+      <div class="drawer-side">
         <label aria-label="close sidebar" class="drawer-overlay" for="drawer-menu"></label>
-        <Menu :menuItems="sectionItems" title="Sections" @onMenuClicked="onMenuClicked"/>
 
-        <Menu :menuItems="resourceItems" title="Resources" @onMenuClicked="onMenuClicked"/>
+        <div class="h-full bg-base-300">
+          <Menu :menuItems="sectionItems" title="Sections" @onMenuClicked="onMenuClicked"/>
+
+          <Menu :menuItems="resourceItems" title="Resources" @onMenuClicked="onMenuClicked"/>
+        </div>
       </div>
     </div>
   </div>
@@ -43,7 +46,7 @@
 <script lang="ts" setup>
 import Menu from "./components/options/left/Menu.vue";
 import {GLOBAL_EVENTS, MenuItem} from "./types.ts";
-import {inject, onMounted, ref} from "vue";
+import {inject, onMounted, ref, watch} from "vue";
 import TabRulesPane from "./components/options/center/sections/TabRulesPane.vue";
 import SettingsPane from "./components/options/center/sections/SettingsPane.vue";
 import HelpPane from "./components/options/center/sections/HelpPane.vue";
@@ -103,6 +106,9 @@ const currentContent = ref<MenuItem>(sectionItems[0]);
 
 const onMenuClicked = (menuItem: MenuItem) => {
   currentContent.value = menuItem;
+
+  const drawerMenu = document.getElementById('drawer-menu') as HTMLInputElement;
+  drawerMenu.checked = false;
 };
 
 const openAddModal = () => {
