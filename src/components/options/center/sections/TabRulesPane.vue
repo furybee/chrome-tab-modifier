@@ -1,71 +1,79 @@
 <template>
   <div>
-    <EmptyRules v-if="rulesStore.rules.length === 0" />
+    <EmptyRules v-if="rulesStore.rules.length === 0"/>
 
-    <div v-else class="p-4">
-      <TableRules :rules="rulesStore.rules"/>
+    <div v-else class="container mx-auto max-w-7xl p-4">
+      <div class="card bg-base-200">
+        <div class="card-body">
+          <TableRules :rules="rulesStore.rules"/>
+        </div>
+      </div>
     </div>
 
     <dialog ref="addRuleModal" class="modal">
-      <RuleForm />
+      <div class="modal-box w-11/12 max-w-5xl">
+        <RuleForm v-if="isRuleFormModalOpened" />
+      </div>
     </dialog>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {Rule, useRulesStore} from "../../../../stores/rules.store.ts";
+import {useRulesStore} from "../../../../stores/rules.store.ts";
 import EmptyRules from "./TabRules/EmptyRules.vue";
 import {inject, onMounted, onUnmounted, ref} from "vue";
 import TableRules from "./TabRules/TableRules.vue";
-import {GLOBAL_EVENTS} from "../../../../types.ts";
+import {GLOBAL_EVENTS, RuleModalParams} from "../../../../types.ts";
 import RuleForm from "./TabRules/RuleForm.vue";
 
 const rulesStore = useRulesStore();
 rulesStore.init();
 
 const addRuleModal = ref(null);
+const isRuleFormModalOpened = ref(false);
 
 const emitter = inject('emitter');
 
 onMounted(() => {
   emitter.on(GLOBAL_EVENTS.OPEN_ADD_RULE_MODAL, openAddRuleModal);
+  emitter.on(GLOBAL_EVENTS.CLOSE_ADD_RULE_MODAL, closeAddRuleModal);
 });
 
 onUnmounted(() => {
   emitter.off(GLOBAL_EVENTS.OPEN_ADD_RULE_MODAL, openAddRuleModal);
+  emitter.off(GLOBAL_EVENTS.CLOSE_ADD_RULE_MODAL, closeAddRuleModal);
 });
 
-const openAddRuleModal = (rule?: Rule) => {
+const openAddRuleModal = (params?: RuleModalParams) => {
   if (!addRuleModal.value) {
     return;
   }
 
-  if (rule) {
-    rulesStore.setCurrentRule(JSON.parse(JSON.stringify(rule)));
+  // Reset current rule
+  rulesStore.setCurrentRule();
+
+  if (params !== undefined && params.rule !== undefined && params.index !== undefined) {
+    rulesStore.setCurrentRule(
+        params.rule,
+        params.index
+    );
   }
+
+  // mount RuleForm component
+  isRuleFormModalOpened.value = true;
 
   addRuleModal.value.showModal();
 };
 
-const saveRule = async () => {
-  const exampleRule = {
-    $$hashKey: "object:30",
-    detection: "CONTAINS",
-    name: "Rule created from right-click (www.google.com/...)",
-    tab: {
-      icon: "chrome/bookmarks.png",
-      muted: true,
-      pinned: false,
-      protected: false,
-      title: 'Gogolus',
-      title_matcher: null,
-      unique: false,
-      url_matcher: null
-    },
-    url_fragment: "https://www.google.com/"
-  };
+const closeAddRuleModal = () => {
+  if (!addRuleModal.value) {
+    return;
+  }
 
-  await rulesStore.addRule(exampleRule);
+  // unmount RuleForm component
+  isRuleFormModalOpened.value = false;
+
+  addRuleModal.value.close();
 };
 </script>
 <style scoped>

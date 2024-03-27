@@ -1,16 +1,16 @@
 <template>
   <div class="flex h-screen w-screen overflow-auto">
     <div class="drawer lg:drawer-open">
-      <input id="drawer-menu" class="drawer-toggle" type="checkbox" />
+      <input id="drawer-menu" class="drawer-toggle" type="checkbox"/>
       <div class="drawer-content flex flex-col items-center justify-center">
         <div class="h-screen w-full">
           <div class="navbar bg-base-200">
             <div class="navbar-start">
               <label class="btn btn-circle swap swap-rotate drawer-button lg:hidden" for="drawer-menu">
-                <input type="checkbox" />
-                <BurgerIcon />
-                <CloseIcon />
-                </label>
+                <input type="checkbox"/>
+                <BurgerIcon/>
+                <CloseIcon/>
+              </label>
 
               <a class="btn btn-ghost text-xl">
                 {{ currentContent.title }}
@@ -27,7 +27,7 @@
             </div>
           </div>
 
-          <component :is="panes[currentContent.component]" />
+          <component :is="panes[currentContent.component]"/>
         </div>
       </div>
       <div class="drawer-side bg-base-300">
@@ -35,7 +35,6 @@
         <Menu :menuItems="sectionItems" title="Sections" @onMenuClicked="onMenuClicked"/>
 
         <Menu :menuItems="resourceItems" title="Resources" @onMenuClicked="onMenuClicked"/>
-
       </div>
     </div>
   </div>
@@ -44,13 +43,14 @@
 <script lang="ts" setup>
 import Menu from "./components/options/left/Menu.vue";
 import {GLOBAL_EVENTS, MenuItem} from "./types.ts";
-import {inject, ref} from "vue";
+import {inject, onMounted, ref} from "vue";
 import TabRulesPane from "./components/options/center/sections/TabRulesPane.vue";
 import SettingsPane from "./components/options/center/sections/SettingsPane.vue";
 import HelpPane from "./components/options/center/sections/HelpPane.vue";
 import DonationPane from "./components/options/center/resources/DonationPane.vue";
 import BurgerIcon from "./icons/BurgerIcon.vue";
 import CloseIcon from "./icons/CloseIcon.vue";
+import {useRulesStore} from "./stores/rules.store.ts";
 
 const emitter = inject('emitter');
 
@@ -97,6 +97,8 @@ const resourceItems = [
   },
 ] as MenuItem[]
 
+const rulesStore = useRulesStore();
+
 const currentContent = ref<MenuItem>(sectionItems[0]);
 
 const onMenuClicked = (menuItem: MenuItem) => {
@@ -106,6 +108,12 @@ const onMenuClicked = (menuItem: MenuItem) => {
 const openAddModal = () => {
   emitter.emit(GLOBAL_EVENTS.OPEN_ADD_RULE_MODAL)
 };
+
+onMounted(async () => {
+  await rulesStore.init();
+
+  await rulesStore.setTheme(rulesStore.theme);
+});
 </script>
 
 <style lang="scss" scoped>

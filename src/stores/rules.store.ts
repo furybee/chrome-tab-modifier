@@ -1,46 +1,30 @@
 import {defineStore} from 'pinia'
-
-export type Tab = {
-    icon: string;
-    muted: boolean;
-    pinned: boolean;
-    protected: boolean;
-    title: string;
-    title_matcher: string;
-    unique: boolean;
-    url_matcher: string;
-};
-
-export type Rule = {
-    detection: string;
-    name: string;
-    tab: Tab;
-    url_fragment: string;
-}
-
-export type Settings = {
-    enable_new_version_notification: boolean;
-}
+import {Rule, Settings, TabModifierSettings} from "../types.ts";
+import {_clone} from "../helpers.ts";
 
 const STORAGE_KEY = 'tab_modifier';
 
-const getStorage = (callback) => {
-    chrome.storage.local.get(STORAGE_KEY, (items) => {
-        callback(items.tab_modifier);
-    });
-};
-
-function getStorageAsync() {
+function getStorageAsync(): Promise<TabModifierSettings | undefined> {
     return new Promise((resolve, reject) => {
         chrome.storage.local.get(STORAGE_KEY, (items) => {
             if (chrome.runtime.lastError) {
                 reject(new Error(chrome.runtime.lastError));
             } else {
-                resolve(items[STORAGE_KEY]);
+                resolve(items[STORAGE_KEY])
             }
         });
     });
 }
+
+const getDefaultTabModifierSettings = (): TabModifierSettings => {
+    return {
+        rules: [],
+        settings: {
+            enable_new_version_notification: false
+        },
+        theme: 'dim',
+    };
+};
 
 export const useRulesStore = defineStore('rules', {
     state: () => {
@@ -48,7 +32,8 @@ export const useRulesStore = defineStore('rules', {
             currentRule: undefined as Rule | undefined,
             currentIndex: undefined as number | undefined,
             rules: [] as Rule[],
-            settings: {} as Settings
+            settings: {} as Settings,
+            theme: 'dim'
         }
     },
     actions: {
@@ -56,41 +41,86 @@ export const useRulesStore = defineStore('rules', {
             try {
                 const tab_modifier = await getStorageAsync();
 
-                if (tab_modifier === undefined) {
-                    console.log('tab_modifier is undefined');
+                if (!tab_modifier) {
+                    await this.save();
                 } else {
-                    console.log('tab_modifier is defined', tab_modifier.rules);
                     this.rules = tab_modifier.rules;
+                    this.settings = tab_modifier.settings;
+                    this.theme = tab_modifier.theme;
                 }
             } catch (error) {
                 console.error('Failed to load rules:', error);
             }
         },
-        setCurrentRule(rule?: Rule) {
-            this.currentRule = rule;
+        setCurrentRule(rule?: Rule, index?: number) {
+            this.currentRule = _clone(rule);
+            this.currentIndex = index;
         },
-        saveCurrentRule(rule: Rule) {
-            console.log('saveCurrentRule', rule);
+        async setTheme(theme: string) {
+            this.theme = theme;
+
+            document.body.setAttribute('data-theme', this.theme);
+
+            await this.save();
+        },
+        async updateRule(rule: Rule) {
+            if (this.currentIndex !== undefined && rule !== undefined) {
+                this.rules[this.currentIndex] = _clone(rule);
+
+                await this.save();
+            } else {
+                console.error('No rule or index to update');
+
+                await Promise.reject('No rule or index to update');
+            }
+        },
+        async deleteRule(index: number) {
+            this.rules.splice(index, 1);
+
+            await this.save();
+        },
+        async duplicateRule(index: number) {
+            const rule = _clone(this.rules[index]);
+
+            this.rules.push(rule);
+
+            await this.save();
+        },
+        async save() {
+            try {
+                let tab_modifier = await getStorageAsync();
+
+                if (!tab_modifier) {
+                    tab_modifier = getDefaultTabModifierSettings();
+                } else {
+                    tab_modifier.theme = this.theme;
+                    tab_modifier.rules = this.rules;
+                    tab_modifier.settings = this.settings;
+                }
+
+                chrome.storage.local.set({tab_modifier: _clone(tab_modifier)});
+            } catch (error) {
+                console.error('Failed to save:', error);
+            }
+        },
+        async deleteAllRules() {
+            chrome.storage.local.remove(STORAGE_KEY);
+
+            await this.save();
         },
         async addRule(rule: Rule) {
             try {
                 let tab_modifier = await getStorageAsync();
-                tab_modifier = undefined;
 
-                if (tab_modifier === undefined) {
-                    tab_modifier = {
-                        settings: {
-                            enable_new_version_notification: false
-                        },
-                        rules: []
-                    };
+                if (!tab_modifier) {
+                    tab_modifier = getDefaultTabModifierSettings();
                 }
 
                 tab_modifier.rules.push(rule);
 
-                chrome.storage.local.set({tab_modifier: tab_modifier});
-
                 this.rules = tab_modifier.rules;
+
+                chrome.storage.local.set({tab_modifier: _clone(tab_modifier)});
             } catch (error) {
                 console.error('Failed to load rules:', error);
             }
