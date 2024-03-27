@@ -103,17 +103,6 @@
 
           <CustomSelect v-model="currentRule.tab.group_id" :items="availableGroups"/>
         </label>
-
-        <label class="form-control w-full flex-1">
-          <div class="label">
-            <span class="label-text text-sm">Custom Group</span>
-          </div>
-          <input v-model="newGroup" class="input input-xs input-bordered w-full" placeholder="e.g. Personal/Work"
-                 required type="text"/>
-          <div v-if="showHelp" class="label">
-            <span class="text-xs label-text-alt">You can set a new group for your tab</span>
-          </div>
-        </label>
       </div>
 
       <div class="grid grid-cols-2 gap-2 mt-6">
@@ -194,13 +183,13 @@ import {computed, inject, onMounted, ref, watch} from "vue";
 import CustomSelect from "../../../../global/CustomSelect.vue";
 import NewFeature from "../../../../global/NewFeature.vue";
 import {_clone} from "../../../../../helpers.ts";
-import {GLOBAL_EVENTS} from "../../../../../types.ts";
+import {GLOBAL_EVENTS, Group} from "../../../../../types.ts";
 
 const rulesStore = useRulesStore();
 
 const isEditMode = computed(() => !!rulesStore.currentRule);
 
-let defaultRule = {
+const defaultRule = {
   name: "",
   detection: "CONTAINS",
   url_fragment: "",
@@ -213,6 +202,7 @@ let defaultRule = {
     title_matcher: null,
     unique: false,
     url_matcher: null,
+    group: null,
     group_id: null,
   },
 };
@@ -229,18 +219,12 @@ const isFirstPartFilled = computed(() => {
   return currentRule.value.name && currentRule.value.detection && currentRule.value.url_fragment;
 });
 
-const availableGroups = ref([]);
-
-onMounted(() => {
-  chrome.tabGroups.query({}, (groups) => {
-    availableGroups.value = groups.map((group) => {
-      return {
-        icon: null,
-        value: group.id,
-        label: group.title,
-      };
-    });
-  });
+const availableGroups = rulesStore.groups.map((group: Group) => {
+  return {
+    icon: null,
+    value: group.id,
+    label: group.title,
+  };
 });
 
 watch(

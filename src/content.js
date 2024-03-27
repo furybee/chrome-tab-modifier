@@ -193,6 +193,7 @@ chrome.storage.local.get(STORAGE_KEY, (items) => {
             chrome.runtime.sendMessage({
                 action: 'setGroup',
                 groupId: rule.tab.group_id,
+                groupTitle: rule.tab.group_title,
             });
         }
     }

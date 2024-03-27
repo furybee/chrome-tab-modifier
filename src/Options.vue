@@ -46,8 +46,9 @@
 <script lang="ts" setup>
 import Menu from "./components/options/left/Menu.vue";
 import {GLOBAL_EVENTS, MenuItem} from "./types.ts";
-import {inject, onMounted, ref, watch} from "vue";
+import {inject, onMounted, ref} from "vue";
 import TabRulesPane from "./components/options/center/sections/TabRulesPane.vue";
+import TabGroupsPane from "./components/options/center/sections/TabGroupsPane.vue";
 import SettingsPane from "./components/options/center/sections/SettingsPane.vue";
 import HelpPane from "./components/options/center/sections/HelpPane.vue";
 import DonationPane from "./components/options/center/resources/DonationPane.vue";
@@ -59,6 +60,7 @@ const emitter = inject('emitter');
 
 const panes = {
   TabRulesPane,
+  TabGroupsPane,
   SettingsPane,
   HelpPane,
   DonationPane,
@@ -69,6 +71,11 @@ const sectionItems = [
     title: 'Tab Rules',
     icon: 'TabRulesIcon',
     component: 'TabRulesPane',
+  },
+  {
+    title: 'Tab Groups',
+    icon: 'TabGroupsIcon',
+    component: 'TabGroupsPane',
   },
   {
     title: 'Settings',
@@ -119,6 +126,35 @@ onMounted(async () => {
   await rulesStore.init();
 
   await rulesStore.setTheme(rulesStore.theme);
+
+  // const createTabProperties = {
+  //     url: 'options.html',
+  //     active: false,
+  // };
+
+  // chrome.tabs.create(createTabProperties, (tab) => {
+  //     console.log(tab);
+  //
+  //     const createGroupProperties = {
+  //       tabIds: [tab.id],
+  //     };
+  //
+  //     chrome.tabs.group(createGroupProperties, (groupId: number) => {
+  //       console.log(groupId);
+  //
+  //       chrome.tabGroups.update(
+  //           groupId,
+  //           {
+  //             title: 'Tab Modifier',
+  //             color: 'red',
+  //             collapsed: true,
+  //           },
+  //           () => {
+  //             console.log('Tab group updated');
+  //           }
+  //     )
+  //     });
+  // });
 });
 </script>
 
