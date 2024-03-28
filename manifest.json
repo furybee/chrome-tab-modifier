@@ -29,13 +29,10 @@
     ]
   }],
   "permissions": [
-    "http://*/*",
-    "https://*/*",
     "tabs",
     "tabGroups",
     "storage",
-    "contextMenus",
-    "extension"
+    "contextMenus"
   ],
   "host_permissions": [
     "http://*/*",
