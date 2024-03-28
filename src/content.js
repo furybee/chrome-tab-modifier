@@ -1,4 +1,3 @@
-Constants for clarity
 const STORAGE_KEY = 'tab_modifier';
 const EVENT_HASH_CHANGE = 'hashchange';
 
