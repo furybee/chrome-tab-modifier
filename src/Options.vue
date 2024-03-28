@@ -24,6 +24,12 @@
                   @click="openAddModal">
                 Add
               </a>
+              <a
+                  v-if="currentContent.component === 'TabGroupsPane'"
+                  class="btn"
+                  @click="openAddGroupModal">
+                Add
+              </a>
             </div>
           </div>
 
@@ -34,7 +40,11 @@
         <label aria-label="close sidebar" class="drawer-overlay" for="drawer-menu"></label>
 
         <div class="h-full bg-base-300">
+          <h1 class="px-8 pt-4 text-xl font-bold">Tab Modifier</h1>
+
           <Menu :menuItems="sectionItems" title="Sections" @onMenuClicked="onMenuClicked"/>
+
+          <div class="divider divider-base-200 my-0"></div>
 
           <Menu :menuItems="resourceItems" title="Resources" @onMenuClicked="onMenuClicked"/>
         </div>
@@ -120,6 +130,10 @@ const onMenuClicked = (menuItem: MenuItem) => {
 
 const openAddModal = () => {
   emitter.emit(GLOBAL_EVENTS.OPEN_ADD_RULE_MODAL)
+};
+
+const openAddGroupModal = () => {
+  emitter.emit(GLOBAL_EVENTS.OPEN_ADD_GROUP_MODAL)
 };
 
 onMounted(async () => {

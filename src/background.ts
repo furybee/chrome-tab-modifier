@@ -1,45 +1,108 @@
+const STORAGE_KEY = 'tab_modifier';
 
-// let options_url = chrome.extension.getURL('options.html'), openOptionsPage, getStorage;
+chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+    if (!changeInfo['url']) {
+        return;
+    }
 
-// console.log('options_url', options_url);
+    console.log('Tab Url Changed', tabId, changeInfo, tab);
 
-// getStorage = function (callback) {
-//     chrome.storage.local.get('tab_modifier', function (items) {
-//         callback(items.tab_modifier);
-//     });
-// };
+    chrome.storage.local.get(STORAGE_KEY, (items) => {
+        const tabModifier = items?.[STORAGE_KEY];
 
-// openOptionsPage = function (hash) {
-//     console.log('openOptionsPage', options_url, hash);
-//     // chrome.tabs.query({ url: options_url }, function (tabs) {
-//     //     if (tabs.length > 0) {
-//     //         chrome.tabs.update(tabs[0].id, { active: true, highlighted: true }, function (current_tab) {
-//     //             chrome.windows.update(current_tab.windowId, { focused: true });
-//     //         });
-//     //     } else {
-//     //         chrome.tabs.create({ url: (hash !== undefined) ? options_url + '#' + hash : options_url });
-//     //     }
-//     // });
-// };
+        console.log('tabModifier', tabModifier);
 
-// chrome.contextMenus.create({
-//     id: 'rename-tab',
-//     title: 'Rename Tab',
-//     contexts: ['all']
-// });
+        if (!tabModifier) {
+            return;
+        }
 
-// @ts-expect-error: Ignore chrome not defined error
+        let rule = null;
 
-// chrome.tabs.onUpdated.addListener((tabId: any, changeInfo: any, tab: any): void => {
-//     console.log(`Change URL: ${tabId}`);
-//     console.log(`Change URL: ${tab.url}`);
-//     console.log(`Change URL: ${changeInfo}`);
-//     console.log(`Change URL: ${tab}`);
-// });
+        function applyRule() {
+            rule = tabModifier.rules.find((r) => {
+                const detectionType = r.detection ?? 'CONTAINS';
+                const urlFragment = r.url_fragment;
 
-// chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
-//     console.log('Tab updated', tabId, changeInfo, tab);
-// });
+                switch (detectionType) {
+                    case 'CONTAINS':
+                        return tab.url.includes(urlFragment);
+                    case 'STARTS':
+                        return tab.url.startsWith(urlFragment);
+                    case 'ENDS':
+                        return tab.url.endsWith(urlFragment);
+                    case 'REGEXP':
+                        return new RegExp(urlFragment).test(tab.url);
+                    case 'EXACT':
+                        return tab.url === urlFragment;
+                    default:
+                        return false;
+                }
+            });
+
+            if (!rule) {
+                return;
+            }
+
+            if (rule.tab.group_id) {
+                const group = tabModifier.groups.find((g) => g.id === rule.tab.group_id);
+                console.log('Tab modifier Group', group);
+
+                const tabGroupsQueryInfo = {
+                    title: group.title,
+                    windowId: tab.windowId
+                };
+
+                chrome.tabGroups.query(tabGroupsQueryInfo, (groups: chrome.tabGroups.TabGroup[]) => {
+                    console.log('query', groups.length);
+
+                    if (groups.length === 0) {
+                        const groupCreateProperties = {
+                            tabIds: [tab.id]
+                        };
+
+                        chrome.tabs.group(groupCreateProperties, (groupId: number) => {
+                            console.log('create', groupId);
+
+                            const updateProperties = {
+                                title: group.title,
+                                color: group.color,
+                            };
+
+                            chrome.tabGroups.update(groupId, updateProperties, (updatedGroup: chrome.tabGroups.TabGroup) => {
+                                console.log('update', updatedGroup);
+
+                                chrome.tabs.get(tab.id, function(tab) {
+                                    chrome.tabs.highlight({'tabs': tab.index}, function() {});
+                                });
+                            });
+                        });
+                    } else if (groups.length === 1) {
+                        const group = groups[0];
+
+                        const tabGroupsQueryInfo = {
+                            groupId: group.id,
+                            tabIds: [tab.id]
+                        };
+
+                        chrome.tabs.group(tabGroupsQueryInfo, (groupId: number) => {
+                            chrome.tabs.get(tab.id, function(tab) {
+                                chrome.tabs.highlight({'tabs': tab.index}, function() {});
+                            });
+                        });
+                    } else {
+                        console.log('group ?');
+                    }
+                });
+            }
+
+        }
+
+        applyRule();
+
+        // Remove hashchange listener to avoid conflicts (commented out)
+        // window.onhashchange = applyRule;
+    });
+});
 
 chrome.runtime.onMessage.addListener(function (message, sender) {
     switch (message.action) {

@@ -29,6 +29,7 @@
       <input v-model="currentGroup.title" class="input input-xs input-bordered w-full"
              placeholder="e.g. Google" required type="text"/>
       <div v-if="showHelp" class="label">
+        You can set a title for your tab
       </div>
     </div>
 
@@ -40,7 +41,7 @@
         <CustomSelect v-model="currentGroup.color" :items="availableGroupColors"/>
       </div>
       <div v-if="showHelp" class="label">
-        <span class="text-xs label-text-alt">You can set a new group for your tab</span>
+        <span class="text-xs label-text-alt">You can set a color for your group</span>
       </div>
 
       <div class="form-control mt-4">

@@ -185,29 +185,6 @@ chrome.storage.local.get(STORAGE_KEY, (items) => {
                 urlFragment: rule.url_fragment,
             });
         }
-
-        // if (rule.tab.group_id) {
-        //     chrome.runtime.sendMessage({
-        //         action: 'setGroup',
-        //         groupId: rule.tab.group_id,
-        //         groupTitle: rule.tab.group_title,
-        //     });
-        // }
-
-        console.log('Tab modified', rule.tab);
-        if (rule.tab.group_id) {
-            console.log('Groups', tabModifier.groups);
-
-            const group = tabModifier.groups.find((g) => g.id === rule.tab.group_id);
-            console.log('Tab modified Group', group);
-
-            chrome.runtime.sendMessage({
-                action: 'setGroup',
-                groupTitle: group.title,
-                groupColor: group.color,
-            });
-        }
-
     }
 
     applyRule();

@@ -1,20 +1,15 @@
 <template>
   <ul class="menu p-4 w-80 bg-base-300 text-base-content">
-    <li>
-      <h2 v-if="title" class="menu-title">{{ title }}</h2>
-      <ul>
-        <li v-for="menuItem in props.menuItems" :key="menuItem.component">
-          <a @click.prevent="onMenuClicked(menuItem)">
-            <component :is="icons[menuItem.icon]" class="menuItem-icon"></component>
-            {{ menuItem.title }}
-            <template v-if="menuItem.component === 'TabGroupsPane'">
-              <NewFeature />
-            </template>
+      <li v-for="menuItem in props.menuItems" :key="menuItem.component">
+        <a @click.prevent="onMenuClicked(menuItem)">
+          <component :is="icons[menuItem.icon]" class="menuItem-icon"></component>
+          {{ menuItem.title }}
+          <template v-if="menuItem.component === 'TabGroupsPane'">
+            <NewFeature />
+          </template>
 
-          </a>
-        </li>
-      </ul>
-    </li>
+        </a>
+      </li>
   </ul>
 </template>
 
