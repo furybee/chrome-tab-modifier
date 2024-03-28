@@ -49,6 +49,7 @@ export const useRulesStore = defineStore('rules', {
                     await this.save();
                 } else {
                     this.rules = tab_modifier.rules;
+                    this.groups = tab_modifier.groups;
                     this.settings = tab_modifier.settings;
                     this.theme = tab_modifier.theme;
                 }

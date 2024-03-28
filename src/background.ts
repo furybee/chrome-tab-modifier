@@ -37,6 +37,10 @@
 //     console.log(`Change URL: ${tab}`);
 // });
 
+// chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+//     console.log('Tab updated', tabId, changeInfo, tab);
+// });
+
 chrome.runtime.onMessage.addListener(function (message, sender) {
     switch (message.action) {
         case 'setUnique':
@@ -75,10 +79,48 @@ chrome.runtime.onMessage.addListener(function (message, sender) {
             });
             break;
         case 'setGroup':
-            chrome.tabs.group({
-                groupId: message.groupId,
-                tabIds: [sender.tab.id]
+            if (sender.tab.url === "chrome://newtab/") {
+                return;
+            }
+
+            const tabGroupsQueryInfo = {
+                title: message.groupTitle
+            };
+
+            console.log('sender.tab', sender.tab);
+
+            chrome.tabGroups.query(tabGroupsQueryInfo, (groups: chrome.tabGroups.TabGroup[]) => {
+                if (groups.length === 0) {
+                    const groupCreateProperties = {
+                        tabIds: [sender.tab.id]
+                    };
+
+                    chrome.tabs.group(groupCreateProperties, (groupId: number) => {
+                        console.log('group 0', groupId);
+
+                        const updateProperties = {
+                            title: message.groupTitle,
+                            color: message.groupColor,
+                        };
+
+                        chrome.tabGroups.update(groupId, updateProperties, (updatedGroup: chrome.tabGroups.TabGroup) => {
+                            console.log('group 0 update', updatedGroup);
+                        });
+                    });
+                } else if (groups.length === 1) {
+                    const group = groups[0];
+
+                    console.log('group 1', group);
+
+                    chrome.tabs.group({
+                        groupId: group.id,
+                        tabIds: [sender.tab.id]
+                    });
+                } else {
+                    console.log('group ?');
+                }
             });
+
             break;
         case 'setMuted':
             chrome.tabs.update(sender.tab.id, {

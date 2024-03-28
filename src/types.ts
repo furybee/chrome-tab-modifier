@@ -5,13 +5,6 @@ export type MenuItem = {
     link?: string;
 };
 
-// export type TabGroup = {
-//     id: number;
-//     label: string;
-//     color: 'grey' | 'blue' | 'red' | 'yellow' | 'green' | 'pink' | 'purple' | 'cyan' | 'orange';
-//     override: boolean;
-// }
-
 export type Tab = {
     icon: string;
     muted: boolean;
@@ -21,9 +14,7 @@ export type Tab = {
     title_matcher: string;
     unique: boolean;
     url_matcher: string;
-    // group?: TabGroup;
     group_id?: number;
-    group_color?: 'grey' | 'blue' | 'red' | 'yellow' | 'green' | 'pink' | 'purple' | 'cyan' | 'orange';
 };
 
 export type Rule = {
