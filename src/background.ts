@@ -5,12 +5,8 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
         return;
     }
 
-    console.log('Tab Url Changed', tabId, changeInfo, tab);
-
     chrome.storage.local.get(STORAGE_KEY, (items) => {
         const tabModifier = items?.[STORAGE_KEY];
-
-        console.log('tabModifier', tabModifier);
 
         if (!tabModifier) {
             return;
@@ -44,33 +40,27 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
             }
 
             if (rule.tab.group_id) {
-                const group = tabModifier.groups.find((g) => g.id === rule.tab.group_id);
-                console.log('Tab modifier Group', group);
+                const tmGroup = tabModifier.groups.find((g) => g.id === rule.tab.group_id);
 
                 const tabGroupsQueryInfo = {
-                    title: group.title,
+                    title: tmGroup.title,
                     windowId: tab.windowId
                 };
 
                 chrome.tabGroups.query(tabGroupsQueryInfo, (groups: chrome.tabGroups.TabGroup[]) => {
-                    console.log('query', groups.length);
-
                     if (groups.length === 0) {
                         const groupCreateProperties = {
                             tabIds: [tab.id]
                         };
 
                         chrome.tabs.group(groupCreateProperties, (groupId: number) => {
-                            console.log('create', groupId);
-
                             const updateProperties = {
-                                title: group.title,
-                                color: group.color,
+                                title: tmGroup.title,
+                                color: tmGroup.color,
+                                collapsed: tmGroup.collapsed,
                             };
 
                             chrome.tabGroups.update(groupId, updateProperties, (updatedGroup: chrome.tabGroups.TabGroup) => {
-                                console.log('update', updatedGroup);
-
                                 chrome.tabs.get(tab.id, function(tab) {
                                     chrome.tabs.highlight({'tabs': tab.index}, function() {});
                                 });
@@ -85,12 +75,21 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
                         };
 
                         chrome.tabs.group(tabGroupsQueryInfo, (groupId: number) => {
-                            chrome.tabs.get(tab.id, function(tab) {
-                                chrome.tabs.highlight({'tabs': tab.index}, function() {});
+                            const updateProperties = {
+                                title: tmGroup.title,
+                                color: tmGroup.color,
+                                collapsed: tmGroup.collapsed,
+                            };
+
+                            chrome.tabGroups.update(groupId, updateProperties, (updatedGroup: chrome.tabGroups.TabGroup) => {
+                                console.log('update', updatedGroup);
+
+                                chrome.tabs.get(tab.id, function(tab: chrome.tabs.Tab) {
+                                    chrome.tabs.highlight({'tabs': tab.index}, function() {});
+                                });
                             });
+
                         });
-                    } else {
-                        console.log('group ?');
                     }
                 });
             }
@@ -98,36 +97,35 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
         }
 
         applyRule();
-
-        // Remove hashchange listener to avoid conflicts (commented out)
-        // window.onhashchange = applyRule;
     });
 });
 
 chrome.runtime.onMessage.addListener(function (message, sender) {
     switch (message.action) {
         case 'setUnique':
-            chrome.tabs.get(sender.tab.id, function (current_tab) {
-                if (current_tab === undefined) {
+            chrome.tabs.get(sender.tab.id, function (currentTab: chrome.tabs.Tab) {
+                if (currentTab === undefined) {
                     return;
                 }
 
-                let tab, tab_id;
+                let tab: chrome.tabs.Tab, tabId: number;
 
-                chrome.tabs.query({}, function (tabs) {
+                chrome.tabs.query({}, function (tabs: chrome.tabs.Tab[]) {
                     for (let i = 0; i < tabs.length; i++) {
                         tab = tabs[i];
 
-                        if (tab.url.indexOf(message.url_fragment) !== -1 && tab.id !== current_tab.id) {
-                            tab_id = tab.id;
+                        if (tab.url.indexOf(message.url_fragment) !== -1 && tab.id !== currentTab.id) {
+                            tabId = tab.id;
 
-                            chrome.tabs.executeScript(current_tab.id, {
+                            const injectDetails = {
                                 code: 'window.onbeforeunload = null;'
-                            }, function () {
-                                chrome.tabs.remove(current_tab.id);
+                            };
 
-                                chrome.tabs.update(tab_id, {
-                                    url: current_tab.url,
+                            chrome.tabs.executeScript(currentTab.id, injectDetails, () => {
+                                chrome.tabs.remove(currentTab.id);
+
+                                chrome.tabs.update(tabId, {
+                                    url: currentTab.url,
                                     highlighted: true
                                 });
                             });
