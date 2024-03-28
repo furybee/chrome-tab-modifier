@@ -14,7 +14,7 @@ export type Tab = {
     title_matcher: string;
     unique: boolean;
     url_matcher: string;
-    group_id?: number;
+    group_id?: string;
 };
 
 export type Rule = {

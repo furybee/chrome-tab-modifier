@@ -11,32 +11,27 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(rule, index) in props.rules" :key="index" class="group">
+      <tr v-for="(rule, index) in props.rules" :key="index" class="group cursor-pointer hover:bg-base-100" @click="editRule(rule, index)">
         <td>{{ rule.name }}</td>
         <td>{{ rule.detection }}</td>
         <td>{{ rule.url_fragment }}</td>
         <td><img :alt="rule.name + '_icon'" :src="getIconUrl(rule.tab.icon)" class="w-6 h-6"></td>
-        <td class="invisible group-hover:visible grid lg:grid-cols-3 gap-2">
-          <button class="btn btn-xs btn-circle tooltip flex items-center justify-items-center"
-                  data-tip="Edit"
-                  @click="editRule(rule, index)"
-          >
-            <EditIcon class="!w-4 !h-4"/>
-          </button>
+        <td class="invisible group-hover:visible">
+          <div class="flex justify-end gap-8">
+            <button class="btn btn-xs btn-circle tooltip flex items-center justify-items-center"
+                    data-tip="Duplicate"
+                    @click="duplicateRule(index)"
+            >
+              <DuplicateIcon class="!w-4 !h-4"/>
+            </button>
 
-          <button class="btn btn-xs btn-circle tooltip flex items-center justify-items-center"
-                  data-tip="Duplicate"
-                  @click="duplicateRule(index)"
-          >
-            <DuplicateIcon class="!w-4 !h-4"/>
-          </button>
-
-          <button class="btn btn-xs btn-circle btn-outline tooltip flex items-center justify-items-center btn-error"
-                  data-tip="Delete"
-                  @click="deleteRule(index)"
-          >
-            <DeleteIcon class="!w-4 !h-4"/>
-          </button>
+            <button class="btn btn-xs btn-circle btn-outline tooltip flex items-center justify-items-center btn-error"
+                    data-tip="Delete"
+                    @click="deleteRule(index)"
+            >
+              <DeleteIcon class="!w-4 !h-4"/>
+            </button>
+          </div>
         </td>
       </tr>
       </tbody>
