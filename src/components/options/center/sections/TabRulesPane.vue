@@ -1,29 +1,29 @@
 <template>
   <div>
-    <EmptyRules v-if="rulesStore.rules.length === 0"/>
+    <EmptyRules v-if="rulesStore.rules.length === 0" />
 
     <div v-else class="container mx-auto max-w-7xl p-4">
       <div class="card bg-base-200">
         <div class="card-body">
-          <TableRules :rules="rulesStore.rules"/>
+          <TableRules :rules="rulesStore.rules" />
         </div>
       </div>
     </div>
 
     <dialog ref="addRuleModal" class="modal">
       <div class="modal-box w-11/12 max-w-5xl">
-        <RuleForm v-if="isRuleFormModalOpened"/>
+        <RuleForm v-if="isRuleFormModalOpened" />
       </div>
     </dialog>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {useRulesStore} from "../../../../stores/rules.store.ts";
+import { useRulesStore } from "../../../../stores/rules.store.ts";
 import EmptyRules from "./TabRules/EmptyRules.vue";
-import {inject, onMounted, onUnmounted, ref} from "vue";
+import { inject, onMounted, onUnmounted, ref } from "vue";
 import TableRules from "./TabRules/TableRules.vue";
-import {GLOBAL_EVENTS, RuleModalParams} from "../../../../types.ts";
+import { GLOBAL_EVENTS, RuleModalParams } from "../../../../types.ts";
 import RuleForm from "./TabRules/RuleForm.vue";
 
 const rulesStore = useRulesStore();
@@ -32,7 +32,7 @@ rulesStore.init();
 const addRuleModal = ref(null);
 const isRuleFormModalOpened = ref(false);
 
-const emitter = inject('emitter');
+const emitter = inject("emitter");
 
 onMounted(() => {
   emitter.on(GLOBAL_EVENTS.OPEN_ADD_RULE_MODAL, openAddRuleModal);
@@ -52,11 +52,12 @@ const openAddRuleModal = (params?: RuleModalParams) => {
   // Reset current rule
   rulesStore.setCurrentRule();
 
-  if (params !== undefined && params.rule !== undefined && params.index !== undefined) {
-    rulesStore.setCurrentRule(
-        params.rule,
-        params.index
-    );
+  if (
+    params !== undefined &&
+    params.rule !== undefined &&
+    params.index !== undefined
+  ) {
+    rulesStore.setCurrentRule(params.rule, params.index);
   }
 
   // mount RuleForm component
@@ -76,6 +77,4 @@ const closeAddRuleModal = () => {
   addRuleModal.value.close();
 };
 </script>
-<style scoped>
-
-</style>
+<style scoped></style>

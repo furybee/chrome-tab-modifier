@@ -1,61 +1,61 @@
 export type MenuItem = {
-    title: string;
-    icon: string;
-    component?: string;
-    link?: string;
+  title: string;
+  icon: string;
+  component?: string;
+  link?: string;
 };
 
 export type Tab = {
-    icon: string;
-    muted: boolean;
-    pinned: boolean;
-    protected: boolean;
-    title: string;
-    title_matcher: string;
-    unique: boolean;
-    url_matcher: string;
-    group_id?: string;
+  icon: string;
+  muted: boolean;
+  pinned: boolean;
+  protected: boolean;
+  title: string;
+  title_matcher: string;
+  unique: boolean;
+  url_matcher: string;
+  group_id?: string;
 };
 
 export type Rule = {
-    detection: string;
-    name: string;
-    tab: Tab;
-    url_fragment: string;
-}
+  detection: string;
+  name: string;
+  tab: Tab;
+  url_fragment: string;
+};
 
 export type Group = {
-    id: string;
-    title: string;
-    color: Tab;
-    collapsed: boolean;
-}
+  id: string;
+  title: string;
+  color: Tab;
+  collapsed: boolean;
+};
 
 export type Settings = {
-    enable_new_version_notification: boolean;
-}
+  enable_new_version_notification: boolean;
+};
 
 export type TabModifierSettings = {
-    rules: Rule[];
-    groups: Group[];
-    settings: Settings;
-    theme: string;
+  rules: Rule[];
+  groups: Group[];
+  settings: Settings;
+  theme: string;
 };
 
 export const GLOBAL_EVENTS = {
-    OPEN_ADD_RULE_MODAL: 'OPEN_ADD_RULE_MODAL',
-    OPEN_ADD_GROUP_MODAL: 'OPEN_ADD_GROUP_MODAL',
-    CLOSE_ADD_RULE_MODAL: 'CLOSE_ADD_RULE_MODAL',
-    CLOSE_ADD_GROUP_MODAL: 'CLOSE_ADD_GROUP_MODAL',
-    GLOBAL_KEY_SAVE: 'GLOBAL_KEY_SAVE',
+  OPEN_ADD_RULE_MODAL: "OPEN_ADD_RULE_MODAL",
+  OPEN_ADD_GROUP_MODAL: "OPEN_ADD_GROUP_MODAL",
+  CLOSE_ADD_RULE_MODAL: "CLOSE_ADD_RULE_MODAL",
+  CLOSE_ADD_GROUP_MODAL: "CLOSE_ADD_GROUP_MODAL",
+  GLOBAL_KEY_SAVE: "GLOBAL_KEY_SAVE",
 };
 
 export type RuleModalParams = {
-    index?: number;
-    rule?: Rule;
+  index?: number;
+  rule?: Rule;
 };
 
 export type GroupModalParams = {
-    index?: number;
-    group?: Group;
+  index?: number;
+  group?: Group;
 };

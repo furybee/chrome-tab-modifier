@@ -1,28 +1,28 @@
 <template>
   <div>
-    <EmptyGroups v-if="rulesStore.groups.length === 0"/>
+    <EmptyGroups v-if="rulesStore.groups.length === 0" />
 
     <div v-else class="container mx-auto max-w-7xl p-4">
       <div class="card bg-base-200">
         <div class="card-body">
-          <TableGroups :groups="rulesStore.groups"/>
+          <TableGroups :groups="rulesStore.groups" />
         </div>
       </div>
     </div>
 
     <dialog ref="addGroupModal" class="modal">
       <div class="modal-box">
-        <GroupForm v-if="isGroupFormModalOpened"/>
+        <GroupForm v-if="isGroupFormModalOpened" />
       </div>
     </dialog>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {useRulesStore} from "../../../../stores/rules.store.ts";
+import { useRulesStore } from "../../../../stores/rules.store.ts";
 import EmptyGroups from "./TabGroups/EmptyGroups.vue";
-import {inject, onMounted, onUnmounted, ref} from "vue";
-import {GLOBAL_EVENTS, GroupModalParams} from "../../../../types.ts";
+import { inject, onMounted, onUnmounted, ref } from "vue";
+import { GLOBAL_EVENTS, GroupModalParams } from "../../../../types.ts";
 import GroupForm from "./TabGroups/GroupForm.vue";
 import TableGroups from "./TabGroups/TableGroups.vue";
 
@@ -32,7 +32,7 @@ rulesStore.init();
 const addGroupModal = ref(null);
 const isGroupFormModalOpened = ref(false);
 
-const emitter = inject('emitter');
+const emitter = inject("emitter");
 
 onMounted(() => {
   emitter.on(GLOBAL_EVENTS.OPEN_ADD_GROUP_MODAL, openAddGroupModal);
@@ -52,11 +52,12 @@ const openAddGroupModal = (params?: GroupModalParams) => {
   // Reset current group
   rulesStore.setCurrentGroup();
 
-  if (params !== undefined && params.group !== undefined && params.index !== undefined) {
-    rulesStore.setCurrentGroup(
-        params.group,
-        params.index
-    );
+  if (
+    params !== undefined &&
+    params.group !== undefined &&
+    params.index !== undefined
+  ) {
+    rulesStore.setCurrentGroup(params.group, params.index);
   }
 
   // mount GroupForm component
@@ -76,6 +77,4 @@ const closeAddGroupModal = () => {
   addGroupModal.value.close();
 };
 </script>
-<style scoped>
-
-</style>
+<style scoped></style>

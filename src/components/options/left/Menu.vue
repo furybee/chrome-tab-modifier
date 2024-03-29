@@ -2,19 +2,18 @@
   <ul class="menu p-4 w-80 bg-base-300 text-base-content">
     <li v-for="menuItem in props.menuItems" :key="menuItem.component">
       <a @click.prevent="onMenuClicked(menuItem)">
-        <component :is="icons[menuItem.icon]" class="menuItem-icon"></component>
+        <component :is="icons[menuItem.icon]" class="menuItem-icon" />
         {{ menuItem.title }}
         <template v-if="menuItem.component === 'TabGroupsPane'">
-          <NewFeature/>
+          <NewFeature />
         </template>
-
       </a>
     </li>
   </ul>
 </template>
 
 <script lang="ts" setup>
-import {MenuItem} from "../../../types.ts";
+import { MenuItem } from "../../../types.ts";
 import TabRulesIcon from "../../../icons/TabRulesIcon.vue";
 import TabGroupsIcon from "../../../icons/TabGroupsIcon.vue";
 import SettingsIcon from "../../../icons/SettingsIcon.vue";
@@ -31,7 +30,7 @@ const icons = {
   HelpIcon,
   GithubIcon,
   DonationIcon,
-  ChromeIcon
+  ChromeIcon,
 };
 
 const props = defineProps<{
@@ -39,15 +38,13 @@ const props = defineProps<{
   menuItems: MenuItem[];
 }>();
 
-const emit = defineEmits(['onMenuClicked'])
+const emit = defineEmits(["onMenuClicked"]);
 
 const onMenuClicked = (menu: MenuItem) => {
-  if (menu.link) return window.open(menu.link, '_blank');
+  if (menu.link) return window.open(menu.link, "_blank");
 
-  emit('onMenuClicked', menu);
+  emit("onMenuClicked", menu);
 };
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>
