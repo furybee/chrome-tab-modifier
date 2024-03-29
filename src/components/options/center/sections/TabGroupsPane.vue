@@ -12,7 +12,7 @@
 
     <dialog ref="addGroupModal" class="modal">
       <div class="modal-box">
-        <GroupForm v-if="isGroupFormModalOpened" />
+        <GroupForm v-if="isGroupFormModalOpened"/>
       </div>
     </dialog>
   </div>

@@ -12,7 +12,7 @@
 
     <dialog ref="addRuleModal" class="modal">
       <div class="modal-box w-11/12 max-w-5xl">
-        <RuleForm v-if="isRuleFormModalOpened" />
+        <RuleForm v-if="isRuleFormModalOpened"/>
       </div>
     </dialog>
   </div>

@@ -17,32 +17,32 @@ chrome.storage.local.get('tab_modifier', function (items) {
                 }
             } else {
                 switch (tab_modifier.rules[i].detection) {
-                    case 'STARTS':
-                        if (location.href.startsWith(tab_modifier.rules[i].url_fragment) === true) {
-                            rule = tab_modifier.rules[i];
-                            break;
-                        }
+                case 'STARTS':
+                    if (location.href.startsWith(tab_modifier.rules[i].url_fragment) === true) {
+                        rule = tab_modifier.rules[i];
                         break;
-                    case 'ENDS':
-                        if (location.href.endsWith(tab_modifier.rules[i].url_fragment) === true) {
-                            rule = tab_modifier.rules[i];
-                            break;
-                        }
+                    }
+                    break;
+                case 'ENDS':
+                    if (location.href.endsWith(tab_modifier.rules[i].url_fragment) === true) {
+                        rule = tab_modifier.rules[i];
                         break;
-                    case 'REGEXP':
-                        var regexp = new RegExp(tab_modifier.rules[i].url_fragment);
+                    }
+                    break;
+                case 'REGEXP':
+                    var regexp = new RegExp(tab_modifier.rules[i].url_fragment);
 
-                        if (regexp.test(location.href) === true) {
-                            rule = tab_modifier.rules[i];
-                            break;
-                        }
+                    if (regexp.test(location.href) === true) {
+                        rule = tab_modifier.rules[i];
                         break;
-                    case 'EXACT':
-                        if (location.href === tab_modifier.rules[i].url_fragment) {
-                            rule = tab_modifier.rules[i];
-                            break;
-                        }
+                    }
+                    break;
+                case 'EXACT':
+                    if (location.href === tab_modifier.rules[i].url_fragment) {
+                        rule = tab_modifier.rules[i];
                         break;
+                    }
+                    break;
                 }
             }
         }
@@ -107,8 +107,8 @@ chrome.storage.local.get('tab_modifier', function (items) {
 
                 for (i = 0; i < matches.length; i++) {
                     selector = matches[i].substring(1, matches[i].length - 1);
-                    text     = getTextBySelector(selector);
-                    title    = updateTitle(title, matches[i], text);
+                    text = getTextBySelector(selector);
+                    title = updateTitle(title, matches[i], text);
                 }
             }
 
@@ -164,9 +164,9 @@ chrome.storage.local.get('tab_modifier', function (items) {
             icon = (/^(https?|data):/.test(new_icon) === true) ? new_icon : chrome.extension.getURL('/assets/' + new_icon);
 
             // Create new favicon
-            link      = document.createElement('link');
+            link = document.createElement('link');
             link.type = 'image/x-icon';
-            link.rel  = 'icon';
+            link.rel = 'icon';
             link.href = icon;
 
             document.getElementsByTagName('head')[0].appendChild(link);
@@ -209,7 +209,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
 
         // Pin the tab
         if (rule.tab.pinned === true) {
-            chrome.runtime.sendMessage({ action: 'setPinned' });
+            chrome.runtime.sendMessage({action: 'setPinned'});
         }
 
         // Set new icon
@@ -283,7 +283,7 @@ chrome.storage.local.get('tab_modifier', function (items) {
 
         // Mute the tab
         if (rule.tab.muted === true) {
-            chrome.runtime.sendMessage({ action: 'setMuted' });
+            chrome.runtime.sendMessage({action: 'setMuted'});
         }
     };
 

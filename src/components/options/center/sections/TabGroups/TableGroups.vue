@@ -2,16 +2,17 @@
   <div class="overflow-x-auto">
     <table class="table table-zebra">
       <thead>
-        <tr>
-          <th>Title</th>
-          <th>Color</th>
-          <th>Collapsed</th>
-          <th></th>
-        </tr>
+      <tr>
+        <th>Title</th>
+        <th>Color</th>
+        <th>Collapsed</th>
+        <th></th>
+      </tr>
       </thead>
       <tbody>
       <tr
-          v-for="(group, index) in props.groups" :key="index" class="cursor-pointer group hover:bg-base-100" @click="editGroup(group, index)"
+          v-for="(group, index) in props.groups" :key="index" class="cursor-pointer group hover:bg-base-100"
+          @click="editGroup(group, index)"
       >
         <td>{{ group.title }}</td>
         <td>

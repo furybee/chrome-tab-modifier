@@ -3,7 +3,8 @@
     <div class="btn btn-xs w-full flex flex-row justify-between items-center" role="button" tabindex="0">
       <div class="flex items-center">
         <img v-if="currentItem?.icon" :src="currentItem.icon" alt="_icon" class="w-4 h-4 mr-2"/>
-        <ColorVisualizer v-if="currentItem?.color" :color="currentItem.color" alt="_color" class="!w-4 !h-4 mr-2"></ColorVisualizer>
+        <ColorVisualizer v-if="currentItem?.color" :color="currentItem.color" alt="_color"
+                         class="!w-4 !h-4 mr-2"></ColorVisualizer>
 
         {{ currentItem?.label ?? '' }}
       </div>

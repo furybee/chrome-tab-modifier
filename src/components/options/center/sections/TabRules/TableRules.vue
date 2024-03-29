@@ -11,9 +11,11 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="(rule, index) in props.rules" :key="index" class="group cursor-pointer hover:bg-base-100" @click="editRule(rule, index)">
+      <tr v-for="(rule, index) in props.rules" :key="index" class="group cursor-pointer hover:bg-base-100"
+          @click="editRule(rule, index)">
         <td>{{ rule.name }}</td>
         <td>{{ rule.detection }}</td>
+
         <td>{{ rule.url_fragment }}</td>
         <td><img :alt="rule.name + '_icon'" :src="getIconUrl(rule.tab.icon)" class="w-6 h-6"></td>
         <td class="invisible group-hover:visible">
@@ -22,6 +24,7 @@
                     data-tip="Duplicate"
                     @click="duplicateRule(index)"
             >
+
               <DuplicateIcon class="!w-4 !h-4"/>
             </button>
 

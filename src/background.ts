@@ -8,12 +8,18 @@ function applyRuleToTab(tab: chrome.tabs.Tab, tabModifier: TabModifierSettings) 
         const detectionType = r.detection ?? 'CONTAINS';
         const urlFragment = r.url_fragment;
         switch (detectionType) {
-            case 'CONTAINS': return tab.url.includes(urlFragment);
-            case 'STARTS': return tab.url.startsWith(urlFragment);
-            case 'ENDS': return tab.url.endsWith(urlFragment);
-            case 'REGEXP': return new RegExp(urlFragment).test(tab.url);
-            case 'EXACT': return tab.url === urlFragment;
-            default: return false;
+            case 'CONTAINS':
+                return tab.url.includes(urlFragment);
+            case 'STARTS':
+                return tab.url.startsWith(urlFragment);
+            case 'ENDS':
+                return tab.url.endsWith(urlFragment);
+            case 'REGEXP':
+                return new RegExp(urlFragment).test(tab.url);
+            case 'EXACT':
+                return tab.url === urlFragment;
+            default:
+                return false;
         }
     });
 
@@ -23,7 +29,7 @@ function applyRuleToTab(tab: chrome.tabs.Tab, tabModifier: TabModifierSettings) 
 
     if (!tmGroup) return;
 
-    const tabGroupsQueryInfo = { title: tmGroup.title, windowId: tab.windowId };
+    const tabGroupsQueryInfo = {title: tmGroup.title, windowId: tab.windowId};
 
     chrome.tabGroups.query(tabGroupsQueryInfo, (groups: chrome.tabGroups.TabGroup[]) => handleTabGroups(groups, tab, tmGroup));
 }
@@ -35,7 +41,7 @@ function handleTabGroups(groups: chrome.tabGroups.TabGroup[], tab: chrome.tabs.T
     } else if (groups.length === 1) {
         const group = groups[0];
 
-        chrome.tabs.group({ groupId: group.id, tabIds: [tab.id] }, (groupId: number) => {
+        chrome.tabs.group({groupId: group.id, tabIds: [tab.id]}, (groupId: number) => {
             updateTabGroup(groupId, tmGroup);
         });
     }
@@ -43,14 +49,14 @@ function handleTabGroups(groups: chrome.tabGroups.TabGroup[], tab: chrome.tabs.T
 
 // Function to create and setup a new tab group
 function createAndSetupGroup(tabIds, tmGroup) {
-    chrome.tabs.group({ tabIds: tabIds }, groupId => {
+    chrome.tabs.group({tabIds: tabIds}, groupId => {
         updateTabGroup(groupId, tmGroup);
     });
 }
 
 // Function to update tab group properties
 function updateTabGroup(groupId, tmGroup) {
-    const updateProperties = { title: tmGroup.title, color: tmGroup.color, collapsed: tmGroup.collapsed };
+    const updateProperties = {title: tmGroup.title, color: tmGroup.color, collapsed: tmGroup.collapsed};
     chrome.tabGroups.update(groupId, updateProperties);
 }
 
@@ -69,13 +75,13 @@ chrome.runtime.onMessage.addListener((message, sender) => {
             handleSetUnique(message, sender.tab);
             break;
         case 'setPinned':
-            chrome.tabs.update(sender.tab.id, { pinned: true });
+            chrome.tabs.update(sender.tab.id, {pinned: true});
             break;
         case 'setGroup':
             handleSetGroup(message, sender.tab);
             break;
         case 'setMuted':
-            chrome.tabs.update(sender.tab.id, { muted: true });
+            chrome.tabs.update(sender.tab.id, {muted: true});
             break;
     }
 });
@@ -86,9 +92,9 @@ function handleSetUnique(message: any, currentTab: chrome.tabs.Tab) {
     chrome.tabs.query({}, tabs => {
         tabs.forEach(tab => {
             if (tab.url.includes(message.url_fragment) && tab.id !== currentTab.id) {
-                chrome.tabs.executeScript(currentTab.id, { code: 'window.onbeforeunload = null;' }, () => {
+                chrome.tabs.executeScript(currentTab.id, {code: 'window.onbeforeunload = null;'}, () => {
                     chrome.tabs.remove(currentTab.id);
-                    chrome.tabs.update(tab.id, { url: currentTab.url, highlighted: true });
+                    chrome.tabs.update(tab.id, {url: currentTab.url, highlighted: true});
                 });
             }
         });

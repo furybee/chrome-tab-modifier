@@ -24,4 +24,8 @@
     "allowSyntheticDefaultImports": true,
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "*.html", "*.json", "vite.config.ts"],
+  "exclude": [
+    "node_modules",
+    "dist",
+  ]
 }

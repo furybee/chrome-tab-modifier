@@ -81,18 +81,18 @@ chrome.storage.local.get(STORAGE_KEY, (items) => {
             const urlFragment = r.url_fragment;
 
             switch (detectionType) {
-                case 'CONTAINS':
-                    return location.href.includes(urlFragment);
-                case 'STARTS':
-                    return location.href.startsWith(urlFragment);
-                case 'ENDS':
-                    return location.href.endsWith(urlFragment);
-                case 'REGEXP':
-                    return new RegExp(urlFragment).test(location.href);
-                case 'EXACT':
-                    return location.href === urlFragment;
-                default:
-                    return false;
+            case 'CONTAINS':
+                return location.href.includes(urlFragment);
+            case 'STARTS':
+                return location.href.startsWith(urlFragment);
+            case 'ENDS':
+                return location.href.endsWith(urlFragment);
+            case 'REGEXP':
+                return new RegExp(urlFragment).test(location.href);
+            case 'EXACT':
+                return location.href === urlFragment;
+            default:
+                return false;
             }
         });
 
