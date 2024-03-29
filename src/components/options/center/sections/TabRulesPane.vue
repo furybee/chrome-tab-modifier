@@ -1,30 +1,30 @@
 <template>
-  <div>
-    <EmptyRules v-if="rulesStore.rules.length === 0" />
+	<div>
+		<EmptyRules v-if="rulesStore.rules.length === 0" />
 
-    <div v-else class="container mx-auto max-w-7xl p-4">
-      <div class="card bg-base-200">
-        <div class="card-body">
-          <TableRules :rules="rulesStore.rules" />
-        </div>
-      </div>
-    </div>
+		<div v-else class="container mx-auto max-w-7xl p-4">
+			<div class="card bg-base-200">
+				<div class="card-body">
+					<TableRules :rules="rulesStore.rules" />
+				</div>
+			</div>
+		</div>
 
-    <dialog ref="addRuleModal" class="modal">
-      <div class="modal-box w-11/12 max-w-5xl">
-        <RuleForm v-if="isRuleFormModalOpened" />
-      </div>
-    </dialog>
-  </div>
+		<dialog ref="addRuleModal" class="modal">
+			<div class="modal-box w-11/12 max-w-5xl">
+				<RuleForm v-if="isRuleFormModalOpened" />
+			</div>
+		</dialog>
+	</div>
 </template>
 
 <script lang="ts" setup>
-import { useRulesStore } from "../../../../stores/rules.store.ts";
-import EmptyRules from "./TabRules/EmptyRules.vue";
-import { inject, onMounted, onUnmounted, ref } from "vue";
-import TableRules from "./TabRules/TableRules.vue";
-import { GLOBAL_EVENTS, RuleModalParams } from "../../../../types.ts";
-import RuleForm from "./TabRules/RuleForm.vue";
+import { useRulesStore } from '../../../../stores/rules.store.ts';
+import EmptyRules from './TabRules/EmptyRules.vue';
+import { inject, onMounted, onUnmounted, ref } from 'vue';
+import TableRules from './TabRules/TableRules.vue';
+import { GLOBAL_EVENTS, RuleModalParams } from '../../../../types.ts';
+import RuleForm from './TabRules/RuleForm.vue';
 
 const rulesStore = useRulesStore();
 rulesStore.init();
@@ -32,49 +32,45 @@ rulesStore.init();
 const addRuleModal = ref(null);
 const isRuleFormModalOpened = ref(false);
 
-const emitter = inject("emitter");
+const emitter = inject('emitter');
 
 onMounted(() => {
-  emitter.on(GLOBAL_EVENTS.OPEN_ADD_RULE_MODAL, openAddRuleModal);
-  emitter.on(GLOBAL_EVENTS.CLOSE_ADD_RULE_MODAL, closeAddRuleModal);
+	emitter.on(GLOBAL_EVENTS.OPEN_ADD_RULE_MODAL, openAddRuleModal);
+	emitter.on(GLOBAL_EVENTS.CLOSE_ADD_RULE_MODAL, closeAddRuleModal);
 });
 
 onUnmounted(() => {
-  emitter.off(GLOBAL_EVENTS.OPEN_ADD_RULE_MODAL, openAddRuleModal);
-  emitter.off(GLOBAL_EVENTS.CLOSE_ADD_RULE_MODAL, closeAddRuleModal);
+	emitter.off(GLOBAL_EVENTS.OPEN_ADD_RULE_MODAL, openAddRuleModal);
+	emitter.off(GLOBAL_EVENTS.CLOSE_ADD_RULE_MODAL, closeAddRuleModal);
 });
 
 const openAddRuleModal = (params?: RuleModalParams) => {
-  if (!addRuleModal.value) {
-    return;
-  }
+	if (!addRuleModal.value) {
+		return;
+	}
 
-  // Reset current rule
-  rulesStore.setCurrentRule();
+	// Reset current rule
+	rulesStore.setCurrentRule();
 
-  if (
-    params !== undefined &&
-    params.rule !== undefined &&
-    params.index !== undefined
-  ) {
-    rulesStore.setCurrentRule(params.rule, params.index);
-  }
+	if (params !== undefined && params.rule !== undefined && params.index !== undefined) {
+		rulesStore.setCurrentRule(params.rule, params.index);
+	}
 
-  // mount RuleForm component
-  isRuleFormModalOpened.value = true;
+	// mount RuleForm component
+	isRuleFormModalOpened.value = true;
 
-  addRuleModal.value.showModal();
+	addRuleModal.value.showModal();
 };
 
 const closeAddRuleModal = () => {
-  if (!addRuleModal.value) {
-    return;
-  }
+	if (!addRuleModal.value) {
+		return;
+	}
 
-  // unmount RuleForm component
-  isRuleFormModalOpened.value = false;
+	// unmount RuleForm component
+	isRuleFormModalOpened.value = false;
 
-  addRuleModal.value.close();
+	addRuleModal.value.close();
 };
 </script>
 <style scoped></style>
