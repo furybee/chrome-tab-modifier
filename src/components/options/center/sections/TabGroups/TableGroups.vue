@@ -2,16 +2,17 @@
   <div class="overflow-x-auto">
     <table class="table table-zebra">
       <thead>
-      <tr>
-        <th>Title</th>
-        <th>Color</th>
-        <th>Collapsed</th>
-        <th></th>
-      </tr>
+        <tr>
+          <th>Title</th>
+          <th>Color</th>
+          <th>Collapsed</th>
+          <th></th>
+        </tr>
       </thead>
       <tbody>
       <tr
-          v-for="(group, index) in props.groups" :key="index" class="cursor-pointer group hover:bg-base-100" @click="editGroup(group, index)">
+          v-for="(group, index) in props.groups" :key="index" class="cursor-pointer group hover:bg-base-100" @click="editGroup(group, index)"
+      >
         <td>{{ group.title }}</td>
         <td>
           <ColorVisualizer :color="_chromeColor(group.color)"/>
@@ -34,7 +35,6 @@
 </template>
 
 <script lang="ts" setup>
-import EditIcon from "../../../../../icons/EditIcon.vue";
 import DeleteIcon from "../../../../../icons/DeleteIcon.vue";
 import {inject} from "vue";
 import {GLOBAL_EVENTS, Group, GroupModalParams} from "../../../../../types.ts";

@@ -41,7 +41,6 @@
 
 <script lang="ts" setup>
 import DuplicateIcon from "../../../../../icons/DuplicateIcon.vue";
-import EditIcon from "../../../../../icons/EditIcon.vue";
 import DeleteIcon from "../../../../../icons/DeleteIcon.vue";
 import {inject} from "vue";
 import {GLOBAL_EVENTS, Rule, RuleModalParams} from "../../../../../types.ts";

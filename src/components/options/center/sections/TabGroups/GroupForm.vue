@@ -73,7 +73,7 @@ import {useRulesStore} from "../../../../../stores/rules.store.ts";
 import {computed, inject, ref, watch} from "vue";
 import CustomSelect from "../../../../global/CustomSelect.vue";
 import {_chromeColor, _clone} from "../../../../../helpers.ts";
-import {GLOBAL_EVENTS, Group} from "../../../../../types.ts";
+import {GLOBAL_EVENTS} from "../../../../../types.ts";
 
 const emitter = inject('emitter');
 const rulesStore = useRulesStore();

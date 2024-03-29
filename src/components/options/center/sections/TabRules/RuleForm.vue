@@ -179,7 +179,7 @@
 </template>
 <script lang="ts" setup>
 import {useRulesStore} from "../../../../../stores/rules.store.ts";
-import {computed, inject, onMounted, ref, watch} from "vue";
+import {computed, inject, ref, watch} from "vue";
 import CustomSelect from "../../../../global/CustomSelect.vue";
 import NewFeature from "../../../../global/NewFeature.vue";
 import {_clone} from "../../../../../helpers.ts";
