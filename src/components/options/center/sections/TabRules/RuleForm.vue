@@ -77,7 +77,7 @@
 				<div class="label">
 					<span v-if="showHelp" class="text-xs label-text-alt">
 						You can inject any DOM content with {selector}. Examples: {title} for website title,
-						{h1}, {#id}, {.class}, etc. (Read the help section)
+						{h1}, {#id}, {.class}, etc.
 					</span>
 				</div>
 			</label>
@@ -177,7 +177,7 @@
 					/>
 					<div class="label">
 						<span v-if="showHelp" class="text-xs label-text-alt">
-							Regular expression to search string fragments in title (read the help section)</span
+							Regular expression to search string fragments in title</span
 						>
 					</div>
 				</label>
@@ -195,7 +195,7 @@
 					/>
 					<div class="label">
 						<span v-if="showHelp" class="text-xs label-text-alt">
-							Regular expression to search string fragments in URL (read the help section)</span
+							Regular expression to search string fragments in URL</span
 						>
 					</div>
 				</label>
