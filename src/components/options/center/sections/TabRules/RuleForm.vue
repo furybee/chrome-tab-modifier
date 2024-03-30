@@ -84,24 +84,35 @@
 
 	<div v-if="isFirstPartFilled" class="mt-6">
 		<hr class="border-base-300" />
-		<label class="form-control w-full flex-1 mt-4">
-			<div class="label">
-				<span class="label-text text-sm">Tab title</span>
-			</div>
-			<input
-				v-model="currentRule.tab.title"
-				class="input input-xs input-bordered w-full"
-				placeholder="e.g. Hey {title}"
-				required
-				type="text"
-			/>
-			<div class="label">
-				<span v-if="showHelp" class="text-xs label-text-alt">
-					You can inject any DOM content with {selector}. Examples: {title} for website title, {h1},
-					{#id}, {.class}, etc. (Read the help section)
-				</span>
-			</div>
-		</label>
+
+		<div class="flex gap-2 mt-4">
+			<label class="form-control w-full max-w-xs flex-0">
+				<div class="label">
+					<span class="label-text text-sm">Group <NewFeature /></span>
+				</div>
+
+				<CustomSelect v-model="currentRule.tab.group_id" :items="availableGroups" />
+			</label>
+
+			<label class="form-control w-full flex-1">
+				<div class="label">
+					<span class="label-text text-sm">Tab title</span>
+				</div>
+				<input
+					v-model="currentRule.tab.title"
+					class="input input-xs input-bordered w-full"
+					placeholder="e.g. Hey {title}"
+					required
+					type="text"
+				/>
+				<div class="label">
+					<span v-if="showHelp" class="text-xs label-text-alt">
+						You can inject any DOM content with {selector}. Examples: {title} for website title,
+						{h1}, {#id}, {.class}, etc. (Read the help section)
+					</span>
+				</div>
+			</label>
+		</div>
 
 		<div class="flex gap-2">
 			<label class="form-control w-full max-w-xs flex-0">
@@ -133,18 +144,8 @@
 			</label>
 		</div>
 
-		<div class="flex gap-2 mt-4">
-			<label class="form-control w-full max-w-xs flex-0">
-				<div class="label">
-					<span class="label-text text-sm">Group <NewFeature /></span>
-				</div>
-
-				<CustomSelect v-model="currentRule.tab.group_id" :items="availableGroups" />
-			</label>
-		</div>
-
 		<div class="grid grid-cols-2 gap-2 mt-6">
-			<div class="form-control w-52">
+			<div class="form-control max-w-xs">
 				<label class="cursor-pointer label">
 					<span class="label-text text-xs">Pinned</span>
 					<input
@@ -156,7 +157,7 @@
 					/>
 				</label>
 			</div>
-			<div class="form-control w-52">
+			<div class="form-control max-w-xs">
 				<label class="cursor-pointer label">
 					<span class="label-text text-xs">Ask before closing</span>
 					<input
@@ -167,7 +168,7 @@
 					/>
 				</label>
 			</div>
-			<div class="form-control w-52">
+			<div class="form-control max-w-xs">
 				<label class="cursor-pointer label">
 					<span class="label-text text-xs">Unique</span>
 					<input
@@ -178,7 +179,7 @@
 					/>
 				</label>
 			</div>
-			<div class="form-control w-52">
+			<div class="form-control max-w-xs">
 				<label class="cursor-pointer label">
 					<span class="label-text text-xs">Muted</span>
 					<input

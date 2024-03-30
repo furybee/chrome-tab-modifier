@@ -83,12 +83,12 @@ const panes = {
 
 const sectionItems = [
 	{
-		title: 'Tab Rules',
+		title: 'Rules',
 		icon: 'TabRulesIcon',
 		component: 'TabRulesPane',
 	},
 	{
-		title: 'Tab Groups',
+		title: 'Groups',
 		icon: 'TabGroupsIcon',
 		component: 'TabGroupsPane',
 	},

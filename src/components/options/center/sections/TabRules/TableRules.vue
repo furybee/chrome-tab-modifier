@@ -4,9 +4,9 @@
 			<thead>
 				<tr>
 					<th>Name</th>
+					<th>Title</th>
 					<th>Detection</th>
 					<th>URL Fragment</th>
-					<th>Icon</th>
 					<th />
 				</tr>
 			</thead>
@@ -17,16 +17,21 @@
 					class="group cursor-pointer hover:bg-base-100"
 					@click="editRule(rule, index)"
 				>
-					<td>{{ rule.name }}</td>
+					<td>
+						{{ rule.name }}
+					</td>
+					<td>
+						<div class="flex items-center gap-2">
+							<img :alt="rule.name + '_icon'" :src="getIconUrl(rule.tab.icon)" class="w-6 h-6" />
+							{{ rule.tab.title && rule.tab.title !== '' ? rule.tab.title : '{title}' }}
+						</div>
+					</td>
 					<td>
 						{{ rule.detection }}
 					</td>
 					<td>{{ rule.url_fragment }}</td>
 					<td>
-						<img :alt="rule.name + '_icon'" :src="getIconUrl(rule.tab.icon)" class="w-6 h-6" />
-					</td>
-					<td class="invisible group-hover:visible">
-						<div class="flex justify-end gap-8">
+						<div class="flex justify-end gap-8 invisible group-hover:visible overflow-hidden">
 							<button
 								class="btn btn-xs btn-circle tooltip flex items-center justify-items-center"
 								data-tip="Duplicate"

@@ -2,7 +2,7 @@
 	<div>
 		<EmptyRules v-if="rulesStore.rules.length === 0" />
 
-		<div v-else class="container mx-auto max-w-7xl p-4">
+		<div v-else class="container mx-auto max-w-5xl p-4">
 			<div class="card bg-base-200">
 				<div class="card-body">
 					<TableRules :rules="rulesStore.rules" />

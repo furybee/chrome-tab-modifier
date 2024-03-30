@@ -21,8 +21,8 @@
 						<ColorVisualizer :color="_chromeColor(group.color)" />
 					</td>
 					<td>{{ group.collapsed }}</td>
-					<td class="invisible group-hover:visible">
-						<div class="flex justify-end gap-8">
+					<td>
+						<div class="flex justify-end gap-8 invisible group-hover:visible overflow-hidden">
 							<button
 								class="btn btn-xs btn-circle btn-outline tooltip flex items-center justify-items-center btn-error"
 								data-tip="Delete"
