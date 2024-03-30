@@ -6,7 +6,19 @@
   "homepage_url": "https://github.com/furybee/chrome-tab-modifier",
   "action": {
     "default_title": "Tab Modifier",
-    "default_popup": "index.html"
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "assets/icon_16.png",
+      "32": "assets/icon_32.png",
+      "48": "assets/icon_48.png",
+      "128": "assets/icon_128.png"
+    }
+  },
+  "icons": {
+    "16": "assets/icon_16.png",
+    "32": "assets/icon_32.png",
+    "48": "assets/icon_48.png",
+    "128": "assets/icon_128.png"
   },
   "background": {
     "service_worker": "src/background.ts",
