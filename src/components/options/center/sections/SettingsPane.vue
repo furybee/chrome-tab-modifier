@@ -13,7 +13,7 @@
 						<p>Change Tab Modifier theme</p>
 					</div>
 					<div class="col-span-1">
-						<CustomSelect v-model="currentTheme" :items="themes" />
+						<CustomSelect v-model="currentTheme" :items="themes" :show-clear-btn="false" />
 					</div>
 				</div>
 

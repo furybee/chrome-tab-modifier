@@ -32,14 +32,14 @@
 					@click="onItemSelected(item)"
 				>
 					<a>
-						<img v-if="item.icon" :src="item.icon" alt="_icon" class="w-6 h-6 mr-2" />
-						<ColorVisualizer v-if="item.color" :color="item.color" class="mr-2" />
+						<img v-if="item.icon" :src="item.icon" alt="_icon" class="!w-4 !h-4 mr-2" />
+						<ColorVisualizer v-if="item.color" :color="item.color" class="!w-4 !h-4 mr-2" />
 						{{ item.label }}
 					</a>
 				</li>
 			</ul>
 		</div>
-		<div class="px-1 btn btn-xs btn-accent rounded-l-none" @click="clearValue">
+		<div v-if="showClearBtn" class="px-1 btn btn-xs btn-accent rounded-l-none" @click="clearValue">
 			<CloseIcon class="!w-4 !h-4" />
 		</div>
 	</div>
@@ -63,6 +63,7 @@ const icon = ref('');
 
 const props = defineProps<{
 	items: SelectItem[];
+	showClearBtn?: boolean;
 }>();
 
 const onItemSelected = (item: SelectItem) => {

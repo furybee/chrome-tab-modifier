@@ -27,7 +27,7 @@ export type Rule = {
 export type Group = {
 	id: string;
 	title: string;
-	color: Tab;
+	color: string;
 	collapsed: boolean;
 };
 

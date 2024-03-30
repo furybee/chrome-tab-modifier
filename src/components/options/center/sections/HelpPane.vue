@@ -8,7 +8,7 @@
 					behaviors on any website. Define your rules and let the extension makes the job
 					automatically.
 				</p>
-				<p>All of your data are stored on your computer, I don't have any access to it.</p>
+				<p>All of your data are stored on your computer, We don't have any access to it.</p>
 			</div>
 		</div>
 
@@ -92,8 +92,7 @@
 				</ul>
 
 				<h3 class="font-bold">Group</h3>
-				<p>This action will create or move your tab to a group.</p>
-				<p>You can select an existing group or create a new one.</p>
+				<p>This action will move your tab to a group.</p>
 
 				<h3 class="font-bold">Pinned</h3>
 				<p>This action will pin the tab.</p>
