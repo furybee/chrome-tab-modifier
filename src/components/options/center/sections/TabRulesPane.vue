@@ -40,8 +40,8 @@ onMounted(() => {
 });
 
 onUnmounted(() => {
-	emitter.off(GLOBAL_EVENTS.OPEN_ADD_RULE_MODAL, openAddRuleModal);
-	emitter.off(GLOBAL_EVENTS.CLOSE_ADD_RULE_MODAL, closeAddRuleModal);
+	emitter.off(GLOBAL_EVENTS.OPEN_ADD_RULE_MODAL);
+	emitter.off(GLOBAL_EVENTS.CLOSE_ADD_RULE_MODAL);
 });
 
 const openAddRuleModal = (params?: RuleModalParams) => {

@@ -2,9 +2,10 @@ import { Group, TabModifierSettings } from './types.ts';
 
 const STORAGE_KEY = 'tab_modifier';
 
-// Function to apply rules to a tab
 function applyRuleToTab(tab: chrome.tabs.Tab, tabModifier: TabModifierSettings) {
 	const rule = tabModifier.rules.find((r) => {
+		if (!tab.url) return false;
+
 		const detectionType = r.detection ?? 'CONTAINS';
 		const urlFragment = r.url_fragment;
 		switch (detectionType) {
@@ -42,6 +43,8 @@ function handleTabGroups(
 	tab: chrome.tabs.Tab,
 	tmGroup: Group
 ) {
+	if (!tab.id) return;
+
 	if (groups.length === 0) {
 		createAndSetupGroup([tab.id], tmGroup);
 	} else if (groups.length === 1) {
@@ -66,13 +69,13 @@ function updateTabGroup(groupId: number, tmGroup: Group) {
 		title: tmGroup.title,
 		color: tmGroup.color,
 		collapsed: tmGroup.collapsed,
-	};
+	} as chrome.tabGroups.UpdateProperties;
 
 	chrome.tabGroups.update(groupId, updateProperties);
 }
 
 chrome.tabs.onUpdated.addListener(
-	(tabId: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab) => {
+	(_: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab) => {
 		if (!changeInfo.url) return;
 
 		chrome.storage.local.get(STORAGE_KEY, (items: any) => {
@@ -83,29 +86,41 @@ chrome.tabs.onUpdated.addListener(
 );
 
 chrome.runtime.onMessage.addListener((message, sender) => {
+	if (!sender.tab) return;
+
+	const tab = sender.tab as chrome.tabs.Tab;
+	if (!tab.id) return;
+
 	switch (message.action) {
 		case 'setUnique':
-			handleSetUnique(message, sender.tab);
+			handleSetUnique(message, tab);
 			break;
 		case 'setPinned':
-			chrome.tabs.update(sender.tab.id, { pinned: true });
+			chrome.tabs.update(tab.id, { pinned: true });
 			break;
 		case 'setGroup':
-			handleSetGroup(message, sender.tab);
+			handleSetGroup(sender.tab);
 			break;
 		case 'setMuted':
-			chrome.tabs.update(sender.tab.id, { muted: true });
+			chrome.tabs.update(tab.id, { muted: true });
 			break;
 	}
 });
 
 function handleSetUnique(message: any, currentTab: chrome.tabs.Tab) {
-	if (currentTab === undefined) return;
+	if (!currentTab?.id) return;
 
 	chrome.tabs.query({}, (tabs: chrome.tabs.Tab[]) => {
 		tabs.forEach((tab) => {
+			if (!tab.url) return;
+
 			if (tab.url.includes(message.url_fragment) && tab.id !== currentTab.id) {
+				if (!currentTab?.id) return;
+
 				chrome.tabs.executeScript(currentTab.id, { code: 'window.onbeforeunload = null;' }, () => {
+					if (!currentTab?.id) return;
+					if (!tab?.id) return;
+
 					chrome.tabs.remove(currentTab.id);
 
 					chrome.tabs.update(tab.id, {
@@ -118,7 +133,7 @@ function handleSetUnique(message: any, currentTab: chrome.tabs.Tab) {
 	});
 }
 
-function handleSetGroup(message: any, tab: chrome.tabs.Tab) {
+function handleSetGroup(tab: chrome.tabs.Tab) {
 	if (tab.url === 'chrome://newtab/') return;
 
 	chrome.storage.local.get(STORAGE_KEY, (items) => {

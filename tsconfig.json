@@ -22,6 +22,8 @@
 
     "composite": true,
     "allowSyntheticDefaultImports": true,
+
+    "types": ["chrome"]
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "*.html", "*.json", "vite.config.ts"],
   "exclude": [

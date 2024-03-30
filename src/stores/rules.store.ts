@@ -1,13 +1,14 @@
 import { defineStore } from 'pinia';
-import { GLOBAL_EVENTS, Group, Rule, Settings, TabModifierSettings } from '../types.ts';
+import { Group, Rule, Settings, TabModifierSettings } from '../types.ts';
 import { _clone } from '../helpers.ts';
+
 const STORAGE_KEY = 'tab_modifier';
 
 function getStorageAsync(): Promise<TabModifierSettings | undefined> {
 	return new Promise((resolve, reject) => {
 		chrome.storage.local.get(STORAGE_KEY, (items) => {
 			if (chrome.runtime.lastError) {
-				reject(new Error(chrome.runtime.lastError));
+				reject(new Error(chrome.runtime.lastError.message));
 			} else {
 				resolve(items[STORAGE_KEY]);
 			}

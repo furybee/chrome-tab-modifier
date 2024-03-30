@@ -16,8 +16,9 @@
 </template>
 
 <script setup lang="ts">
-import { GLOBAL_EVENTS, ToastType, ToastParams } from '../../types.ts';
+import { GLOBAL_EVENTS, ToastParams, ToastType } from '../../types.ts';
 import { inject, onMounted, onUnmounted, ref } from 'vue';
+
 const emitter = inject('emitter');
 
 const type = ref<ToastType>('none');
