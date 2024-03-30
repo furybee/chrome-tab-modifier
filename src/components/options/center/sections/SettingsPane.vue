@@ -52,7 +52,7 @@
 						<p>Export your tab rules for backup purpose or for sharing with friend.</p>
 					</div>
 					<div class="col-span-1">
-						<button class="btn btn-sm btn-outline w-full">Export</button>
+						<button class="btn btn-sm btn-outline w-full" @click="exportConfig">Export</button>
 					</div>
 				</div>
 			</div>
@@ -83,11 +83,14 @@
 
 <script lang="ts" setup>
 import CustomSelect from '../../../global/CustomSelect.vue';
-import { ref, watch } from 'vue';
+import { inject, ref, watch } from 'vue';
 import { useRulesStore } from '../../../../stores/rules.store.ts';
 import NewFeature from '../../../global/NewFeature.vue';
+import { GLOBAL_EVENTS } from '../../../../types.ts';
 
+const emitter = inject('emitter');
 const rulesStore = useRulesStore();
+const currentTheme = ref(rulesStore.settings.theme);
 
 const themes = [
 	{ label: 'Dim', value: 'dim' },
@@ -98,16 +101,47 @@ const themes = [
 	{ label: 'Valentine', value: 'valentine' },
 ];
 
-const currentTheme = ref(rulesStore.theme);
-
 watch(currentTheme, (theme) => {
-	rulesStore.setTheme(theme);
+	rulesStore.applyTheme(theme);
 });
 
 const onDeleteAllRules = async () => {
-	console.log('onDeleteAllRules');
-
 	await rulesStore.deleteAllRules();
+
+	emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
+		type: 'success',
+		message: 'All rules have been deleted successfully!',
+	});
+};
+
+const exportConfig = async () => {
+	const config = await rulesStore.getConfig();
+
+	if (!config) {
+		emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
+			type: 'error',
+			message: 'No config found',
+		});
+
+		return;
+	}
+
+	const blob = new Blob([JSON.stringify(config, null, 4)], { type: 'text/plain' });
+	const url = (window.URL || window.webkitURL).createObjectURL(blob);
+	const a = document.createElement('a');
+
+	a.href = url;
+	a.download = 'tab-modifier.config.json';
+	document.body.appendChild(a);
+	a.click();
+
+	document.body.removeChild(a);
+	window.URL.revokeObjectURL(url);
+
+	emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
+		type: 'success',
+		message: 'Export successfully!',
+	});
 };
 </script>
 

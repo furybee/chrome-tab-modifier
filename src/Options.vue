@@ -39,6 +39,8 @@
 					</div>
 
 					<component :is="panes[currentContent.component]" />
+
+					<Toaster />
 				</div>
 			</div>
 			<div class="drawer-side">
@@ -70,6 +72,7 @@ import DonationPane from './components/options/center/resources/DonationPane.vue
 import BurgerIcon from './icons/BurgerIcon.vue';
 import CloseIcon from './icons/CloseIcon.vue';
 import { useRulesStore } from './stores/rules.store.ts';
+import Toaster from './components/global/Toaster.vue';
 
 const emitter = inject('emitter');
 
@@ -143,37 +146,6 @@ const openAddGroupModal = () => {
 
 onMounted(async () => {
 	await rulesStore.init();
-
-	await rulesStore.setTheme(rulesStore.theme);
-
-	// const createTabProperties = {
-	//     url: 'options.html',
-	//     active: false,
-	// };
-
-	// chrome.tabs.create(createTabProperties, (tab) => {
-	//     console.log(tab);
-	//
-	//     const createGroupProperties = {
-	//       tabIds: [tab.id],
-	//     };
-	//
-	//     chrome.tabs.group(createGroupProperties, (groupId: number) => {
-	//       console.log(groupId);
-	//
-	//       chrome.tabGroups.update(
-	//           groupId,
-	//           {
-	//             title: 'Tab Modifier',
-	//             color: 'red',
-	//             collapsed: true,
-	//           },
-	//           () => {
-	//             console.log('Tab group updated');
-	//           }
-	//     )
-	//     });
-	// });
 });
 </script>
 

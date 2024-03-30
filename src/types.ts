@@ -33,13 +33,13 @@ export type Group = {
 
 export type Settings = {
 	enable_new_version_notification: boolean;
+	theme: string;
 };
 
 export type TabModifierSettings = {
 	rules: Rule[];
 	groups: Group[];
 	settings: Settings;
-	theme: string;
 };
 
 export const GLOBAL_EVENTS = {
@@ -48,6 +48,7 @@ export const GLOBAL_EVENTS = {
 	CLOSE_ADD_RULE_MODAL: 'CLOSE_ADD_RULE_MODAL',
 	CLOSE_ADD_GROUP_MODAL: 'CLOSE_ADD_GROUP_MODAL',
 	GLOBAL_KEY_SAVE: 'GLOBAL_KEY_SAVE',
+	SHOW_TOAST: 'SHOW_TOAST',
 };
 
 export type RuleModalParams = {
@@ -58,4 +59,12 @@ export type RuleModalParams = {
 export type GroupModalParams = {
 	index?: number;
 	group?: Group;
+};
+
+export type ToastType = 'success' | 'error' | 'info' | 'warning' | 'none';
+
+export type ToastParams = {
+	type: ToastType;
+	message: string;
+	timeout?: number;
 };

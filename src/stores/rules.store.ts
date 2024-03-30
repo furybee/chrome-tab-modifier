@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia';
-import { Group, Rule, Settings, TabModifierSettings } from '../types.ts';
+import { GLOBAL_EVENTS, Group, Rule, Settings, TabModifierSettings } from '../types.ts';
 import { _clone } from '../helpers.ts';
-
 const STORAGE_KEY = 'tab_modifier';
 
 function getStorageAsync(): Promise<TabModifierSettings | undefined> {
@@ -22,8 +21,8 @@ const getDefaultTabModifierSettings = (): TabModifierSettings => {
 		groups: [],
 		settings: {
 			enable_new_version_notification: false,
+			theme: 'dim',
 		},
-		theme: 'dim',
 	};
 };
 
@@ -36,25 +35,32 @@ export const useRulesStore = defineStore('rules', {
 			currentGroupIndex: undefined as number | undefined,
 			rules: [] as Rule[],
 			groups: [] as Group[],
-			settings: {} as Settings,
-			theme: 'dim',
+			settings: { theme: 'dim' } as Settings,
 		};
 	},
 	actions: {
 		async init() {
 			try {
-				const tab_modifier = await getStorageAsync();
+				const tabModifier = await getStorageAsync();
 
-				if (!tab_modifier) {
+				if (!tabModifier) {
 					await this.save();
 				} else {
-					this.rules = tab_modifier.rules;
-					this.groups = tab_modifier.groups;
-					this.settings = tab_modifier.settings;
-					this.theme = tab_modifier.theme;
+					this.rules = tabModifier.rules;
+					this.groups = tabModifier.groups;
+					this.settings = tabModifier.settings;
 				}
+
+				await this.applyTheme(this.settings.theme);
 			} catch (error) {
 				console.error('Failed to load rules:', error);
+			}
+		},
+		async getConfig(): Promise<TabModifierSettings | undefined> {
+			try {
+				return await getStorageAsync();
+			} catch (error) {
+				console.error('Failed to load config:', error);
 			}
 		},
 		setCurrentRule(rule?: Rule, index?: number) {
@@ -65,10 +71,10 @@ export const useRulesStore = defineStore('rules', {
 			this.currentGroup = _clone(group);
 			this.currentGroupIndex = index;
 		},
-		async setTheme(theme: string) {
-			this.theme = theme;
+		async applyTheme(theme: string) {
+			this.settings.theme = theme;
 
-			document.body.setAttribute('data-theme', this.theme);
+			document.body.setAttribute('data-theme', this.settings.theme);
 
 			await this.save();
 		},
@@ -113,19 +119,22 @@ export const useRulesStore = defineStore('rules', {
 		},
 		async save() {
 			try {
-				let tab_modifier = await getStorageAsync();
+				let tabModifier = await getStorageAsync();
 
-				if (!tab_modifier) {
-					tab_modifier = getDefaultTabModifierSettings();
+				if (!tabModifier) {
+					tabModifier = getDefaultTabModifierSettings();
 				} else {
-					tab_modifier.theme = this.theme;
-					tab_modifier.rules = this.rules;
-					tab_modifier.groups = this.groups;
-					tab_modifier.settings = this.settings;
+					tabModifier.rules = this.rules;
+					tabModifier.groups = this.groups;
+					tabModifier.settings = this.settings;
 				}
 
 				chrome.storage.local.set({
-					tab_modifier: _clone(tab_modifier),
+					tab_modifier: _clone({
+						rules: tabModifier.rules,
+						groups: tabModifier.groups,
+						settings: tabModifier.settings,
+					}),
 				});
 			} catch (error) {
 				console.error('Failed to save:', error);
@@ -138,18 +147,22 @@ export const useRulesStore = defineStore('rules', {
 		},
 		async addRule(rule: Rule) {
 			try {
-				let tab_modifier = await getStorageAsync();
+				let tabModifier = await getStorageAsync();
 
-				if (!tab_modifier) {
-					tab_modifier = getDefaultTabModifierSettings();
+				if (!tabModifier) {
+					tabModifier = getDefaultTabModifierSettings();
 				}
 
-				tab_modifier.rules.push(rule);
+				tabModifier.rules.push(rule);
 
-				this.rules = tab_modifier.rules;
+				this.rules = tabModifier.rules;
 
 				chrome.storage.local.set({
-					tab_modifier: _clone(tab_modifier),
+					tab_modifier: _clone({
+						rules: tabModifier.rules,
+						groups: tabModifier.groups,
+						settings: tabModifier.settings,
+					}),
 				});
 			} catch (error) {
 				console.error('Failed to load rules:', error);
@@ -157,20 +170,24 @@ export const useRulesStore = defineStore('rules', {
 		},
 		async addGroup(group: Group) {
 			try {
-				let tab_modifier = await getStorageAsync();
+				let tabModifier = await getStorageAsync();
 
-				if (!tab_modifier) {
-					tab_modifier = getDefaultTabModifierSettings();
+				if (!tabModifier) {
+					tabModifier = getDefaultTabModifierSettings();
 				}
 
 				group.id = Math.random().toString(36).substring(7);
 
-				tab_modifier.groups.push(group);
+				tabModifier.groups.push(group);
 
-				this.groups = tab_modifier.groups;
+				this.groups = tabModifier.groups;
 
 				chrome.storage.local.set({
-					tab_modifier: _clone(tab_modifier),
+					tab_modifier: _clone({
+						rules: tabModifier.rules,
+						groups: tabModifier.groups,
+						settings: tabModifier.settings,
+					}),
 				});
 			} catch (error) {
 				console.error('Failed to load rules:', error);

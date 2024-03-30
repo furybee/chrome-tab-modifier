@@ -109,5 +109,10 @@ const save = async () => {
 	}
 
 	emitter.emit(GLOBAL_EVENTS.CLOSE_ADD_GROUP_MODAL);
+
+	emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
+		type: 'success',
+		message: 'Saved successfully!',
+	});
 };
 </script>
