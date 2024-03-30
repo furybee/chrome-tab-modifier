@@ -23,7 +23,7 @@ import { useRulesStore } from '../../../../stores/rules.store.ts';
 import EmptyRules from './TabRules/EmptyRules.vue';
 import { inject, onMounted, onUnmounted, ref } from 'vue';
 import TableRules from './TabRules/TableRules.vue';
-import { GLOBAL_EVENTS, RuleModalParams } from '../../../../types.ts';
+import { GLOBAL_EVENTS, RuleModalParams } from '../../../../common/types.ts';
 import RuleForm from './TabRules/RuleForm.vue';
 
 const rulesStore = useRulesStore();

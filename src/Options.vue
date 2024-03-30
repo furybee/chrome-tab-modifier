@@ -62,15 +62,15 @@
 
 <script lang="ts" setup>
 import Menu from './components/options/left/Menu.vue';
-import { GLOBAL_EVENTS, MenuItem } from './types.ts';
+import { GLOBAL_EVENTS, MenuItem } from './common/types.ts';
 import { inject, onMounted, ref } from 'vue';
 import TabRulesPane from './components/options/center/sections/TabRulesPane.vue';
 import TabGroupsPane from './components/options/center/sections/TabGroupsPane.vue';
 import SettingsPane from './components/options/center/sections/SettingsPane.vue';
 import HelpPane from './components/options/center/sections/HelpPane.vue';
 import DonationPane from './components/options/center/resources/DonationPane.vue';
-import BurgerIcon from './icons/BurgerIcon.vue';
-import CloseIcon from './icons/CloseIcon.vue';
+import BurgerIcon from './components/icons/BurgerIcon.vue';
+import CloseIcon from './components/icons/CloseIcon.vue';
 import { useRulesStore } from './stores/rules.store.ts';
 import Toaster from './components/global/Toaster.vue';
 

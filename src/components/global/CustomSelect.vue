@@ -47,9 +47,9 @@
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
-import ChevronDownIcon from '../../icons/ChevronDownIcon.vue';
+import ChevronDownIcon from '../icons/ChevronDownIcon.vue';
 import ColorVisualizer from '../options/center/sections/TabGroups/ColorVisualizer.vue';
-import CloseIcon from '../../icons/CloseIcon.vue';
+import CloseIcon from '../icons/CloseIcon.vue';
 
 interface SelectItem {
 	icon?: string;

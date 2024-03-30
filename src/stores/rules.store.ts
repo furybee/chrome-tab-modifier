@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import { Group, Rule, Settings, TabModifierSettings } from '../types.ts';
-import { _clone } from '../helpers.ts';
+import { Group, Rule, Settings, TabModifierSettings } from '../common/types.ts';
+import { _clone } from '../common/helpers.ts';
 
 const STORAGE_KEY = 'tab_modifier';
 

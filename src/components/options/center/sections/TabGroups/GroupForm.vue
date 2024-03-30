@@ -64,8 +64,8 @@
 import { useRulesStore } from '../../../../../stores/rules.store.ts';
 import { computed, inject, ref, watch } from 'vue';
 import CustomSelect from '../../../../global/CustomSelect.vue';
-import { _chromeColor, _clone } from '../../../../../helpers.ts';
-import { GLOBAL_EVENTS } from '../../../../../types.ts';
+import { _chromeColor, _clone } from '../../../../../common/helpers.ts';
+import { GLOBAL_EVENTS } from '../../../../../common/types.ts';
 import HelpSwap from '../../../../global/HelpSwap.vue';
 
 const emitter = inject('emitter');

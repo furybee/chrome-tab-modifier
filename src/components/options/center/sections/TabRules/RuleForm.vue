@@ -222,8 +222,8 @@ import { useRulesStore } from '../../../../../stores/rules.store.ts';
 import { computed, inject, ref, watch } from 'vue';
 import CustomSelect from '../../../../global/CustomSelect.vue';
 import NewFeature from '../../../../global/NewFeature.vue';
-import { _chromeColor, _clone } from '../../../../../helpers.ts';
-import { GLOBAL_EVENTS, Group } from '../../../../../types.ts';
+import { _chromeColor, _clone } from '../../../../../common/helpers.ts';
+import { GLOBAL_EVENTS, Group } from '../../../../../common/types.ts';
 import HelpSwap from '../../../../global/HelpSwap.vue';
 
 const rulesStore = useRulesStore();

@@ -1,4 +1,4 @@
-import { Group, TabModifierSettings } from './types.ts';
+import { Group, TabModifierSettings } from './common/types.ts';
 
 const STORAGE_KEY = 'tab_modifier';
 

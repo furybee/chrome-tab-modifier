@@ -86,7 +86,7 @@ import CustomSelect from '../../../global/CustomSelect.vue';
 import { inject, ref, watch } from 'vue';
 import { useRulesStore } from '../../../../stores/rules.store.ts';
 import NewFeature from '../../../global/NewFeature.vue';
-import { GLOBAL_EVENTS } from '../../../../types.ts';
+import { GLOBAL_EVENTS } from '../../../../common/types.ts';
 
 const emitter = inject('emitter');
 const rulesStore = useRulesStore();

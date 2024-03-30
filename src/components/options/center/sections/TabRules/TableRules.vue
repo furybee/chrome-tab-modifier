@@ -56,10 +56,10 @@
 </template>
 
 <script lang="ts" setup>
-import DuplicateIcon from '../../../../../icons/DuplicateIcon.vue';
-import DeleteIcon from '../../../../../icons/DeleteIcon.vue';
+import DuplicateIcon from '../../../../icons/DuplicateIcon.vue';
+import DeleteIcon from '../../../../icons/DeleteIcon.vue';
 import { inject } from 'vue';
-import { GLOBAL_EVENTS, Rule, RuleModalParams } from '../../../../../types.ts';
+import { GLOBAL_EVENTS, Rule, RuleModalParams } from '../../../../../common/types.ts';
 import { useRulesStore } from '../../../../../stores/rules.store.ts';
 
 const props = defineProps<{

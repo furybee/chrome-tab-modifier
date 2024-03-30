@@ -14,7 +14,7 @@
 
 <script lang="ts" setup>
 import { inject } from 'vue';
-import { GLOBAL_EVENTS } from '../../../../../types.ts';
+import { GLOBAL_EVENTS } from '../../../../../common/types.ts';
 
 const emitter = inject('emitter');
 

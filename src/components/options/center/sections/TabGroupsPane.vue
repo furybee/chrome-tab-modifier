@@ -22,7 +22,7 @@
 import { useRulesStore } from '../../../../stores/rules.store.ts';
 import EmptyGroups from './TabGroups/EmptyGroups.vue';
 import { inject, onMounted, onUnmounted, ref } from 'vue';
-import { GLOBAL_EVENTS, GroupModalParams } from '../../../../types.ts';
+import { GLOBAL_EVENTS, GroupModalParams } from '../../../../common/types.ts';
 import GroupForm from './TabGroups/GroupForm.vue';
 import TableGroups from './TabGroups/TableGroups.vue';
 

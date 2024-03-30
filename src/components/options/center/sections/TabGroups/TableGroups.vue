@@ -39,11 +39,11 @@
 </template>
 
 <script lang="ts" setup>
-import DeleteIcon from '../../../../../icons/DeleteIcon.vue';
+import DeleteIcon from '../../../../icons/DeleteIcon.vue';
 import { inject } from 'vue';
-import { GLOBAL_EVENTS, Group, GroupModalParams } from '../../../../../types.ts';
+import { GLOBAL_EVENTS, Group, GroupModalParams } from '../../../../../common/types.ts';
 import { useRulesStore } from '../../../../../stores/rules.store.ts';
-import { _chromeColor } from '../../../../../helpers.ts';
+import { _chromeColor } from '../../../../../common/helpers.ts';
 import ColorVisualizer from './ColorVisualizer.vue';
 
 const props = defineProps<{

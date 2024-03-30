@@ -13,14 +13,14 @@
 </template>
 
 <script lang="ts" setup>
-import { MenuItem } from '../../../types.ts';
-import TabRulesIcon from '../../../icons/TabRulesIcon.vue';
-import TabGroupsIcon from '../../../icons/TabGroupsIcon.vue';
-import SettingsIcon from '../../../icons/SettingsIcon.vue';
-import HelpIcon from '../../../icons/HelpIcon.vue';
-import GithubIcon from '../../../icons/GithubIcon.vue';
-import DonationIcon from '../../../icons/DonationIcon.vue';
-import ChromeIcon from '../../../icons/ChromeIcon.vue';
+import { MenuItem } from '../../../common/types.ts';
+import TabRulesIcon from '../../icons/TabRulesIcon.vue';
+import TabGroupsIcon from '../../icons/TabGroupsIcon.vue';
+import SettingsIcon from '../../icons/SettingsIcon.vue';
+import HelpIcon from '../../icons/HelpIcon.vue';
+import GithubIcon from '../../icons/GithubIcon.vue';
+import DonationIcon from '../../icons/DonationIcon.vue';
+import ChromeIcon from '../../icons/ChromeIcon.vue';
 import NewFeature from '../../global/NewFeature.vue';
 
 const icons = {
