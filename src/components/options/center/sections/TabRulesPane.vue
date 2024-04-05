@@ -5,7 +5,7 @@
 		<div v-else class="container mx-auto max-w-5xl p-4">
 			<div class="card bg-base-200">
 				<div class="card-body">
-					<TableRules :rules="rulesStore.rules" />
+					<TableRules :rules="rulesStore.rules" :groups="rulesStore.groups" />
 				</div>
 			</div>
 		</div>

@@ -4,6 +4,7 @@
 			<thead>
 				<tr>
 					<th>Name</th>
+					<th>Group</th>
 					<th>Title</th>
 					<th>Detection</th>
 					<th>URL Fragment</th>
@@ -23,6 +24,13 @@
 						{{ rule.name }}
 					</td>
 					<td>
+						<template v-if="!rule.tab.group_id">-</template>
+						<div v-else class="flex items-center gap-2">
+							<ColorVisualizer :color="_chromeGroupColor(groupsById[rule.tab.group_id].color)" />
+							{{ groupsById[rule.tab.group_id].title }}
+						</div>
+					</td>
+					<td>
 						<div class="flex items-center gap-2">
 							<img
 								v-if="rule.tab.icon"
@@ -36,7 +44,11 @@
 					<td>
 						{{ rule.detection }}
 					</td>
-					<td>{{ rule.url_fragment }}</td>
+					<td>
+						<div class="tooltip" :data-tip="rule.url_fragment">
+							{{ _shortify(rule.url_fragment, 20) }}
+						</div>
+					</td>
 					<td>
 						<div class="flex justify-end gap-8 invisible group-hover:visible overflow-hidden">
 							<button
@@ -66,20 +78,29 @@
 import DuplicateIcon from '../../../../icons/DuplicateIcon.vue';
 import DeleteIcon from '../../../../icons/DeleteIcon.vue';
 import { ref, inject } from 'vue';
-import { GLOBAL_EVENTS, Rule, RuleModalParams } from '../../../../../common/types.ts';
+import { GLOBAL_EVENTS, Group, Rule, RuleModalParams } from '../../../../../common/types.ts';
 import { useRulesStore } from '../../../../../stores/rules.store.ts';
 import RefreshIcon from '../../../../icons/RefreshIcon.vue';
 import RefreshButton from '../../../../global/RefreshButton.vue';
+import { _chromeGroupColor, _shortify } from '../../../../../common/helpers.ts';
+import ColorVisualizer from '../TabGroups/ColorVisualizer.vue';
 
 const props = defineProps<{
 	rules: Rule[];
+	groups: Group[];
 }>();
+
+const groupsById = props.groups.reduce(
+	(acc, group) => {
+		acc[group.id] = group;
+		return acc;
+	},
+	{} as Record<string, Group>
+);
 
 const refresh = () => {
 	rulesStore.init();
 };
-
-const isRefreshRotating = ref(false);
 
 const getIconUrl = (icon: string): string | undefined => {
 	if (!icon) return;

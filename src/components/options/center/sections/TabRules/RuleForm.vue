@@ -6,14 +6,14 @@
 		<HelpSwap v-model="showHelp" />
 	</h3>
 
-	<div class="flex gap-2 mt-2">
-		<label class="form-control w-full max-w-xs flex-1">
+	<div class="flex flex-wrap md:flex-nowrap gap-2 mt-2">
+		<label class="form-control w-full md:max-w-xs md:flex-1">
 			<div class="label">
 				<span class="label-text text-sm">Name</span>
 			</div>
 			<input
 				v-model="currentRule.name"
-				class="input input-xs input-bordered w-full max-w-xs"
+				class="input input-xs input-bordered w-full"
 				placeholder="e.g. Pinned GMail"
 				required
 				type="text"
@@ -23,7 +23,7 @@
 			</div>
 		</label>
 
-		<label class="form-control w-full max-w-xs flex-0">
+		<label class="form-control w-full md:max-w-xs md:flex-0">
 			<div class="label">
 				<span class="label-text text-sm">Detection</span>
 			</div>
@@ -34,13 +34,13 @@
 			</select>
 		</label>
 
-		<label class="form-control w-full max-w-xs flex-1">
+		<label class="form-control w-full md:max-w-xs md:flex-1">
 			<div class="label">
 				<span class="label-text text-sm">URL Fragment</span>
 			</div>
 			<input
 				v-model="currentRule.url_fragment"
-				class="input input-xs input-bordered w-full max-w-xs"
+				class="input input-xs input-bordered w-full md:max-w-xs"
 				placeholder="e.g mail.google.com"
 				required
 				type="text"
@@ -55,7 +55,7 @@
 		<hr class="border-base-300" />
 
 		<div class="flex gap-2 mt-4">
-			<label class="form-control w-full max-w-xs flex-0">
+			<label class="form-control w-full max-w-xs md:flex-0">
 				<div class="label">
 					<span class="label-text text-sm">Group <NewFeature /></span>
 				</div>
@@ -63,7 +63,7 @@
 				<CustomSelect v-model="currentRule.tab.group_id" :items="availableGroups" />
 			</label>
 
-			<label class="form-control w-full flex-1">
+			<label class="form-control w-full md:flex-1">
 				<div class="label">
 					<span class="label-text text-sm">Tab title</span>
 				</div>
@@ -84,7 +84,7 @@
 		</div>
 
 		<div class="flex gap-2">
-			<label class="form-control w-full max-w-xs flex-0">
+			<label class="form-control w-full max-w-xs md:flex-0">
 				<div class="label">
 					<span class="label-text text-sm">Icon</span>
 				</div>
@@ -94,7 +94,7 @@
 				</div>
 			</label>
 
-			<label class="form-control w-full flex-1">
+			<label class="form-control w-full md:flex-1">
 				<div class="label">
 					<span class="label-text text-sm">Custom Icon</span>
 				</div>
@@ -210,10 +210,10 @@
 		</form>
 		<button class="btn btn-sm btn-outline btn-primary ml-4 group" @click="save">
 			Save
-			<span v-if="showHelp">
-				<kbd class="kbd kbd-xs group-hover:text-neutral group-hover:bg-primary">⌘</kbd
-				><kbd class="kbd kbd-xs group-hover:text-neutral group-hover:bg-primary">S</kbd>
-			</span>
+			<!--			<span v-if="showHelp">-->
+			<!--				<kbd class="kbd kbd-xs group-hover:text-neutral group-hover:bg-primary">⌘</kbd-->
+			<!--				><kbd class="kbd kbd-xs group-hover:text-neutral group-hover:bg-primary">S</kbd>-->
+			<!--			</span>-->
 		</button>
 	</div>
 </template>

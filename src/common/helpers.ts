@@ -6,6 +6,10 @@ export function _clone(obj: any) {
 	return JSON.parse(JSON.stringify(obj));
 }
 
+export function _shortify(text: string, length: number) {
+	return text.length > length ? text.slice(0, length) + '...' : text;
+}
+
 export function _chromeGroupColor(color: string) {
 	switch (color) {
 		case 'grey':
