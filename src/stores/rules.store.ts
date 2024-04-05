@@ -38,6 +38,40 @@ export const useRulesStore = defineStore('rules', {
 				console.error('Failed to load rules:', error);
 			}
 		},
+		async setConfig(config: TabModifierSettings) {
+			try {
+				await _setStorage(config);
+
+				await this.init();
+			} catch (error) {
+				console.error('Failed to set config:', error);
+			}
+		},
+		async mergeConfig(config: TabModifierSettings) {
+			try {
+				const tabModifier = await _getStorageAsync();
+
+				if (!tabModifier) {
+					await this.setConfig(config);
+
+					return;
+				}
+
+				if (config.rules.length > 0) {
+					tabModifier.rules.push(...config.rules);
+				}
+
+				if (config.groups.length > 0) {
+					tabModifier.groups.push(...config.groups);
+				}
+
+				await _setStorage(tabModifier);
+
+				await this.init();
+			} catch (error) {
+				console.error('Failed to set config:', error);
+			}
+		},
 		async getConfig(): Promise<TabModifierSettings | undefined> {
 			try {
 				return await _getStorageAsync();

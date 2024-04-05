@@ -17,18 +17,18 @@
 					</div>
 				</div>
 
-				<div class="grid grid-cols-6 mt-4">
-					<div class="col-span-5">
-						<h3 class="font-bold">Notifications</h3>
-						<p>
-							Enable "New version" toast, a tab is opened on each new version with a link to the
-							changelog
-						</p>
-					</div>
-					<div class="col-span-1">
-						<input checked class="toggle toggle-primary" type="checkbox" />
-					</div>
-				</div>
+				<!--				<div class="grid grid-cols-6 mt-4">-->
+				<!--					<div class="col-span-5">-->
+				<!--						<h3 class="font-bold">Notifications</h3>-->
+				<!--						<p>-->
+				<!--							Enable "New version" toast, a tab is opened on each new version with a link to the-->
+				<!--							changelog-->
+				<!--						</p>-->
+				<!--					</div>-->
+				<!--					<div class="col-span-1">-->
+				<!--						<input checked class="toggle toggle-primary" type="checkbox" />-->
+				<!--					</div>-->
+				<!--				</div>-->
 			</div>
 		</div>
 
@@ -42,7 +42,45 @@
 						<p>Restore your tab rules settings from an external JSON file.</p>
 					</div>
 					<div class="col-span-1">
-						<button class="btn btn-sm btn-outline w-full">Import</button>
+						<button class="btn btn-sm btn-outline w-full" @click="showImportModal">Import</button>
+						<dialog ref="importModal" class="modal">
+							<div class="modal-box">
+								<h3 class="font-bold text-lg">Import</h3>
+								<p>Import tab rules settings from an external JSON file.</p>
+
+								<label class="form-control w-full mt-4">
+									<input
+										ref="fileInput"
+										type="file"
+										accept=".json"
+										class="file-input file-input-xs file-input-bordered w-full"
+										@change="onFileChanged"
+									/>
+								</label>
+
+								<div class="modal-action">
+									<form method="dialog">
+										<button class="btn btn-sm">Close</button>
+									</form>
+
+									<button
+										:disabled="!fileLoaded"
+										class="btn btn-sm btn-outline btn-accent ml-4 group"
+										@click="importReplaceConfig"
+									>
+										Import & Replace
+									</button>
+
+									<button
+										:disabled="!fileLoaded"
+										class="btn btn-sm btn-outline btn-primary ml-4 group"
+										@click="importMergeConfig"
+									>
+										Import & Merge
+									</button>
+								</div>
+							</div>
+						</dialog>
 					</div>
 				</div>
 
@@ -87,31 +125,111 @@ import { inject, ref, watch } from 'vue';
 import { useRulesStore } from '../../../../stores/rules.store.ts';
 import NewFeature from '../../../global/NewFeature.vue';
 import { GLOBAL_EVENTS } from '../../../../common/types.ts';
+import { _getThemes } from '../../../../common/helpers.ts';
 
 const emitter = inject('emitter');
 const rulesStore = useRulesStore();
 const currentTheme = ref(rulesStore.settings.theme);
 
-const themes = [
-	{ label: 'Dim', value: 'dim' },
-	{ label: 'Dark', value: 'dark' },
-	{ label: 'Halloween', value: 'halloween' },
-	{ label: 'Light', value: 'light' },
-	{ label: 'Cupcake', value: 'cupcake' },
-	{ label: 'Valentine', value: 'valentine' },
-];
+const importModal = ref(null);
+const fileInput = ref(null);
+const fileLoaded = ref(false);
+
+const themes = _getThemes();
 
 watch(currentTheme, (theme) => {
 	rulesStore.applyTheme(theme);
 });
 
-const onDeleteAllRules = async () => {
-	await rulesStore.deleteAllRules();
+const onFileChanged = (event: any) => {
+	const file = event.target.files[0];
 
-	emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
-		type: 'success',
-		message: 'All rules have been deleted successfully!',
-	});
+	if (!file) {
+		fileLoaded.value = false;
+		return;
+	}
+
+	fileLoaded.value = true;
+};
+
+const onDeleteAllRules = async () => {
+	if (confirm('Are you sure you want to delete all rules?')) {
+		await rulesStore.deleteAllRules();
+
+		emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
+			type: 'success',
+			message: 'All rules have been deleted successfully!',
+		});
+	}
+};
+
+const showImportModal = () => {
+	if (!importModal.value) return;
+
+	const modal = importModal.value as HTMLDialogElement;
+	modal.showModal();
+};
+
+const importMergeConfig = async () => {
+	if (!fileInput.value) return;
+
+	const file = fileInput.value.files[0];
+	const reader = new FileReader();
+
+	reader.onload = async (event: any) => {
+		const config = JSON.parse(event.target.result);
+
+		await rulesStore.mergeConfig(config);
+
+		emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
+			type: 'success',
+			message: 'Import successfully!',
+		});
+
+		if (fileInput.value) {
+			fileInput.value.value = '';
+		}
+
+		if (!importModal.value) return;
+
+		const modal = importModal.value as HTMLDialogElement;
+		modal.close();
+	};
+
+	reader.readAsText(file);
+};
+
+const importReplaceConfig = async () => {
+	if (!fileInput.value) return;
+
+	if (!confirm('All your current settings will be replaced. Are you sure?')) {
+		return;
+	}
+
+	const file = fileInput.value.files[0];
+	const reader = new FileReader();
+
+	reader.onload = async (event: any) => {
+		const config = JSON.parse(event.target.result);
+
+		await rulesStore.setConfig(config);
+
+		emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
+			type: 'success',
+			message: 'Import successfully!',
+		});
+
+		if (fileInput.value) {
+			fileInput.value.value = '';
+		}
+
+		if (!importModal.value) return;
+
+		const modal = importModal.value as HTMLDialogElement;
+		modal.close();
+	};
+
+	reader.readAsText(file);
 };
 
 const exportConfig = async () => {

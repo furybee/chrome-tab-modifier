@@ -27,10 +27,23 @@ export function _chromeGroupColor(color: string) {
 		case 'orange':
 			return '#fcad70';
 	}
+
+	return '#dadce0';
 }
 
 export function _isDefined(...args: any[]) {
 	return args.every((arg) => arg !== undefined);
+}
+
+export function _getThemes() {
+	return [
+		{ label: 'Dim', value: 'dim' },
+		{ label: 'Dark', value: 'dark' },
+		{ label: 'Halloween', value: 'halloween' },
+		{ label: 'Light', value: 'light' },
+		{ label: 'Cupcake', value: 'cupcake' },
+		{ label: 'Valentine', value: 'valentine' },
+	];
 }
 
 export function _getIcons() {
