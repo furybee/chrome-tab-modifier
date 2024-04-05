@@ -26,17 +26,21 @@ function handleSetUnique(message: any, currentTab: chrome.tabs.Tab) {
 			if (tab.url.includes(message.url_fragment) && tab.id !== currentTab.id) {
 				if (!currentTab?.id) return;
 
-				chrome.tabs.executeScript(currentTab.id, { code: 'window.onbeforeunload = null;' }, () => {
-					if (!currentTab?.id) return;
-					if (!tab?.id) return;
+				chrome.tabs.executeScript(
+					currentTab.id,
+					{ code: 'window.onbeforeunload = null;' },
+					async () => {
+						if (!currentTab?.id) return;
+						if (!tab?.id) return;
 
-					chrome.tabs.remove(currentTab.id);
+						await chrome.tabs.remove(currentTab.id);
 
-					chrome.tabs.update(tab.id, {
-						url: currentTab.url,
-						highlighted: true,
-					});
-				});
+						await chrome.tabs.update(tab.id, {
+							url: currentTab.url,
+							highlighted: true,
+						});
+					}
+				);
 			}
 		});
 	});
@@ -76,6 +80,7 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
 });
 
 async function handleRenameTab(tab: chrome.tabs.Tab, title: string) {
+	if (!tab?.id) return;
 	if (!tab?.url) return;
 
 	let tabModifier = await _getStorageAsync();
@@ -87,9 +92,7 @@ async function handleRenameTab(tab: chrome.tabs.Tab, title: string) {
 	if (!URL.canParse(tab.url)) return;
 
 	const urlParams = new URL(tab.url);
-
 	const ruleName = 'Rule (' + urlParams.host.substring(0, 15) + ')';
-
 	const rule = _getDefaultRule(title ?? 'Default', ruleName, urlParams.href);
 
 	tabModifier.rules.push(rule);
@@ -106,7 +109,7 @@ chrome.contextMenus.create({
 });
 
 chrome.contextMenus.onClicked.addListener(async function (info, tab) {
-	if (tab?.url === undefined) return;
+	if (!tab?.id) return;
 
 	if (info.menuItemId === 'rename-tab') {
 		await chrome.tabs.sendMessage(tab.id, { action: 'openPrompt' });
@@ -114,11 +117,12 @@ chrome.contextMenus.onClicked.addListener(async function (info, tab) {
 });
 
 function applyRuleToTab(tab: chrome.tabs.Tab, tabModifier: TabModifierSettings) {
-	const rule = tabModifier.rules.find((r) => {
+	const rule = tabModifier.rules.find((rule) => {
 		if (!tab.url) return false;
 
-		const detectionType = r.detection ?? 'CONTAINS';
-		const urlFragment = r.url_fragment;
+		const detectionType = rule.detection ?? 'CONTAINS';
+		const urlFragment = rule.url_fragment;
+
 		switch (detectionType) {
 			case 'CONTAINS':
 				return tab.url.includes(urlFragment);
@@ -149,7 +153,7 @@ function applyRuleToTab(tab: chrome.tabs.Tab, tabModifier: TabModifierSettings) 
 }
 
 // Function to handle tab groups after querying
-function handleTabGroups(
+async function handleTabGroups(
 	groups: chrome.tabGroups.TabGroup[],
 	tab: chrome.tabs.Tab,
 	tmGroup: Group
@@ -157,7 +161,7 @@ function handleTabGroups(
 	if (!tab.id) return;
 
 	if (groups.length === 0) {
-		createAndSetupGroup([tab.id], tmGroup);
+		await createAndSetupGroup([tab.id], tmGroup);
 	} else if (groups.length === 1) {
 		const group = groups[0];
 
@@ -168,21 +172,21 @@ function handleTabGroups(
 }
 
 // Function to create and setup a new tab group
-function createAndSetupGroup(tabIds: number[], tmGroup: Group) {
+async function createAndSetupGroup(tabIds: number[], tmGroup: Group) {
 	chrome.tabs.group({ tabIds: tabIds }, (groupId: number) => {
 		updateTabGroup(groupId, tmGroup);
 	});
 }
 
 // Function to update tab group properties
-function updateTabGroup(groupId: number, tmGroup: Group) {
+async function updateTabGroup(groupId: number, tmGroup: Group) {
 	const updateProperties = {
 		title: tmGroup.title,
 		color: tmGroup.color,
 		collapsed: tmGroup.collapsed,
 	} as chrome.tabGroups.UpdateProperties;
 
-	chrome.tabGroups.update(groupId, updateProperties);
+	await chrome.tabGroups.update(groupId, updateProperties);
 }
 
 export {};
