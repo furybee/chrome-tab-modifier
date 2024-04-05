@@ -123,17 +123,17 @@ const editRule = (rule: Rule, index: number) => {
 };
 
 const duplicateRule = async (event: MouseEvent, index: number) => {
-	await rulesStore.duplicateRule(index);
-
 	event.stopPropagation();
+
+	await rulesStore.duplicateRule(index);
 };
 
 const deleteRule = async (event: MouseEvent, index: number) => {
+	event.stopPropagation();
+
 	if (confirm('Are you sure you want to delete this rule?')) {
 		await rulesStore.deleteRule(index);
 	}
-
-	event.stopPropagation();
 };
 </script>
 
