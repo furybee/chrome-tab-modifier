@@ -128,9 +128,10 @@ import { GLOBAL_EVENTS } from '../../../../common/types.ts';
 import { _getThemes } from '../../../../common/helpers.ts';
 
 const emitter = inject('emitter');
-const rulesStore = useRulesStore();
-const currentTheme = ref(rulesStore.settings.theme);
 
+const rulesStore = useRulesStore();
+
+const currentTheme = ref(rulesStore.settings.theme);
 const importModal = ref(null);
 const fileInput = ref(null);
 const fileLoaded = ref(false);

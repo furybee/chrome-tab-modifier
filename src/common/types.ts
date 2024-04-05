@@ -1,3 +1,5 @@
+import { DefineComponent } from 'vue';
+
 export type MenuItem = {
 	title: string;
 	icon: string;
@@ -68,3 +70,8 @@ export type ToastParams = {
 	message: string;
 	timeout?: number;
 };
+
+export type Components = Record<
+	string,
+	DefineComponent<NonNullable<unknown>, NonNullable<unknown>, any>
+>;

@@ -64,8 +64,8 @@
 import { useRulesStore } from '../../../../../stores/rules.store.ts';
 import { computed, inject, ref, watch } from 'vue';
 import CustomSelect from '../../../../global/CustomSelect.vue';
-import { _chromeGroupColor, _clone } from '../../../../../common/helpers.ts';
-import { GLOBAL_EVENTS } from '../../../../../common/types.ts';
+import { _clone, _groupColors } from '../../../../../common/helpers.ts';
+import { GLOBAL_EVENTS, Group } from '../../../../../common/types.ts';
 import HelpSwap from '../../../../global/HelpSwap.vue';
 
 const emitter = inject('emitter');
@@ -73,7 +73,7 @@ const rulesStore = useRulesStore();
 
 const isEditMode = computed(() => !!rulesStore.currentGroup);
 
-const defaultGroup = {
+const defaultGroup: Partial<Group> = {
 	title: '',
 	color: 'grey',
 	collapsed: false,
@@ -82,17 +82,7 @@ const defaultGroup = {
 const showHelp = ref(false);
 const currentGroup = ref(_clone(rulesStore.currentGroup ?? defaultGroup));
 
-const availableGroupColors = [
-	{ label: 'grey', value: 'grey', color: _chromeGroupColor('grey') },
-	{ label: 'blue', value: 'blue', color: _chromeGroupColor('blue') },
-	{ label: 'red', value: 'red', color: _chromeGroupColor('red') },
-	{ label: 'yellow', value: 'yellow', color: _chromeGroupColor('yellow') },
-	{ label: 'green', value: 'green', color: _chromeGroupColor('green') },
-	{ label: 'pink', value: 'pink', color: _chromeGroupColor('pink') },
-	{ label: 'purple', value: 'purple', color: _chromeGroupColor('purple') },
-	{ label: 'cyan', value: 'cyan', color: _chromeGroupColor('cyan') },
-	{ label: 'orange', value: 'orange', color: _chromeGroupColor('orange') },
-];
+const availableGroupColors = _groupColors();
 
 watch(
 	() => rulesStore.currentGroup,

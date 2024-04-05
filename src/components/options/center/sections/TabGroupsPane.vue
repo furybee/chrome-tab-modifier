@@ -29,7 +29,7 @@ import TableGroups from './TabGroups/TableGroups.vue';
 const rulesStore = useRulesStore();
 rulesStore.init();
 
-const addGroupModal = ref(null);
+const addGroupModal = ref<HTMLDialogElement | null>(null);
 const isGroupFormModalOpened = ref(false);
 
 const emitter = inject('emitter');
@@ -56,9 +56,7 @@ const openAddGroupModal = (params?: GroupModalParams) => {
 		rulesStore.setCurrentGroup(params.group, params.index);
 	}
 
-	// mount GroupForm component
 	isGroupFormModalOpened.value = true;
-
 	addGroupModal.value.showModal();
 };
 
@@ -67,9 +65,7 @@ const closeAddGroupModal = () => {
 		return;
 	}
 
-	// unmount GroupForm component
 	isGroupFormModalOpened.value = false;
-
 	addGroupModal.value.close();
 };
 </script>

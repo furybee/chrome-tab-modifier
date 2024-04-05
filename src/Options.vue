@@ -38,7 +38,7 @@
 						</div>
 					</div>
 
-					<component :is="panes[currentContent.component]" />
+					<component :is="panes[currentContent.component]" v-if="currentContent.component" />
 
 					<Toaster />
 				</div>
@@ -62,7 +62,7 @@
 
 <script lang="ts" setup>
 import Menu from './components/options/left/Menu.vue';
-import { GLOBAL_EVENTS, MenuItem } from './common/types.ts';
+import { GLOBAL_EVENTS, Components, MenuItem } from './common/types.ts';
 import { inject, onMounted, ref } from 'vue';
 import TabRulesPane from './components/options/center/sections/TabRulesPane.vue';
 import TabGroupsPane from './components/options/center/sections/TabGroupsPane.vue';
@@ -76,7 +76,7 @@ import Toaster from './components/global/Toaster.vue';
 
 const emitter = inject('emitter');
 
-const panes = {
+const panes: Components = {
 	TabRulesPane,
 	TabGroupsPane,
 	SettingsPane,

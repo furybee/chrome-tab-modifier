@@ -3,6 +3,4 @@
 		<h1 class="whitespace-nowrap">Tab Modifier</h1>
 	</div>
 </template>
-<script setup lang="ts">
-import RuleForm from './components/options/center/sections/TabRules/RuleForm.vue';
-</script>
+<script setup lang="ts"></script>

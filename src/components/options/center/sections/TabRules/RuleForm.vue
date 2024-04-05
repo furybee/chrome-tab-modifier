@@ -220,25 +220,28 @@
 <script lang="ts" setup>
 import { useRulesStore } from '../../../../../stores/rules.store.ts';
 import { computed, inject, ref, watch } from 'vue';
-import CustomSelect from '../../../../global/CustomSelect.vue';
+import CustomSelect, { SelectItem } from '../../../../global/CustomSelect.vue';
 import NewFeature from '../../../../global/NewFeature.vue';
-import { _chromeGroupColor, _clone, _getIcons } from '../../../../../common/helpers.ts';
+import {
+	_chromeGroupColor,
+	_clone,
+	_getDetections,
+	_getIcons,
+} from '../../../../../common/helpers.ts';
 import { GLOBAL_EVENTS, Group } from '../../../../../common/types.ts';
 import HelpSwap from '../../../../global/HelpSwap.vue';
 import { _getDefaultRule } from '../../../../../common/storage.ts';
 
 const rulesStore = useRulesStore();
 
-const isEditMode = computed(() => !!rulesStore.currentRule);
-
 const defaultRule = _getDefaultRule('', 'CONTAINS', '');
 
 const customIcon = ref('');
 const iconUrl = ref('');
-
 const showHelp = ref(false);
-
 const currentRule = ref(_clone(rulesStore.currentRule ?? defaultRule));
+
+const isEditMode = computed(() => !!rulesStore.currentRule);
 
 const isFirstPartFilled = computed(() => {
 	return currentRule.value.name && currentRule.value.detection && currentRule.value.url_fragment;
@@ -251,7 +254,7 @@ const availableGroups = rulesStore.groups.map((group: Group) => {
 		value: group.id,
 		label: group.title,
 	};
-});
+}) as SelectItem[];
 
 watch(
 	() => rulesStore.currentRule,
@@ -308,13 +311,6 @@ const save = async () => {
 	});
 };
 
-const detections = [
-	{ name: 'Contains', value: 'CONTAINS' },
-	{ name: 'Starts with', value: 'STARTS_WITH' },
-	{ name: 'Exact', value: 'EXACT' },
-	{ name: 'Ends with', value: 'ENDS_WITH' },
-	{ name: 'Regex', value: 'REGEX' },
-];
-
+const detections = _getDetections();
 const icons = _getIcons();
 </script>

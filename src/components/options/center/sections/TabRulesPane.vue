@@ -29,7 +29,7 @@ import RuleForm from './TabRules/RuleForm.vue';
 const rulesStore = useRulesStore();
 rulesStore.init();
 
-const addRuleModal = ref(null);
+const addRuleModal = ref<HTMLDialogElement | null>(null);
 const isRuleFormModalOpened = ref(false);
 
 const emitter = inject('emitter');
@@ -67,7 +67,6 @@ const closeAddRuleModal = () => {
 		return;
 	}
 
-	// unmount RuleForm component
 	isRuleFormModalOpened.value = false;
 
 	addRuleModal.value.close();

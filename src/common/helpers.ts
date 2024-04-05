@@ -10,6 +10,20 @@ export function _shortify(text: string, length: number) {
 	return text.length > length ? text.slice(0, length) + '...' : text;
 }
 
+export function _groupColors() {
+	return [
+		{ label: 'grey', value: 'grey', color: _chromeGroupColor('grey') },
+		{ label: 'blue', value: 'blue', color: _chromeGroupColor('blue') },
+		{ label: 'red', value: 'red', color: _chromeGroupColor('red') },
+		{ label: 'yellow', value: 'yellow', color: _chromeGroupColor('yellow') },
+		{ label: 'green', value: 'green', color: _chromeGroupColor('green') },
+		{ label: 'pink', value: 'pink', color: _chromeGroupColor('pink') },
+		{ label: 'purple', value: 'purple', color: _chromeGroupColor('purple') },
+		{ label: 'cyan', value: 'cyan', color: _chromeGroupColor('cyan') },
+		{ label: 'orange', value: 'orange', color: _chromeGroupColor('orange') },
+	];
+}
+
 export function _chromeGroupColor(color: string) {
 	switch (color) {
 		case 'grey':
@@ -50,6 +64,15 @@ export function _getThemes() {
 	];
 }
 
+export function _getDetections() {
+	return [
+		{ name: 'Contains', value: 'CONTAINS' },
+		{ name: 'Starts with', value: 'STARTS_WITH' },
+		{ name: 'Exact', value: 'EXACT' },
+		{ name: 'Ends with', value: 'ENDS_WITH' },
+		{ name: 'Regex', value: 'REGEX' },
+	];
+}
 export function _getIcons() {
 	const assets = chrome.runtime.getURL('/assets/');
 

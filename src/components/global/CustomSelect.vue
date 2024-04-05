@@ -51,8 +51,8 @@ import ChevronDownIcon from '../icons/ChevronDownIcon.vue';
 import ColorVisualizer from '../options/center/sections/TabGroups/ColorVisualizer.vue';
 import CloseIcon from '../icons/CloseIcon.vue';
 
-interface SelectItem {
-	icon?: string;
+export interface SelectItem {
+	icon?: string | null;
 	color?: string;
 	value: string;
 	label: string;
