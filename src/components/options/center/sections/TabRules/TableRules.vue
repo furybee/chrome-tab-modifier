@@ -7,7 +7,9 @@
 					<th>Title</th>
 					<th>Detection</th>
 					<th>URL Fragment</th>
-					<th />
+					<th class="text-right">
+						<RefreshButton @on-refresh-click="refresh"></RefreshButton>
+					</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -22,7 +24,12 @@
 					</td>
 					<td>
 						<div class="flex items-center gap-2">
-							<img :alt="rule.name + '_icon'" :src="getIconUrl(rule.tab.icon)" class="w-6 h-6" />
+							<img
+								v-if="rule.tab.icon"
+								:alt="rule.name + '_icon'"
+								:src="getIconUrl(rule.tab.icon)"
+								class="w-6 h-6"
+							/>
 							{{ rule.tab.title && rule.tab.title !== '' ? rule.tab.title : '{title}' }}
 						</div>
 					</td>
@@ -35,7 +42,7 @@
 							<button
 								class="btn btn-xs btn-circle tooltip flex items-center justify-items-center"
 								data-tip="Duplicate"
-								@click="duplicateRule(index)"
+								@click="(event) => duplicateRule(event, index)"
 							>
 								<DuplicateIcon class="!w-4 !h-4" />
 							</button>
@@ -43,7 +50,7 @@
 							<button
 								class="btn btn-xs btn-circle btn-outline tooltip flex items-center justify-items-center btn-error"
 								data-tip="Delete"
-								@click="deleteRule(index)"
+								@click="(event) => deleteRule(event, index)"
 							>
 								<DeleteIcon class="!w-4 !h-4" />
 							</button>
@@ -58,15 +65,25 @@
 <script lang="ts" setup>
 import DuplicateIcon from '../../../../icons/DuplicateIcon.vue';
 import DeleteIcon from '../../../../icons/DeleteIcon.vue';
-import { inject } from 'vue';
+import { ref, inject } from 'vue';
 import { GLOBAL_EVENTS, Rule, RuleModalParams } from '../../../../../common/types.ts';
 import { useRulesStore } from '../../../../../stores/rules.store.ts';
+import RefreshIcon from '../../../../icons/RefreshIcon.vue';
+import RefreshButton from '../../../../global/RefreshButton.vue';
 
 const props = defineProps<{
 	rules: Rule[];
 }>();
 
-const getIconUrl = (icon: string) => {
+const refresh = () => {
+	rulesStore.init();
+};
+
+const isRefreshRotating = ref(false);
+
+const getIconUrl = (icon: string): string | undefined => {
+	if (!icon) return;
+
 	if (icon.startsWith('http')) {
 		return icon;
 	}
@@ -84,12 +101,16 @@ const editRule = (rule: Rule, index: number) => {
 	} as RuleModalParams);
 };
 
-const duplicateRule = (index: number) => {
-	rulesStore.duplicateRule(index);
+const duplicateRule = async (event: MouseEvent, index: number) => {
+	await rulesStore.duplicateRule(index);
+
+	event.stopPropagation();
 };
 
-const deleteRule = (index: number) => {
+const deleteRule = (event: MouseEvent, index: number) => {
 	rulesStore.deleteRule(index);
+
+	event.stopPropagation();
 };
 </script>
 

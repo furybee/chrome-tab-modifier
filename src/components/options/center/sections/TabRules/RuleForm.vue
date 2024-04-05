@@ -222,33 +222,17 @@ import { useRulesStore } from '../../../../../stores/rules.store.ts';
 import { computed, inject, ref, watch } from 'vue';
 import CustomSelect from '../../../../global/CustomSelect.vue';
 import NewFeature from '../../../../global/NewFeature.vue';
-import { _chromeColor, _clone } from '../../../../../common/helpers.ts';
+import { _chromeGroupColor, _clone, _getIcons } from '../../../../../common/helpers.ts';
 import { GLOBAL_EVENTS, Group } from '../../../../../common/types.ts';
 import HelpSwap from '../../../../global/HelpSwap.vue';
+import { _getDefaultRule } from '../../../../../common/storage.ts';
 
 const rulesStore = useRulesStore();
 
 const isEditMode = computed(() => !!rulesStore.currentRule);
 
-const defaultRule = {
-	name: '',
-	detection: 'CONTAINS',
-	url_fragment: '',
-	tab: {
-		icon: '',
-		muted: false,
-		pinned: false,
-		protected: false,
-		title: '',
-		title_matcher: null,
-		unique: false,
-		url_matcher: null,
-		group: null,
-		group_id: null,
-	},
-};
+const defaultRule = _getDefaultRule('', 'CONTAINS', '');
 
-const newGroup = ref('');
 const customIcon = ref('');
 const iconUrl = ref('');
 
@@ -263,7 +247,7 @@ const isFirstPartFilled = computed(() => {
 const availableGroups = rulesStore.groups.map((group: Group) => {
 	return {
 		icon: null,
-		color: _chromeColor(group.color),
+		color: _chromeGroupColor(group.color),
 		value: group.id,
 		label: group.title,
 	};
@@ -332,153 +316,5 @@ const detections = [
 	{ name: 'Regex', value: 'REGEX' },
 ];
 
-const assets = chrome.runtime.getURL('/assets/');
-
-const icons = [
-	{
-		label: 'Default',
-		value: 'chrome/default.png',
-		icon: assets + 'chrome/default.png',
-	},
-	{
-		label: 'Chrome',
-		value: 'chrome/chrome.png',
-		icon: assets + 'chrome/chrome.png',
-	},
-	{
-		label: 'Bookmarks',
-		value: 'chrome/bookmarks.png',
-		icon: assets + 'chrome/bookmarks.png',
-	},
-	{
-		label: 'Downloads',
-		value: 'chrome/downloads.png',
-		icon: assets + 'chrome/downloads.png',
-	},
-	{
-		label: 'Extensions',
-		value: 'chrome/extensions.png',
-		icon: assets + 'chrome/extensions.png',
-	},
-	{
-		label: 'History',
-		value: 'chrome/history.png',
-		icon: assets + 'chrome/history.png',
-	},
-	{
-		label: 'Settings',
-		value: 'chrome/settings.png',
-		icon: assets + 'chrome/settings.png',
-	},
-	{
-		label: 'amber',
-		value: 'bullets/bullet-amber.png',
-		icon: assets + 'bullets/bullet-amber.png',
-	},
-	{
-		label: 'amber-alt',
-		value: 'bullets/bullet-amber-alt.png',
-		icon: assets + 'bullets/bullet-amber-alt.png',
-	},
-	{
-		label: 'blue',
-		value: 'bullets/bullet-blue.png',
-		icon: assets + 'bullets/bullet-blue.png',
-	},
-	{
-		label: 'blue-alt',
-		value: 'bullets/bullet-blue-alt.png',
-		icon: assets + 'bullets/bullet-blue-alt.png',
-	},
-	{
-		label: 'blue-grey',
-		value: 'bullets/bullet-blue-grey.png',
-		icon: assets + 'bullets/bullet-blue-grey.png',
-	},
-	{
-		label: 'blue-grey-alt',
-		value: 'bullets/bullet-blue-grey-alt.png',
-		icon: assets + 'bullets/bullet-blue-grey-alt.png',
-	},
-	{
-		label: 'cyan',
-		value: 'bullets/bullet-cyan.png',
-		icon: assets + 'bullets/bullet-cyan.png',
-	},
-	{
-		label: 'cyan-alt',
-		value: 'bullets/bullet-cyan-alt.png',
-		icon: assets + 'bullets/bullet-cyan-alt.png',
-	},
-	{
-		label: 'deep-orange',
-		value: 'bullets/bullet-deep-orange.png',
-		icon: assets + 'bullets/bullet-deep-orange.png',
-	},
-	{
-		label: 'deep-orange-alt',
-		value: 'bullets/bullet-deep-orange-alt.png',
-		icon: assets + 'bullets/bullet-deep-orange-alt.png',
-	},
-	{
-		label: 'green',
-		value: 'bullets/bullet-green.png',
-		icon: assets + 'bullets/bullet-green.png',
-	},
-	{
-		label: 'green-alt',
-		value: 'bullets/bullet-green-alt.png',
-		icon: assets + 'bullets/bullet-green-alt.png',
-	},
-	{
-		label: 'indigo',
-		value: 'bullets/bullet-indigo.png',
-		icon: assets + 'bullets/bullet-indigo.png',
-	},
-	{
-		label: 'indigo-alt',
-		value: 'bullets/bullet-indigo-alt.png',
-		icon: assets + 'bullets/bullet-indigo-alt.png',
-	},
-	{
-		label: 'pink',
-		value: 'bullets/bullet-pink.png',
-		icon: assets + 'bullets/bullet-pink.png',
-	},
-	{
-		label: 'pink-alt',
-		value: 'bullets/bullet-pink-alt.png',
-		icon: assets + 'bullets/bullet-pink-alt.png',
-	},
-	{
-		label: 'purple',
-		value: 'bullets/bullet-purple.png',
-		icon: assets + 'bullets/bullet-purple.png',
-	},
-	{
-		label: 'purple-alt',
-		value: 'bullets/bullet-purple-alt.png',
-		icon: assets + 'bullets/bullet-purple-alt.png',
-	},
-	{
-		label: 'red',
-		value: 'bullets/bullet-red.png',
-		icon: assets + 'bullets/bullet-red.png',
-	},
-	{
-		label: 'red-alt',
-		value: 'bullets/bullet-red-alt.png',
-		icon: assets + 'bullets/bullet-red-alt.png',
-	},
-	{
-		label: 'teal',
-		value: 'bullets/bullet-teal.png',
-		icon: assets + 'bullets/bullet-teal.png',
-	},
-	{
-		label: 'teal-alt',
-		value: 'bullets/bullet-teal-alt.png',
-		icon: assets + 'bullets/bullet-teal-alt.png',
-	},
-];
+const icons = _getIcons();
 </script>

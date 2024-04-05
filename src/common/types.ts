@@ -6,22 +6,22 @@ export type MenuItem = {
 };
 
 export type Tab = {
-	icon: string;
+	title: string;
+	icon: string | null;
 	muted: boolean;
 	pinned: boolean;
 	protected: boolean;
-	title: string;
-	title_matcher: string;
 	unique: boolean;
-	url_matcher: string;
-	group_id?: string;
+	group_id?: string | null;
+	title_matcher: string | null;
+	url_matcher: string | null;
 };
 
 export type Rule = {
-	detection: string;
 	name: string;
-	tab: Tab;
+	detection: string;
 	url_fragment: string;
+	tab: Tab;
 };
 
 export type Group = {

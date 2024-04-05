@@ -64,7 +64,7 @@
 import { useRulesStore } from '../../../../../stores/rules.store.ts';
 import { computed, inject, ref, watch } from 'vue';
 import CustomSelect from '../../../../global/CustomSelect.vue';
-import { _chromeColor, _clone } from '../../../../../common/helpers.ts';
+import { _chromeGroupColor, _clone } from '../../../../../common/helpers.ts';
 import { GLOBAL_EVENTS } from '../../../../../common/types.ts';
 import HelpSwap from '../../../../global/HelpSwap.vue';
 
@@ -82,17 +82,17 @@ const defaultGroup = {
 const showHelp = ref(false);
 const currentGroup = ref(_clone(rulesStore.currentGroup ?? defaultGroup));
 
-const availableGroupColors = ref([
-	{ label: 'grey', value: 'grey', color: _chromeColor('grey') },
-	{ label: 'blue', value: 'blue', color: _chromeColor('blue') },
-	{ label: 'red', value: 'red', color: _chromeColor('red') },
-	{ label: 'yellow', value: 'yellow', color: _chromeColor('yellow') },
-	{ label: 'green', value: 'green', color: _chromeColor('green') },
-	{ label: 'pink', value: 'pink', color: _chromeColor('pink') },
-	{ label: 'purple', value: 'purple', color: _chromeColor('purple') },
-	{ label: 'cyan', value: 'cyan', color: _chromeColor('cyan') },
-	{ label: 'orange', value: 'orange', color: _chromeColor('orange') },
-]);
+const availableGroupColors = [
+	{ label: 'grey', value: 'grey', color: _chromeGroupColor('grey') },
+	{ label: 'blue', value: 'blue', color: _chromeGroupColor('blue') },
+	{ label: 'red', value: 'red', color: _chromeGroupColor('red') },
+	{ label: 'yellow', value: 'yellow', color: _chromeGroupColor('yellow') },
+	{ label: 'green', value: 'green', color: _chromeGroupColor('green') },
+	{ label: 'pink', value: 'pink', color: _chromeGroupColor('pink') },
+	{ label: 'purple', value: 'purple', color: _chromeGroupColor('purple') },
+	{ label: 'cyan', value: 'cyan', color: _chromeGroupColor('cyan') },
+	{ label: 'orange', value: 'orange', color: _chromeGroupColor('orange') },
+];
 
 watch(
 	() => rulesStore.currentGroup,

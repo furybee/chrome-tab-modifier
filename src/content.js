@@ -1,5 +1,4 @@
 const STORAGE_KEY = 'tab_modifier';
-const EVENT_HASH_CHANGE = 'hashchange';
 
 // Helper functions for readability
 function getTextBySelector(selector) {
@@ -190,7 +189,17 @@ chrome.storage.local.get(STORAGE_KEY, (items) => {
 	}
 
 	applyRule();
+});
 
-	// Remove hashchange listener to avoid conflicts (commented out)
-	// window.onhashchange = applyRule;
+chrome.runtime.onMessage.addListener(function (request) {
+	if (request.action === 'openPrompt') {
+		const title = prompt(
+			'Enter the new title, a Tab rule will be automatically created for you based on current URL'
+		);
+
+		chrome.runtime.sendMessage({
+			action: 'renameTab',
+			title: title,
+		});
+	}
 });

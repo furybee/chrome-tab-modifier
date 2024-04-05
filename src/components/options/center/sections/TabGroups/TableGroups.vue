@@ -18,7 +18,7 @@
 				>
 					<td>{{ group.title }}</td>
 					<td>
-						<ColorVisualizer :color="_chromeColor(group.color)" />
+						<ColorVisualizer :color="_chromeGroupColor(group.color)" />
 					</td>
 					<td>{{ group.collapsed }}</td>
 					<td>
@@ -43,7 +43,7 @@ import DeleteIcon from '../../../../icons/DeleteIcon.vue';
 import { inject } from 'vue';
 import { GLOBAL_EVENTS, Group, GroupModalParams } from '../../../../../common/types.ts';
 import { useRulesStore } from '../../../../../stores/rules.store.ts';
-import { _chromeColor } from '../../../../../common/helpers.ts';
+import { _chromeGroupColor } from '../../../../../common/helpers.ts';
 import ColorVisualizer from './ColorVisualizer.vue';
 
 const props = defineProps<{

@@ -1,31 +1,12 @@
 import { defineStore } from 'pinia';
 import { Group, Rule, Settings, TabModifierSettings } from '../common/types.ts';
 import { _clone } from '../common/helpers.ts';
-
-const STORAGE_KEY = 'tab_modifier';
-
-function getStorageAsync(): Promise<TabModifierSettings | undefined> {
-	return new Promise((resolve, reject) => {
-		chrome.storage.local.get(STORAGE_KEY, (items) => {
-			if (chrome.runtime.lastError) {
-				reject(new Error(chrome.runtime.lastError.message));
-			} else {
-				resolve(items[STORAGE_KEY]);
-			}
-		});
-	});
-}
-
-const getDefaultTabModifierSettings = (): TabModifierSettings => {
-	return {
-		rules: [],
-		groups: [],
-		settings: {
-			enable_new_version_notification: false,
-			theme: 'dim',
-		},
-	};
-};
+import {
+	_clearStorage,
+	_getDefaultTabModifierSettings,
+	_getStorageAsync,
+	_setStorage,
+} from '../common/storage.ts';
 
 export const useRulesStore = defineStore('rules', {
 	state: () => {
@@ -42,7 +23,7 @@ export const useRulesStore = defineStore('rules', {
 	actions: {
 		async init() {
 			try {
-				const tabModifier = await getStorageAsync();
+				const tabModifier = await _getStorageAsync();
 
 				if (!tabModifier) {
 					await this.save();
@@ -59,7 +40,7 @@ export const useRulesStore = defineStore('rules', {
 		},
 		async getConfig(): Promise<TabModifierSettings | undefined> {
 			try {
-				return await getStorageAsync();
+				return await _getStorageAsync();
 			} catch (error) {
 				console.error('Failed to load config:', error);
 			}
@@ -111,70 +92,60 @@ export const useRulesStore = defineStore('rules', {
 
 			await this.save();
 		},
-		async duplicateRule(index: number) {
+		async duplicateRule(index: number): Promise<Rule> {
 			const rule = _clone(this.rules[index]);
 
 			this.rules.push(rule);
 
 			await this.save();
+
+			return rule;
 		},
 		async save() {
 			try {
-				let tabModifier = await getStorageAsync();
+				let tabModifier = await _getStorageAsync();
 
 				if (!tabModifier) {
-					tabModifier = getDefaultTabModifierSettings();
+					tabModifier = _getDefaultTabModifierSettings();
 				} else {
 					tabModifier.rules = this.rules;
 					tabModifier.groups = this.groups;
 					tabModifier.settings = this.settings;
 				}
 
-				chrome.storage.local.set({
-					tab_modifier: _clone({
-						rules: tabModifier.rules,
-						groups: tabModifier.groups,
-						settings: tabModifier.settings,
-					}),
-				});
+				await _setStorage(tabModifier);
 			} catch (error) {
 				console.error('Failed to save:', error);
 			}
 		},
 		async deleteAllRules() {
-			chrome.storage.local.remove(STORAGE_KEY);
+			await _clearStorage();
 
 			await this.save();
 		},
 		async addRule(rule: Rule) {
 			try {
-				let tabModifier = await getStorageAsync();
+				let tabModifier = await _getStorageAsync();
 
 				if (!tabModifier) {
-					tabModifier = getDefaultTabModifierSettings();
+					tabModifier = _getDefaultTabModifierSettings();
 				}
 
 				tabModifier.rules.push(rule);
 
 				this.rules = tabModifier.rules;
 
-				chrome.storage.local.set({
-					tab_modifier: _clone({
-						rules: tabModifier.rules,
-						groups: tabModifier.groups,
-						settings: tabModifier.settings,
-					}),
-				});
+				await _setStorage(tabModifier);
 			} catch (error) {
 				console.error('Failed to load rules:', error);
 			}
 		},
 		async addGroup(group: Group) {
 			try {
-				let tabModifier = await getStorageAsync();
+				let tabModifier = await _getStorageAsync();
 
 				if (!tabModifier) {
-					tabModifier = getDefaultTabModifierSettings();
+					tabModifier = _getDefaultTabModifierSettings();
 				}
 
 				group.id = Math.random().toString(36).substring(7);
@@ -183,13 +154,7 @@ export const useRulesStore = defineStore('rules', {
 
 				this.groups = tabModifier.groups;
 
-				chrome.storage.local.set({
-					tab_modifier: _clone({
-						rules: tabModifier.rules,
-						groups: tabModifier.groups,
-						settings: tabModifier.settings,
-					}),
-				});
+				await _setStorage(tabModifier);
 			} catch (error) {
 				console.error('Failed to load rules:', error);
 			}

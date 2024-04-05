@@ -6,7 +6,7 @@ export function _clone(obj: any) {
 	return JSON.parse(JSON.stringify(obj));
 }
 
-export function _chromeColor(color: string) {
+export function _chromeGroupColor(color: string) {
 	switch (color) {
 		case 'grey':
 			return '#dadce0';
@@ -31,4 +31,156 @@ export function _chromeColor(color: string) {
 
 export function _isDefined(...args: any[]) {
 	return args.every((arg) => arg !== undefined);
+}
+
+export function _getIcons() {
+	const assets = chrome.runtime.getURL('/assets/');
+
+	return [
+		{
+			label: 'Default',
+			value: 'chrome/default.png',
+			icon: assets + 'chrome/default.png',
+		},
+		{
+			label: 'Chrome',
+			value: 'chrome/chrome.png',
+			icon: assets + 'chrome/chrome.png',
+		},
+		{
+			label: 'Bookmarks',
+			value: 'chrome/bookmarks.png',
+			icon: assets + 'chrome/bookmarks.png',
+		},
+		{
+			label: 'Downloads',
+			value: 'chrome/downloads.png',
+			icon: assets + 'chrome/downloads.png',
+		},
+		{
+			label: 'Extensions',
+			value: 'chrome/extensions.png',
+			icon: assets + 'chrome/extensions.png',
+		},
+		{
+			label: 'History',
+			value: 'chrome/history.png',
+			icon: assets + 'chrome/history.png',
+		},
+		{
+			label: 'Settings',
+			value: 'chrome/settings.png',
+			icon: assets + 'chrome/settings.png',
+		},
+		{
+			label: 'amber',
+			value: 'bullets/bullet-amber.png',
+			icon: assets + 'bullets/bullet-amber.png',
+		},
+		{
+			label: 'amber-alt',
+			value: 'bullets/bullet-amber-alt.png',
+			icon: assets + 'bullets/bullet-amber-alt.png',
+		},
+		{
+			label: 'blue',
+			value: 'bullets/bullet-blue.png',
+			icon: assets + 'bullets/bullet-blue.png',
+		},
+		{
+			label: 'blue-alt',
+			value: 'bullets/bullet-blue-alt.png',
+			icon: assets + 'bullets/bullet-blue-alt.png',
+		},
+		{
+			label: 'blue-grey',
+			value: 'bullets/bullet-blue-grey.png',
+			icon: assets + 'bullets/bullet-blue-grey.png',
+		},
+		{
+			label: 'blue-grey-alt',
+			value: 'bullets/bullet-blue-grey-alt.png',
+			icon: assets + 'bullets/bullet-blue-grey-alt.png',
+		},
+		{
+			label: 'cyan',
+			value: 'bullets/bullet-cyan.png',
+			icon: assets + 'bullets/bullet-cyan.png',
+		},
+		{
+			label: 'cyan-alt',
+			value: 'bullets/bullet-cyan-alt.png',
+			icon: assets + 'bullets/bullet-cyan-alt.png',
+		},
+		{
+			label: 'deep-orange',
+			value: 'bullets/bullet-deep-orange.png',
+			icon: assets + 'bullets/bullet-deep-orange.png',
+		},
+		{
+			label: 'deep-orange-alt',
+			value: 'bullets/bullet-deep-orange-alt.png',
+			icon: assets + 'bullets/bullet-deep-orange-alt.png',
+		},
+		{
+			label: 'green',
+			value: 'bullets/bullet-green.png',
+			icon: assets + 'bullets/bullet-green.png',
+		},
+		{
+			label: 'green-alt',
+			value: 'bullets/bullet-green-alt.png',
+			icon: assets + 'bullets/bullet-green-alt.png',
+		},
+		{
+			label: 'indigo',
+			value: 'bullets/bullet-indigo.png',
+			icon: assets + 'bullets/bullet-indigo.png',
+		},
+		{
+			label: 'indigo-alt',
+			value: 'bullets/bullet-indigo-alt.png',
+			icon: assets + 'bullets/bullet-indigo-alt.png',
+		},
+		{
+			label: 'pink',
+			value: 'bullets/bullet-pink.png',
+			icon: assets + 'bullets/bullet-pink.png',
+		},
+		{
+			label: 'pink-alt',
+			value: 'bullets/bullet-pink-alt.png',
+			icon: assets + 'bullets/bullet-pink-alt.png',
+		},
+		{
+			label: 'purple',
+			value: 'bullets/bullet-purple.png',
+			icon: assets + 'bullets/bullet-purple.png',
+		},
+		{
+			label: 'purple-alt',
+			value: 'bullets/bullet-purple-alt.png',
+			icon: assets + 'bullets/bullet-purple-alt.png',
+		},
+		{
+			label: 'red',
+			value: 'bullets/bullet-red.png',
+			icon: assets + 'bullets/bullet-red.png',
+		},
+		{
+			label: 'red-alt',
+			value: 'bullets/bullet-red-alt.png',
+			icon: assets + 'bullets/bullet-red-alt.png',
+		},
+		{
+			label: 'teal',
+			value: 'bullets/bullet-teal.png',
+			icon: assets + 'bullets/bullet-teal.png',
+		},
+		{
+			label: 'teal-alt',
+			value: 'bullets/bullet-teal-alt.png',
+			icon: assets + 'bullets/bullet-teal-alt.png',
+		},
+	];
 }
