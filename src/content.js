@@ -170,12 +170,10 @@ async function applyRule(ruleParam) {
 		});
 	}
 
-	if (rule.tab.group_id) {
-		await chrome.runtime.sendMessage({
-			action: 'setGroup',
-			rule: rule,
-		});
-	}
+	await chrome.runtime.sendMessage({
+		action: 'setGroup',
+		rule: rule,
+	});
 }
 
 chrome.storage.local.get(STORAGE_KEY, async (items) => {

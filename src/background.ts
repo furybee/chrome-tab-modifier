@@ -113,13 +113,40 @@ chrome.contextMenus.onClicked.addListener(async function (info, tab) {
 	}
 });
 
+async function ungroupTab(rule: Rule | undefined, tab: chrome.tabs.Tab) {
+	if (!tab.id) return;
+
+	let isRuleHasGroup = false;
+
+	if (rule && rule.tab.group_id && rule.tab.group_id !== '') {
+		isRuleHasGroup = true;
+	}
+
+	if (!isRuleHasGroup && tab.groupId && tab.groupId !== -1) {
+		// Check if the group is one of user's groups
+		const group = await chrome.tabGroups.get(tab.groupId);
+
+		const tabModifier = await _getStorageAsync();
+		if (!tabModifier) return;
+
+		const tmGroup = tabModifier.groups.find((g) => g.title === group.title);
+		if (tmGroup) await chrome.tabs.ungroup(tab.id);
+	}
+}
+
 async function applyGroupRuleToTab(
 	rule: Rule,
 	tab: chrome.tabs.Tab,
 	tabModifier: TabModifierSettings
 ) {
+	if (!tab.id) return;
+
 	// remove tab from group if it's already in one
-	if (!rule || !rule.tab.group_id) return;
+	if (!rule || !rule.tab.group_id) {
+		await ungroupTab(rule, tab);
+
+		return;
+	}
 
 	const tmGroup = tabModifier.groups.find((g) => g.id === rule.tab.group_id);
 
@@ -136,23 +163,9 @@ async function applyRuleToTab(tab: chrome.tabs.Tab) {
 	if (!tab.id) return false;
 	if (!tab.url) return false;
 
-	let isRuleHasGroup = false;
-
 	const rule = await _getRuleFromUrl(tab.url);
-	if (rule && rule.tab.group_id && rule.tab.group_id !== '') {
-		isRuleHasGroup = true;
-	}
 
-	if (!isRuleHasGroup && tab.groupId && tab.groupId !== -1) {
-		// Check if the group is one of user's groups
-		const group = await chrome.tabGroups.get(tab.groupId);
-
-		const tabModifier = await _getStorageAsync();
-		if (!tabModifier) return;
-
-		const tmGroup = tabModifier.groups.find((g) => g.title === group.title);
-		if (tmGroup) await chrome.tabs.ungroup(tab.id);
-	}
+	await ungroupTab(rule, tab);
 
 	if (rule) {
 		await chrome.tabs.sendMessage(tab.id, { action: 'applyRule', rule: rule });
