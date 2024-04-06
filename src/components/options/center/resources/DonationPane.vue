@@ -10,7 +10,7 @@
 			</div>
 		</div>
 
-		<div class="grid grid-cols-2 gap-2 text-md">
+		<div class="grid grid-cols-1 md:grid-cols-3 gap-2 text-md">
 			<DonationCard link="https://www.buymeacoffee.com/xyugxh7bk" name="Buy Me a Coffee">
 				<template #icon>
 					<BuyMeACoffeeIcon class="!h-4" />
