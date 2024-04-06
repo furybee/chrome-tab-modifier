@@ -50,13 +50,7 @@
 			<form method="dialog">
 				<button class="btn btn-sm">Close <kbd v-if="showHelp" class="kbd kbd-xs">esc</kbd></button>
 			</form>
-			<button class="btn btn-sm btn-outline btn-primary ml-4 group" @click="save">
-				Save
-				<!--				<span v-if="showHelp">-->
-				<!--					<kbd class="kbd kbd-xs group-hover:text-neutral group-hover:bg-primary">⌘</kbd-->
-				<!--					><kbd class="kbd kbd-xs group-hover:text-neutral group-hover:bg-primary">S</kbd>-->
-				<!--				</span>-->
-			</button>
+			<button class="btn btn-sm btn-outline btn-primary ml-4 group" @click="save">Save</button>
 		</div>
 	</div>
 </template>

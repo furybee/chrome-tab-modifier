@@ -52,8 +52,8 @@ const openAddRuleModal = (params?: RuleModalParams) => {
 	// Reset current rule
 	rulesStore.setCurrentRule();
 
-	if (params !== undefined && params.rule !== undefined && params.index !== undefined) {
-		rulesStore.setCurrentRule(params.rule, params.index);
+	if (params !== undefined && params.rule) {
+		rulesStore.setCurrentRule(params.rule);
 	}
 
 	// mount RuleForm component

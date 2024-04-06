@@ -18,7 +18,7 @@
 					v-for="(rule, index) in props.rules"
 					:key="index"
 					class="group cursor-pointer hover:bg-base-100"
-					@click="editRule(rule, index)"
+					@click="editRule(rule)"
 				>
 					<td>
 						{{ rule.name }}
@@ -83,22 +83,25 @@ import { useRulesStore } from '../../../../../stores/rules.store.ts';
 import RefreshButton from '../../../../global/RefreshButton.vue';
 import { _chromeGroupColor, _shortify } from '../../../../../common/helpers.ts';
 import ColorVisualizer from '../TabGroups/ColorVisualizer.vue';
+import { computed } from 'vue';
 
 const props = defineProps<{
 	rules: Rule[];
 	groups: Group[];
 }>();
 
-const groupsById = props.groups.reduce(
-	(acc, group) => {
-		acc[group.id] = group;
-		return acc;
-	},
-	{} as Record<string, Group>
-);
+const groupsById = computed(() => {
+	return props.groups.reduce(
+		(acc, group) => {
+			acc[group.id] = group;
+			return acc;
+		},
+		{} as Record<string, Group>
+	);
+});
 
-const refresh = () => {
-	rulesStore.init();
+const refresh = async () => {
+	await rulesStore.init();
 };
 
 const getIconUrl = (icon: string): string | undefined => {
@@ -114,9 +117,8 @@ const getIconUrl = (icon: string): string | undefined => {
 const rulesStore = useRulesStore();
 const emitter = inject('emitter');
 
-const editRule = (rule: Rule, index: number) => {
+const editRule = (rule: Rule) => {
 	emitter.emit(GLOBAL_EVENTS.OPEN_ADD_RULE_MODAL, {
-		index,
 		rule,
 	} as RuleModalParams);
 };

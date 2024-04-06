@@ -1,13 +1,13 @@
 <template>
-	<h3 class="font-bold text-lg flex justify-between">
+	<h3 v-if="options.showTitle" class="font-bold text-lg flex justify-between mb-2">
 		<span v-if="isEditMode">Edit rule</span>
 		<span v-else>Add a new rule</span>
 
 		<HelpSwap v-model="showHelp" />
 	</h3>
 
-	<div class="flex flex-wrap md:flex-nowrap gap-2 mt-2">
-		<label class="form-control w-full md:max-w-xs md:flex-1">
+	<div class="flex flex-wrap md:flex-nowrap gap-2">
+		<div class="form-control w-full md:max-w-xs md:flex-1">
 			<div class="label">
 				<span class="label-text text-sm">Name</span>
 			</div>
@@ -21,9 +21,9 @@
 			<div v-if="showHelp" class="label">
 				<span class="text-xs label-text-alt">Give an explicit name, just for you</span>
 			</div>
-		</label>
+		</div>
 
-		<label class="form-control w-full md:max-w-xs md:flex-0">
+		<div class="form-control w-full md:max-w-xs md:flex-0">
 			<div class="label">
 				<span class="label-text text-sm">Detection</span>
 			</div>
@@ -32,9 +32,9 @@
 					{{ detection.name }}
 				</option>
 			</select>
-		</label>
+		</div>
 
-		<label class="form-control w-full md:max-w-xs md:flex-1">
+		<div class="form-control w-full md:max-w-xs md:flex-1">
 			<div class="label">
 				<span class="label-text text-sm">URL Fragment</span>
 			</div>
@@ -48,22 +48,36 @@
 			<div v-if="showHelp" class="label">
 				<span class="text-xs label-text-alt">URL fragment to find</span>
 			</div>
-		</label>
+		</div>
 	</div>
 
 	<div v-if="isFirstPartFilled" class="mt-6">
 		<hr class="border-base-300" />
 
-		<div class="flex gap-2 mt-4">
-			<label class="form-control w-full max-w-xs md:flex-0">
+		<div class="flex flex-wrap md:flex-nowrap gap-2 mt-4">
+			<div v-if="!isGroupFormVisible" class="form-control w-full md:max-w-xs md:flex-0">
 				<div class="label">
 					<span class="label-text text-sm">Group <NewFeature /></span>
 				</div>
 
 				<CustomSelect v-model="currentRule.tab.group_id" :items="availableGroups" />
-			</label>
 
-			<label class="form-control w-full md:flex-1">
+				<button class="btn-link" @click.prevent="(event) => showGroupForm(event)">
+					Create new group
+				</button>
+			</div>
+			<div v-else class="border border-accent rounded-md w-full md:max-w-xs md:flex-0 px-2 pb-2">
+				<div class="flex justify-between items-center">
+					<div class="label">
+						<span class="label-text text-sm">Group <NewFeature /></span>
+					</div>
+					<CloseIcon class="cursor-pointer !h-4 !w-4" @click="hideGroupForm" />
+				</div>
+
+				<ShortGroupForm v-if="newGroup" v-model="newGroup" @on-close="hideGroupForm" />
+			</div>
+
+			<div class="form-control w-full md:flex-1">
 				<div class="label">
 					<span class="label-text text-sm">Tab title</span>
 				</div>
@@ -80,11 +94,11 @@
 						{h1}, {#id}, {.class}, etc.
 					</span>
 				</div>
-			</label>
+			</div>
 		</div>
 
-		<div class="flex gap-2">
-			<label class="form-control w-full max-w-xs md:flex-0">
+		<div class="flex flex-wrap md:flex-nowrap gap-2">
+			<div class="form-control w-full md:max-w-xs md:flex-0">
 				<div class="label">
 					<span class="label-text text-sm">Icon</span>
 				</div>
@@ -92,7 +106,7 @@
 				<div class="flex w-full gap-2">
 					<CustomSelect v-model="currentRule.tab.icon" :items="icons" />
 				</div>
-			</label>
+			</div>
 
 			<label class="form-control w-full md:flex-1">
 				<div class="label">
@@ -206,15 +220,11 @@
 	<div class="modal-action items-center">
 		<p v-if="showHelp" class="py-4">Remember refresh your tabs after saving</p>
 		<form method="dialog">
-			<button class="btn btn-sm">Close <kbd v-if="showHelp" class="kbd kbd-xs">esc</kbd></button>
+			<button v-if="options.showCancel" class="btn btn-sm">
+				Close <kbd v-if="showHelp" class="kbd kbd-xs">esc</kbd>
+			</button>
 		</form>
-		<button class="btn btn-sm btn-outline btn-primary ml-4 group" @click="save">
-			Save
-			<!--			<span v-if="showHelp">-->
-			<!--				<kbd class="kbd kbd-xs group-hover:text-neutral group-hover:bg-primary">⌘</kbd-->
-			<!--				><kbd class="kbd kbd-xs group-hover:text-neutral group-hover:bg-primary">S</kbd>-->
-			<!--			</span>-->
-		</button>
+		<button class="btn btn-sm btn-outline btn-primary ml-4 group" @click="save">Save</button>
 	</div>
 </template>
 <script lang="ts" setup>
@@ -228,17 +238,38 @@ import {
 	_getDetections,
 	_getIcons,
 } from '../../../../../common/helpers.ts';
-import { GLOBAL_EVENTS, Group } from '../../../../../common/types.ts';
+import { GLOBAL_EVENTS, Group, Rule } from '../../../../../common/types.ts';
 import HelpSwap from '../../../../global/HelpSwap.vue';
-import { _getDefaultRule } from '../../../../../common/storage.ts';
+import { _getDefaultGroup, _getDefaultRule } from '../../../../../common/storage.ts';
+import ShortGroupForm from './ShortGroupForm.vue';
+import CloseIcon from '../../../../icons/CloseIcon.vue';
 
 const rulesStore = useRulesStore();
+export interface Props {
+	rule?: Rule;
+	options?: {
+		showTitle: boolean;
+		showCancel: boolean;
+	};
+}
 
-const defaultRule = _getDefaultRule('', 'CONTAINS', '');
+const props = withDefaults(defineProps<Props>(), {
+	rule: undefined,
+	options: () => ({
+		showTitle: true,
+		showCancel: true,
+	}),
+});
+
+const emit = defineEmits(['onSave']);
+
+const defaultRule = props.rule ?? _getDefaultRule('', 'CONTAINS', '');
 
 const customIcon = ref('');
 const iconUrl = ref('');
 const showHelp = ref(false);
+const isGroupFormVisible = ref(false);
+const newGroup = ref<Group | null>(null);
 const currentRule = ref(_clone(rulesStore.currentRule ?? defaultRule));
 
 const isEditMode = computed(() => !!rulesStore.currentRule);
@@ -246,6 +277,20 @@ const isEditMode = computed(() => !!rulesStore.currentRule);
 const isFirstPartFilled = computed(() => {
 	return currentRule.value.name && currentRule.value.detection && currentRule.value.url_fragment;
 });
+
+const showGroupForm = (event: MouseEvent) => {
+	event.stopPropagation();
+
+	newGroup.value = _getDefaultGroup();
+
+	isGroupFormVisible.value = true;
+};
+
+const hideGroupForm = () => {
+	isGroupFormVisible.value = false;
+
+	newGroup.value = null;
+};
 
 const availableGroups = rulesStore.groups.map((group: Group) => {
 	return {
@@ -296,7 +341,13 @@ watch(
 );
 
 const emitter = inject('emitter');
+
 const save = async () => {
+	if (newGroup.value) {
+		await rulesStore.addGroup(newGroup.value);
+		currentRule.value.tab.group_id = newGroup.value.id;
+	}
+
 	if (isEditMode.value) {
 		await rulesStore.updateRule(currentRule.value);
 	} else {
@@ -309,6 +360,8 @@ const save = async () => {
 		type: 'success',
 		message: 'Saved successfully!',
 	});
+
+	emit('onSave');
 };
 
 const detections = _getDetections();

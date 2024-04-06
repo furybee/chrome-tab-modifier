@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { Group, Rule, Settings, TabModifierSettings } from '../common/types.ts';
-import { _clone } from '../common/helpers.ts';
+import { _clone, _generateRandomId } from '../common/helpers.ts';
 import {
 	_clearStorage,
 	_getDefaultTabModifierSettings,
@@ -12,15 +12,20 @@ export const useRulesStore = defineStore('rules', {
 	state: () => {
 		return {
 			currentRule: undefined as Rule | undefined,
-			currentIndex: undefined as number | undefined,
 			currentGroup: undefined as Group | undefined,
-			currentGroupIndex: undefined as number | undefined,
 			rules: [] as Rule[],
 			groups: [] as Group[],
 			settings: { theme: 'dim' } as Settings,
 		};
 	},
 	actions: {
+		addMissingRuleIds(rules: Rule[]) {
+			rules.forEach((rule) => {
+				if (!rule.id) {
+					rule.id = _generateRandomId();
+				}
+			});
+		},
 		async init() {
 			try {
 				const tabModifier = await _getStorageAsync();
@@ -28,14 +33,18 @@ export const useRulesStore = defineStore('rules', {
 				if (!tabModifier) {
 					await this.save();
 				} else {
-					this.rules = tabModifier.rules;
+					this.addMissingRuleIds(tabModifier.rules);
+
 					this.groups = tabModifier.groups;
+					this.rules = tabModifier.rules;
 					this.settings = tabModifier.settings;
 				}
 
 				await this.applyTheme(this.settings.theme);
+
+				await this.save();
 			} catch (error) {
-				console.error('Failed to load rules:', error);
+				console.error('Failed to init:', error);
 			}
 		},
 		async setConfig(config: TabModifierSettings) {
@@ -79,13 +88,11 @@ export const useRulesStore = defineStore('rules', {
 				console.error('Failed to load config:', error);
 			}
 		},
-		setCurrentRule(rule?: Rule, index?: number) {
+		setCurrentRule(rule?: Rule) {
 			this.currentRule = _clone(rule);
-			this.currentIndex = index;
 		},
-		setCurrentGroup(group?: Group, index?: number) {
+		setCurrentGroup(group?: Group) {
 			this.currentGroup = _clone(group);
-			this.currentGroupIndex = index;
 		},
 		async applyTheme(theme: string) {
 			this.settings.theme = theme;
@@ -95,25 +102,29 @@ export const useRulesStore = defineStore('rules', {
 			await this.save();
 		},
 		async updateRule(rule: Rule) {
-			if (this.currentIndex !== undefined && rule !== undefined) {
-				this.rules[this.currentIndex] = _clone(rule);
+			const index = this.rules.findIndex((r) => r.id === rule.id);
+
+			if (index !== -1) {
+				this.rules[index] = _clone(rule);
 
 				await this.save();
 			} else {
-				console.error('No rule or index to update');
+				console.error('No rule to update');
 
-				await Promise.reject('No rule or index to update');
+				await Promise.reject('No rule to update');
 			}
 		},
 		async updateGroup(group: Group) {
-			if (this.currentGroupIndex !== undefined && group !== undefined) {
-				this.groups[this.currentGroupIndex] = _clone(group);
+			const index = this.groups.findIndex((r) => r.id === group.id);
+
+			if (index !== -1) {
+				this.groups[index] = _clone(group);
 
 				await this.save();
 			} else {
-				console.error('No group or index to update');
+				console.error('No group to update');
 
-				await Promise.reject('No group or index to update');
+				await Promise.reject('No group to update');
 			}
 		},
 		async deleteRule(index: number) {
@@ -142,8 +153,8 @@ export const useRulesStore = defineStore('rules', {
 				if (!tabModifier) {
 					tabModifier = _getDefaultTabModifierSettings();
 				} else {
-					tabModifier.rules = this.rules;
 					tabModifier.groups = this.groups;
+					tabModifier.rules = this.rules;
 					tabModifier.settings = this.settings;
 				}
 
@@ -182,7 +193,7 @@ export const useRulesStore = defineStore('rules', {
 					tabModifier = _getDefaultTabModifierSettings();
 				}
 
-				group.id = Math.random().toString(36).substring(7);
+				group.id = group.id ?? _generateRandomId();
 
 				tabModifier.groups.push(group);
 

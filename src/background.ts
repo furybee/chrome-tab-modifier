@@ -1,18 +1,17 @@
-import { Group, TabModifierSettings } from './common/types.ts';
+import { Group, Rule, TabModifierSettings } from './common/types.ts';
 import {
 	_getDefaultRule,
 	_getDefaultTabModifierSettings,
+	_getRuleFromUrl,
 	_getStorageAsync,
 	_setStorage,
 } from './common/storage.ts';
 
 chrome.tabs.onUpdated.addListener(
-	(_: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab) => {
+	async (_: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab) => {
 		if (!changeInfo.url) return;
 
-		_getStorageAsync().then((tabModifier) => {
-			if (tabModifier) applyRuleToTab(tab, tabModifier);
-		});
+		await applyRuleToTab(tab);
 	}
 );
 
@@ -46,12 +45,13 @@ function handleSetUnique(message: any, currentTab: chrome.tabs.Tab) {
 	});
 }
 
-function handleSetGroup(tab: chrome.tabs.Tab) {
-	if (tab.url === 'chrome://newtab/') return;
+async function handleSetGroup(rule: Rule, tab: chrome.tabs.Tab) {
+	if (tab.url?.startsWith('chrome')) return;
 
-	_getStorageAsync().then((tabModifier) => {
-		if (tabModifier) applyRuleToTab(tab, tabModifier);
-	});
+	console.log('handleSetGroup', rule, tab);
+
+	const tabModifier = await _getStorageAsync();
+	if (tabModifier) await applyGroupRuleToTab(rule, tab, tabModifier);
 }
 
 chrome.runtime.onMessage.addListener(async (message, sender) => {
@@ -68,7 +68,7 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
 			await chrome.tabs.update(tab.id, { pinned: true });
 			break;
 		case 'setGroup':
-			handleSetGroup(tab);
+			await handleSetGroup(message.rule, tab);
 			break;
 		case 'setMuted':
 			await chrome.tabs.update(tab.id, { muted: true });
@@ -116,29 +116,11 @@ chrome.contextMenus.onClicked.addListener(async function (info, tab) {
 	}
 });
 
-function applyRuleToTab(tab: chrome.tabs.Tab, tabModifier: TabModifierSettings) {
-	const rule = tabModifier.rules.find((rule) => {
-		if (!tab.url) return false;
-
-		const detectionType = rule.detection ?? 'CONTAINS';
-		const urlFragment = rule.url_fragment;
-
-		switch (detectionType) {
-			case 'CONTAINS':
-				return tab.url.includes(urlFragment);
-			case 'STARTS':
-				return tab.url.startsWith(urlFragment);
-			case 'ENDS':
-				return tab.url.endsWith(urlFragment);
-			case 'REGEXP':
-				return new RegExp(urlFragment).test(tab.url);
-			case 'EXACT':
-				return tab.url === urlFragment;
-			default:
-				return false;
-		}
-	});
-
+async function applyGroupRuleToTab(
+	rule: Rule,
+	tab: chrome.tabs.Tab,
+	tabModifier: TabModifierSettings
+) {
 	if (!rule || !rule.tab.group_id) return;
 
 	const tmGroup = tabModifier.groups.find((g) => g.id === rule.tab.group_id);
@@ -150,6 +132,31 @@ function applyRuleToTab(tab: chrome.tabs.Tab, tabModifier: TabModifierSettings) 
 	chrome.tabGroups.query(tabGroupsQueryInfo, (groups: chrome.tabGroups.TabGroup[]) =>
 		handleTabGroups(groups, tab, tmGroup)
 	);
+}
+
+async function applyRuleToTab(tab: chrome.tabs.Tab) {
+	if (!tab.id) return false;
+	if (!tab.url) return false;
+
+	const rule = await _getRuleFromUrl(tab.url);
+	if (rule) {
+		await chrome.tabs.sendMessage(tab.id, { action: 'applyRule', rule: rule });
+
+		return;
+	}
+
+	if (tab.groupId !== -1) {
+		// check if the group is one of user's groups
+		const group = await chrome.tabGroups.get(tab.groupId);
+
+		const tabModifier = await _getStorageAsync();
+		if (!tabModifier) return;
+
+		const isMyGroup = tabModifier.groups.find((g) => g.title === group.title);
+		if (isMyGroup) await chrome.tabs.ungroup(tab.id);
+
+		return;
+	}
 }
 
 // Function to handle tab groups after querying
@@ -171,14 +178,12 @@ async function handleTabGroups(
 	}
 }
 
-// Function to create and setup a new tab group
 async function createAndSetupGroup(tabIds: number[], tmGroup: Group) {
 	chrome.tabs.group({ tabIds: tabIds }, (groupId: number) => {
 		updateTabGroup(groupId, tmGroup);
 	});
 }
 
-// Function to update tab group properties
 async function updateTabGroup(groupId: number, tmGroup: Group) {
 	const updateProperties = {
 		title: tmGroup.title,

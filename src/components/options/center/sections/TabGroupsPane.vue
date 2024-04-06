@@ -52,8 +52,8 @@ const openAddGroupModal = (params?: GroupModalParams) => {
 	// Reset current group
 	rulesStore.setCurrentGroup();
 
-	if (params !== undefined && params.group !== undefined && params.index !== undefined) {
-		rulesStore.setCurrentGroup(params.group, params.index);
+	if (params !== undefined && params.group !== undefined) {
+		rulesStore.setCurrentGroup(params.group);
 	}
 
 	isGroupFormModalOpened.value = true;

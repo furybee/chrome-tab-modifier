@@ -1,3 +1,5 @@
+import { _getRuleFromUrl } from './common/storage.ts';
+
 const STORAGE_KEY = 'tab_modifier';
 
 // Helper functions for readability
@@ -67,139 +69,128 @@ function processIcon(newIcon) {
 	return true;
 }
 
-chrome.storage.local.get(STORAGE_KEY, (items) => {
+async function applyRule(ruleParam) {
+	const rule = ruleParam ?? (await _getRuleFromUrl(location.href));
+
+	if (!rule) {
+		return;
+	}
+
+	// Apply tab modifications
+	if (rule.tab.title) {
+		document.title = processTitle(location.href, document.title, rule);
+
+		const titleObserver = new MutationObserver(() => {
+			if (!titleChangedByMe) {
+				document.title = processTitle(location.href, document.title, rule);
+				titleChangedByMe = true;
+			} else {
+				titleChangedByMe = false;
+			}
+		});
+
+		titleObserver.observe(document.querySelector('head > title'), {
+			subtree: true,
+			characterResponse: true,
+			childList: true,
+		});
+	}
+
+	let titleChangedByMe = false;
+
+	// Pinning, muting handled through Chrome Runtime messages
+	if (rule.tab.pinned) {
+		chrome.runtime.sendMessage({ action: 'setPinned' });
+	}
+
+	if (rule.tab.muted) {
+		chrome.runtime.sendMessage({ action: 'setMuted' });
+	}
+
+	let iconChangedByMe = false;
+
+	// Favicon handling
+	if (rule.tab.icon) {
+		processIcon(rule.tab.icon);
+
+		const iconObserver = new MutationObserver((mutations) => {
+			if (!iconChangedByMe) {
+				mutations.forEach((mutation) => {
+					if (mutation.target.type === 'image/x-icon') {
+						processIcon(rule.tab.icon);
+						iconChangedByMe = true;
+					} else if (mutation.addedNodes.length) {
+						mutation.addedNodes.forEach((node) => {
+							if (node.type === 'image/x-icon') {
+								processIcon(rule.tab.icon);
+								iconChangedByMe = true;
+							}
+						});
+					} else if (mutation.removedNodes.length) {
+						mutation.removedNodes.forEach((node) => {
+							if (node.type === 'image/x-icon') {
+								processIcon(rule.tab.icon);
+								iconChangedByMe = true;
+							}
+						});
+					}
+				});
+			} else {
+				iconChangedByMe = false;
+			}
+		});
+
+		iconObserver.observe(document.head, {
+			attributes: true,
+			childList: true,
+			characterData: true,
+			subtree: true,
+			attributeOldValue: true,
+			characterDataOldValue: true,
+		});
+	}
+
+	// Protection (disable beforeunload event) and unique tab handling
+	if (rule.tab.protected) {
+		window.onbeforeunload = () => '';
+	}
+
+	if (rule.tab.unique) {
+		await chrome.runtime.sendMessage({
+			action: 'setUnique',
+			urlFragment: rule.url_fragment,
+		});
+	}
+
+	if (rule.tab.group_id) {
+		await chrome.runtime.sendMessage({
+			action: 'setGroup',
+			rule: rule,
+		});
+	}
+}
+
+chrome.storage.local.get(STORAGE_KEY, async (items) => {
 	const tabModifier = items?.[STORAGE_KEY];
 
 	if (!tabModifier) {
 		return;
 	}
 
-	let rule = null;
-
-	function applyRule() {
-		rule = tabModifier.rules.find((r) => {
-			const detectionType = r.detection ?? 'CONTAINS';
-			const urlFragment = r.url_fragment;
-
-			switch (detectionType) {
-				case 'CONTAINS':
-					return location.href.includes(urlFragment);
-				case 'STARTS':
-					return location.href.startsWith(urlFragment);
-				case 'ENDS':
-					return location.href.endsWith(urlFragment);
-				case 'REGEXP':
-					return new RegExp(urlFragment).test(location.href);
-				case 'EXACT':
-					return location.href === urlFragment;
-				default:
-					return false;
-			}
-		});
-
-		if (!rule) {
-			return;
-		}
-
-		// Apply tab modifications
-		if (rule.tab.title) {
-			document.title = processTitle(location.href, document.title, rule);
-
-			const titleObserver = new MutationObserver((mutations) => {
-				if (!titleChangedByMe) {
-					document.title = processTitle(location.href, document.title, rule);
-					titleChangedByMe = true;
-				} else {
-					titleChangedByMe = false;
-				}
-			});
-
-			titleObserver.observe(document.querySelector('head > title'), {
-				subtree: true,
-				characterResponse: true,
-				childList: true,
-			});
-		}
-
-		let titleChangedByMe = false;
-
-		// Pinning, muting handled through Chrome Runtime messages
-		if (rule.tab.pinned) {
-			chrome.runtime.sendMessage({ action: 'setPinned' });
-		}
-
-		if (rule.tab.muted) {
-			chrome.runtime.sendMessage({ action: 'setMuted' });
-		}
-
-		let iconChangedByMe = false;
-
-		// Favicon handling
-		if (rule.tab.icon) {
-			processIcon(rule.tab.icon);
-
-			const iconObserver = new MutationObserver((mutations) => {
-				if (!iconChangedByMe) {
-					mutations.forEach((mutation) => {
-						if (mutation.target.type === 'image/x-icon') {
-							processIcon(rule.tab.icon);
-							iconChangedByMe = true;
-						} else if (mutation.addedNodes.length) {
-							mutation.addedNodes.forEach((node) => {
-								if (node.type === 'image/x-icon') {
-									processIcon(rule.tab.icon);
-									iconChangedByMe = true;
-								}
-							});
-						} else if (mutation.removedNodes.length) {
-							mutation.removedNodes.forEach((node) => {
-								if (node.type === 'image/x-icon') {
-									processIcon(rule.tab.icon);
-									iconChangedByMe = true;
-								}
-							});
-						}
-					});
-				} else {
-					iconChangedByMe = false;
-				}
-			});
-
-			iconObserver.observe(document.head, {
-				attributes: true,
-				childList: true,
-				characterData: true,
-				subtree: true,
-				attributeOldValue: true,
-				characterDataOldValue: true,
-			});
-		}
-
-		// Protection (disable beforeunload event) and unique tab handling
-		if (rule.tab.protected) {
-			window.onbeforeunload = () => '';
-		}
-
-		if (rule.tab.unique) {
-			chrome.runtime.sendMessage({
-				action: 'setUnique',
-				urlFragment: rule.url_fragment,
-			});
-		}
-	}
-
-	applyRule();
+	await applyRule();
 });
 
-chrome.runtime.onMessage.addListener(function (request) {
+chrome.runtime.onMessage.addListener(async function (request) {
 	if (request.action === 'openPrompt') {
 		const title = prompt(
 			'Enter the new title, a Tab rule will be automatically created for you based on current URL'
 		);
 
-		chrome.runtime.sendMessage({
+		await chrome.runtime.sendMessage({
 			action: 'renameTab',
 			title: title,
 		});
+	} else if (request.action === 'applyRule') {
+		await applyRule(request.rule);
 	}
 });

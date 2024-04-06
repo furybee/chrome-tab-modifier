@@ -15,7 +15,9 @@
 						class="!w-4 !h-4 mr-2"
 					/>
 
-					{{ currentItem?.label ?? '' }}
+					<template v-if="showLabel">
+						{{ currentItem?.label ?? '' }}
+					</template>
 				</div>
 				<span v-if="props.items.length === 0">-- no items --</span>
 				<ChevronDownIcon class="!w-4 !h-4 ml-2" />
@@ -34,7 +36,9 @@
 					<a>
 						<img v-if="item.icon" :src="item.icon" alt="_icon" class="!w-4 !h-4 mr-2" />
 						<ColorVisualizer v-if="item.color" :color="item.color" class="!w-4 !h-4 mr-2" />
-						{{ item.label }}
+						<template v-if="showLabel">
+							{{ item.label }}
+						</template>
 					</a>
 				</li>
 			</ul>
@@ -58,13 +62,19 @@ export interface SelectItem {
 	label: string;
 }
 
-const model = defineModel();
+const model = defineModel<string>();
 const icon = ref('');
 
-const props = defineProps<{
+export interface Props {
 	items: SelectItem[];
 	showClearBtn?: boolean;
-}>();
+	showLabel?: boolean;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+	showClearBtn: true,
+	showLabel: true,
+});
 
 const onItemSelected = (item: SelectItem) => {
 	icon.value = item.icon ?? '';

@@ -20,6 +20,7 @@ export type Tab = {
 };
 
 export type Rule = {
+	id: string;
 	name: string;
 	detection: string;
 	url_fragment: string;
@@ -54,12 +55,10 @@ export const GLOBAL_EVENTS = {
 };
 
 export type RuleModalParams = {
-	index?: number;
 	rule?: Rule;
 };
 
 export type GroupModalParams = {
-	index?: number;
 	group?: Group;
 };
 

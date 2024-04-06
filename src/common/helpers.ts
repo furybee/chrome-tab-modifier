@@ -224,3 +224,7 @@ export function _getIcons() {
 		},
 	];
 }
+
+export function _generateRandomId() {
+	return Math.random().toString(36).substring(2, 9);
+}
