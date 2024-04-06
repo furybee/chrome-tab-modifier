@@ -110,7 +110,10 @@
 					<input
 						v-model="currentRule.tab.icon"
 						class="input input-xs input-bordered w-full"
-						:class="{ 'input-error': !isCustomIcon }"
+						:class="{
+							'input-error':
+								!isCustomIcon && currentRule.tab.icon !== '' && currentRule.tab.icon !== null,
+						}"
 						placeholder="e.g. https://google.com/favicon.ico"
 						required
 						type="text"
@@ -326,10 +329,12 @@ const hideGroupForm = () => {
 const showCustomIconForm = (event: MouseEvent) => {
 	event.stopPropagation();
 
+	currentRule.value.tab.icon = '';
 	isCustomIconFormVisible.value = true;
 };
 
 const hideCustomIconForm = () => {
+	currentRule.value.tab.icon = '';
 	isCustomIconFormVisible.value = false;
 };
 
