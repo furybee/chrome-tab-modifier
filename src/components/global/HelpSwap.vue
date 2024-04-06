@@ -1,5 +1,5 @@
 <template>
-	<label class="btn btn-xs btn-circle bg-transparent border-none swap swap-rotate">
+	<label class="btn btn-xs btn-circle bg-transparent border-none swap swap-rotate hover:text-info">
 		<input v-model="model" type="checkbox" />
 		<svg
 			class="swap-off w-6 h-6"

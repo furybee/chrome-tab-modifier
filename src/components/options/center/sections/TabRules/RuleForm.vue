@@ -19,7 +19,7 @@
 				type="text"
 			/>
 			<div v-if="showHelp" class="label">
-				<span class="text-xs label-text-alt">Give an explicit name, just for you</span>
+				<span class="text-xs opacity-80 label-text-alt">Give an explicit name, just for you</span>
 			</div>
 		</div>
 
@@ -46,7 +46,7 @@
 				type="text"
 			/>
 			<div v-if="showHelp" class="label">
-				<span class="text-xs label-text-alt">URL fragment to find</span>
+				<span class="text-xs opacity-80 label-text-alt">URL fragment to find</span>
 			</div>
 		</div>
 	</div>
@@ -62,19 +62,65 @@
 
 				<CustomSelect v-model="currentRule.tab.group_id" :items="availableGroups" />
 
-				<button class="btn-link" @click.prevent="(event) => showGroupForm(event)">
+				<button class="btn-link mt-1" @click.prevent="(event) => showGroupForm(event)">
 					Create new group
 				</button>
 			</div>
-			<div v-else class="border border-accent rounded-md w-full md:max-w-xs md:flex-0 px-2 pb-2">
+			<div v-else class="bg-base-300 rounded-md w-full md:max-w-xs md:flex-0 px-2 pb-2">
 				<div class="flex justify-between items-center">
 					<div class="label">
 						<span class="label-text text-sm">Group <NewFeature /></span>
 					</div>
-					<CloseIcon class="cursor-pointer !h-4 !w-4" @click="hideGroupForm" />
+					<CloseIcon class="cursor-pointer hover:text-error !h-4 !w-4" @click="hideGroupForm" />
 				</div>
 
 				<ShortGroupForm v-if="newGroup" v-model="newGroup" @on-close="hideGroupForm" />
+			</div>
+
+			<div
+				v-show="!isCustomIconFormVisible"
+				class="form-control w-full md:w-40 md:max-w-xs md:flex-0"
+			>
+				<div class="label">
+					<span class="label-text text-sm">Icon</span>
+				</div>
+
+				<CustomSelect v-model="currentRule.tab.icon" :items="icons" :show-label="false" />
+
+				<button class="btn-link mt-1" @click.prevent="(event) => showCustomIconForm(event)">
+					Use custom icon
+				</button>
+			</div>
+			<div
+				v-show="isCustomIconFormVisible"
+				class="bg-base-300 rounded-md w-full md:max-w-xs md:flex-0 px-2 pb-2"
+			>
+				<div class="flex justify-between items-center">
+					<div class="label">
+						<span class="label-text text-sm">Custom Icon</span>
+					</div>
+					<CloseIcon
+						class="cursor-pointer hover:text-error !h-4 !w-4"
+						@click="hideCustomIconForm"
+					/>
+				</div>
+
+				<div class="flex items-center justify-between gap-2">
+					<img v-if="isCustomIcon" :src="currentRule.tab.icon" class="w-6 h-6" />
+					<input
+						v-model="currentRule.tab.icon"
+						class="input input-xs input-bordered w-full"
+						:class="{ 'input-error': !isCustomIcon }"
+						placeholder="e.g. https://google.com/favicon.ico"
+						required
+						type="text"
+					/>
+				</div>
+				<div v-if="showHelp" class="label">
+					<span class="text-xs opacity-80 label-text-alt"
+						>You can set a custom URL or data URI for the new icon, no local path accepted</span
+					>
+				</div>
 			</div>
 
 			<div class="form-control w-full md:flex-1">
@@ -89,42 +135,12 @@
 					type="text"
 				/>
 				<div class="label">
-					<span v-if="showHelp" class="text-xs label-text-alt">
+					<span v-if="showHelp" class="text-xs opacity-80 label-text-alt">
 						You can inject any DOM content with {selector}. Examples: {title} for website title,
 						{h1}, {#id}, {.class}, etc.
 					</span>
 				</div>
 			</div>
-		</div>
-
-		<div class="flex flex-wrap md:flex-nowrap gap-2">
-			<div class="form-control w-full md:max-w-xs md:flex-0">
-				<div class="label">
-					<span class="label-text text-sm">Icon</span>
-				</div>
-
-				<div class="flex w-full gap-2">
-					<CustomSelect v-model="currentRule.tab.icon" :items="icons" />
-				</div>
-			</div>
-
-			<label class="form-control w-full md:flex-1">
-				<div class="label">
-					<span class="label-text text-sm">Custom Icon</span>
-				</div>
-				<input
-					v-model="customIcon"
-					class="input input-xs input-bordered w-full"
-					placeholder="e.g. https://google.com/favicon.ico"
-					required
-					type="text"
-				/>
-				<div v-if="showHelp" class="label">
-					<span class="text-xs label-text-alt"
-						>You can set a custom URL or data URI for the new icon, no local path accepted</span
-					>
-				</div>
-			</label>
 		</div>
 
 		<div class="grid grid-cols-2 gap-2 mt-6">
@@ -190,7 +206,7 @@
 						type="text"
 					/>
 					<div class="label">
-						<span v-if="showHelp" class="text-xs label-text-alt">
+						<span v-if="showHelp" class="text-xs opacity-80 label-text-alt">
 							Regular expression to search string fragments in title</span
 						>
 					</div>
@@ -208,7 +224,7 @@
 						type="text"
 					/>
 					<div class="label">
-						<span v-if="showHelp" class="text-xs label-text-alt">
+						<span v-if="showHelp" class="text-xs opacity-80 label-text-alt">
 							Regular expression to search string fragments in URL</span
 						>
 					</div>
@@ -218,7 +234,7 @@
 	</div>
 
 	<div class="modal-action items-center">
-		<p v-if="showHelp" class="py-4">Remember refresh your tabs after saving</p>
+		<p v-if="showHelp" class="py-4 opacity-80">Remember refresh your tabs after saving</p>
 		<form method="dialog">
 			<button v-if="options.showCancel" class="btn btn-sm">
 				Close <kbd v-if="showHelp" class="kbd kbd-xs">esc</kbd>
@@ -272,7 +288,6 @@ const emit = defineEmits(['onSave']);
 const defaultRule = props.rule ?? _getDefaultRule('', 'CONTAINS', '');
 
 const customIcon = ref('');
-const iconUrl = ref('');
 const showHelp = ref(false);
 const isGroupFormVisible = ref(false);
 const newGroup = ref<Group | null>(null);
@@ -280,9 +295,19 @@ const currentRule = ref(_clone(rulesStore.currentRule ?? defaultRule));
 
 const isEditMode = computed(() => !!rulesStore.currentRule);
 
+const isCustomIcon = computed(
+	() =>
+		currentRule.value.tab.icon.startsWith('http') || currentRule.value.tab.icon.startsWith('data:')
+);
+
 const isFirstPartFilled = computed(() => {
 	return currentRule.value.name && currentRule.value.detection && currentRule.value.url_fragment;
 });
+
+const isCustomIconFormVisible = ref(false);
+
+isCustomIconFormVisible.value =
+	currentRule.value.tab.icon.startsWith('http') || currentRule.value.tab.icon.startsWith('data:');
 
 const showGroupForm = (event: MouseEvent) => {
 	event.stopPropagation();
@@ -296,6 +321,16 @@ const hideGroupForm = () => {
 	isGroupFormVisible.value = false;
 
 	newGroup.value = null;
+};
+
+const showCustomIconForm = (event: MouseEvent) => {
+	event.stopPropagation();
+
+	isCustomIconFormVisible.value = true;
+};
+
+const hideCustomIconForm = () => {
+	isCustomIconFormVisible.value = false;
 };
 
 const availableGroups = rulesStore.groups.map((group: Group) => {
@@ -315,29 +350,6 @@ watch(
 );
 
 watch(
-	() => customIcon.value,
-	(newIcon) => {
-		if (newIcon) {
-			currentRule.value.tab.icon = newIcon;
-		}
-	}
-);
-
-watch(
-	() => currentRule.value.tab.icon,
-	(newIcon) => {
-		if (newIcon.startsWith('http')) {
-			iconUrl.value = newIcon;
-
-			return;
-		}
-
-		iconUrl.value = chrome.runtime.getURL('/assets/' + newIcon);
-		customIcon.value = '';
-	}
-);
-
-watch(
 	() => currentRule.value.tab.group_id,
 	(newGroupId) => {
 		if (newGroupId) {
@@ -352,6 +364,12 @@ const save = async () => {
 	if (newGroup.value) {
 		await rulesStore.addGroup(newGroup.value);
 		currentRule.value.tab.group_id = newGroup.value.id;
+	}
+
+	if (isCustomIconFormVisible.value) {
+		if (customIcon.value.startsWith('http') || customIcon.value.startsWith('data:')) {
+			currentRule.value.tab.icon = customIcon.value;
+		}
 	}
 
 	if (isEditMode.value) {

@@ -18,7 +18,7 @@
 				required
 				type="text"
 			/>
-			<div v-if="showHelp" class="label">You can set a title for your tab</div>
+			<div v-if="showHelp" class="label opacity-80">You can set a title for your tab</div>
 		</div>
 
 		<div class="form-control w-full flex-1">
@@ -29,7 +29,7 @@
 				<CustomSelect v-model="currentGroup.color" :items="availableGroupColors" />
 			</div>
 			<div v-if="showHelp" class="label">
-				<span class="text-xs label-text-alt">You can set a color for your group</span>
+				<span class="text-xs label-text-alt opacity-80">You can set a color for your group</span>
 			</div>
 
 			<div class="form-control mt-4">
@@ -46,7 +46,7 @@
 		</div>
 
 		<div class="modal-action items-center">
-			<p v-if="showHelp" class="py-4">Remember refresh your tabs after saving</p>
+			<p v-if="showHelp" class="py-4 opacity-80">Remember refresh your tabs after saving</p>
 			<form method="dialog">
 				<button class="btn btn-sm">Close <kbd v-if="showHelp" class="kbd kbd-xs">esc</kbd></button>
 			</form>

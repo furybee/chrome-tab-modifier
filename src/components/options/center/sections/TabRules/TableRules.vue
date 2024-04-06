@@ -107,7 +107,7 @@ const refresh = async () => {
 const getIconUrl = (icon: string): string | undefined => {
 	if (!icon) return;
 
-	if (icon.startsWith('http')) {
+	if (icon.startsWith('http') || icon.startsWith('data:')) {
 		return icon;
 	}
 
