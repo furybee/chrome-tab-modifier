@@ -76,11 +76,19 @@ async function applyRule(ruleParam) {
 		return;
 	}
 
-	// Apply tab modifications
+	let titleChangedByMe = false;
+
 	if (rule.tab.title) {
 		document.title = processTitle(location.href, document.title, rule);
 
+		// Delay title change to ensure it's not overwritten by the page
+		setTimeout(() => {
+			document.title = processTitle(location.href, document.title, rule);
+		}, 200);
+
 		const titleObserver = new MutationObserver(() => {
+			console.log('title observer', titleChangedByMe);
+
 			if (!titleChangedByMe) {
 				document.title = processTitle(location.href, document.title, rule);
 				titleChangedByMe = true;
@@ -95,8 +103,6 @@ async function applyRule(ruleParam) {
 			childList: true,
 		});
 	}
-
-	let titleChangedByMe = false;
 
 	// Pinning, muting handled through Chrome Runtime messages
 	if (rule.tab.pinned) {
