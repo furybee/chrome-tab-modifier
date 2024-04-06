@@ -15,34 +15,32 @@ chrome.tabs.onUpdated.addListener(
 	}
 );
 
-function handleSetUnique(message: any, currentTab: chrome.tabs.Tab) {
-	if (!currentTab?.id) return;
-
-	chrome.tabs.query({}, (tabs: chrome.tabs.Tab[]) => {
-		tabs.forEach((tab) => {
-			if (!tab.url) return;
-
-			if (tab.url.includes(message.url_fragment) && tab.id !== currentTab.id) {
-				if (!currentTab?.id) return;
-
-				chrome.tabs.executeScript(
-					currentTab.id,
-					{ code: 'window.onbeforeunload = null;' },
-					async () => {
-						if (!currentTab?.id) return;
-						if (!tab?.id) return;
-
-						await chrome.tabs.remove(currentTab.id);
-
-						await chrome.tabs.update(tab.id, {
-							url: currentTab.url,
-							highlighted: true,
-						});
-					}
-				);
+function queryTabs(queryInfo = {}): Promise<chrome.tabs.Tab[]> {
+	return new Promise((resolve, reject) => {
+		chrome.tabs.query(queryInfo, (result) => {
+			if (chrome.runtime.lastError) {
+				reject(new Error(chrome.runtime.lastError.message));
+			} else {
+				resolve(result);
 			}
 		});
 	});
+}
+
+async function handleSetUnique(message: any, currentTab: chrome.tabs.Tab) {
+	if (!currentTab.id) return;
+
+	console.log('handleSetUnique', message, currentTab);
+
+	const tabs = await queryTabs({});
+
+	for (const tab of tabs) {
+		if (tab.url?.includes(message.url_fragment) && tab.id !== currentTab.id) {
+			await chrome.tabs.executeScript(currentTab.id, { code: 'window.onbeforeunload = null;' });
+			await chrome.tabs.remove(currentTab.id);
+			await chrome.tabs.update(tab.id, { url: currentTab.url, highlighted: true });
+		}
+	}
 }
 
 async function handleSetGroup(rule: Rule, tab: chrome.tabs.Tab) {
