@@ -8,6 +8,12 @@ import {
 	_setStorage,
 } from '../common/storage.ts';
 
+/**
+ * Invisible character to append to group
+ * titles to identify them as our groups.
+ */
+const INVISIBLE_CHAR: string = '\u200B';
+
 export const useRulesStore = defineStore('rules', {
 	state: () => {
 		return {
@@ -26,6 +32,13 @@ export const useRulesStore = defineStore('rules', {
 				}
 			});
 		},
+		addMissingInvisibleChar(groups: Group[]) {
+			groups.forEach((group) => {
+				if (!group.title.endsWith(INVISIBLE_CHAR)) {
+					group.title = group.title + INVISIBLE_CHAR;
+				}
+			});
+		},
 		async init() {
 			try {
 				const tabModifier = await _getStorageAsync();
@@ -34,6 +47,7 @@ export const useRulesStore = defineStore('rules', {
 					await this.save();
 				} else {
 					this.addMissingRuleIds(tabModifier.rules);
+					this.addMissingInvisibleChar(tabModifier.groups);
 
 					this.groups = tabModifier.groups;
 					this.rules = tabModifier.rules;
@@ -118,6 +132,10 @@ export const useRulesStore = defineStore('rules', {
 			const index = this.groups.findIndex((r) => r.id === group.id);
 
 			if (index !== -1) {
+				if (!group.title.endsWith(INVISIBLE_CHAR)) {
+					group.title = group.title + INVISIBLE_CHAR;
+				}
+
 				this.groups[index] = _clone(group);
 
 				await this.save();
@@ -194,6 +212,10 @@ export const useRulesStore = defineStore('rules', {
 				}
 
 				group.id = group.id ?? _generateRandomId();
+
+				if (!group.title.endsWith(INVISIBLE_CHAR)) {
+					group.title = group.title + INVISIBLE_CHAR;
+				}
 
 				tabModifier.groups.push(group);
 

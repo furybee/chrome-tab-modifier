@@ -48,8 +48,6 @@ function handleSetUnique(message: any, currentTab: chrome.tabs.Tab) {
 async function handleSetGroup(rule: Rule, tab: chrome.tabs.Tab) {
 	if (tab.url?.startsWith('chrome')) return;
 
-	console.log('handleSetGroup', rule, tab);
-
 	const tabModifier = await _getStorageAsync();
 	if (tabModifier) await applyGroupRuleToTab(rule, tab, tabModifier);
 }
@@ -82,14 +80,13 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
 async function handleRenameTab(tab: chrome.tabs.Tab, title: string) {
 	if (!tab?.id) return;
 	if (!tab?.url) return;
+	if (!URL.canParse(tab.url)) return;
 
 	let tabModifier = await _getStorageAsync();
 
-	if (tabModifier === undefined) {
+	if (!tabModifier) {
 		tabModifier = _getDefaultTabModifierSettings();
 	}
-
-	if (!URL.canParse(tab.url)) return;
 
 	const urlParams = new URL(tab.url);
 	const ruleName = 'Rule (' + urlParams.host.substring(0, 15) + ')';
@@ -121,6 +118,7 @@ async function applyGroupRuleToTab(
 	tab: chrome.tabs.Tab,
 	tabModifier: TabModifierSettings
 ) {
+	// remove tab from group if it's already in one
 	if (!rule || !rule.tab.group_id) return;
 
 	const tmGroup = tabModifier.groups.find((g) => g.id === rule.tab.group_id);
@@ -138,28 +136,29 @@ async function applyRuleToTab(tab: chrome.tabs.Tab) {
 	if (!tab.id) return false;
 	if (!tab.url) return false;
 
-	const rule = await _getRuleFromUrl(tab.url);
-	if (rule) {
-		await chrome.tabs.sendMessage(tab.id, { action: 'applyRule', rule: rule });
+	let isRuleHasGroup = false;
 
-		return;
+	const rule = await _getRuleFromUrl(tab.url);
+	if (rule && rule.tab.group_id && rule.tab.group_id !== '') {
+		isRuleHasGroup = true;
 	}
 
-	if (tab.groupId !== -1) {
-		// check if the group is one of user's groups
+	if (!isRuleHasGroup && tab.groupId && tab.groupId !== -1) {
+		// Check if the group is one of user's groups
 		const group = await chrome.tabGroups.get(tab.groupId);
 
 		const tabModifier = await _getStorageAsync();
 		if (!tabModifier) return;
 
-		const isMyGroup = tabModifier.groups.find((g) => g.title === group.title);
-		if (isMyGroup) await chrome.tabs.ungroup(tab.id);
+		const tmGroup = tabModifier.groups.find((g) => g.title === group.title);
+		if (tmGroup) await chrome.tabs.ungroup(tab.id);
+	}
 
-		return;
+	if (rule) {
+		await chrome.tabs.sendMessage(tab.id, { action: 'applyRule', rule: rule });
 	}
 }
 
-// Function to handle tab groups after querying
 async function handleTabGroups(
 	groups: chrome.tabGroups.TabGroup[],
 	tab: chrome.tabs.Tab,

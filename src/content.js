@@ -2,12 +2,6 @@ import { _getRuleFromUrl } from './common/storage.ts';
 
 const STORAGE_KEY = 'tab_modifier';
 
-// Helper functions for readability
-function getTextBySelector(selector) {
-	const el = document.querySelector(selector);
-	return el?.childNodes[0]?.textContent?.trim() ?? '';
-}
-
 function updateTitle(title, tag, value) {
 	return value ? title.replace(tag, value) : title;
 }
@@ -18,9 +12,7 @@ function processTitle(currentUrl, currentTitle, rule) {
 
 	if (matches) {
 		matches.forEach((match) => {
-			const selector = match.substring(1, match.length - 1);
-			const text = getTextBySelector(selector);
-			title = updateTitle(title, match, text);
+			title = updateTitle(title, match, currentTitle);
 		});
 	}
 
@@ -60,6 +52,7 @@ function processIcon(newIcon) {
 	const iconUrl = /^(https?|data):/.test(newIcon)
 		? newIcon
 		: chrome.runtime.getURL(`/assets/${newIcon}`);
+
 	const newIconLink = document.createElement('link');
 	newIconLink.type = 'image/x-icon';
 	newIconLink.rel = 'icon';
@@ -79,38 +72,47 @@ async function applyRule(ruleParam) {
 	let titleChangedByMe = false;
 
 	if (rule.tab.title) {
-		document.title = processTitle(location.href, document.title, rule);
+		// check if element with id original-title exists
+		let element = document.querySelector('meta[name="original-tab-modifier-title"]');
+
+		if (!element) {
+			element = document.createElement('meta');
+			element.name = 'original-tab-modifier-title';
+			element.content = document.title;
+			document.head.appendChild(element);
+		}
+
+		const originalTitle = element.getAttribute('content');
+		document.title = processTitle(location.href, originalTitle, rule);
 
 		// Delay title change to ensure it's not overwritten by the page
 		setTimeout(() => {
-			document.title = processTitle(location.href, document.title, rule);
+			document.title = processTitle(location.href, originalTitle, rule);
+
+			const titleObserver = new MutationObserver(() => {
+				if (!titleChangedByMe) {
+					document.title = processTitle(location.href, originalTitle, rule);
+					titleChangedByMe = true;
+				} else {
+					titleChangedByMe = false;
+				}
+			});
+
+			titleObserver.observe(document.querySelector('head > title'), {
+				subtree: true,
+				characterResponse: true,
+				childList: true,
+			});
 		}, 200);
-
-		const titleObserver = new MutationObserver(() => {
-			console.log('title observer', titleChangedByMe);
-
-			if (!titleChangedByMe) {
-				document.title = processTitle(location.href, document.title, rule);
-				titleChangedByMe = true;
-			} else {
-				titleChangedByMe = false;
-			}
-		});
-
-		titleObserver.observe(document.querySelector('head > title'), {
-			subtree: true,
-			characterResponse: true,
-			childList: true,
-		});
 	}
 
 	// Pinning, muting handled through Chrome Runtime messages
 	if (rule.tab.pinned) {
-		chrome.runtime.sendMessage({ action: 'setPinned' });
+		await chrome.runtime.sendMessage({ action: 'setPinned' });
 	}
 
 	if (rule.tab.muted) {
-		chrome.runtime.sendMessage({ action: 'setMuted' });
+		await chrome.runtime.sendMessage({ action: 'setMuted' });
 	}
 
 	let iconChangedByMe = false;
@@ -198,5 +200,7 @@ chrome.runtime.onMessage.addListener(async function (request) {
 		});
 	} else if (request.action === 'applyRule') {
 		await applyRule(request.rule);
+	} else if (request.action === 'ungroupTab') {
+		await chrome.tabs.ungroup(request.tabId);
 	}
 });

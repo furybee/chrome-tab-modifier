@@ -25,7 +25,7 @@
 					</td>
 					<td>
 						<template v-if="!rule.tab.group_id">-</template>
-						<div v-else class="flex items-center gap-2">
+						<div v-else-if="groupsById[rule.tab.group_id]" class="flex items-center gap-2">
 							<ColorVisualizer :color="_chromeGroupColor(groupsById[rule.tab.group_id].color)" />
 							{{ groupsById[rule.tab.group_id].title }}
 						</div>
