@@ -35,6 +35,9 @@ async function handleSetUnique(message: any, currentTab: chrome.tabs.Tab) {
 	const tabs = await queryTabs({});
 
 	for (const tab of tabs) {
+		if (!tab.url) continue;
+		if (!tab.id) continue;
+
 		if (tab.url?.includes(message.url_fragment) && tab.id !== currentTab.id) {
 			await chrome.tabs.executeScript(currentTab.id, { code: 'window.onbeforeunload = null;' });
 			await chrome.tabs.remove(currentTab.id);
@@ -58,7 +61,7 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
 
 	switch (message.action) {
 		case 'setUnique':
-			handleSetUnique(message, tab);
+			await handleSetUnique(message, tab);
 			break;
 		case 'setPinned':
 			await chrome.tabs.update(tab.id, { pinned: true });

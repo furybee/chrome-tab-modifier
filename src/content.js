@@ -63,6 +63,7 @@ function processIcon(newIcon) {
 }
 
 async function applyRule(ruleParam) {
+	const urlChanged = !!ruleParam;
 	const rule = ruleParam ?? (await _getRuleFromUrl(location.href));
 
 	if (!rule) {
@@ -166,7 +167,7 @@ async function applyRule(ruleParam) {
 	if (rule.tab.unique) {
 		await chrome.runtime.sendMessage({
 			action: 'setUnique',
-			urlFragment: rule.url_fragment,
+			url_fragment: rule.url_fragment,
 		});
 	}
 
@@ -197,6 +198,7 @@ chrome.runtime.onMessage.addListener(async function (request) {
 			title: title,
 		});
 	} else if (request.action === 'applyRule') {
+		console.log('Applying rule', request.rule);
 		await applyRule(request.rule);
 	} else if (request.action === 'ungroupTab') {
 		await chrome.tabs.ungroup(request.tabId);
