@@ -2,7 +2,7 @@
 	<div class="flex w-full bg-base-200 rounded-md">
 		<div class="dropdown w-full">
 			<div
-				class="btn btn-xs w-full flex flex-row justify-between items-center"
+				class="btn btn-xs w-full flex flex-row flex-nowrap whitespace-nowrap justify-between items-center"
 				role="button"
 				tabindex="0"
 			>

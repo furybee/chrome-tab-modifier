@@ -224,7 +224,13 @@
 				Close <kbd v-if="showHelp" class="kbd kbd-xs">esc</kbd>
 			</button>
 		</form>
-		<button class="btn btn-sm btn-outline btn-primary ml-4 group" @click="save">Save</button>
+		<button
+			:disabled="!isFirstPartFilled"
+			class="btn btn-sm btn-outline btn-primary ml-4 group"
+			@click="save"
+		>
+			Save
+		</button>
 	</div>
 </template>
 <script lang="ts" setup>

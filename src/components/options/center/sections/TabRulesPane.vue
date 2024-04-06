@@ -37,6 +37,14 @@ const emitter = inject('emitter');
 onMounted(() => {
 	emitter.on(GLOBAL_EVENTS.OPEN_ADD_RULE_MODAL, openAddRuleModal);
 	emitter.on(GLOBAL_EVENTS.CLOSE_ADD_RULE_MODAL, closeAddRuleModal);
+
+	if (!addRuleModal.value) {
+		return;
+	}
+
+	addRuleModal.value.addEventListener('close', () => {
+		closeAddRuleModal();
+	});
 });
 
 onUnmounted(() => {
@@ -52,7 +60,7 @@ const openAddRuleModal = (params?: RuleModalParams) => {
 	// Reset current rule
 	rulesStore.setCurrentRule();
 
-	if (params !== undefined && params.rule) {
+	if (params?.rule) {
 		rulesStore.setCurrentRule(params.rule);
 	}
 
@@ -63,11 +71,11 @@ const openAddRuleModal = (params?: RuleModalParams) => {
 };
 
 const closeAddRuleModal = () => {
+	isRuleFormModalOpened.value = false;
+
 	if (!addRuleModal.value) {
 		return;
 	}
-
-	isRuleFormModalOpened.value = false;
 
 	addRuleModal.value.close();
 };

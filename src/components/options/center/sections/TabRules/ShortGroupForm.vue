@@ -1,7 +1,7 @@
 <template>
 	<div>
-		<div v-if="model" class="grid grid-cols-3 gap-2">
-			<div class="form-control">
+		<div v-if="model" class="flex gap-2">
+			<div class="form-control flex-0">
 				<div class="flex gap-2">
 					<CustomSelect
 						v-model="model.color"
@@ -11,7 +11,7 @@
 					/>
 				</div>
 			</div>
-			<div class="form-control col-span-2">
+			<div class="form-control w-full flex-0">
 				<input
 					v-model="model.title"
 					class="input input-xs input-bordered w-full"
