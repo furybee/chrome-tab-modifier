@@ -369,6 +369,8 @@ const save = async () => {
 	if (isCustomIconFormVisible.value) {
 		if (customIcon.value.startsWith('http') || customIcon.value.startsWith('data:')) {
 			currentRule.value.tab.icon = customIcon.value;
+		} else {
+			currentRule.value.tab.icon = null;
 		}
 	}
 
