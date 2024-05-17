@@ -7,13 +7,13 @@
 ### Install Node Modules
 
 ```bash
-npm install
+yarn
 ```
 
 ### Run the development server
 
 ```bash
-npm run dev
+yarn dev
 ```
 
 ### IDE Setup
@@ -31,3 +31,5 @@ Add chrome types to the project:
 * Click OK to close the Settings dialog.
 
 ![img.png](img.png)
+
+## Donation
