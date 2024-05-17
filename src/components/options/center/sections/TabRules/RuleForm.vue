@@ -300,7 +300,8 @@ const isEditMode = computed(() => !!rulesStore.currentRule);
 
 const isCustomIcon = computed(
 	() =>
-		currentRule.value.tab.icon.startsWith('http') || currentRule.value.tab.icon.startsWith('data:')
+		currentRule.value.tab.icon?.startsWith('http') ||
+		currentRule.value.tab.icon?.startsWith('data:')
 );
 
 const isFirstPartFilled = computed(() => {
@@ -310,7 +311,7 @@ const isFirstPartFilled = computed(() => {
 const isCustomIconFormVisible = ref(false);
 
 isCustomIconFormVisible.value =
-	currentRule.value.tab.icon.startsWith('http') || currentRule.value.tab.icon.startsWith('data:');
+	currentRule.value.tab.icon?.startsWith('http') || currentRule.value.tab.icon?.startsWith('data:');
 
 const showGroupForm = (event: MouseEvent) => {
 	event.stopPropagation();
