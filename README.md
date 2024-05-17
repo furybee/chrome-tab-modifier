@@ -30,6 +30,10 @@ Add chrome types to the project:
 * Click Download and Install
 * Click OK to close the Settings dialog.
 
-![img.png](img.png)
-
 ## Donation
+
+If you like this extension and want to support its development, you can make a donation by clicking one of the links below.
+
+- [Buy Me a Coffee](https://www.buymeacoffee.com/xyugxh7bk)
+- [Credit Card](https://donate.stripe.com/fZeg1Sgml971dbieUU)
+- [Paypal](https://www.paypal.com/donate/?hosted_button_id=T7KZA4MLT5XTU)
