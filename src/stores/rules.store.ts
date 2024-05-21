@@ -164,6 +164,38 @@ export const useRulesStore = defineStore('rules', {
 
 			return rule;
 		},
+		async moveUp(index: number): Promise<Rule> {
+			if (index <= 0 || index >= this.rules.length) {
+				throw new Error('Index out of bounds');
+			}
+
+			// Clone the current rule
+			const rule = _clone(this.rules[index]);
+
+			// Swap the current rule with the one above it
+			[this.rules[index - 1], this.rules[index]] = [this.rules[index], this.rules[index - 1]];
+
+			// Save the changes
+			await this.save();
+
+			return rule;
+		},
+		async moveDown(index: number): Promise<Rule> {
+			if (index < 0 || index >= this.rules.length - 1) {
+				throw new Error('Index out of bounds');
+			}
+
+			// Clone the current rule
+			const rule = _clone(this.rules[index]);
+
+			// Swap the current rule with the one below it
+			[this.rules[index], this.rules[index + 1]] = [this.rules[index + 1], this.rules[index]];
+
+			// Save the changes
+			await this.save();
+
+			return rule;
+		},
 		async save() {
 			try {
 				let tabModifier = await _getStorageAsync();

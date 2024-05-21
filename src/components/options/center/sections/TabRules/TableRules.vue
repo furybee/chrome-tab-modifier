@@ -8,6 +8,7 @@
 					<th>Title</th>
 					<th>Detection</th>
 					<th>URL Fragment</th>
+					<th></th>
 					<th class="text-right">
 						<RefreshButton @on-refresh-click="refresh"></RefreshButton>
 					</th>
@@ -50,6 +51,27 @@
 						</div>
 					</td>
 					<td>
+						<div class="flex gap-4 invisible group-hover:visible overflow-hidden">
+							<button
+								class="btn btn-xs btn-circle tooltip flex items-center justify-items-center"
+								:class="{ invisible: index === 0 }"
+								data-tip="Move Up"
+								@click.prevent="(event) => moveUp(event, index)"
+							>
+								<ArrowUpIcon class="!w-4 !h-4" />
+							</button>
+
+							<button
+								class="btn btn-xs btn-circle tooltip flex items-center justify-items-center"
+								:class="{ invisible: index === props.rules.length - 1 }"
+								data-tip="Move Down"
+								@click.prevent="(event) => moveDown(event, index)"
+							>
+								<ArrowDownIcon class="!w-4 !h-4" />
+							</button>
+						</div>
+					</td>
+					<td>
 						<div class="flex justify-end gap-8 invisible group-hover:visible overflow-hidden">
 							<button
 								class="btn btn-xs btn-circle tooltip flex items-center justify-items-center"
@@ -84,6 +106,8 @@ import RefreshButton from '../../../../global/RefreshButton.vue';
 import { _chromeGroupColor, _shortify } from '../../../../../common/helpers.ts';
 import ColorVisualizer from '../TabGroups/ColorVisualizer.vue';
 import { computed } from 'vue';
+import ArrowDownIcon from '../../../../icons/ArrowDownIcon.vue';
+import ArrowUpIcon from '../../../../icons/ArrowUpIcon.vue';
 
 const props = defineProps<{
 	rules: Rule[];
@@ -127,6 +151,18 @@ const duplicateRule = async (event: MouseEvent, index: number) => {
 	event.stopPropagation();
 
 	await rulesStore.duplicateRule(index);
+};
+
+const moveUp = async (event: MouseEvent, index: number) => {
+	event.stopPropagation();
+
+	await rulesStore.moveUp(index);
+};
+
+const moveDown = async (event: MouseEvent, index: number) => {
+	event.stopPropagation();
+
+	await rulesStore.moveDown(index);
 };
 
 const deleteRule = async (event: MouseEvent, index: number) => {
