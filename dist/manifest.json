@@ -42,5 +42,13 @@
         "tabs",
         "storage",
         "contextMenus"
-    ]
+    ],
+    "commands": {
+      "rename-tab": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+Y"
+        },
+        "description": "Rename the current tab"
+      }
+    }
 }
