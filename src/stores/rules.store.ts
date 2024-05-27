@@ -63,7 +63,14 @@ export const useRulesStore = defineStore('rules', {
 		},
 		async setConfig(config: TabModifierSettings) {
 			try {
-				await _setStorage(config);
+				const defaultConfig = _getDefaultTabModifierSettings();
+
+				const mergedConfig = {
+					...defaultConfig,
+					...config,
+				};
+
+				await _setStorage(mergedConfig);
 
 				await this.init();
 			} catch (error) {
