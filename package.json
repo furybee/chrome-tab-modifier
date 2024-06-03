@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "zip": "zip -r tab-modifier.zip dist.crx manifest.json"
   },
   "dependencies": {
     "@types/chrome": "^0.0.263",
