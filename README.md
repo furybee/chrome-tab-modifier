@@ -1,9 +1,6 @@
-# <img src="dist/img/icon_32.png" alt="icon"> Tab Modifier
+# <img src="public/assets/icon_16.png" alt="icon"> Tab Modifier
 
 Take control of your tabs.
-
-[![Build Status](http://img.shields.io/travis/sylouuu/chrome-tab-modifier.svg?style=flat)](https://travis-ci.org/sylouuu/chrome-tab-modifier)
-[![devDependency Status](http://img.shields.io/david/dev/sylouuu/chrome-tab-modifier.svg?style=flat)](https://david-dm.org/sylouuu/chrome-tab-modifier#info=devDependencies)
 
 ## Features
 
@@ -42,41 +39,13 @@ Install from the **[Chrome Web Store](https://chrome.google.com/webstore/detail/
 
 Also available for **[Opera Browser](https://addons.opera.com/fr/extensions/details/tab-modifier/)**.
 
-Not available for **Firefox**, refer to [#46](https://github.com/sylouuu/chrome-tab-modifier/issues/46).
+Not available for **Firefox**, refer to [#46](https://github.com/FuryBee/chrome-tab-modifier/issues/46).
 
 ## Usage
 
-* Click on the <img src="dist/img/icon_16.png" alt="icon"> icon to open Options.
+* Click on the Tab Modifier icon <img src="public/assets/icon_16.png" alt="icon"> to open Popup or Right-Click then Options.
 * Create your tab rules.
 * Try & enjoy!
-
-## Demo
-
-### Before
-
-<img src="screenshots/tabs+before.png" alt="tabs before">
-
-### After
-
-<img src="screenshots/tabs+after.png" alt="tabs after">
-
-* Youtube tab has been modified: use Google icon and pinned state.
-* My Website tabs have been modified: use a prefix in title.
-* Twitter tab has been modified: use default Chrome icon (white paper) and renamed to "I'm working hard!".
-
-## Options
-
-### Tab Rules
-
-<img src="screenshots/tab_rules.png" alt="tab_rules">
-
-### Tab Rules Form
-
-<img src="screenshots/tab_rules_form.png" alt="tab_rules_form">
-
-### Settings
-
-<img src="screenshots/settings.png" alt="settings">
 
 ## Examples
 
@@ -138,7 +107,7 @@ Customize title with HTML selector and Regexp:
 * **Title**: {title} | $2 by $1
 * **URL matcher**: github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)
 
-Tab title will be: "sylouuu/chrome-tab-modifier: Take control of your tabs | chrome-tab-modifier by sylouuu"
+Tab title will be: "FuryBee/chrome-tab-modifier: Take control of your tabs | chrome-tab-modifier by FuryBee"
 
 Match GitHub repositories:
 
@@ -162,17 +131,13 @@ Github final path as title for blobs:
 * **URL fragment**: github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)/blob/
 * **Title**: {.final-path}
 
-And now, build your own... :muscle:
-
-## Ideas
-
-* Require password after inactivity.
+And now, build your own... 💪
 
 ## Known issues
 
 ### Local icon path doesn't work
 
-Related issue: [#5](https://github.com/sylouuu/chrome-tab-modifier/issues/5)
+Related issue: [#5](https://github.com/furybee/chrome-tab-modifier/issues/5)
 
 Due to browser security restrictions, this path won't work: `file://<path>/icon.png`.
 Your icon will not be shown by Chrome.
@@ -183,25 +148,21 @@ Another solution consists in transform your image in the [Data URI format](https
 
 ### Chrome system pages `chrome://`
 
-Related issues: [#11](https://github.com/sylouuu/chrome-tab-modifier/issues/11), [#14](https://github.com/sylouuu/chrome-tab-modifier/issues/14)
+Related issues: [#11](https://github.com/furybee/chrome-tab-modifier/issues/11), [#14](https://github.com/furybee/chrome-tab-modifier/issues/14)
 
 Pages that start with `chrome://` URL are protected. No content script can be injected then Tab Modifier will not work on these pages.
 
 ### Local files `file:///`
 
-Related issue: [#13](https://github.com/sylouuu/chrome-tab-modifier/issues/13)
+Related issue: [#13](https://github.com/furybee/chrome-tab-modifier/issues/13)
 
 By default, extensions don't have access to local files. You have to opt-in "Allow access to file URLs" from `chrome://extensions/?id=hcbgadmbdkiilgpifjgcakjehmafcjai`.
 
 ### Protected action is not triggered
 
-Related issue: [#95](https://github.com/sylouuu/chrome-tab-modifier/issues/95)
+Related issue: [#95](https://github.com/furybee/chrome-tab-modifier/issues/95)
 
 Since Chrome 90, the JS event that triggers a refresh or a closure has been reworked. See related issue.
-
-## Changelog
-
-See [releases](https://github.com/sylouuu/chrome-tab-modifier/releases) section.
 
 ## Development
 
@@ -209,17 +170,19 @@ In case you want to contribute or just want to play with the code, follow the gu
 
 ### Setup
 
-Download and install [NodeJS](http://nodejs.org/download/) to get [npm](https://www.npmjs.org/).
+Download and install [NodeJS](http://nodejs.org/download/) v18 to get [npm](https://www.npmjs.org/).
 
-Install `gulp` and `yarn` globally:
+💡 Use `nvm` to allow you to quickly install and use different versions of node via the command line.
+
+Install `yarn` globally:
 
 ```bash
-npm install -g gulp yarn
+npm install -g yarn
 ```
 
 Clone the project and install dependencies with `yarn`.
 
-Type `gulp` to watch your changes inside `src/` folder or type `gulp build` after each change.
+Type `yarn dev` to watch your changes inside `src/` folder or type `yarn build` after each change.
 
 ### Load local extension in Chrome
 
@@ -227,11 +190,15 @@ Go to `chrome://extensions/` and enable the "Developer mode".
 
 Click on "Load unpacked extension..." and select the project `dist/` folder.
 
-## Donators
+## Donation
 
 A huge thanks to all donators!
 
-If you like my work and you want to support me, visit the [PayPal link](https://www.paypal.me/sylvainvalienne/5). ;)
+If you like this extension and want to support its development, you can make a donation by clicking one of the links below.
+
+- [Buy Me a Coffee](https://www.buymeacoffee.com/xyugxh7bk)
+- [Credit Card](https://donate.stripe.com/fZeg1Sgml971dbieUU)
+- [Paypal](https://www.paypal.com/donate/?hosted_button_id=T7KZA4MLT5XTU)
 
 ## License
 

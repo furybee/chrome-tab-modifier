@@ -1,0 +1,71 @@
+<template>
+	<div class="overflow-x-auto">
+		<table class="table table-zebra">
+			<thead>
+				<tr>
+					<th>Title</th>
+					<th>Color</th>
+					<th>Collapsed</th>
+					<th />
+				</tr>
+			</thead>
+			<tbody>
+				<tr
+					v-for="(group, index) in props.groups"
+					:key="index"
+					class="cursor-pointer group hover:bg-base-100"
+					@click="editGroup(group)"
+				>
+					<td>{{ group.title }}</td>
+					<td>
+						<ColorVisualizer :color="_chromeGroupColor(group.color)" />
+					</td>
+					<td>{{ group.collapsed }}</td>
+					<td>
+						<div class="flex justify-end gap-8 invisible group-hover:visible overflow-hidden">
+							<button
+								class="btn btn-xs btn-circle btn-outline tooltip flex items-center justify-items-center btn-error"
+								data-tip="Delete"
+								@click.prevent="(event) => deleteGroup(event, index)"
+							>
+								<DeleteIcon class="!w-4 !h-4" />
+							</button>
+						</div>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</template>
+
+<script lang="ts" setup>
+import DeleteIcon from '../../../../icons/DeleteIcon.vue';
+import { inject } from 'vue';
+import { GLOBAL_EVENTS, Group, GroupModalParams } from '../../../../../common/types.ts';
+import { useRulesStore } from '../../../../../stores/rules.store.ts';
+import { _chromeGroupColor } from '../../../../../common/helpers.ts';
+import ColorVisualizer from './ColorVisualizer.vue';
+
+const props = defineProps<{
+	groups: Group[];
+}>();
+
+const rulesStore = useRulesStore();
+const emitter = inject('emitter');
+
+const editGroup = (group: Group) => {
+	emitter.emit(GLOBAL_EVENTS.OPEN_ADD_GROUP_MODAL, {
+		group,
+	} as GroupModalParams);
+};
+
+const deleteGroup = async (event: any, index: number) => {
+	event.stopPropagation();
+
+	if (confirm('Are you sure you want to delete this group?')) {
+		await rulesStore.deleteGroup(index);
+	}
+};
+</script>
+
+<style scoped></style>

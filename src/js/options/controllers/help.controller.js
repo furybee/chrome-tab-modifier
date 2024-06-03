@@ -1,3 +1,0 @@
-app.controller('HelpController', function () {
-    
-});
