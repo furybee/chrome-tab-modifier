@@ -288,7 +288,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits(['onSave']);
 
-const defaultRule = props.rule ?? _getDefaultRule('', 'CONTAINS', '');
+const defaultRule = props.rule ?? _getDefaultRule('', '', '');
 
 const customIcon = ref('');
 const showHelp = ref(false);
