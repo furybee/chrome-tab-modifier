@@ -51,7 +51,7 @@ const props = defineProps<{
 }>();
 
 const rulesStore = useRulesStore();
-const emitter = inject('emitter');
+const emitter: any = inject('emitter');
 
 const editGroup = (group: Group) => {
 	emitter.emit(GLOBAL_EVENTS.OPEN_ADD_GROUP_MODAL, {

@@ -127,13 +127,13 @@ import NewFeature from '../../../global/NewFeature.vue';
 import { GLOBAL_EVENTS } from '../../../../common/types.ts';
 import { _getThemes } from '../../../../common/helpers.ts';
 
-const emitter = inject('emitter');
+const emitter: any = inject('emitter');
 
 const rulesStore = useRulesStore();
 
 const currentTheme = ref(rulesStore.settings.theme);
 const importModal = ref(null);
-const fileInput = ref(null);
+const fileInput = ref<HTMLInputElement | null>(null);
 const fileLoaded = ref(false);
 
 const themes = _getThemes();
@@ -173,6 +173,7 @@ const showImportModal = () => {
 
 const importMergeConfig = async () => {
 	if (!fileInput.value) return;
+	if (!fileInput.value.files) return;
 
 	const file = fileInput.value.files[0];
 	const reader = new FileReader();
@@ -202,6 +203,7 @@ const importMergeConfig = async () => {
 
 const importReplaceConfig = async () => {
 	if (!fileInput.value) return;
+	if (!fileInput.value.files) return;
 
 	if (!confirm('All your current settings will be replaced. Are you sure?')) {
 		return;

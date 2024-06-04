@@ -19,7 +19,7 @@
 import { GLOBAL_EVENTS, ToastParams, ToastType } from '../../common/types.ts';
 import { inject, onMounted, onUnmounted, ref } from 'vue';
 
-const emitter = inject('emitter');
+const emitter: any = inject('emitter');
 
 const type = ref<ToastType>('none');
 const message = ref('');

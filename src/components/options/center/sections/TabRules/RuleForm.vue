@@ -364,7 +364,7 @@ watch(
 	}
 );
 
-const emitter = inject('emitter');
+const emitter: any = inject('emitter');
 
 const save = async () => {
 	if (newGroup.value) {

@@ -32,7 +32,7 @@ rulesStore.init();
 const addGroupModal = ref<HTMLDialogElement | null>(null);
 const isGroupFormModalOpened = ref(false);
 
-const emitter = inject('emitter');
+const emitter: any = inject('emitter');
 
 onMounted(() => {
 	emitter.on(GLOBAL_EVENTS.OPEN_ADD_GROUP_MODAL, openAddGroupModal);

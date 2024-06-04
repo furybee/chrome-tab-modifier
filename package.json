@@ -4,10 +4,11 @@
   "version": "1.0.1",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc && vite build",
+    "dev": "rm -rf ./dist && vite",
+    "tsc": "vue-tsc",
+    "build": "rm -rf ./dist && vite build",
     "preview": "vite preview",
-    "build-zip": "rm -rf ./dist && rm -f tab-modifier.zip && vite build && cd ./dist && zip -r ../tab-modifier.zip *"
+    "build-zip": "rm -rf ./dist && rm -f tab-modifier.zip && yarn build && cd ./dist && zip -r ../tab-modifier.zip *"
   },
   "dependencies": {
     "@types/chrome": "^0.0.263",

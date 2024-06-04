@@ -139,7 +139,7 @@ const getIconUrl = (icon: string): string | undefined => {
 };
 
 const rulesStore = useRulesStore();
-const emitter = inject('emitter');
+const emitter: any = inject('emitter');
 
 const editRule = (rule: Rule) => {
 	emitter.emit(GLOBAL_EVENTS.OPEN_ADD_RULE_MODAL, {

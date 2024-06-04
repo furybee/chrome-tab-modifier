@@ -26,18 +26,16 @@ const reloadTab = () => {
 	chrome.tabs.reload(tab.value.id);
 };
 
-chrome.tabs.onUpdated.addListener(
-	(_: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab) => {
-		if (!changeInfo.url) return;
+chrome.tabs.onUpdated.addListener((_: number, changeInfo: chrome.tabs.TabChangeInfo) => {
+	if (!changeInfo.url) return;
 
-		_getRuleFromUrl(changeInfo.url).then((foundRule) => {
-			if (!foundRule) return;
+	_getRuleFromUrl(changeInfo.url).then((foundRule) => {
+		if (!foundRule) return;
 
-			rule.value = foundRule;
-			rulesStore.currentRule = foundRule;
-		});
-	}
-);
+		rule.value = foundRule;
+		rulesStore.currentRule = foundRule;
+	});
+});
 
 onMounted(async () => {
 	await rulesStore.init();

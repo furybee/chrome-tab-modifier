@@ -74,7 +74,7 @@ import CloseIcon from './components/icons/CloseIcon.vue';
 import { useRulesStore } from './stores/rules.store.ts';
 import Toaster from './components/global/Toaster.vue';
 
-const emitter = inject('emitter');
+const emitter: any = inject('emitter');
 
 const panes: Components = {
 	TabRulesPane,
