@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "rm -rf ./dist && vite",
     "tsc": "vue-tsc",
-    "build": "rm -rf ./dist && vite build",
+    "build": "vue-tsc && rm -rf ./dist && vite build",
     "preview": "vite preview",
     "build-zip": "rm -rf ./dist && rm -f tab-modifier.zip && yarn build && cd ./dist && zip -r ../tab-modifier.zip *"
   },
