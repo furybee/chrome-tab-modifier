@@ -41,11 +41,17 @@ export const useRulesStore = defineStore('rules', {
 		},
 		async init() {
 			try {
-				const tabModifier = await _getStorageAsync();
+				let tabModifier = await _getStorageAsync();
 
 				if (!tabModifier) {
 					await this.save();
 				} else {
+					tabModifier = await this.setConfig(tabModifier, false);
+
+					if (!tabModifier) {
+						throw new Error('Failed to set config');
+					}
+
 					this.addMissingRuleIds(tabModifier.rules);
 					this.addMissingInvisibleChar(tabModifier.groups);
 
@@ -54,6 +60,7 @@ export const useRulesStore = defineStore('rules', {
 					this.settings = tabModifier.settings;
 				}
 
+				console.log(this.settings.theme);
 				await this.applyTheme(this.settings.theme);
 
 				await this.save();
@@ -61,7 +68,10 @@ export const useRulesStore = defineStore('rules', {
 				console.error('Failed to init:', error);
 			}
 		},
-		async setConfig(config: TabModifierSettings) {
+		async setConfig(
+			config: TabModifierSettings,
+			shouldInit: boolean = true
+		): Promise<TabModifierSettings | undefined> {
 			try {
 				const defaultConfig = _getDefaultTabModifierSettings();
 
@@ -70,9 +80,13 @@ export const useRulesStore = defineStore('rules', {
 					...config,
 				};
 
-				await _setStorage(mergedConfig);
+				await _setStorage(config);
 
-				await this.init();
+				if (shouldInit) {
+					await this.init();
+				}
+
+				return mergedConfig;
 			} catch (error) {
 				console.error('Failed to set config:', error);
 			}
