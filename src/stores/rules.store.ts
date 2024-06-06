@@ -25,10 +25,19 @@ export const useRulesStore = defineStore('rules', {
 		};
 	},
 	actions: {
-		addMissingRuleIds(rules: Rule[]) {
+		handleMissingRuleSettings(rules: Rule[]) {
 			rules.forEach((rule) => {
 				if (!rule.id) {
 					rule.id = _generateRandomId();
+				}
+
+				// old settings
+				if (rule.detection === 'STARTS') {
+					rule.detection = 'STARTS_WITH';
+				}
+
+				if (rule.detection === 'ENDS') {
+					rule.detection = 'ENDS_WITH';
 				}
 			});
 		},
@@ -52,7 +61,7 @@ export const useRulesStore = defineStore('rules', {
 						throw new Error('Failed to set config');
 					}
 
-					this.addMissingRuleIds(tabModifier.rules);
+					this.handleMissingRuleSettings(tabModifier.rules);
 					this.addMissingInvisibleChar(tabModifier.groups);
 
 					this.groups = tabModifier.groups;
