@@ -62,7 +62,7 @@ import { _clone, _groupColors } from '../../../../../common/helpers.ts';
 import { GLOBAL_EVENTS, Group } from '../../../../../common/types.ts';
 import HelpSwap from '../../../../global/HelpSwap.vue';
 
-const emitter = inject('emitter');
+const emitter: any = inject('emitter');
 const rulesStore = useRulesStore();
 
 const isEditMode = computed(() => !!rulesStore.currentGroup);

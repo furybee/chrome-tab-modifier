@@ -7,13 +7,13 @@ import {
 	_setStorage,
 } from './common/storage.ts';
 
-chrome.tabs.onUpdated.addListener(
-	async (_: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab) => {
-		if (!changeInfo.url) return;
-
-		await applyRuleToTab(tab);
-	}
-);
+// chrome.tabs.onUpdated.addListener(
+// 	async (_: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab) => {
+// 		if (!changeInfo.url) return;
+//
+// 		await applyRuleToTab(tab);
+// 	}
+// );
 
 function queryTabs(queryInfo = {}): Promise<chrome.tabs.Tab[]> {
 	return new Promise((resolve, reject) => {
@@ -160,18 +160,18 @@ async function applyGroupRuleToTab(
 	);
 }
 
-async function applyRuleToTab(tab: chrome.tabs.Tab) {
-	if (!tab.id) return false;
-	if (!tab.url) return false;
-
-	const rule = await _getRuleFromUrl(tab.url);
-
-	await ungroupTab(rule, tab);
-
-	if (rule) {
-		await chrome.tabs.sendMessage(tab.id, { action: 'applyRule', rule: rule });
-	}
-}
+// async function applyRuleToTab(tab: chrome.tabs.Tab) {
+// 	if (!tab.id) return false;
+// 	if (!tab.url) return false;
+//
+// 	const rule = await _getRuleFromUrl(tab.url);
+//
+// 	await ungroupTab(rule, tab);
+//
+// 	if (rule) {
+// 		await chrome.tabs.sendMessage(tab.id, { action: 'applyRule', rule: rule });
+// 	}
+// }
 
 async function handleTabGroups(
 	groups: chrome.tabGroups.TabGroup[],

@@ -16,7 +16,7 @@
 import { inject } from 'vue';
 import { GLOBAL_EVENTS } from '../../../../../common/types.ts';
 
-const emitter = inject('emitter');
+const emitter: any = inject('emitter');
 
 const onGetStartedClicked = () => {
 	emitter.emit(GLOBAL_EVENTS.OPEN_ADD_GROUP_MODAL);

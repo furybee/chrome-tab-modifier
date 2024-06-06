@@ -32,7 +32,7 @@ rulesStore.init();
 const addRuleModal = ref<HTMLDialogElement | null>(null);
 const isRuleFormModalOpened = ref(false);
 
-const emitter = inject('emitter');
+const emitter: any = inject('emitter');
 
 onMounted(() => {
 	emitter.on(GLOBAL_EVENTS.OPEN_ADD_RULE_MODAL, openAddRuleModal);

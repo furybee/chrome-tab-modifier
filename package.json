@@ -1,12 +1,14 @@
 {
   "name": "tab-modifier",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.2",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc && vite build",
-    "preview": "vite preview"
+    "dev": "rm -rf ./dist && vite",
+    "tsc": "vue-tsc",
+    "build": "vue-tsc && rm -rf ./dist && vite build",
+    "preview": "vite preview",
+    "build-zip": "rm -rf ./dist && rm -f tab-modifier.zip && yarn build && cd ./dist && zip -r ../tab-modifier.zip *"
   },
   "dependencies": {
     "@types/chrome": "^0.0.263",
