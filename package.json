@@ -10,7 +10,7 @@
     "coverage": "npx vitest --run --coverage.enabled true",
     "dev": "rm -rf ./dist && vite",
     "tsc": "vue-tsc",
-    "build": "vue-tsc && rm -rf ./dist && vite build",
+    "build": "rm -rf ./dist && vite build",
     "preview": "vite preview",
     "build-zip": "rm -rf ./dist && rm -f tab-modifier.zip && yarn build && cd ./dist && zip -r ../tab-modifier.zip *"
   },
