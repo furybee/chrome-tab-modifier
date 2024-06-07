@@ -1,7 +1,7 @@
 <template>
 	<div class="flex w-full bg-base-200 rounded-md">
-		<div class="dropdown w-full">
-			<div
+		<details ref="dropdown" class="dropdown w-full">
+			<summary
 				class="btn btn-xs w-full flex flex-row flex-nowrap whitespace-nowrap justify-between items-center"
 				role="button"
 				tabindex="0"
@@ -21,7 +21,7 @@
 				</div>
 				<span v-if="props.items.length === 0">-- no items --</span>
 				<ChevronDownIcon class="!w-4 !h-4 ml-2" />
-			</div>
+			</summary>
 			<ul
 				v-show="props.items.length > 0"
 				class="w-full p-0 shadow menu dropdown-content z-[1] bg-base-300 rounded-md max-h-36 overflow-x-hidden overflow-y-auto flex flex-row"
@@ -42,7 +42,7 @@
 					</a>
 				</li>
 			</ul>
-		</div>
+		</details>
 		<div v-if="showClearBtn" class="px-1 btn btn-xs btn-accent rounded-l-none" @click="clearValue">
 			<CloseIcon class="!w-4 !h-4" />
 		</div>
@@ -76,9 +76,15 @@ const props = withDefaults(defineProps<Props>(), {
 	showLabel: true,
 });
 
+const dropdown = ref<HTMLElement | null>(null);
+
 const onItemSelected = (item: SelectItem) => {
 	icon.value = item.icon ?? '';
 	model.value = item.value;
+
+	if (dropdown.value) {
+		dropdown.value.removeAttribute('open');
+	}
 };
 
 const clearValue = () => {
