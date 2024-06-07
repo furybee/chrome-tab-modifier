@@ -78,6 +78,65 @@ describe('Content', () => {
 			const result = processTitle('https://example.com/test', '', rule);
 			expect(result).toBe('Page test');
 		});
+
+		it('should process title with title matcher and URL matcher', () => {
+			const rule = {
+				tab: {
+					title: '@0 | $0',
+					title_matcher: '[a-z]*@gmail.com',
+					url_matcher: '[a-z]*.google.com',
+				},
+			};
+
+			const result = processTitle('mail.google.com', 'john@gmail.com', rule);
+			expect(result).toBe('john@gmail.com | mail.google.com');
+		});
+
+		it('should match github repositories', () => {
+			const rule = {
+				tab: {
+					title: 'I got you GitHub!',
+					detection: 'REGEX',
+					url_fragment: 'github.com',
+				},
+			};
+
+			const result = processTitle('github.com', '', rule);
+			expect(result).toBe('I got you GitHub!');
+		});
+
+		it('should deguise Github as Google', () => {
+			const rule = {
+				tab: {
+					detection: 'CONTAINS',
+					url_fragment: 'github.com',
+					title: 'Google',
+					icon: 'https://www.google.com/favicon.ico',
+				},
+			};
+
+			const result = processTitle('github.com', '', rule);
+			expect(result).toBe('Google');
+		});
+
+		it('should customize title with html selector and regexp', () => {
+			const rule = {
+				tab: {
+					title: '{title} | $2 by $1',
+					detection: 'CONTAINS',
+					url_fragment: 'github.com',
+					url_matcher: 'github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)',
+				},
+			};
+
+			document.title = 'FuryBee/chrome-tab-modifier: Take control of your tabs';
+
+			const result = processTitle('https://github.com/furybee/chrome-tab-modifier', '', rule);
+
+			expect(result).toBe(
+				'FuryBee/chrome-tab-modifier: Take control of your tabs | chrome-tab-modifier by furybee'
+			);
+		});
 	});
 
 	describe('processIcon', () => {

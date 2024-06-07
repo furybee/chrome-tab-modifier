@@ -109,7 +109,7 @@ Customize title with HTML selector and Regexp:
 * **Title**: {title} | $2 by $1
 * **URL matcher**: github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)
 
-Tab title will be: "FuryBee/chrome-tab-modifier: Take control of your tabs | chrome-tab-modifier by FuryBee"
+Tab title will be: "FuryBee/chrome-tab-modifier: Take control of your tabs | chrome-tab-modifier by furybee"
 
 Match GitHub repositories:
 
