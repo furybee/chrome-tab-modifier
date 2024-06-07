@@ -1,5 +1,7 @@
 # <img src="public/assets/icon_16.png" alt="icon"> Tab Modifier
 
+[![CI](https://github.com/furybee/chrome-tab-modifier/actions/workflows/ci.yml/badge.svg?branch=feat%2Ftests)](https://github.com/furybee/chrome-tab-modifier/actions/workflows/ci.yml)
+
 Take control of your tabs.
 
 ## Features
