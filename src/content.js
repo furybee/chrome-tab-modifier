@@ -2,20 +2,22 @@ import { _getRuleFromUrl } from './common/storage.ts';
 
 const STORAGE_KEY = 'tab_modifier';
 
-function updateTitle(title, tag, value) {
+export function updateTitle(title, tag, value) {
 	return value ? title.replace(tag, value) : title;
 }
 
-function getTextBySelector(selector) {
+export function getTextBySelector(selector) {
 	let el = document.querySelector(selector),
 		value = '';
 
-	if (el !== null) {
-		el = el.childNodes[0];
+	if (el) {
+		if (el.childNodes.length > 0) {
+			el = el.childNodes[0];
+		}
 
-		if (el.tagName === 'input') {
+		if (el.tagName?.toLowerCase() === 'input') {
 			value = el.value;
-		} else if (el.tagName === 'select') {
+		} else if (el.tagName?.toLowerCase() === 'select') {
 			value = el.options[el.selectedIndex].text;
 		} else {
 			value = el.innerText || el.textContent;
@@ -25,7 +27,7 @@ function getTextBySelector(selector) {
 	return value.trim();
 }
 
-function processTitle(currentUrl, currentTitle, rule) {
+export function processTitle(currentUrl, currentTitle, rule) {
 	let title = rule.tab.title;
 	const matches = title.match(/\{([^}]+)}/g);
 
@@ -77,7 +79,7 @@ function processTitle(currentUrl, currentTitle, rule) {
 	return title;
 }
 
-function processIcon(newIcon) {
+export function processIcon(newIcon) {
 	const icons = document.querySelectorAll('head link[rel*="icon"]');
 	icons.forEach((icon) => icon.parentNode.removeChild(icon));
 
@@ -94,7 +96,7 @@ function processIcon(newIcon) {
 	return true;
 }
 
-async function applyRule(ruleParam) {
+export async function applyRule(ruleParam) {
 	const rule = ruleParam ?? (await _getRuleFromUrl(location.href));
 
 	if (!rule) {
