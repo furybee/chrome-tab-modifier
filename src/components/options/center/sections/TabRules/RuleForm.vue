@@ -194,42 +194,48 @@
 			</div>
 		</div>
 
-		<details class="mt-6">
-			<summary>Advanced</summary>
-			<div class="flex gap-2">
+		<details class="mt-6" :open="isAdvancedOpenWhenMounted">
+			<summary class="mb-3 cursor-pointer">Advanced</summary>
+
+			<div class="grid grid-cols-1 md:grid-cols-2 gap-2">
 				<label class="form-control w-full flex-1">
 					<div class="label">
 						<span class="label-text text-sm">Title matcher</span>
 					</div>
 					<input
 						v-model="currentRule.tab.title_matcher"
-						class="input input-xs input-bordered w-full max-w-xs"
+						class="input input-xs input-bordered w-full"
 						placeholder="Title matcher"
 						required
 						type="text"
 					/>
-					<div class="label">
-						<span v-if="showHelp" class="text-xs opacity-80 label-text-alt">
-							Regular expression to search string fragments in title</span
-						>
+					<div v-if="showHelp">
+						<div class="label">
+							<span class="text-xs opacity-80 label-text-alt">
+								Regular expression to search string fragments in title</span
+							>
+						</div>
+						<RegexVisualizer class="mt-2" tag="@" :regex="currentRule.tab.title_matcher" />
 					</div>
 				</label>
-
 				<label class="form-control w-full flex-1">
 					<div class="label">
 						<span class="label-text text-sm">URL matcher</span>
 					</div>
 					<input
 						v-model="currentRule.tab.url_matcher"
-						class="input input-xs input-bordered w-full max-w-xs"
+						class="input input-xs input-bordered w-full"
 						placeholder="URL matcher"
 						required
 						type="text"
 					/>
-					<div class="label">
-						<span v-if="showHelp" class="text-xs opacity-80 label-text-alt">
-							Regular expression to search string fragments in URL</span
-						>
+					<div v-if="showHelp">
+						<div class="label">
+							<span class="text-xs opacity-80 label-text-alt">
+								Regular expression to search string fragments in URL</span
+							>
+						</div>
+						<RegexVisualizer class="mt-2" tag="$" :regex="currentRule.tab.url_matcher" />
 					</div>
 				</label>
 			</div>
@@ -254,7 +260,7 @@
 </template>
 <script lang="ts" setup>
 import { useRulesStore } from '../../../../../stores/rules.store.ts';
-import { computed, inject, ref, watch } from 'vue';
+import { computed, inject, onMounted, ref, watch } from 'vue';
 import CustomSelect, { SelectItem } from '../../../../global/CustomSelect.vue';
 import NewFeature from '../../../../global/NewFeature.vue';
 import {
@@ -268,6 +274,7 @@ import HelpSwap from '../../../../global/HelpSwap.vue';
 import { _getDefaultGroup, _getDefaultRule } from '../../../../../common/storage.ts';
 import ShortGroupForm from './ShortGroupForm.vue';
 import CloseIcon from '../../../../icons/CloseIcon.vue';
+import RegexVisualizer from '../../../../global/RegexVisualizer.vue';
 
 const rulesStore = useRulesStore();
 export interface Props {
@@ -386,6 +393,15 @@ const save = async () => {
 
 	emit('onSave');
 };
+
+const isAdvancedOpenWhenMounted = ref(false);
+
+onMounted(() => {
+	isAdvancedOpenWhenMounted.value =
+		!!currentRule.value.tab.title_matcher || !!currentRule.value.tab.url_matcher;
+
+	console.log(isAdvancedOpenWhenMounted.value);
+});
 
 const detections = _getDetections();
 const icons = _getIcons();

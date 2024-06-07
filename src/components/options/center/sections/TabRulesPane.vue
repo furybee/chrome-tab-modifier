@@ -11,7 +11,7 @@
 		</div>
 
 		<dialog ref="addRuleModal" class="modal">
-			<div class="modal-box w-11/12 max-w-5xl">
+			<div class="modal-box w-11/12 max-w-4xl">
 				<RuleForm v-if="isRuleFormModalOpened" />
 			</div>
 		</dialog>
