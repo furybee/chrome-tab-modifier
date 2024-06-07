@@ -290,7 +290,6 @@ const emit = defineEmits(['onSave']);
 
 const defaultRule = props.rule ?? _getDefaultRule('', '', '');
 
-const customIcon = ref('');
 const showHelp = ref(false);
 const isGroupFormVisible = ref(false);
 const newGroup = ref<Group | null>(null);
@@ -370,14 +369,6 @@ const save = async () => {
 	if (newGroup.value) {
 		await rulesStore.addGroup(newGroup.value);
 		currentRule.value.tab.group_id = newGroup.value.id;
-	}
-
-	if (isCustomIconFormVisible.value) {
-		if (customIcon.value.startsWith('http') || customIcon.value.startsWith('data:')) {
-			currentRule.value.tab.icon = customIcon.value;
-		} else {
-			currentRule.value.tab.icon = null;
-		}
 	}
 
 	if (isEditMode.value) {

@@ -69,7 +69,6 @@ export const useRulesStore = defineStore('rules', {
 					this.settings = tabModifier.settings;
 				}
 
-				console.log(this.settings.theme);
 				await this.applyTheme(this.settings.theme);
 
 				await this.save();

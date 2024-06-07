@@ -25,3 +25,7 @@ dist-ssr
 
 tab-modifier.zip
 /deploy/*
+
+coverage/
+dummy-*
+html/
