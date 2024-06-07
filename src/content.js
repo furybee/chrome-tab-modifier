@@ -33,7 +33,6 @@ function processTitle(currentUrl, currentTitle, rule) {
 		let selector, text;
 
 		matches.forEach((match) => {
-			debugger;
 			selector = match.substring(1, match.length - 1);
 			text = getTextBySelector(selector);
 
@@ -43,12 +42,15 @@ function processTitle(currentUrl, currentTitle, rule) {
 
 	if (rule.tab.title_matcher) {
 		try {
-			const titleMatches = currentTitle.match(new RegExp(rule.tab.title_matcher, 'g'));
+			const regex = new RegExp(rule.tab.title_matcher, 'g');
+			let matches;
+			let i = 0;
 
-			if (titleMatches) {
-				titleMatches.forEach((match, i) => {
-					title = updateTitle(title, '@' + i, match);
-				});
+			while ((matches = regex.exec(currentTitle)) !== null) {
+				for (let j = 0; j < matches.length; j++) {
+					title = updateTitle(title, '@' + i, matches[j]);
+					i++;
+				}
 			}
 		} catch (e) {
 			console.error(e);
@@ -57,11 +59,15 @@ function processTitle(currentUrl, currentTitle, rule) {
 
 	if (rule.tab.url_matcher) {
 		try {
-			const urlMatches = currentUrl.match(new RegExp(rule.tab.url_matcher, 'g'));
-			if (urlMatches) {
-				urlMatches.forEach((match, i) => {
-					title = updateTitle(title, '$' + i, match);
-				});
+			const regex = new RegExp(rule.tab.url_matcher, 'g');
+			let matches;
+			let i = 0;
+
+			while ((matches = regex.exec(currentUrl)) !== null) {
+				for (let j = 0; j < matches.length; j++) {
+					title = updateTitle(title, '$' + i, matches[j]);
+					i++;
+				}
 			}
 		} catch (e) {
 			console.error(e);
