@@ -30,8 +30,6 @@ function queryTabs(queryInfo = {}): Promise<chrome.tabs.Tab[]> {
 async function handleSetUnique(message: any, currentTab: chrome.tabs.Tab) {
 	if (!currentTab.id) return;
 
-	console.log('handleSetUnique', message, currentTab);
-
 	const tabs = await queryTabs({});
 
 	for (const tab of tabs) {
