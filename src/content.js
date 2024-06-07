@@ -6,19 +6,45 @@ function updateTitle(title, tag, value) {
 	return value ? title.replace(tag, value) : title;
 }
 
+function getTextBySelector(selector) {
+	let el = document.querySelector(selector),
+		value = '';
+
+	if (el !== null) {
+		el = el.childNodes[0];
+
+		if (el.tagName === 'input') {
+			value = el.value;
+		} else if (el.tagName === 'select') {
+			value = el.options[el.selectedIndex].text;
+		} else {
+			value = el.innerText || el.textContent;
+		}
+	}
+
+	return value.trim();
+}
+
 function processTitle(currentUrl, currentTitle, rule) {
 	let title = rule.tab.title;
 	const matches = title.match(/\{([^}]+)}/g);
 
 	if (matches) {
+		let selector, text;
+
 		matches.forEach((match) => {
-			title = updateTitle(title, match, currentTitle);
+			debugger;
+			selector = match.substring(1, match.length - 1);
+			text = getTextBySelector(selector);
+
+			title = updateTitle(title, match, text);
 		});
 	}
 
 	if (rule.tab.title_matcher) {
 		try {
 			const titleMatches = currentTitle.match(new RegExp(rule.tab.title_matcher, 'g'));
+
 			if (titleMatches) {
 				titleMatches.forEach((match, i) => {
 					title = updateTitle(title, '@' + i, match);
@@ -63,7 +89,6 @@ function processIcon(newIcon) {
 }
 
 async function applyRule(ruleParam) {
-	const urlChanged = !!ruleParam;
 	const rule = ruleParam ?? (await _getRuleFromUrl(location.href));
 
 	if (!rule) {
@@ -198,7 +223,6 @@ chrome.runtime.onMessage.addListener(async function (request) {
 			title: title,
 		});
 	} else if (request.action === 'applyRule') {
-		console.log('Applying rule', request.rule);
 		await applyRule(request.rule);
 	} else if (request.action === 'ungroupTab') {
 		await chrome.tabs.ungroup(request.tabId);
