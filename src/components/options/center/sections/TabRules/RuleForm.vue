@@ -399,8 +399,6 @@ const isAdvancedOpenWhenMounted = ref(false);
 onMounted(() => {
 	isAdvancedOpenWhenMounted.value =
 		!!currentRule.value.tab.title_matcher || !!currentRule.value.tab.url_matcher;
-
-	console.log(isAdvancedOpenWhenMounted.value);
 });
 
 const detections = _getDetections();
