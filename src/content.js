@@ -118,6 +118,7 @@ export async function applyRule(ruleParam) {
 
 		let originalTitle = originalTitleElement.getAttribute('content');
 		document.title = processTitle(location.href, originalTitle, rule);
+		titleChangedByMe = true;
 
 		const targetNode = document.documentElement;
 		const config = { childList: true, subtree: true };
