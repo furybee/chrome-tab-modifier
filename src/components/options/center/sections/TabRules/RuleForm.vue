@@ -21,11 +21,14 @@
 				<span class="label-text text-sm">Name</span>
 			</div>
 			<input
+				ref="currentRuleNameInput"
 				v-model="currentRule.name"
 				class="input input-xs input-bordered w-full"
 				placeholder="e.g. Pinned GMail"
 				required
 				type="text"
+				autofocus
+				tabindex="0"
 			/>
 			<div v-if="showHelp" class="label">
 				<span class="text-xs opacity-80 label-text-alt">Give an explicit name, just for you</span>
@@ -412,10 +415,15 @@ const save = async () => {
 };
 
 const isAdvancedOpenWhenMounted = ref(false);
+const currentRuleNameInput = ref(null);
 
 onMounted(() => {
 	isAdvancedOpenWhenMounted.value =
 		!!currentRule.value.tab.title_matcher || !!currentRule.value.tab.url_matcher;
+
+	if (currentRuleNameInput.value) {
+		currentRuleNameInput.value.focus();
+	}
 });
 
 const detections = _getDetections();
