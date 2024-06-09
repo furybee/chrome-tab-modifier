@@ -7,6 +7,9 @@
 				<template v-if="menuItem.component === 'TabGroupsPane'">
 					<NewFeature />
 				</template>
+				<template v-if="menuItem.link">
+					<ExternalIcon class="size-3" />
+				</template>
 			</a>
 		</li>
 	</ul>
@@ -22,6 +25,7 @@ import GithubIcon from '../../icons/GithubIcon.vue';
 import DonationIcon from '../../icons/DonationIcon.vue';
 import ChromeIcon from '../../icons/ChromeIcon.vue';
 import NewFeature from '../../global/NewFeature.vue';
+import ExternalIcon from '../../icons/ExternalIcon.vue';
 
 const icons: Components = {
 	TabRulesIcon,
