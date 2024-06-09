@@ -125,7 +125,6 @@ export async function applyRule(ruleParam) {
 		let lastTitle = document.title;
 
 		const callback = function () {
-			// for (const mutation of mutationsList) {
 			if (document.title !== lastTitle) {
 				originalTitleElement.setAttribute('content', document.title);
 
