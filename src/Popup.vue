@@ -3,7 +3,7 @@
 		<RuleForm
 			v-if="isInit"
 			:rule="rule"
-			:options="{ showCancel: false, showTitle: true }"
+			:options="{ showCancel: false, showTitle: true, showOptionLink: true }"
 			@on-save="reloadTab"
 		/>
 	</div>
