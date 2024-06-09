@@ -20,20 +20,20 @@
 							</a>
 						</div>
 
-						<div class="navbar-end">
+						<div class="navbar-end mr-2">
 							<a
-								v-if="currentContent.component === 'TabRulesPane'"
-								class="btn"
+								v-if="hasRules && currentContent.component === 'TabRulesPane'"
+								class="btn btn-xs btn-circle btn-primary"
 								@click="openAddModal"
 							>
-								Add
+								<PlusIcon class="!w-3 !h-3" />
 							</a>
 							<a
-								v-if="currentContent.component === 'TabGroupsPane'"
-								class="btn"
+								v-if="hasGroups && currentContent.component === 'TabGroupsPane'"
+								class="btn btn-xs btn-circle btn-primary"
 								@click="openAddGroupModal"
 							>
-								Add
+								<PlusIcon class="!w-3 !h-3" />
 							</a>
 						</div>
 					</div>
@@ -63,7 +63,7 @@
 <script lang="ts" setup>
 import Menu from './components/options/left/Menu.vue';
 import { GLOBAL_EVENTS, Components, MenuItem } from './common/types.ts';
-import { inject, onMounted, ref } from 'vue';
+import { inject, onMounted, ref, computed } from 'vue';
 import TabRulesPane from './components/options/center/sections/TabRulesPane.vue';
 import TabGroupsPane from './components/options/center/sections/TabGroupsPane.vue';
 import SettingsPane from './components/options/center/sections/SettingsPane.vue';
@@ -73,6 +73,7 @@ import BurgerIcon from './components/icons/BurgerIcon.vue';
 import CloseIcon from './components/icons/CloseIcon.vue';
 import { useRulesStore } from './stores/rules.store.ts';
 import Toaster from './components/global/Toaster.vue';
+import PlusIcon from './components/icons/PlusIcon.vue';
 
 const emitter: any = inject('emitter');
 
@@ -143,6 +144,14 @@ const openAddModal = () => {
 const openAddGroupModal = () => {
 	emitter.emit(GLOBAL_EVENTS.OPEN_ADD_GROUP_MODAL);
 };
+
+const hasRules = computed<boolean>(() => {
+	return rulesStore.rules.length > 0;
+});
+
+const hasGroups = computed<boolean>(() => {
+	return rulesStore.groups.length > 0;
+});
 
 onMounted(async () => {
 	await rulesStore.init();
