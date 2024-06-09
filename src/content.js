@@ -103,37 +103,37 @@ export async function applyRule(ruleParam) {
 		return;
 	}
 
-	let titleChangedByMe = false;
-
 	if (rule.tab.title) {
 		// check if element with id original-title exists
-		let element = document.querySelector('meta[name="original-tab-modifier-title"]');
+		let originalTitleElement = document.querySelector('meta[name="original-tab-modifier-title"]');
 
-		if (!element) {
-			element = document.createElement('meta');
-			element.name = 'original-tab-modifier-title';
-			element.content = document.title;
-			document.head.appendChild(element);
+		if (!originalTitleElement) {
+			originalTitleElement = document.createElement('meta');
+			originalTitleElement.name = 'original-tab-modifier-title';
+			originalTitleElement.content = document.title;
+			document.head.appendChild(originalTitleElement);
 		}
 
-		const originalTitle = element.getAttribute('content');
+		let originalTitle = originalTitleElement.getAttribute('content');
 		document.title = processTitle(location.href, originalTitle, rule);
-		titleChangedByMe = true;
 
-		const titleObserver = new MutationObserver(() => {
-			if (!titleChangedByMe) {
+		const targetNode = document.documentElement;
+		const config = { childList: true, subtree: true };
+		let lastTitle = document.title;
+
+		const callback = function () {
+			if (document.title !== lastTitle) {
+				originalTitleElement.setAttribute('content', document.title);
+
+				originalTitle = originalTitleElement.getAttribute('content');
 				document.title = processTitle(location.href, originalTitle, rule);
-				titleChangedByMe = true;
-			} else {
-				titleChangedByMe = false;
-			}
-		});
 
-		titleObserver.observe(document.querySelector('title'), {
-			attributes: true,
-			childList: true,
-			subtree: true,
-		});
+				lastTitle = document.title;
+			}
+		};
+
+		const observer = new MutationObserver(callback);
+		observer.observe(targetNode, config);
 	}
 
 	// Pinning, muting handled through Chrome Runtime messages
