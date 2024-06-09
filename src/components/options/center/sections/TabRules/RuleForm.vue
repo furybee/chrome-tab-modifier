@@ -3,7 +3,16 @@
 		<span v-if="isEditMode">Edit rule</span>
 		<span v-else>Add a new rule</span>
 
-		<HelpSwap v-model="showHelp" />
+		<div class="flex gap-2 items-center">
+			<HelpSwap v-model="showHelp" />
+			<button
+				v-if="options.showOptionLink"
+				class="btn btn-xs btn-circle bg-transparent border-none hover:text-accent"
+				@click="openOptions"
+			>
+				<SettingsIcon class="!w-4 !h-4" />
+			</button>
+		</div>
 	</h3>
 
 	<div class="flex flex-wrap md:flex-nowrap gap-2">
@@ -244,10 +253,8 @@
 
 	<div class="modal-action items-center">
 		<p v-if="showHelp" class="py-4 opacity-80">Remember refresh your tabs after saving</p>
-		<form method="dialog">
-			<button v-if="options.showCancel" class="btn btn-sm">
-				Close <kbd v-if="showHelp" class="kbd kbd-xs">esc</kbd>
-			</button>
+		<form v-if="options.showCancel" method="dialog">
+			<button class="btn btn-sm">Close <kbd v-if="showHelp" class="kbd kbd-xs">esc</kbd></button>
 		</form>
 		<button
 			:disabled="!isFirstPartFilled"
@@ -275,6 +282,7 @@ import { _getDefaultGroup, _getDefaultRule } from '../../../../../common/storage
 import ShortGroupForm from './ShortGroupForm.vue';
 import CloseIcon from '../../../../icons/CloseIcon.vue';
 import RegexVisualizer from '../../../../global/RegexVisualizer.vue';
+import SettingsIcon from '../../../../icons/SettingsIcon.vue';
 
 const rulesStore = useRulesStore();
 export interface Props {
@@ -282,6 +290,7 @@ export interface Props {
 	options?: {
 		showTitle: boolean;
 		showCancel: boolean;
+		showOptionLink: boolean;
 	};
 }
 
@@ -371,6 +380,14 @@ watch(
 );
 
 const emitter: any = inject('emitter');
+
+const openOptions = () => {
+	if (chrome.runtime.openOptionsPage) {
+		chrome.runtime.openOptionsPage();
+	} else {
+		chrome.tabs.create({ url: chrome.runtime.getURL('options.html') });
+	}
+};
 
 const save = async () => {
 	if (newGroup.value) {

@@ -2,7 +2,7 @@
 	<label class="btn btn-xs btn-circle bg-transparent border-none swap swap-rotate hover:text-info">
 		<input v-model="model" type="checkbox" />
 		<svg
-			class="swap-off w-6 h-6"
+			class="swap-off w-4 h-4"
 			fill="none"
 			stroke="currentColor"
 			stroke-width="1.5"
@@ -17,7 +17,7 @@
 		</svg>
 
 		<svg
-			class="swap-on w-6 h-6"
+			class="swap-on w-4 h-4"
 			fill="none"
 			stroke="currentColor"
 			stroke-width="1.5"
