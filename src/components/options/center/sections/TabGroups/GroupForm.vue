@@ -12,11 +12,13 @@
 				<span class="label-text text-sm">Title</span>
 			</label>
 			<input
+				ref="currentGroupTitleInput"
 				v-model="currentGroup.title"
 				class="input input-xs input-bordered w-full"
 				placeholder="e.g. Google"
 				required
 				type="text"
+				autofocus
 			/>
 			<div v-if="showHelp" class="label opacity-80">You can set a title for your tab</div>
 		</div>
@@ -56,7 +58,7 @@
 </template>
 <script lang="ts" setup>
 import { useRulesStore } from '../../../../../stores/rules.store.ts';
-import { computed, inject, ref, watch } from 'vue';
+import { computed, inject, onMounted, ref, watch } from 'vue';
 import CustomSelect from '../../../../global/CustomSelect.vue';
 import { _clone, _groupColors } from '../../../../../common/helpers.ts';
 import { GLOBAL_EVENTS, Group } from '../../../../../common/types.ts';
@@ -99,4 +101,12 @@ const save = async () => {
 		message: 'Saved successfully!',
 	});
 };
+
+const currentGroupTitleInput = ref<HTMLInputElement | null>(null);
+
+onMounted(() => {
+	if (currentGroupTitleInput.value) {
+		currentGroupTitleInput.value.focus();
+	}
+});
 </script>
