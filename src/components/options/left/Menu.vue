@@ -8,7 +8,7 @@
 					<NewFeature />
 				</template>
 				<template v-if="menuItem.link">
-					<ExternalIcon class="size-3" />
+					<ExternalIcon class="!w-3 !h-3" />
 				</template>
 			</a>
 		</li>
