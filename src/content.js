@@ -118,26 +118,22 @@ export async function applyRule(ruleParam) {
 
 		const originalTitle = element.getAttribute('content');
 		document.title = processTitle(location.href, originalTitle, rule);
+		titleChangedByMe = true;
 
-		// Delay title change to ensure it's not overwritten by the page
-		setTimeout(() => {
-			document.title = processTitle(location.href, originalTitle, rule);
+		const titleObserver = new MutationObserver(() => {
+			if (!titleChangedByMe) {
+				document.title = processTitle(location.href, originalTitle, rule);
+				titleChangedByMe = true;
+			} else {
+				titleChangedByMe = false;
+			}
+		});
 
-			const titleObserver = new MutationObserver(() => {
-				if (!titleChangedByMe) {
-					document.title = processTitle(location.href, originalTitle, rule);
-					titleChangedByMe = true;
-				} else {
-					titleChangedByMe = false;
-				}
-			});
-
-			titleObserver.observe(document.querySelector('head > title'), {
-				subtree: true,
-				characterResponse: true,
-				childList: true,
-			});
-		}, 200);
+		titleObserver.observe(document.querySelector('title'), {
+			attributes: true,
+			childList: true,
+			subtree: true,
+		});
 	}
 
 	// Pinning, muting handled through Chrome Runtime messages
