@@ -103,7 +103,7 @@ export async function applyRule(ruleParam) {
 		return;
 	}
 
-	let titleChangedByMe = false;
+	const titleChangedByMe = false;
 
 	if (rule.tab.title) {
 		// check if element with id original-title exists
@@ -116,24 +116,29 @@ export async function applyRule(ruleParam) {
 			document.head.appendChild(element);
 		}
 
-		const originalTitle = element.getAttribute('content');
+		let originalTitle = element.getAttribute('content');
 		document.title = processTitle(location.href, originalTitle, rule);
-		titleChangedByMe = true;
 
-		const titleObserver = new MutationObserver(() => {
-			if (!titleChangedByMe) {
-				document.title = processTitle(location.href, originalTitle, rule);
-				titleChangedByMe = true;
-			} else {
-				titleChangedByMe = false;
+		const targetNode = document.documentElement;
+		const config = { childList: true, subtree: true };
+		let lastTitle = document.title;
+
+		const callback = function (mutationsList) {
+			for (const mutation of mutationsList) {
+				if (document.title !== lastTitle) {
+					console.log('Le titre du document a changé:', document.title);
+					element.setAttribute('content', document.title);
+
+					originalTitle = element.getAttribute('content');
+					document.title = processTitle(location.href, originalTitle, rule);
+
+					lastTitle = document.title;
+				}
 			}
-		});
+		};
 
-		titleObserver.observe(document.querySelector('title'), {
-			attributes: true,
-			childList: true,
-			subtree: true,
-		});
+		const observer = new MutationObserver(callback);
+		observer.observe(targetNode, config);
 	}
 
 	// Pinning, muting handled through Chrome Runtime messages
