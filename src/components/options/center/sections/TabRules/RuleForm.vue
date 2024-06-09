@@ -415,7 +415,7 @@ const save = async () => {
 };
 
 const isAdvancedOpenWhenMounted = ref(false);
-const currentRuleNameInput = ref(null);
+const currentRuleNameInput = ref<HTMLInputElement | null>(null);
 
 onMounted(() => {
 	isAdvancedOpenWhenMounted.value =
