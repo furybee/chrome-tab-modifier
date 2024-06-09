@@ -103,8 +103,6 @@ export async function applyRule(ruleParam) {
 		return;
 	}
 
-	const titleChangedByMe = false;
-
 	if (rule.tab.title) {
 		// check if element with id original-title exists
 		let originalTitleElement = document.querySelector('meta[name="original-tab-modifier-title"]');
@@ -118,7 +116,6 @@ export async function applyRule(ruleParam) {
 
 		let originalTitle = originalTitleElement.getAttribute('content');
 		document.title = processTitle(location.href, originalTitle, rule);
-		titleChangedByMe = true;
 
 		const targetNode = document.documentElement;
 		const config = { childList: true, subtree: true };
