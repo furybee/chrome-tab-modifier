@@ -3,7 +3,7 @@ import { _getRuleFromUrl } from './common/storage.ts';
 const STORAGE_KEY = 'tab_modifier';
 
 export function updateTitle(title, tag, value) {
-	return value ? title.replace(tag, value) : title;
+	return value ? title.replace(tag, decodeURI(value)) : title;
 }
 
 export function getTextBySelector(selector) {
