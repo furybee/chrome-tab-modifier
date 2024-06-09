@@ -25,7 +25,7 @@ Tab Modifier is compatible with Chromium-based browsers.
 | Google Chrome  | ⬇️ [Install](https://chromewebstore.google.com/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai) | Chrome Web Store      |
 | Arc            | ⬇️ [Install](https://chromewebstore.google.com/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai) | Chrome Web Store      |
 | Brave          | ⬇️ [Install](https://chromewebstore.google.com/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai) | Chrome Web Store      |
-| Opera          | ⬇️ [Opera Addons](https://addons.opera.com/fr/extensions/details/tab-modifier/)                      | Opera Addons          | 
+| Opera          | ⬇️ [Install](https://addons.opera.com/en/extensions/details/tab-modifier/)                           | Opera Addons          | 
 | Microsoft Edge | ⏳ Soon                                                                                               | Microsoft Edge Addons |
 
 Firefox is not supported, refer to [#282].
