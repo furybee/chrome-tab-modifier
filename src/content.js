@@ -107,33 +107,31 @@ export async function applyRule(ruleParam) {
 
 	if (rule.tab.title) {
 		// check if element with id original-title exists
-		let element = document.querySelector('meta[name="original-tab-modifier-title"]');
+		let originalTitleElement = document.querySelector('meta[name="original-tab-modifier-title"]');
 
-		if (!element) {
-			element = document.createElement('meta');
-			element.name = 'original-tab-modifier-title';
-			element.content = document.title;
-			document.head.appendChild(element);
+		if (!originalTitleElement) {
+			originalTitleElement = document.createElement('meta');
+			originalTitleElement.name = 'original-tab-modifier-title';
+			originalTitleElement.content = document.title;
+			document.head.appendChild(originalTitleElement);
 		}
 
-		let originalTitle = element.getAttribute('content');
+		let originalTitle = originalTitleElement.getAttribute('content');
 		document.title = processTitle(location.href, originalTitle, rule);
 
 		const targetNode = document.documentElement;
 		const config = { childList: true, subtree: true };
 		let lastTitle = document.title;
 
-		const callback = function (mutationsList) {
-			for (const mutation of mutationsList) {
-				if (document.title !== lastTitle) {
-					console.log('Le titre du document a changé:', document.title);
-					element.setAttribute('content', document.title);
+		const callback = function () {
+			// for (const mutation of mutationsList) {
+			if (document.title !== lastTitle) {
+				originalTitleElement.setAttribute('content', document.title);
 
-					originalTitle = element.getAttribute('content');
-					document.title = processTitle(location.href, originalTitle, rule);
+				originalTitle = originalTitleElement.getAttribute('content');
+				document.title = processTitle(location.href, originalTitle, rule);
 
-					lastTitle = document.title;
-				}
+				lastTitle = document.title;
 			}
 		};
 
