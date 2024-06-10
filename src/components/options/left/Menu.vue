@@ -1,7 +1,10 @@
 <template>
 	<ul class="menu p-4 w-80 bg-base-300 text-base-content">
 		<li v-for="menuItem in props.menuItems" :key="menuItem.component">
-			<a @click.prevent="onMenuClicked(menuItem)">
+			<a
+				:class="{ active: menuStore.currentMenuItem?.title === menuItem.title }"
+				@click.prevent="onMenuClicked(menuItem)"
+			>
 				<component :is="icons[menuItem.icon]" class="menuItem-icon" />
 				{{ menuItem.title }}
 				<template v-if="menuItem.component === 'TabGroupsPane'">
@@ -26,6 +29,7 @@ import DonationIcon from '../../icons/DonationIcon.vue';
 import ChromeIcon from '../../icons/ChromeIcon.vue';
 import NewFeature from '../../global/NewFeature.vue';
 import ExternalIcon from '../../icons/ExternalIcon.vue';
+import { useMenuStore } from '../../../stores/menu.store.ts';
 
 const icons: Components = {
 	TabRulesIcon,
@@ -41,6 +45,8 @@ const props = defineProps<{
 	title: string;
 	menuItems: MenuItem[];
 }>();
+
+const menuStore = useMenuStore();
 
 const emit = defineEmits(['onMenuClicked']);
 
