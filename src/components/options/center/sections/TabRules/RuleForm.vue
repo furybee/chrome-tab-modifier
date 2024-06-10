@@ -302,6 +302,7 @@ const props = withDefaults(defineProps<Props>(), {
 	options: () => ({
 		showTitle: true,
 		showCancel: true,
+		showOptionLink: false,
 	}),
 });
 
