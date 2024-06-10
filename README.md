@@ -28,7 +28,7 @@ Tab Modifier is compatible with Chromium-based browsers.
 | Opera          | ⬇️ [Install](https://addons.opera.com/en/extensions/details/tab-modifier/)                           | Opera Addons          | 
 | Microsoft Edge | ⏳ Soon                                                                                               | Microsoft Edge Addons |
 
-Firefox is not supported, refer to [#282].
+Firefox is not supported, refer to [#282](https://github.com/furybee/chrome-tab-modifier/discussions/282).
 
 ## Usage
 
