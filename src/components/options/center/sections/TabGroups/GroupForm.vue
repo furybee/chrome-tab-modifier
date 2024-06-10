@@ -52,7 +52,13 @@
 			<form method="dialog">
 				<button class="btn btn-sm">Close <kbd v-if="showHelp" class="kbd kbd-xs">esc</kbd></button>
 			</form>
-			<button class="btn btn-sm btn-outline btn-primary ml-4 group" @click="save">Save</button>
+			<button
+				:disabled="currentGroup.title.trim() === ''"
+				class="btn btn-sm btn-outline btn-primary ml-4 group"
+				@click="save"
+			>
+				Save
+			</button>
 		</div>
 	</div>
 </template>
