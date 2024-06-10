@@ -74,6 +74,7 @@ import CloseIcon from './components/icons/CloseIcon.vue';
 import { useRulesStore } from './stores/rules.store.ts';
 import Toaster from './components/global/Toaster.vue';
 import PlusIcon from './components/icons/PlusIcon.vue';
+import { useMenuStore } from './stores/menu.store.ts';
 
 const emitter: any = inject('emitter');
 
@@ -127,11 +128,14 @@ const resourceItems = [
 ] as MenuItem[];
 
 const rulesStore = useRulesStore();
+const menuStore = useMenuStore();
 
 const currentContent = ref<MenuItem>(sectionItems[0]);
 
 const onMenuClicked = (menuItem: MenuItem) => {
 	currentContent.value = menuItem;
+
+	menuStore.setCurrentMenuItem(menuItem);
 
 	const drawerMenu = document.getElementById('drawer-menu') as HTMLInputElement;
 	drawerMenu.checked = false;
@@ -154,6 +158,8 @@ const hasGroups = computed<boolean>(() => {
 });
 
 onMounted(async () => {
+	menuStore.setCurrentMenuItem(currentContent.value);
+
 	await rulesStore.init();
 });
 </script>
