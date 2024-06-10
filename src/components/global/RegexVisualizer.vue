@@ -54,7 +54,7 @@ const visualizeRegex = () => {
 				matchValues.value.push(matches[j]);
 			}
 		}
-	} catch (error) {
+	} catch (error: any) {
 		errorValue.value = `<span class="text-red-500">Error: ${error.message}</span>`;
 	}
 };
