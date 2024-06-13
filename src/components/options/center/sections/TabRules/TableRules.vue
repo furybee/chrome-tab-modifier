@@ -39,7 +39,7 @@
 								:src="getIconUrl(rule.tab.icon)"
 								class="w-6 h-6"
 							/>
-							{{ rule.tab.title && rule.tab.title !== '' ? rule.tab.title : '{title}' }}
+							{{ rule.tab.title && rule.tab.title !== '' ? rule.tab.title : '' }}
 						</div>
 					</td>
 					<td>

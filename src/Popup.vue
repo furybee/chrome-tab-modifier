@@ -16,7 +16,7 @@ import { _getRuleFromUrl, _getDefaultRule, _getStorageAsync } from './common/sto
 
 const rulesStore = useRulesStore();
 const isInit = ref(false);
-const rule = ref(_getDefaultRule('', '{title}', 'url'));
+const rule = ref(_getDefaultRule('', '', 'url'));
 
 const tab = ref<chrome.tabs.Tab | null>(null);
 
