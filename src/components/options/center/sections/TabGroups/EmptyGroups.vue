@@ -6,7 +6,7 @@
 				<p class="py-6">
 					There is no group yet! Hit the following button to create your first group.
 				</p>
-				<button class="btn btn-primary" @click="onGetStartedClicked">Get Started</button>
+				<button class="btn btn-primary" @click="onGetStartedClicked">Create my first Group</button>
 			</div>
 		</div>
 	</div>

@@ -31,7 +31,7 @@
 import { ref, watch } from 'vue';
 
 const props = defineProps<{
-	regex: string;
+	regex: string | null;
 	tag: string;
 }>();
 
@@ -40,6 +40,10 @@ const errorValue = ref('');
 const matchValues = ref<Array<string>>([]);
 
 const visualizeRegex = () => {
+	if (!props.regex) {
+		return;
+	}
+
 	try {
 		const regexPattern = new RegExp(props.regex, 'g');
 		let matches;
@@ -50,7 +54,7 @@ const visualizeRegex = () => {
 				matchValues.value.push(matches[j]);
 			}
 		}
-	} catch (error) {
+	} catch (error: any) {
 		errorValue.value = `<span class="text-red-500">Error: ${error.message}</span>`;
 	}
 };

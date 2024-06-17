@@ -6,7 +6,7 @@
 				<p class="py-6">
 					There is no rule yet! Hit the following button to create your first rule.
 				</p>
-				<button class="btn btn-primary" @click="onGetStartedClicked">Get Started</button>
+				<button class="btn btn-primary" @click="onGetStartedClicked">Create my first Rule</button>
 			</div>
 		</div>
 	</div>

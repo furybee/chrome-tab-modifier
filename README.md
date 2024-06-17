@@ -1,6 +1,6 @@
 # <img src="public/assets/icon_16.png" alt="icon"> Tab Modifier
 
-[![CI](https://github.com/furybee/chrome-tab-modifier/actions/workflows/ci.yml/badge.svg?branch=feat%2Ftests)](https://github.com/furybee/chrome-tab-modifier/actions/workflows/ci.yml)
+[![CI](https://github.com/furybee/chrome-tab-modifier/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/furybee/chrome-tab-modifier/actions/workflows/ci.yml)
 
 Take control of your tabs.
 
@@ -9,13 +9,34 @@ Take control of your tabs.
 * Rename tab
 * Change tab icon
 * Pin tab
+* Group tabs
 * Prevent tab closing
 * Unique tab
 * Mute tab
 
 Quick rename can be done by right-clicking anywhere in the page and click on "Rename Tab".
 
-## Why?
+## Installation
+
+Tab Modifier is compatible with Chromium-based browsers.
+
+| Browser        | Install Link                                                                                         | Web Store             |
+|----------------|------------------------------------------------------------------------------------------------------|-----------------------|
+| Google Chrome  | ⬇️ [Install](https://chromewebstore.google.com/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai) | Chrome Web Store      |
+| Arc            | ⬇️ [Install](https://chromewebstore.google.com/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai) | Chrome Web Store      |
+| Brave          | ⬇️ [Install](https://chromewebstore.google.com/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai) | Chrome Web Store      |
+| Opera          | ⬇️ [Install](https://addons.opera.com/en/extensions/details/tab-modifier/)                           | Opera Addons          | 
+| Microsoft Edge | ⏳ Soon                                                                                               | Microsoft Edge Addons |
+
+Firefox is not supported, refer to [#282](https://github.com/furybee/chrome-tab-modifier/discussions/282).
+
+## Usage
+
+* Click on the Tab Modifier icon <img src="public/assets/icon_16.png" alt="icon"> to open Popup or Right-Click then Options.
+* Create your tab rules.
+* Try & enjoy!
+
+## Why did you build this extension?
 
 I needed a quick UI element in Chrome to know the environment of the tab, as a Web developer I often use multiple versions of the same website: local, pre-production and production.
 
@@ -29,25 +50,11 @@ I created Tab Modifier to add prefixes to website titles with a specific match.
 
 After that, I have added more features like "auto-pin", custom favicons and more.
 
-## Focused scope
+## Core system
 
-Tab Modifier is based on user *rules* and act on the tab URL that matches the first seen rule.
+Tab Modifier is based on user *rules* and act on the tab URL that matches the first seen rule. When you open a tab (or refresh), the extension will check if the URL matches a rule and apply the actions.
 
-Aware of that, there is no reason to include a feature that is not "rule-based". Prefer to install specific extensions.
-
-## Installation
-
-Install from the **[Chrome Web Store](https://chrome.google.com/webstore/detail/hcbgadmbdkiilgpifjgcakjehmafcjai/)**.
-
-Also available for **[Opera Browser](https://addons.opera.com/fr/extensions/details/tab-modifier/)**.
-
-Not available for **Firefox**, refer to [#46](https://github.com/FuryBee/chrome-tab-modifier/issues/46).
-
-## Usage
-
-* Click on the Tab Modifier icon <img src="public/assets/icon_16.png" alt="icon"> to open Popup or Right-Click then Options.
-* Create your tab rules.
-* Try & enjoy!
+Aware of that, there is no reason to include a feature that is not "rule-based". Prefer to install specific extensions or create your own.
 
 ## Examples
 
@@ -65,14 +72,14 @@ Say hello to all Google websites:
 * **URL fragment**: google.com
 * **Title**: Hello Google: {title}
 
-Disguise GitHub as Google
+❌ Disguise GitHub as Google
 
 * **Detection**: Contains
 * **URL fragment**: github.com
 * **Title**: Google
 * **Icon**: https://www.google.com/favicon.ico
 
-Prevent accidental tab closure:
+❌ Prevent accidental tab closure:
 
 * **Detection**: Contains
 * **URL fragment**: important-website.com
@@ -87,7 +94,7 @@ Mute all Youtube videos by default:
 Set blank icon on Pinterest:
 
 * **Detection**: Contains
-* **URL fragment**: pinterest.com
+* **URL fragment**: pinterest.fr
 * **Icon**: select "Chrome > Default"
 
 Get only one GMail tab opened at once:
@@ -111,7 +118,7 @@ Customize title with HTML selector and Regexp:
 
 Tab title will be: "FuryBee/chrome-tab-modifier: Take control of your tabs | chrome-tab-modifier by furybee"
 
-Match GitHub repositories:
+❌ Match GitHub repositories:
 
 * **Detection**: RegExp
 * **URL fragment**: github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)
@@ -127,7 +134,7 @@ Customize GMail title with Title matcher and URL matcher:
 
 Tab title will be: "youremail@gmail.com | mail.google.com"
 
-Github final path as title for blobs:
+❌ Github final path as title for blobs:
 
 * **Detection**: RegExp
 * **URL fragment**: github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)/blob/

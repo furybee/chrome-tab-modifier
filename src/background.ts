@@ -2,7 +2,6 @@ import { Group, Rule, TabModifierSettings } from './common/types.ts';
 import {
 	_getDefaultRule,
 	_getDefaultTabModifierSettings,
-	_getRuleFromUrl,
 	_getStorageAsync,
 	_setStorage,
 } from './common/storage.ts';

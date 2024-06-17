@@ -103,41 +103,37 @@ export async function applyRule(ruleParam) {
 		return;
 	}
 
-	let titleChangedByMe = false;
-
 	if (rule.tab.title) {
 		// check if element with id original-title exists
-		let element = document.querySelector('meta[name="original-tab-modifier-title"]');
+		let originalTitleElement = document.querySelector('meta[name="original-tab-modifier-title"]');
 
-		if (!element) {
-			element = document.createElement('meta');
-			element.name = 'original-tab-modifier-title';
-			element.content = document.title;
-			document.head.appendChild(element);
+		if (!originalTitleElement) {
+			originalTitleElement = document.createElement('meta');
+			originalTitleElement.name = 'original-tab-modifier-title';
+			originalTitleElement.content = document.title;
+			document.head.appendChild(originalTitleElement);
 		}
 
-		const originalTitle = element.getAttribute('content');
+		let originalTitle = originalTitleElement.getAttribute('content');
 		document.title = processTitle(location.href, originalTitle, rule);
 
-		// Delay title change to ensure it's not overwritten by the page
-		setTimeout(() => {
-			document.title = processTitle(location.href, originalTitle, rule);
+		const targetNode = document.documentElement;
+		const config = { childList: true, subtree: true };
+		let lastTitle = document.title;
 
-			const titleObserver = new MutationObserver(() => {
-				if (!titleChangedByMe) {
-					document.title = processTitle(location.href, originalTitle, rule);
-					titleChangedByMe = true;
-				} else {
-					titleChangedByMe = false;
-				}
-			});
+		const callback = function () {
+			if (document.title !== lastTitle) {
+				originalTitleElement.setAttribute('content', document.title);
 
-			titleObserver.observe(document.querySelector('head > title'), {
-				subtree: true,
-				characterResponse: true,
-				childList: true,
-			});
-		}, 200);
+				originalTitle = originalTitleElement.getAttribute('content');
+				document.title = processTitle(location.href, originalTitle, rule);
+
+				lastTitle = document.title;
+			}
+		};
+
+		const observer = new MutationObserver(callback);
+		observer.observe(targetNode, config);
 	}
 
 	// Pinning, muting handled through Chrome Runtime messages
