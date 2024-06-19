@@ -58,7 +58,6 @@ describe('Content', () => {
 		});
 
 		it('should process title with encoded uri', () => {
-			document.body.innerHTML = '<div id="name">World</div>';
 			const rule = {
 				tab: {
 					title: '$1',
