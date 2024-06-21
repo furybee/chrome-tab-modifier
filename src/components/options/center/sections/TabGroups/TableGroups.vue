@@ -26,7 +26,7 @@
 							<button
 								class="btn btn-xs btn-circle btn-outline tooltip flex items-center justify-items-center btn-error"
 								data-tip="Delete"
-								@click.prevent="(event) => deleteGroup(event, index)"
+								@click.prevent="(event) => deleteGroup(event, group.id)"
 							>
 								<DeleteIcon class="!w-4 !h-4" />
 							</button>
@@ -59,11 +59,11 @@ const editGroup = (group: Group) => {
 	} as GroupModalParams);
 };
 
-const deleteGroup = async (event: any, index: number) => {
+const deleteGroup = async (event: any, groupId: string) => {
 	event.stopPropagation();
 
 	if (confirm('Are you sure you want to delete this group?')) {
-		await rulesStore.deleteGroup(index);
+		await rulesStore.deleteGroup(groupId);
 	}
 };
 </script>
