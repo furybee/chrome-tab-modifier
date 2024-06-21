@@ -21,9 +21,7 @@
 					class="group cursor-pointer hover:bg-base-100"
 					@click="editRule(rule)"
 				>
-					<td>
-						{{ rule.name }}
-					</td>
+					<td>{{ rule.name }}</td>
 					<td>
 						<template v-if="!rule.tab.group_id">-</template>
 						<div v-else-if="groupsById[rule.tab.group_id]" class="flex items-center gap-2">
