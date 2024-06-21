@@ -54,6 +54,20 @@ export const useRulesStore = defineStore('rules', {
 				}
 			});
 		},
+		async updateRulePosition(ruleId: string, position: number) {
+			const index = this.getRuleIndexById(ruleId);
+
+			if (index === -1) {
+				throw new Error('Rule not found');
+			}
+
+			const rule = this.rules[index];
+
+			this.rules.splice(index, 1);
+			this.rules.splice(position, 0, rule);
+
+			await this.save();
+		},
 		addMissingInvisibleChar(groups: Group[]) {
 			groups.forEach((group) => {
 				if (!group.title.endsWith(INVISIBLE_CHAR)) {
