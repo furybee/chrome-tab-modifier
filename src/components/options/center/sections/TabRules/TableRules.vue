@@ -54,7 +54,7 @@
 								class="btn btn-xs btn-circle tooltip flex items-center justify-items-center"
 								:class="{ invisible: index === 0 }"
 								data-tip="Move Up"
-								@click.prevent="(event) => moveUp(event, index)"
+								@click.prevent="(event) => moveUp(event, rule.id)"
 							>
 								<ArrowUpIcon class="!w-4 !h-4" />
 							</button>
@@ -63,7 +63,7 @@
 								class="btn btn-xs btn-circle tooltip flex items-center justify-items-center"
 								:class="{ invisible: index === props.rules.length - 1 }"
 								data-tip="Move Down"
-								@click.prevent="(event) => moveDown(event, index)"
+								@click.prevent="(event) => moveDown(event, rule.id)"
 							>
 								<ArrowDownIcon class="!w-4 !h-4" />
 							</button>
@@ -74,7 +74,7 @@
 							<button
 								class="btn btn-xs btn-circle tooltip flex items-center justify-items-center"
 								data-tip="Duplicate"
-								@click.prevent="(event) => duplicateRule(event, index)"
+								@click.prevent="(event) => duplicateRule(event, rule.id)"
 							>
 								<DuplicateIcon class="!w-4 !h-4" />
 							</button>
@@ -82,7 +82,7 @@
 							<button
 								class="btn btn-xs btn-circle btn-outline tooltip flex items-center justify-items-center btn-error"
 								data-tip="Delete"
-								@click.prevent="(event) => deleteRule(event, index)"
+								@click.prevent="(event) => deleteRule(event, rule.id)"
 							>
 								<DeleteIcon class="!w-4 !h-4" />
 							</button>
@@ -145,29 +145,29 @@ const editRule = (rule: Rule) => {
 	} as RuleModalParams);
 };
 
-const duplicateRule = async (event: MouseEvent, index: number) => {
+const duplicateRule = async (event: MouseEvent, ruleId: string) => {
 	event.stopPropagation();
 
-	await rulesStore.duplicateRule(index);
+	await rulesStore.duplicateRule(ruleId);
 };
 
-const moveUp = async (event: MouseEvent, index: number) => {
+const moveUp = async (event: MouseEvent, ruleId: string) => {
 	event.stopPropagation();
 
-	await rulesStore.moveUp(index);
+	await rulesStore.moveUp(ruleId);
 };
 
-const moveDown = async (event: MouseEvent, index: number) => {
+const moveDown = async (event: MouseEvent, ruleId: string) => {
 	event.stopPropagation();
 
-	await rulesStore.moveDown(index);
+	await rulesStore.moveDown(ruleId);
 };
 
-const deleteRule = async (event: MouseEvent, index: number) => {
+const deleteRule = async (event: MouseEvent, ruleId: string) => {
 	event.stopPropagation();
 
 	if (confirm('Are you sure you want to delete this rule?')) {
-		await rulesStore.deleteRule(index);
+		await rulesStore.deleteRule(ruleId);
 	}
 };
 </script>

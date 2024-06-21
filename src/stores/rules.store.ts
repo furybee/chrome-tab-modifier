@@ -191,18 +191,38 @@ export const useRulesStore = defineStore('rules', {
 				await Promise.reject('No group to update');
 			}
 		},
-		async deleteRule(index: number) {
-			this.rules.splice(index, 1);
+		async deleteGroup(groupId: string) {
+			const index = this.getGroupIndexById(groupId);
 
-			await this.save();
-		},
-		async deleteGroup(index: number) {
 			this.groups.splice(index, 1);
 
 			await this.save();
 		},
-		async duplicateRule(index: number): Promise<Rule> {
-			const rule = _clone(this.rules[index]);
+		getGroupIndexById(id: string): number {
+			return this.groups.findIndex((group) => group.id === id);
+		},
+		getRuleById(id: string): Rule | undefined {
+			return this.rules.find((rule) => rule.id === id);
+		},
+		getRuleIndexById(id: string): number {
+			return this.rules.findIndex((rule) => rule.id === id);
+		},
+		async deleteRule(ruleId: string) {
+			const index = this.getRuleIndexById(ruleId);
+
+			this.rules.splice(index, 1);
+
+			await this.save();
+		},
+		async duplicateRule(ruleId: string): Promise<Rule> {
+			const index = this.getRuleIndexById(ruleId);
+
+			const currentRule = this.rules[index];
+			if (!currentRule) {
+				throw new Error('Rule not found');
+			}
+
+			const rule = _clone(currentRule);
 
 			rule.id = _generateRandomId();
 
@@ -212,7 +232,9 @@ export const useRulesStore = defineStore('rules', {
 
 			return rule;
 		},
-		async moveUp(index: number): Promise<Rule> {
+		async moveUp(ruleId: string): Promise<Rule> {
+			const index = this.getRuleIndexById(ruleId);
+
 			if (index <= 0 || index >= this.rules.length) {
 				throw new Error('Index out of bounds');
 			}
@@ -228,7 +250,9 @@ export const useRulesStore = defineStore('rules', {
 
 			return rule;
 		},
-		async moveDown(index: number): Promise<Rule> {
+		async moveDown(ruleId: string): Promise<Rule> {
+			const index = this.getRuleIndexById(ruleId);
+
 			if (index < 0 || index >= this.rules.length - 1) {
 				throw new Error('Index out of bounds');
 			}
