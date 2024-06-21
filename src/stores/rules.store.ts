@@ -25,13 +25,26 @@ export const useRulesStore = defineStore('rules', {
 		};
 	},
 	actions: {
+		fixDuplicateRuleIds(rules: Rule[]) {
+			const uniqueIds = new Set();
+
+			for (const rule of rules) {
+				if (uniqueIds.has(rule.id)) {
+					rule.id = _generateRandomId();
+				}
+
+				uniqueIds.add(rule.id);
+			}
+
+			return rules;
+		},
 		handleMissingRuleSettings(rules: Rule[]) {
 			rules.forEach((rule) => {
 				if (!rule.id) {
 					rule.id = _generateRandomId();
 				}
 
-				// old settings
+				// FIX: Remove this later
 				if (rule.detection === 'STARTS') {
 					rule.detection = 'STARTS_WITH';
 				}
@@ -62,6 +75,10 @@ export const useRulesStore = defineStore('rules', {
 					}
 
 					this.handleMissingRuleSettings(tabModifier.rules);
+
+					// FIX: Remove this later
+					tabModifier.rules = this.fixDuplicateRuleIds(tabModifier.rules);
+
 					this.addMissingInvisibleChar(tabModifier.groups);
 
 					this.groups = tabModifier.groups;
@@ -187,7 +204,9 @@ export const useRulesStore = defineStore('rules', {
 		async duplicateRule(index: number): Promise<Rule> {
 			const rule = _clone(this.rules[index]);
 
-			this.rules.push(rule);
+			rule.id = _generateRandomId();
+
+			this.rules.splice(index + 1, 0, rule);
 
 			await this.save();
 
