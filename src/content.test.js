@@ -57,6 +57,21 @@ describe('Content', () => {
 			expect(result).toBe('Hello World');
 		});
 
+		it('should process title with encoded uri', () => {
+			const rule = {
+				tab: {
+					title: '$1',
+					url_matcher: '__title=([^&]+)',
+				},
+			};
+			const result = processTitle(
+				'http://example.com?__title=%D0%9F%D1%80%D0%B8%D0%BC%D0%B5%D1%80',
+				'',
+				rule
+			);
+			expect(result).toBe('Пример');
+		});
+
 		it('should process title with title matcher', () => {
 			const rule = {
 				tab: {
