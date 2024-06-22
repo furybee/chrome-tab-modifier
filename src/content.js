@@ -188,9 +188,10 @@ export async function applyRule(ruleParam) {
 		});
 	}
 
-	// Protection (disable beforeunload event) and unique tab handling
 	if (rule.tab.protected) {
-		window.onbeforeunload = () => '';
+		await chrome.runtime.sendMessage({
+			action: 'setProtected',
+		});
 	}
 
 	if (rule.tab.unique) {

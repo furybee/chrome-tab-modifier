@@ -35,8 +35,14 @@ async function handleSetUnique(message: any, currentTab: chrome.tabs.Tab) {
 		if (!tab.url) continue;
 		if (!tab.id) continue;
 
-		if (tab.url?.includes(message.url_fragment) && tab.id !== currentTab.id) {
-			await chrome.tabs.executeScript(currentTab.id, { code: 'window.onbeforeunload = null;' });
+		if (tab.url.includes(message.url_fragment) && tab.id !== currentTab.id) {
+			await chrome.scripting.executeScript({
+				target: { tabId: currentTab.id },
+				func: () => {
+					window.onbeforeunload = null;
+				},
+			});
+
 			await chrome.tabs.remove(currentTab.id);
 			await chrome.tabs.update(tab.id, { url: currentTab.url, highlighted: true });
 		}
@@ -62,6 +68,51 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
 			break;
 		case 'setPinned':
 			await chrome.tabs.update(tab.id, { pinned: true });
+			break;
+		case 'setProtected':
+			/**
+			 * https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event#usage_notes
+			 * Require sticky activation for the dialog to be displayed.
+			 * In other words, the browser will only show the dialog box if the
+			 * frame or any embedded frame receives a user gesture or user interaction.
+			 * If the user has never interacted with the page, then there is no user data to save,
+			 * so no legitimate use case for the dialog.
+			 */
+
+			await chrome.scripting.executeScript({
+				target: { tabId: tab.id },
+				func: () => {
+					let removeListener = false;
+
+					const bindBeforeUnload = () => {
+						window.addEventListener('beforeunload', function (e) {
+							e.preventDefault();
+							e.returnValue = true;
+
+							return 'Are you sure?';
+						});
+
+						if (removeListener) {
+							window.removeEventListener('click', bindBeforeUnload);
+							window.removeEventListener('mousedown', bindBeforeUnload);
+							window.removeEventListener('keydown', bindBeforeUnload);
+							window.removeEventListener('pointerdown', bindBeforeUnload);
+							window.removeEventListener('pointerup', bindBeforeUnload);
+							window.removeEventListener('touchend', bindBeforeUnload);
+						}
+					};
+
+					bindBeforeUnload();
+
+					removeListener = true;
+					window.removeEventListener('click', bindBeforeUnload);
+					window.removeEventListener('mousedown', bindBeforeUnload);
+					window.removeEventListener('keydown', bindBeforeUnload);
+					window.removeEventListener('pointerdown', bindBeforeUnload);
+					window.removeEventListener('pointerup', bindBeforeUnload);
+					window.removeEventListener('touchend', bindBeforeUnload);
+				},
+			});
 			break;
 		case 'setGroup':
 			await handleSetGroup(message.rule, tab);
