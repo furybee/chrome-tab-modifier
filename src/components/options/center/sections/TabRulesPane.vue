@@ -12,7 +12,7 @@
 
 		<dialog ref="addRuleModal" class="modal">
 			<div class="modal-box w-11/12 max-w-4xl">
-				<RuleForm v-if="isRuleFormModalOpened" />
+				<RuleForm v-if="isRuleFormModalOpened" @on-save="refreshRules" />
 			</div>
 		</dialog>
 	</div>
@@ -33,6 +33,10 @@ const addRuleModal = ref<HTMLDialogElement | null>(null);
 const isRuleFormModalOpened = ref(false);
 
 const emitter: any = inject('emitter');
+
+const refreshRules = async () => {
+	await rulesStore.init();
+};
 
 onMounted(() => {
 	emitter.on(GLOBAL_EVENTS.OPEN_ADD_RULE_MODAL, openAddRuleModal);
