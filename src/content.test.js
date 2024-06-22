@@ -246,7 +246,9 @@ describe('Content', () => {
 			};
 			_getRuleFromUrl.mockResolvedValue(rule);
 			await applyRule(rule);
-			expect(window.onbeforeunload).toBeInstanceOf(Function);
+			expect(global.chrome.runtime.sendMessage).toHaveBeenCalledWith({
+				action: 'setProtected',
+			});
 		});
 	});
 });

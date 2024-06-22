@@ -98,10 +98,12 @@
 				<p>This action will pin the tab.</p>
 
 				<h3 class="font-bold">Protected</h3>
-				<p>This action will ask you before closing the tab.</p>
+				<p>This action will ask you before refreshing or closing the tab.</p>
 				<p>
-					Note: the confirm box will be triggered if you (or the website itself) refresh the tab, as
-					the extension can't differentiate closure and refresh.
+					Note: Require sticky activation for the dialog to be displayed. In other words, the
+					browser will only show the dialog box if the frame or any embedded frame receives a user
+					gesture or user interaction. If you have never interacted with the page, the dialog will
+					not be displayed.
 				</p>
 
 				<h3 class="font-bold">Unique</h3>
