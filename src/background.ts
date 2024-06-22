@@ -167,7 +167,7 @@ async function handleRenameTab(tab: chrome.tabs.Tab, title: string) {
 
 	const urlParams = new URL(tab.url);
 	const ruleName = 'Rule (' + urlParams.host.substring(0, 15) + ')';
-	const rule = _getDefaultRule(title ?? 'Default', ruleName, urlParams.href);
+	const rule = _getDefaultRule(ruleName, title ?? '', urlParams.href);
 
 	tabModifier.rules.push(rule);
 
