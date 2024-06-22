@@ -236,7 +236,7 @@ async function applyGroupRuleToTab(
 // 	}
 // }
 
-let handleTabGroupsMaxRetries = 20;
+let handleTabGroupsMaxRetries = 600;
 async function handleTabGroups(
 	groups: chrome.tabGroups.TabGroup[],
 	tab: chrome.tabs.Tab,
@@ -258,7 +258,7 @@ async function handleTabGroups(
 					handleTabGroupsMaxRetries--;
 					return;
 				} else {
-					handleTabGroupsMaxRetries = 20;
+					handleTabGroupsMaxRetries = 600;
 					updateTabGroup(groupId, tmGroup);
 				}
 			});
@@ -268,7 +268,7 @@ async function handleTabGroups(
 	}
 }
 
-let createAndSetupGroupMaxRetries = 20;
+let createAndSetupGroupMaxRetries = 600;
 async function createAndSetupGroup(tabIds: number[], tmGroup: Group) {
 	const execute = () => {
 		chrome.tabs.group({ tabIds: tabIds }, (groupId: number) => {
@@ -277,7 +277,7 @@ async function createAndSetupGroup(tabIds: number[], tmGroup: Group) {
 				createAndSetupGroupMaxRetries--;
 				return;
 			} else {
-				createAndSetupGroupMaxRetries = 20;
+				createAndSetupGroupMaxRetries = 600;
 				updateTabGroup(groupId, tmGroup);
 			}
 		});
@@ -286,7 +286,7 @@ async function createAndSetupGroup(tabIds: number[], tmGroup: Group) {
 	execute();
 }
 
-let updateTabGroupMaxRetries = 20;
+let updateTabGroupMaxRetries = 600;
 async function updateTabGroup(groupId: number, tmGroup: Group) {
 	if (!groupId) return;
 
