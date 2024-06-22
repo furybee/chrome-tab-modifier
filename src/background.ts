@@ -11,8 +11,6 @@ chrome.tabs.onUpdated.addListener(
 	async (_: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab) => {
 		if (!changeInfo.url) return;
 
-		console.log('onUpdated', changeInfo.url);
-
 		await applyRuleToTab(tab);
 	}
 );
