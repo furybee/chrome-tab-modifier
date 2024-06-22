@@ -114,26 +114,8 @@ export async function applyRule(ruleParam) {
 			document.head.appendChild(originalTitleElement);
 		}
 
-		let originalTitle = originalTitleElement.getAttribute('content');
+		const originalTitle = originalTitleElement.getAttribute('content');
 		document.title = processTitle(location.href, originalTitle, rule);
-
-		const targetNode = document.documentElement;
-		const config = { childList: true, subtree: true };
-		let lastTitle = document.title;
-
-		const callback = function () {
-			if (document.title !== lastTitle) {
-				originalTitleElement.setAttribute('content', document.title);
-
-				originalTitle = originalTitleElement.getAttribute('content');
-				document.title = processTitle(location.href, originalTitle, rule);
-
-				lastTitle = document.title;
-			}
-		};
-
-		const observer = new MutationObserver(callback);
-		observer.observe(targetNode, config);
 	}
 
 	// Pinning, muting handled through Chrome Runtime messages
@@ -145,47 +127,9 @@ export async function applyRule(ruleParam) {
 		await chrome.runtime.sendMessage({ action: 'setMuted' });
 	}
 
-	let iconChangedByMe = false;
-
 	// Favicon handling
 	if (rule.tab.icon) {
 		processIcon(rule.tab.icon);
-
-		const iconObserver = new MutationObserver((mutations) => {
-			if (!iconChangedByMe) {
-				mutations.forEach((mutation) => {
-					if (mutation.target.type === 'image/x-icon') {
-						processIcon(rule.tab.icon);
-						iconChangedByMe = true;
-					} else if (mutation.addedNodes.length) {
-						mutation.addedNodes.forEach((node) => {
-							if (node.type === 'image/x-icon') {
-								processIcon(rule.tab.icon);
-								iconChangedByMe = true;
-							}
-						});
-					} else if (mutation.removedNodes.length) {
-						mutation.removedNodes.forEach((node) => {
-							if (node.type === 'image/x-icon') {
-								processIcon(rule.tab.icon);
-								iconChangedByMe = true;
-							}
-						});
-					}
-				});
-			} else {
-				iconChangedByMe = false;
-			}
-		});
-
-		iconObserver.observe(document.head, {
-			attributes: true,
-			childList: true,
-			characterData: true,
-			subtree: true,
-			attributeOldValue: true,
-			characterDataOldValue: true,
-		});
 	}
 
 	if (rule.tab.protected) {
@@ -228,7 +172,9 @@ chrome.runtime.onMessage.addListener(async function (request) {
 			title: title,
 		});
 	} else if (request.action === 'applyRule') {
-		await applyRule(request.rule);
+		setTimeout(async () => {
+			await applyRule(request.rule);
+		}, 200);
 	} else if (request.action === 'ungroupTab') {
 		await chrome.tabs.ungroup(request.tabId);
 	}
