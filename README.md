@@ -20,15 +20,15 @@ Quick rename can be done by right-clicking anywhere in the page and click on "Re
 
 Tab Modifier is compatible with Chromium-based browsers.
 
-| Browser        | Install Link                                                                                         | Web Store             |
-|----------------|------------------------------------------------------------------------------------------------------|-----------------------|
-| Google Chrome  | ⬇️ [Install](https://chromewebstore.google.com/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai) | Chrome Web Store      |
-| Arc            | ⬇️ [Install](https://chromewebstore.google.com/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai) | Chrome Web Store      |
-| Brave          | ⬇️ [Install](https://chromewebstore.google.com/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai) | Chrome Web Store      |
-| Opera          | ⬇️ [Install](https://addons.opera.com/en/extensions/details/tab-modifier/)                           | Opera Addons          | 
-| Microsoft Edge | ⏳ Soon                                                                                               | Microsoft Edge Addons |
+| Browser        | Install Link                                                                                                | Web Store             |
+|----------------|-------------------------------------------------------------------------------------------------------------|-----------------------|
+| Google Chrome  | ⬇️ [Install](https://chromewebstore.google.com/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai)        | Chrome Web Store      |
+| Arc            | ⬇️ [Install](https://chromewebstore.google.com/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai)        | Chrome Web Store      |
+| Brave          | ⬇️ [Install](https://chromewebstore.google.com/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai)        | Chrome Web Store      |
+| Opera          | ⬇️ [Install](https://addons.opera.com/en/extensions/details/tab-modifier/)                                  | Opera Addons          | 
+| Microsoft Edge | ⬇️ [Install](https://microsoftedge.microsoft.com/addons/detail/tab-modifier/edfkealmjdmkfimdjmiapmnakepfilkp) | Microsoft Edge Addons |
 
-Firefox is not supported, refer to [#282](https://github.com/furybee/chrome-tab-modifier/discussions/282).
+Firefox and Safari are not available.
 
 ## Usage
 
