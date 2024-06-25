@@ -36,7 +36,12 @@ export function processTitle(currentUrl, currentTitle, rule) {
 
 		matches.forEach((match) => {
 			selector = match.substring(1, match.length - 1);
-			text = getTextBySelector(selector);
+
+			if (selector === 'title') {
+				text = currentTitle;
+			} else {
+				text = getTextBySelector(selector);
+			}
 
 			title = updateTitle(title, match, text);
 		});

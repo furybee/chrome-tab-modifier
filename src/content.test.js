@@ -144,9 +144,11 @@ describe('Content', () => {
 				},
 			};
 
-			document.title = 'FuryBee/chrome-tab-modifier: Take control of your tabs';
-
-			const result = processTitle('https://github.com/furybee/chrome-tab-modifier', '', rule);
+			const result = processTitle(
+				'https://github.com/furybee/chrome-tab-modifier',
+				'FuryBee/chrome-tab-modifier: Take control of your tabs',
+				rule
+			);
 
 			expect(result).toBe(
 				'FuryBee/chrome-tab-modifier: Take control of your tabs | chrome-tab-modifier by furybee'
