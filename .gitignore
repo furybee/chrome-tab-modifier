@@ -29,3 +29,5 @@ tab-modifier.zip
 coverage/
 dummy-*
 html/
+
+tsconfig.tsbuildinfo
