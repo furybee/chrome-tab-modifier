@@ -179,7 +179,7 @@ const deleteRule = async (event: MouseEvent, ruleId: string) => {
 	}
 };
 
-const onDragEnd = (event: any) => {
+const onDragEnd = () => {
 	rules.value.forEach((rule, index) => {
 		rulesStore.updateRulePosition(rule.id, index);
 	});
