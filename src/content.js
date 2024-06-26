@@ -191,10 +191,12 @@ chrome.runtime.onMessage.addListener(async function (request) {
 			'Enter the new title, a Tab rule will be automatically created for you based on current URL'
 		);
 
-		await chrome.runtime.sendMessage({
-			action: 'renameTab',
-			title: title,
-		});
+		if (title) {
+			await chrome.runtime.sendMessage({
+				action: 'renameTab',
+				title: title,
+			});
+		}
 	} else if (request.action === 'applyRule') {
 		// Don't update title because it will be updated by the MutationObserver
 		await applyRule(request.rule, false);
