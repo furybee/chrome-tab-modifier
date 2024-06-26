@@ -151,9 +151,47 @@ export async function applyRule(ruleParam, updateTitle) {
 		await chrome.runtime.sendMessage({ action: 'setMuted' });
 	}
 
+	let iconChangedByMe = false;
+
 	// Favicon handling
-	if (rule.tab.icon) {
+	if (rule.tab.icon && updateTitle) {
 		processIcon(rule.tab.icon);
+
+		const iconObserver = new MutationObserver((mutations) => {
+			if (!iconChangedByMe) {
+				mutations.forEach((mutation) => {
+					if (mutation.target.type === 'image/x-icon') {
+						processIcon(rule.tab.icon);
+						iconChangedByMe = true;
+					} else if (mutation.addedNodes.length) {
+						mutation.addedNodes.forEach((node) => {
+							if (node.type === 'image/x-icon') {
+								processIcon(rule.tab.icon);
+								iconChangedByMe = true;
+							}
+						});
+					} else if (mutation.removedNodes.length) {
+						mutation.removedNodes.forEach((node) => {
+							if (node.type === 'image/x-icon') {
+								processIcon(rule.tab.icon);
+								iconChangedByMe = true;
+							}
+						});
+					}
+				});
+			} else {
+				iconChangedByMe = false;
+			}
+		});
+
+		iconObserver.observe(document.head, {
+			attributes: true,
+			childList: true,
+			characterData: true,
+			subtree: true,
+			attributeOldValue: true,
+			characterDataOldValue: true,
+		});
 	}
 
 	if (rule.tab.protected) {
