@@ -28,18 +28,20 @@ export const useRulesStore = defineStore('rules', {
 		fixDuplicateRuleIds(rules: Rule[]) {
 			const uniqueIds = new Set();
 
-			for (const rule of rules) {
+			rules = rules.map((rule) => {
 				if (uniqueIds.has(rule.id)) {
 					rule.id = _generateRandomId();
 				}
 
 				uniqueIds.add(rule.id);
-			}
+
+				return rule;
+			});
 
 			return rules;
 		},
-		handleMissingRuleSettings(rules: Rule[]) {
-			rules.forEach((rule) => {
+		handleMissingRuleSettings(rules: Rule[]): Rule[] {
+			rules = rules.map((rule) => {
 				if (!rule.id) {
 					rule.id = _generateRandomId();
 				}
@@ -49,10 +51,18 @@ export const useRulesStore = defineStore('rules', {
 					rule.detection = 'STARTS_WITH';
 				}
 
+				if (rule.detection === 'REGEXP') {
+					rule.detection = 'REGEX';
+				}
+
 				if (rule.detection === 'ENDS') {
 					rule.detection = 'ENDS_WITH';
 				}
+
+				return rule;
 			});
+
+			return rules;
 		},
 		async updateRulePosition(ruleId: string, position: number) {
 			const index = this.getRuleIndexById(ruleId);
@@ -68,12 +78,16 @@ export const useRulesStore = defineStore('rules', {
 
 			await this.save();
 		},
-		addMissingInvisibleChar(groups: Group[]) {
-			groups.forEach((group) => {
+		addMissingInvisibleChar(groups: Group[]): Group[] {
+			groups = groups.map((group) => {
 				if (!group.title.endsWith(INVISIBLE_CHAR)) {
 					group.title = group.title + INVISIBLE_CHAR;
 				}
+
+				return group;
 			});
+
+			return groups;
 		},
 		async init() {
 			try {
@@ -88,12 +102,10 @@ export const useRulesStore = defineStore('rules', {
 						throw new Error('Failed to set config');
 					}
 
-					this.handleMissingRuleSettings(tabModifier.rules);
-
 					// FIX: Remove this later
+					tabModifier.rules = this.handleMissingRuleSettings(tabModifier.rules);
 					tabModifier.rules = this.fixDuplicateRuleIds(tabModifier.rules);
-
-					this.addMissingInvisibleChar(tabModifier.groups);
+					tabModifier.groups = this.addMissingInvisibleChar(tabModifier.groups);
 
 					this.groups = tabModifier.groups;
 					this.rules = tabModifier.rules;
@@ -112,6 +124,10 @@ export const useRulesStore = defineStore('rules', {
 			shouldInit: boolean = true
 		): Promise<TabModifierSettings | undefined> {
 			try {
+				config.rules = this.handleMissingRuleSettings(config.rules);
+				config.rules = this.fixDuplicateRuleIds(config.rules);
+				config.groups = this.addMissingInvisibleChar(config.groups);
+
 				const defaultConfig = _getDefaultTabModifierSettings();
 
 				const mergedConfig = {
@@ -312,7 +328,7 @@ export const useRulesStore = defineStore('rules', {
 					tabModifier = _getDefaultTabModifierSettings();
 				}
 
-				tabModifier.rules.push(rule);
+				tabModifier.rules.unshift(rule);
 
 				this.rules = tabModifier.rules;
 
