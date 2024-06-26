@@ -101,15 +101,15 @@ export function processIcon(newIcon) {
 	return true;
 }
 
-export async function applyRule(ruleParam) {
+export async function applyRule(ruleParam, updateTitle) {
 	const rule = ruleParam ?? (await _getRuleFromUrl(location.href));
+	updateTitle = updateTitle ?? true;
 
 	if (!rule) {
 		return;
 	}
 
-	if (rule.tab.title) {
-		// check if element with id original-title exists
+	if (rule.tab.title && updateTitle) {
 		let originalTitleElement = document.querySelector('meta[name="original-tab-modifier-title"]');
 
 		if (!originalTitleElement) {
@@ -119,8 +119,27 @@ export async function applyRule(ruleParam) {
 			document.head.appendChild(originalTitleElement);
 		}
 
-		const originalTitle = originalTitleElement.getAttribute('content');
+		let originalTitle = originalTitleElement.getAttribute('content');
 		document.title = processTitle(location.href, originalTitle, rule);
+
+		const targetNode = document.documentElement;
+		const config = { childList: true, subtree: true };
+		let lastTitle = document.title;
+
+		const callback = function () {
+			if (document.title !== lastTitle) {
+				console.log('Processing title with mutation observer');
+				originalTitleElement.setAttribute('content', document.title);
+
+				originalTitle = originalTitleElement.getAttribute('content');
+				document.title = processTitle(location.href, originalTitle, rule);
+
+				lastTitle = document.title;
+			}
+		};
+
+		const observer = new MutationObserver(callback);
+		observer.observe(targetNode, config);
 	}
 
 	// Pinning, muting handled through Chrome Runtime messages
@@ -177,9 +196,8 @@ chrome.runtime.onMessage.addListener(async function (request) {
 			title: title,
 		});
 	} else if (request.action === 'applyRule') {
-		setTimeout(async () => {
-			await applyRule(request.rule);
-		}, 200);
+		// Don't update title because it will be updated by the MutationObserver
+		await applyRule(request.rule, false);
 	} else if (request.action === 'ungroupTab') {
 		await chrome.tabs.ungroup(request.tabId);
 	}
