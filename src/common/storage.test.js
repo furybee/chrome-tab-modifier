@@ -273,6 +273,41 @@ describe('Storage', () => {
 			expect(rule).toEqual(mockRule);
 		});
 
+		it('should detect biblegateway url based on REGEX', async () => {
+			const mockRule = {
+				id: '1',
+				name: 'test',
+				detection: 'REGEX',
+				url_fragment:
+					'https:\\/\\/www\\.biblegateway\\.com\\/passage\\/\\?search=.*version=(?!MOUNCE)(?!.*;).*',
+				tab: {
+					title: 'Bible Gateway',
+					icon: null,
+					pinned: false,
+					protected: false,
+					unique: false,
+					muted: false,
+					title_matcher: null,
+					url_matcher: null,
+					group_id: null,
+				},
+			};
+			const mockData = {
+				rules: [mockRule],
+				groups: [],
+				settings: { enable_new_version_notification: false, theme: 'dim' },
+			};
+			global.chrome.storage.local.get.mockImplementation((keys, callback) => {
+				callback({ [STORAGE_KEY]: mockData });
+			});
+			global.chrome.runtime.lastError = null;
+
+			const rule = await _getRuleFromUrl(
+				'https://www.biblegateway.com/passage/?search=John+3&version=NASB'
+			);
+			expect(rule).toEqual(mockRule);
+		});
+
 		it('should detect url based on EXACT', async () => {
 			const mockRule = {
 				id: '1',
