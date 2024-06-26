@@ -6,11 +6,32 @@ export function updateTitle(title, tag, value) {
 	return value ? title.replace(tag, decodeURI(value)) : title;
 }
 
-export function getTextBySelector(selector) {
-	let el = document.querySelector(selector),
+export function getTextBySelector(selector, doc = document) {
+	if (selector.startsWith('iframe')) {
+		const iframeSelector = selector.split('>').slice(0, 1).join('>').trim();
+		const nestedSelector = selector.split('>').slice(1).join('>').trim();
+		const iframe = doc.querySelector(iframeSelector);
+
+		if (iframe) {
+			const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+			return getTextBySelector(nestedSelector, iframeDoc);
+		} else {
+			return '';
+		}
+	}
+
+	let el = doc.querySelector(selector),
 		value = '';
 
 	if (el) {
+		if (el.tagName?.toLowerCase() === 'iframe') {
+			const iframeDoc = el.contentDocument || el.contentWindow.document;
+			const nestedSelector = selector.split('>').slice(1).join('>').trim();
+			if (nestedSelector) {
+				return getTextBySelector(nestedSelector, iframeDoc);
+			}
+		}
+
 		if (el.childNodes.length > 0) {
 			el = el.childNodes[0];
 		}
