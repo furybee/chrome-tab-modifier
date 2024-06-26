@@ -49,6 +49,10 @@ export const useRulesStore = defineStore('rules', {
 					rule.detection = 'STARTS_WITH';
 				}
 
+				if (rule.detection === 'REGEXP') {
+					rule.detection = 'REGEX';
+				}
+
 				if (rule.detection === 'ENDS') {
 					rule.detection = 'ENDS_WITH';
 				}
@@ -88,11 +92,9 @@ export const useRulesStore = defineStore('rules', {
 						throw new Error('Failed to set config');
 					}
 
-					this.handleMissingRuleSettings(tabModifier.rules);
-
 					// FIX: Remove this later
+					this.handleMissingRuleSettings(tabModifier.rules);
 					tabModifier.rules = this.fixDuplicateRuleIds(tabModifier.rules);
-
 					this.addMissingInvisibleChar(tabModifier.groups);
 
 					this.groups = tabModifier.groups;
@@ -112,6 +114,10 @@ export const useRulesStore = defineStore('rules', {
 			shouldInit: boolean = true
 		): Promise<TabModifierSettings | undefined> {
 			try {
+				this.handleMissingRuleSettings(config.rules);
+				config.rules = this.fixDuplicateRuleIds(config.rules);
+				this.addMissingInvisibleChar(config.groups);
+
 				const defaultConfig = _getDefaultTabModifierSettings();
 
 				const mergedConfig = {
@@ -312,7 +318,7 @@ export const useRulesStore = defineStore('rules', {
 					tabModifier = _getDefaultTabModifierSettings();
 				}
 
-				tabModifier.rules.push(rule);
+				tabModifier.rules.unshift(rule);
 
 				this.rules = tabModifier.rules;
 

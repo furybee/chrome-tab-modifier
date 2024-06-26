@@ -128,7 +128,6 @@ export async function applyRule(ruleParam, updateTitle) {
 
 		const callback = function () {
 			if (document.title !== lastTitle) {
-				console.log('Processing title with mutation observer');
 				originalTitleElement.setAttribute('content', document.title);
 
 				originalTitle = originalTitleElement.getAttribute('content');
