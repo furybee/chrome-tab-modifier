@@ -81,12 +81,19 @@ Say hello to all Google websites:
 * **Title**: Google
 * **Icon**: https://www.google.com/favicon.ico
 
+This will not work due to Content Security Policy (CSP) restrictions:
+
+> Refused to load the image 'https://www.google.com/favicon.ico' because it violates the following Content Security Policy directive from GitHub".
+
+
 ❌ Prevent accidental tab closure:
 
 * **Detection**: Contains
 * **URL fragment**: important-website.com
 * **Protected**: ON
 
+> This feature is only available if you interact with the page at least once due to Chrome's security restrictions. https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event#usage_notes
+ 
 Mute all Youtube videos by default:
 
 * **Detection**: Contains
