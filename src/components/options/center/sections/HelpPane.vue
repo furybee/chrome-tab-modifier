@@ -70,6 +70,11 @@
 					matcher".
 				</p>
 				<p>
+					You can inject any DOM content with {selector}. Examples: {title} for website title, {h1},
+					{#id}, {.class}, etc. If you want to query an iframe, you must start with iframe. Example
+					: {iframe > h1}
+				</p>
+				<p>
 					As you can scan the URL, you can also scan the title and inject some parts of it with the
 					"at (@)" syntax. This feature is linked to the "Title matcher" action, see afterwards. Use
 					@0, @1, etc. depending on your regular expression defined in "Title matcher".

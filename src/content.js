@@ -6,15 +6,28 @@ export function updateTitle(title, tag, value) {
 	return value ? title.replace(tag, decodeURI(value)) : title;
 }
 
-export function getTextBySelector(selector, doc = document) {
+export async function getTextBySelector(selector, doc = document) {
 	if (selector.startsWith('iframe')) {
 		const iframeSelector = selector.split('>').slice(0, 1).join('>').trim();
 		const nestedSelector = selector.split('>').slice(1).join('>').trim();
 		const iframe = doc.querySelector(iframeSelector);
 
+		console.log(iframeSelector, nestedSelector, iframe);
+
 		if (iframe) {
-			const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-			return getTextBySelector(nestedSelector, iframeDoc);
+			console.log('iframe found');
+			if (iframe.contentDocument || iframe.contentWindow.document) {
+				const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+				return await getTextBySelector(nestedSelector, iframeDoc);
+			} else {
+				return new Promise((resolve) => {
+					iframe.addEventListener('load', async function () {
+						console.log('iframe loaded');
+						const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+						resolve(await getTextBySelector(nestedSelector, iframeDoc));
+					});
+				});
+			}
 		} else {
 			return '';
 		}
@@ -24,14 +37,6 @@ export function getTextBySelector(selector, doc = document) {
 		value = '';
 
 	if (el) {
-		if (el.tagName?.toLowerCase() === 'iframe') {
-			const iframeDoc = el.contentDocument || el.contentWindow.document;
-			const nestedSelector = selector.split('>').slice(1).join('>').trim();
-			if (nestedSelector) {
-				return getTextBySelector(nestedSelector, iframeDoc);
-			}
-		}
-
 		if (el.childNodes.length > 0) {
 			el = el.childNodes[0];
 		}
@@ -48,24 +53,24 @@ export function getTextBySelector(selector, doc = document) {
 	return value.trim();
 }
 
-export function processTitle(currentUrl, currentTitle, rule) {
+export async function processTitle(currentUrl, currentTitle, rule) {
 	let title = rule.tab.title;
 	const matches = title.match(/\{([^}]+)}/g);
 
 	if (matches) {
 		let selector, text;
 
-		matches.forEach((match) => {
+		for (const match of matches) {
 			selector = match.substring(1, match.length - 1);
 
 			if (selector === 'title') {
 				text = currentTitle;
 			} else {
-				text = getTextBySelector(selector);
+				text = await getTextBySelector(selector);
 			}
 
 			title = updateTitle(title, match, text);
-		});
+		}
 	}
 
 	if (rule.tab.title_matcher) {
@@ -141,18 +146,18 @@ export async function applyRule(ruleParam, updateTitle) {
 		}
 
 		let originalTitle = originalTitleElement.getAttribute('content');
-		document.title = processTitle(location.href, originalTitle, rule);
+		document.title = await processTitle(location.href, originalTitle, rule);
 
 		const targetNode = document.documentElement;
 		const config = { childList: true, subtree: true };
 		let lastTitle = document.title;
 
-		const callback = function () {
+		const callback = async function () {
 			if (document.title !== lastTitle) {
 				originalTitleElement.setAttribute('content', document.title);
 
 				originalTitle = originalTitleElement.getAttribute('content');
-				document.title = processTitle(location.href, originalTitle, rule);
+				document.title = await processTitle(location.href, originalTitle, rule);
 
 				lastTitle = document.title;
 			}
