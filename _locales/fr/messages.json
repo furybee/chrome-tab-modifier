@@ -1,0 +1,67 @@
+{
+  "help_concept_title": { "message": "Concept" },
+  "help_concept_description": { "message": "Prenez le contrôle de vos onglets de navigateur ! Avec cette extension, vous pouvez modifier certains comportements sur n'importe quel site web. Définissez vos règles et laissez l'extension faire le travail automatiquement." },
+  "help_data_privacy": { "message": "Toutes vos données sont stockées sur votre ordinateur, nous n'y avons pas accès." },
+
+  "help_features_title": { "message": "Fonctionnalités" },
+  "help_feature_1": { "message": "Vous pouvez renommer un onglet." },
+  "help_feature_2": { "message": "Vous pouvez changer l'icône (fav) de n'importe quel onglet." },
+  "help_feature_3": { "message": "Vous pouvez épingler un site web sans effort." },
+  "help_feature_4": { "message": "Vous pouvez regrouper vos onglets facilement." },
+  "help_feature_5": { "message": "Vous pouvez protéger certains sites web contre une fermeture accidentelle avec une boîte de confirmation." },
+  "help_feature_6": { "message": "Vous pouvez éviter les onglets en double en configurant la propriété unique." },
+  "help_feature_7": { "message": "Vous pouvez couper le son de n'importe quel site web avant qu'il ne soit joué." },
+  "help_feature_8": { "message": "Et le meilleur pour la fin... Combinez-les tous !" },
+
+  "help_tab_rules_title": { "message": "Règles d'Onglet" },
+  "help_tab_rule_description": { "message": "Vous devez créer une 'règle d'onglet'. Une règle d'onglet comprend :" },
+  "help_rule_name": { "message": "Nom" },
+  "help_rule_name_description": { "message": "Ce nom est utilisé pour vous, juste pour retrouver votre règle parmi d'autres." },
+  "help_rule_detection": { "message": "Détection" },
+  "help_rule_detection_description": { "message": "Les choix sont 'Commence par', 'Contient', 'Exact', 'Se termine par' ou 'RegExp'. L'extension doit savoir comment appliquer votre règle en fonction de la détection dont vous avez besoin. Vous pouvez avoir besoin de capturer un mot dans l'URL, donc vous sélectionnerez 'Contient' ou capturer uniquement les fichiers PNG, donc vous sélectionnerez 'Se termine par', etc. La plupart du temps, 'Contient' fait ce que vous voulez, c'est la détection sélectionnée par défaut." },
+  "help_url_fragment": { "message": "Fragment d'URL" },
+  "help_url_fragment_description": { "message": "C'est la clé de votre règle. Elle déterminera si votre règle sera appliquée ou non. Vous voulez capturer GMail ? Vous pouvez configurer votre règle avec la détection 'Contient' et le fragment d'URL 'mail.google.com'. Une autre solution pourrait être de configurer la détection 'Commence par' et 'https://mail.google.com'. Essayez n'importe quelle combinaison pour atteindre ce que vous voulez." },
+  "help_rule_core_note": { "message": "Après avoir défini le cœur de votre règle, vous pouvez sélectionner certaines actions listées ci-dessous." },
+
+  "help_action_title": { "message": "Titre" },
+  "help_action_title_description": { "message": "Cette action réécrira le titre du site web." },
+  "help_title_advanced_usage_1": { "message": "Une autre utilisation avancée peut être utilisée avec le titre, vous pouvez injecter certaines parties de l'URL avec la syntaxe dollar. Cette fonctionnalité est liée à l'action 'Correspondance URL', voir après. Utilisez $0, $1, etc. en fonction de votre expression régulière définie dans 'Correspondance URL'." },
+  "help_title_advanced_usage_2": { "message": "Comme vous pouvez analyser l'URL, vous pouvez également analyser le titre et y injecter certaines parties avec la syntaxe 'at (@)'. Cette fonctionnalité est liée à l'action 'Correspondance Titre', voir après. Utilisez @0, @1, etc. en fonction de votre expression régulière définie dans 'Correspondance Titre'." },
+
+  "help_action_icon": { "message": "Icône" },
+  "help_action_icon_description": { "message": "Cette action remplacera l'icône (fav) du site web." },
+  "help_icon_option_1": { "message": "Vous pouvez sélectionner une icône fournie par l'extension." },
+  "help_icon_option_2": { "message": "Sinon, vous pouvez définir une URL d'icône dans le champ comme 'https://www.google.com/favicon.ico'." },
+  "help_icon_option_3": { "message": "Si vous souhaitez définir une icône locale depuis votre ordinateur, vous avez 2 options :" },
+  "help_icon_option_3a": { "message": "téléchargez votre icône quelque part comme imgur.com et collez le lien direct" },
+  "help_icon_option_3b": { "message": "allez sur duri.me et glissez-déposez votre icône, puis cliquez sur 'Copier comme DataURI' et collez-le. C'est votre icône transformée au format Data URI" },
+
+  "help_action_group": { "message": "Groupe" },
+  "help_action_group_description": { "message": "Cette action déplacera votre onglet dans un groupe." },
+
+  "help_action_pinned": { "message": "Épinglé" },
+  "help_action_pinned_description": { "message": "Cette action épinglera l'onglet." },
+
+  "help_action_protected": { "message": "Protégé" },
+  "help_action_protected_description": { "message": "Cette action vous demandera avant de rafraîchir ou de fermer l'onglet." },
+  "help_protected_note": { "message": "Note : Nécessite l'activation persistante pour que la boîte de dialogue s'affiche. En d'autres termes, le navigateur n'affichera la boîte de dialogue que si le cadre ou tout cadre intégré reçoit un geste ou une interaction de l'utilisateur. Si vous n'avez jamais interagi avec la page, la boîte de dialogue ne s'affichera pas." },
+
+  "help_action_unique": { "message": "Unique" },
+  "help_action_unique_description": { "message": "Cette action fermera automatiquement les onglets en double. De plus, l'extension ne se concentrera pas sur l'onglet original après la fermeture du doublon." },
+  "help_unique_scenario": { "message": "Scénario : créez une règle basée sur GMail avec l'action unique. Ouvrez GMail, ouvrez un autre GMail, le dernier sera fermé." },
+
+  "help_action_muted": { "message": "Muet" },
+  "help_action_muted_description": { "message": "Cette action empêchera l'onglet de jouer des sons." },
+  "help_muted_requirement": { "message": "Pour fonctionner, cette fonctionnalité nécessite que vous activiez ce drapeau : chrome://flags/#enable-tab-audio-muting puis redémarrez votre navigateur." },
+
+  "help_title_matcher": { "message": "Correspondance Titre" },
+  "help_title_matcher_description": { "message": "Une utilisation avancée, entrez une expression régulière pour identifier certaines parties du titre et les utiliser à l'intérieur du titre lui-même, cela est utile pour réorganiser les mots ou exclure certaines parties du titre, comme [a-z]*@gmail.com et utilisez @0 dans le champ de titre pour injecter la variable." },
+
+  "help_url_matcher": { "message": "Correspondance URL" },
+  "help_url_matcher_description": { "message": "Une utilisation avancée, entrez une expression régulière pour identifier certaines parties de l'URL et les utiliser à l'intérieur du titre, comme q=([^&]+) et utilisez $0 dans le champ de titre pour injecter la variable." },
+
+  "help_additional_notes_title": { "message": "Notes supplémentaires" },
+  "help_additional_notes_1": { "message": "Après avoir créé ou modifié une règle, actualisez l(es) onglet(s) pour appliquer les modifications." },
+  "help_additional_notes_2": { "message": "L'ordre de vos règles est important, si une URL déclenche plus d'une règle, la première sera appliquée. Vous pouvez réorganiser vos règles à tout moment." },
+  "help_additional_notes_3": { "message": "Certaines règles d'onglets intéressantes sont listées ici à des fins d'inspiration." }
+}

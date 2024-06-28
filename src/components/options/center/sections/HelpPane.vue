@@ -2,152 +2,126 @@
 	<div class="container mx-auto max-w-5xl p-4">
 		<div class="card bg-base-200">
 			<div class="card-body">
-				<h2 class="card-title">Concept</h2>
+				<h2 class="card-title">{{ translate('help_concept_title') }}</h2>
 				<p>
-					Take control of your browser tabs! With this extension you are able to change some
-					behaviors on any website. Define your rules and let the extension makes the job
-					automatically.
+					{{ translate('help_concept_description') }}
 				</p>
-				<p>All of your data are stored on your computer, We don't have any access to it.</p>
+				<p>{{ translate('help_data_privacy') }}</p>
 			</div>
 		</div>
 
 		<div class="card bg-base-200 mt-4">
 			<div class="card-body">
-				<h2 class="card-title">Features</h2>
+				<h2 class="card-title">{{ translate('help_features_title') }}</h2>
 
 				<ul class="list-disc ml-3">
-					<li>You can rename a tab.</li>
-					<li>You can change any tab (fav)icon.</li>
-					<li>You can pin a website without effort.</li>
+					<li>{{ translate('help_feature_1') }}</li>
+					<li>{{ translate('help_feature_2') }}</li>
+					<li>{{ translate('help_feature_3') }}</li>
 					<li>
-						You can group your tabs easily.
+						{{ translate('help_feature_4') }}
 						<NewFeature />
 					</li>
-					<li>You can protect some websites from accidental closure with a confirm box.</li>
-					<li>You can avoid duplicate tabs by setting up the unique property.</li>
-					<li>You can mute the sound of any website before it plays it.</li>
-					<li>And the icing on the cake... Combine all of them!</li>
+					<li>{{ translate('help_feature_5') }}</li>
+					<li>{{ translate('help_feature_6') }}</li>
+					<li>{{ translate('help_feature_7') }}</li>
+					<li>{{ translate('help_feature_8') }}</li>
 				</ul>
 			</div>
 		</div>
 
 		<div class="card bg-base-200 mt-4">
 			<div class="card-body">
-				<h2 class="card-title">Tab Rules</h2>
+				<h2 class="card-title">{{ translate('help_tab_rules_title') }}</h2>
 
-				<p>You have to create a "tab rule". A tab rule has:</p>
+				<p>{{ translate('help_tab_rule_description') }}</p>
 
-				<h3 class="font-bold">Name</h3>
-				<p>This name is used for you, just to find your rule among others.</p>
+				<h3 class="font-bold">{{ translate('help_rule_name') }}</h3>
+				<p>{{ translate('help_rule_name_description') }}</p>
 
-				<h3 class="font-bold">Detection</h3>
+				<h3 class="font-bold">{{ translate('help_rule_detection') }}</h3>
 				<p>
-					Choices are either "Starts with", "Contains", "Exact", "Ends with" or "RegExp". The
-					extension must know how to apply your rule depending on the detection you need. You may
-					need to catch a word inside the URL so you will select "Contains" or catch only PNG files
-					so you will select "Ends with", etc. Most of the time, "Contains" does what you want, this
-					is the default selected detection.
+					{{ translate('help_rule_detection_description') }}
 				</p>
 
-				<h3 class="font-bold">URL fragment</h3>
+				<h3 class="font-bold">{{ translate('help_url_fragment') }}</h3>
 				<p>
-					This is the key of your rule. It will determine if your rule will be applied or not. You
-					want to catch GMail? You can set your rule with "Contains" detection and "mail.google.com"
-					URL fragment. Another solution could be to set "Starts with" detection and
-					"https://mail.google.com". Try any combination to achieve what you want.
+					{{ translate('help_url_fragment_description') }}
 				</p>
 				<p class="text-accent">
-					After defining the core of your rule you can select some actions listed below.
+					{{ translate('help_rule_core_note') }}
 				</p>
 
-				<h3 class="font-bold">Title</h3>
-				<p>This action will rewrite the website title.</p>
+				<h3 class="font-bold">{{ translate('help_action_title') }}</h3>
+				<p>{{ translate('help_action_title_description') }}</p>
 				<p>
-					Another advanced usage can be used with the title, you can inject some parts of the URL
-					with the dollar syntax. This feature is linked to the "URL matcher" action, see
-					afterwards. Use $0, $1, etc. depending on your regular expression defined in "URL
-					matcher".
+					{{ translate('help_title_advanced_usage_1') }}
 				</p>
 				<p>
-					As you can scan the URL, you can also scan the title and inject some parts of it with the
-					"at (@)" syntax. This feature is linked to the "Title matcher" action, see afterwards. Use
-					@0, @1, etc. depending on your regular expression defined in "Title matcher".
+					{{ translate('help_title_advanced_usage_2') }}
 				</p>
 
-				<h3 class="font-bold">Icon</h3>
-				<p>This action will replace the website (fav)icon.</p>
-				<p>You can select an icon provided by the extension.</p>
+				<h3 class="font-bold">{{ translate('help_action_icon') }}</h3>
+				<p>{{ translate('help_action_icon_description') }}</p>
+				<p>{{ translate('help_icon_option_1') }}</p>
 				<p>
-					Otherwise, you can define an icon URL in the input like
-					"https://www.google.com/favicon.ico".
+					{{ translate('help_icon_option_2') }}
 				</p>
-				<p>In case you want to define a local icon from your computer, you have 2 options:</p>
+				<p>{{ translate('help_icon_option_3') }}</p>
 				<ul class="list-disc ml-3">
-					<li>upload your icon somewhere like imgur.com and paste the direct link</li>
+					<li>{{ translate('help_icon_option_3a') }}</li>
 					<li>
-						go to duri.me and drag & drop your icon, then click on "Copy as DataURI" and paste it.
-						This is your icon transformed in the Data URI format
+						{{ translate('help_icon_option_3b') }}
 					</li>
 				</ul>
 
-				<h3 class="font-bold">Group</h3>
-				<p>This action will move your tab to a group.</p>
+				<h3 class="font-bold">{{ translate('help_action_group') }}</h3>
+				<p>{{ translate('help_action_group_description') }}</p>
 
-				<h3 class="font-bold">Pinned</h3>
-				<p>This action will pin the tab.</p>
+				<h3 class="font-bold">{{ translate('help_action_pinned') }}</h3>
+				<p>{{ translate('help_action_pinned_description') }}</p>
 
-				<h3 class="font-bold">Protected</h3>
-				<p>This action will ask you before refreshing or closing the tab.</p>
+				<h3 class="font-bold">{{ translate('help_action_protected') }}</h3>
+				<p>{{ translate('help_action_protected_description') }}</p>
 				<p>
-					Note: Require sticky activation for the dialog to be displayed. In other words, the
-					browser will only show the dialog box if the frame or any embedded frame receives a user
-					gesture or user interaction. If you have never interacted with the page, the dialog will
-					not be displayed.
+					{{ translate('help_protected_note') }}
 				</p>
 
-				<h3 class="font-bold">Unique</h3>
+				<h3 class="font-bold">{{ translate('help_action_unique') }}</h3>
 				<p>
-					This action will automatically close duplicate tabs. Besides the extension will not focus
-					the original tab after closing the duplicate one.
+					{{ translate('help_action_unique_description') }}
 				</p>
 				<p>
-					Scenario: create a rule based on GMail with unique action. Open GMail, open another GMail,
-					the last one will be closed.
+					{{ translate('help_unique_scenario') }}
 				</p>
 
-				<h3 class="font-bold">Muted</h3>
-				<p>This action will prevent the tab from playing sounds.</p>
+				<h3 class="font-bold">{{ translate('help_action_muted') }}</h3>
+				<p>{{ translate('help_action_muted_description') }}</p>
 				<p>
-					To work, this feature requires that you enable this flag:
-					chrome://flags/#enable-tab-audio-muting then restart your browser.
+					{{ translate('help_muted_requirement') }}
 				</p>
 
-				<h3 class="font-bold">Title matcher</h3>
+				<h3 class="font-bold">{{ translate('help_title_matcher') }}</h3>
 				<p>
-					An advanced usage, enter a regular expression to identify some title parts and use them
-					inside the title itself, this is useful to reorder words or exclude some parts of the
-					title, like [a-z]*@gmail.com and use @0 in the title input to inject the variable.
+					{{ translate('help_title_matcher_description') }}
 				</p>
 
-				<h3 class="font-bold">URL matcher</h3>
+				<h3 class="font-bold">{{ translate('help_url_matcher') }}</h3>
 				<p>
-					An advanced usage, enter a regular expression to identify some URL parts and use them
-					inside the title, like q=([^&]+) and use $0 in the title input to inject the variable.
+					{{ translate('help_url_matcher_description') }}
 				</p>
 			</div>
 		</div>
 
 		<div class="card bg-base-200 mt-4">
 			<div class="card-body">
-				<h2 class="card-title">Additional notes</h2>
+				<h2 class="card-title">{{ translate('help_additional_notes_title') }}</h2>
 
-				<p>After creating or editing a rule, refresh the tab(s) to apply the changes.</p>
+				<p>{{ translate('help_additional_notes_1') }}</p>
 				<p>
-					The order of your rules is important, if an URL triggers more than one rule, the first one
-					will be applied. You can reorder your rules anyway.
+					{{ translate('help_additional_notes_2') }}
 				</p>
-				<p>Some interesting tab rules are listed here for inspiration purposes.</p>
+				<p>{{ translate('help_additional_notes_3') }}</p>
 			</div>
 		</div>
 	</div>
@@ -155,6 +129,13 @@
 
 <script lang="ts" setup>
 import NewFeature from '../../../global/NewFeature.vue';
+
+const translate = (key: string) => {
+	if (chrome && chrome.i18n) {
+		return chrome.i18n.getMessage(key);
+	}
+	return key;
+};
 </script>
 
 <style scoped>

@@ -1,0 +1,67 @@
+{
+  "help_concept_title": { "message": "Concept" },
+  "help_concept_description": { "message": "Take control of your browser tabs! With this extension you are able to change some behaviors on any website. Define your rules and let the extension make the job automatically." },
+  "help_data_privacy": { "message": "All of your data are stored on your computer, We don't have any access to it." },
+
+  "help_features_title": { "message": "Features" },
+  "help_feature_1": { "message": "You can rename a tab." },
+  "help_feature_2": { "message": "You can change any tab (fav)icon." },
+  "help_feature_3": { "message": "You can pin a website without effort." },
+  "help_feature_4": { "message": "You can group your tabs easily." },
+  "help_feature_5": { "message": "You can protect some websites from accidental closure with a confirm box." },
+  "help_feature_6": { "message": "You can avoid duplicate tabs by setting up the unique property." },
+  "help_feature_7": { "message": "You can mute the sound of any website before it plays it." },
+  "help_feature_8": { "message": "And the icing on the cake... Combine all of them!" },
+
+  "help_tab_rules_title": { "message": "Tab Rules" },
+  "help_tab_rule_description": { "message": "You have to create a 'tab rule'. A tab rule has:" },
+  "help_rule_name": { "message": "Name" },
+  "help_rule_name_description": { "message": "This name is used for you, just to find your rule among others." },
+  "help_rule_detection": { "message": "Detection" },
+  "help_rule_detection_description": { "message": "Choices are either 'Starts with', 'Contains', 'Exact', 'Ends with' or 'RegExp'. The extension must know how to apply your rule depending on the detection you need. You may need to catch a word inside the URL so you will select 'Contains' or catch only PNG files so you will select 'Ends with', etc. Most of the time, 'Contains' does what you want, this is the default selected detection." },
+  "help_url_fragment": { "message": "URL fragment" },
+  "help_url_fragment_description": { "message": "This is the key of your rule. It will determine if your rule will be applied or not. You want to catch GMail? You can set your rule with 'Contains' detection and 'mail.google.com' URL fragment. Another solution could be to set 'Starts with' detection and 'https://mail.google.com'. Try any combination to achieve what you want." },
+  "help_rule_core_note": { "message": "After defining the core of your rule you can select some actions listed below." },
+
+  "help_action_title": { "message": "Title" },
+  "help_action_title_description": { "message": "This action will rewrite the website title." },
+  "help_title_advanced_usage_1": { "message": "Another advanced usage can be used with the title, you can inject some parts of the URL with the dollar syntax. This feature is linked to the 'URL matcher' action, see afterwards. Use $0, $1, etc. depending on your regular expression defined in 'URL matcher'." },
+  "help_title_advanced_usage_2": { "message": "As you can scan the URL, you can also scan the title and inject some parts of it with the 'at (@)' syntax. This feature is linked to the 'Title matcher' action, see afterwards. Use @0, @1, etc. depending on your regular expression defined in 'Title matcher'." },
+
+  "help_action_icon": { "message": "Icon" },
+  "help_action_icon_description": { "message": "This action will replace the website (fav)icon." },
+  "help_icon_option_1": { "message": "You can select an icon provided by the extension." },
+  "help_icon_option_2": { "message": "Otherwise, you can define an icon URL in the input like 'https://www.google.com/favicon.ico'." },
+  "help_icon_option_3": { "message": "In case you want to define a local icon from your computer, you have 2 options:" },
+  "help_icon_option_3a": { "message": "upload your icon somewhere like imgur.com and paste the direct link" },
+  "help_icon_option_3b": { "message": "go to duri.me and drag & drop your icon, then click on 'Copy as DataURI' and paste it. This is your icon transformed in the Data URI format" },
+
+  "help_action_group": { "message": "Group" },
+  "help_action_group_description": { "message": "This action will move your tab to a group." },
+
+  "help_action_pinned": { "message": "Pinned" },
+  "help_action_pinned_description": { "message": "This action will pin the tab." },
+
+  "help_action_protected": { "message": "Protected" },
+  "help_action_protected_description": { "message": "This action will ask you before refreshing or closing the tab." },
+  "help_protected_note": { "message": "Note: Require sticky activation for the dialog to be displayed. In other words, the browser will only show the dialog box if the frame or any embedded frame receives a user gesture or user interaction. If you have never interacted with the page, the dialog will not be displayed." },
+
+  "help_action_unique": { "message": "Unique" },
+  "help_action_unique_description": { "message": "This action will automatically close duplicate tabs. Besides the extension will not focus the original tab after closing the duplicate one." },
+  "help_unique_scenario": { "message": "Scenario: create a rule based on GMail with unique action. Open GMail, open another GMail, the last one will be closed." },
+
+  "help_action_muted": { "message": "Muted" },
+  "help_action_muted_description": { "message": "This action will prevent the tab from playing sounds." },
+  "help_muted_requirement": { "message": "To work, this feature requires that you enable this flag: chrome://flags/#enable-tab-audio-muting then restart your browser." },
+
+  "help_title_matcher": { "message": "Title matcher" },
+  "help_title_matcher_description": { "message": "An advanced usage, enter a regular expression to identify some title parts and use them inside the title itself, this is useful to reorder words or exclude some parts of the title, like [a-z]*@gmail.com and use @0 in the title input to inject the variable." },
+
+  "help_url_matcher": { "message": "URL matcher" },
+  "help_url_matcher_description": { "message": "An advanced usage, enter a regular expression to identify some URL parts and use them inside the title, like q=([^&]+) and use $0 in the title input to inject the variable." },
+
+  "help_additional_notes_title": { "message": "Additional notes" },
+  "help_additional_notes_1": { "message": "After creating or editing a rule, refresh the tab(s) to apply the changes." },
+  "help_additional_notes_2": { "message": "The order of your rules is important, if an URL triggers more than one rule, the first one will be applied. You can reorder your rules anyway." },
+  "help_additional_notes_3": { "message": "Some interesting tab rules are listed here for inspiration purposes." }
+}
