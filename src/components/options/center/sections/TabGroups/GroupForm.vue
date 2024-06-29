@@ -1,7 +1,7 @@
 <template>
 	<h3 class="font-bold text-lg flex justify-between">
-		<span v-if="isEditMode">Edit group</span>
-		<span v-else>Add a new group</span>
+		<span v-if="isEditMode">{{ $translate('group_form_edit_group') }}</span>
+		<span v-else>{{ $translate('group_form_add_new_group') }}</span>
 
 		<HelpSwap v-model="showHelp" />
 	</h3>
@@ -9,34 +9,38 @@
 	<div class="flex flex-col gap-2 mt-2">
 		<div class="form-control w-full flex-1">
 			<label class="label">
-				<span class="label-text text-sm">Title</span>
+				<span class="label-text text-sm">{{ $translate('group_form_title') }}</span>
 			</label>
 			<input
 				ref="currentGroupTitleInput"
 				v-model="currentGroup.title"
 				class="input input-xs input-bordered w-full"
-				placeholder="e.g. Google"
+				:placeholder="$translate('group_form_title_placeholder')"
 				required
 				type="text"
 				autofocus
 			/>
-			<div v-if="showHelp" class="label opacity-80">You can set a title for your tab</div>
+			<div v-if="showHelp" class="label opacity-80">
+				{{ $translate('group_form_title_help') }}
+			</div>
 		</div>
 
 		<div class="form-control w-full flex-1">
 			<div class="label">
-				<span class="label-text text-sm">Color</span>
+				<span class="label-text text-sm">{{ $translate('group_form_color') }}</span>
 			</div>
 			<div class="flex gap-2">
 				<CustomSelect v-model="currentGroup.color" :items="availableGroupColors" />
 			</div>
 			<div v-if="showHelp" class="label">
-				<span class="text-xs label-text-alt opacity-80">You can set a color for your group</span>
+				<span class="text-xs label-text-alt opacity-80">{{
+					$translate('group_form_color_help')
+				}}</span>
 			</div>
 
 			<div class="form-control mt-4">
 				<label class="cursor-pointer label">
-					<span class="label-text text-sm">Collapsed</span>
+					<span class="label-text text-sm">{{ $translate('group_form_collapsed') }}</span>
 					<input
 						v-model="currentGroup.collapsed"
 						checked
@@ -48,16 +52,21 @@
 		</div>
 
 		<div class="modal-action items-center">
-			<p v-if="showHelp" class="py-4 opacity-80">Remember refresh your tabs after saving</p>
+			<p v-if="showHelp" class="py-4 opacity-80">
+				{{ $translate('group_form_remember_refresh') }}
+			</p>
 			<form method="dialog">
-				<button class="btn btn-sm">Close <kbd v-if="showHelp" class="kbd kbd-xs">esc</kbd></button>
+				<button class="btn btn-sm">
+					{{ $translate('group_form_close_button') }}
+					<kbd v-if="showHelp" class="kbd kbd-xs">esc</kbd>
+				</button>
 			</form>
 			<button
 				:disabled="currentGroup.title.trim() === ''"
 				class="btn btn-sm btn-outline btn-primary ml-4 group"
 				@click="save"
 			>
-				Save
+				{{ $translate('group_form_save_button') }}
 			</button>
 		</div>
 	</div>

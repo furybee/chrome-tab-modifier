@@ -49,6 +49,14 @@ export function _chromeGroupColor(color: string) {
 	return '#dadce0';
 }
 
+export const translate = (key: string): string => {
+	if (chrome && chrome.i18n) {
+		return chrome.i18n.getMessage(key);
+	}
+
+	return key;
+};
+
 export function _isDefined(...args: any[]) {
 	return args.every((arg) => arg !== undefined);
 }
