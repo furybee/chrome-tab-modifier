@@ -1,39 +1,36 @@
 {
-  "donation_title": {
-    "message": "Faire un don"
-  },
   "donation_subtitle": {
     "message": "Si vous aimez cette extension et souhaitez soutenir son développement, vous pouvez faire un don en cliquant sur l'un des boutons ci-dessous."
   },
-  "options_section_item_rules": {
-    "message": "Règles"
-  },
-  "options_section_item_groups": {
-    "message": "Groupes"
-  },
-  "options_section_item_settings": {
-    "message": "Paramètres"
-  },
-  "options_section_item_help": {
-    "message": "Aide"
-  },
-  "options_resource_item_donate": {
+  "donation_title": {
     "message": "Faire un don"
   },
-  "group_form_edit_group": {
-    "message": "Modifier le groupe"
+  "empty_groups_action": {
+    "message": "Créer mon premier groupe"
+  },
+  "empty_groups_subtitle": {
+    "message": "Il n'y a pas encore de groupe. Appuyez sur le bouton suivant pour créer votre premièr groupe."
+  },
+  "empty_groups_title": {
+    "message": "Bonjour"
+  },
+  "empty_rules_action": {
+    "message": "Créer ma première règle"
+  },
+  "empty_rules_subtitle": {
+    "message": "Il n'y a pas encore de règle. Appuyez sur le bouton suivant pour créer votre première règle."
+  },
+  "empty_rules_title": {
+    "message": "Bonjour"
   },
   "group_form_add_new_group": {
     "message": "Ajouter un nouveau groupe"
   },
-  "group_form_title": {
-    "message": "Titre"
+  "group_form_close_button": {
+    "message": "Fermer"
   },
-  "group_form_title_placeholder": {
-    "message": "ex. Google"
-  },
-  "group_form_title_help": {
-    "message": "Vous pouvez définir un titre pour votre onglet"
+  "group_form_collapsed": {
+    "message": "Réduit"
   },
   "group_form_color": {
     "message": "Couleur"
@@ -41,14 +38,11 @@
   "group_form_color_help": {
     "message": "Vous pouvez définir une couleur pour votre groupe"
   },
-  "group_form_collapsed": {
-    "message": "Réduit"
+  "group_form_edit_group": {
+    "message": "Modifier le groupe"
   },
   "group_form_remember_refresh": {
     "message": "N'oubliez pas de rafraîchir vos onglets après avoir enregistré"
-  },
-  "group_form_close_button": {
-    "message": "Fermer"
   },
   "group_form_save_button": {
     "message": "Enregistrer"
@@ -56,248 +50,77 @@
   "group_form_save_successfully": {
     "message": "Enregistré avec succès !"
   },
-  "table_groups_title": {
+  "group_form_title": {
     "message": "Titre"
   },
-  "table_groups_color": {
-    "message": "Couleur"
+  "group_form_title_help": {
+    "message": "Vous pouvez définir un titre pour votre onglet"
   },
-  "table_groups_collapsed": {
-    "message": "Réduit"
+  "group_form_title_placeholder": {
+    "message": "ex. Google"
   },
-  "table_groups_delete_confirm": {
-    "message": "Êtes-vous sûr de vouloir supprimer ce groupe ?"
-  },
-  "table_rules_name": {
-    "message": "Nom"
-  },
-  "table_rules_group": {
+  "help_action_group": {
     "message": "Groupe"
   },
-  "table_rules_title": {
-    "message": "Titre"
+  "help_action_group_description": {
+    "message": "Cette action déplacera votre onglet dans un groupe."
   },
-  "table_rules_detection": {
-    "message": "Détection"
-  },
-  "table_rules_url_fragment": {
-    "message": "Fragment d'URL"
-  },
-  "table_rules_move_up": {
-    "message": "Déplacer vers le haut"
-  },
-  "table_rules_move_down": {
-    "message": "Déplacer vers le bas"
-  },
-  "table_rules_duplicate": {
-    "message": "Dupliquer"
-  },
-  "table_rules_delete": {
-    "message": "Supprimer"
-  },
-  "table_rules_delete_confirm": {
-    "message": "Êtes-vous sûr de vouloir supprimer cette règle ?"
-  },
-  "empty_groups_title": {
-    "message": "Bonjour"
-  },
-  "empty_groups_subtitle": {
-    "message": "Il n'y a pas encore de groupe. Appuyez sur le bouton suivant pour créer votre premièr groupe."
-  },
-  "empty_groups_action": {
-    "message": "Créer mon premier groupe"
-  },
-  "empty_rules_title": {
-    "message": "Bonjour"
-  },
-  "empty_rules_subtitle": {
-    "message": "Il n'y a pas encore de règle. Appuyez sur le bouton suivant pour créer votre première règle."
-  },
-  "empty_rules_action": {
-    "message": "Créer ma première règle"
-  },
-  "rule_form_edit_rule": {
-    "message": "Modifier la règle"
-  },
-  "rule_form_add_new_rule": {
-    "message": "Ajouter une nouvelle règle"
-  },
-  "rule_form_name": {
-    "message": "Nom"
-  },
-  "rule_form_name_placeholder": {
-    "message": "ex. GMail Épinglé"
-  },
-  "rule_form_name_help": {
-    "message": "Donnez un nom explicite, juste pour vous"
-  },
-  "rule_form_detection": {
-    "message": "Détection"
-  },
-  "rule_form_url_fragment": {
-    "message": "Fragment d'URL"
-  },
-  "rule_form_url_fragment_placeholder": {
-    "message": "ex. mail.google.com"
-  },
-  "rule_form_url_fragment_help": {
-    "message": "Fragment d'URL à trouver"
-  },
-  "rule_form_group": {
-    "message": "Groupe"
-  },
-  "rule_form_create_new_group": {
-    "message": "Créer un nouveau groupe"
-  },
-  "rule_form_icon": {
+  "help_action_icon": {
     "message": "Icône"
   },
-  "rule_form_use_custom_icon": {
-    "message": "Icône personnalisée"
+  "help_action_icon_description": {
+    "message": "Cette action remplacera l'icône (fav) du site web."
   },
-  "rule_form_custom_icon": {
-    "message": "Icône personnalisée"
-  },
-  "rule_form_custom_icon_placeholder": {
-    "message": "ex. https://google.com/favicon.ico"
-  },
-  "rule_form_custom_icon_help": {
-    "message": "Vous pouvez définir une URL personnalisée ou un URI de données pour la nouvelle icône, aucun chemin local accepté"
-  },
-  "rule_form_tab_title": {
-    "message": "Titre de l'onglet"
-  },
-  "rule_form_tab_title_placeholder": {
-    "message": "ex. Hey {title}"
-  },
-  "rule_form_tab_title_help": {
-    "message": "Vous pouvez injecter tout contenu DOM avec {selector}. Exemples : {title} pour le titre du site web, {h1}, {#id}, {.class}, etc."
-  },
-  "rule_form_pinned": {
-    "message": "Épinglé"
-  },
-  "rule_form_ask_before_closing": {
-    "message": "Demander avant de fermer"
-  },
-  "rule_form_unique": {
-    "message": "Unique"
-  },
-  "rule_form_muted": {
+  "help_action_muted": {
     "message": "Muet"
   },
-  "rule_form_advanced": {
-    "message": "Avancé"
+  "help_action_muted_description": {
+    "message": "Cette action empêchera l'onglet de jouer des sons."
   },
-  "rule_form_title_matcher": {
-    "message": "Correspondance de titre"
+  "help_action_pinned": {
+    "message": "Épinglé"
   },
-  "rule_form_title_matcher_placeholder": {
-    "message": "Correspondance de titre"
+  "help_action_pinned_description": {
+    "message": "Cette action épinglera l'onglet."
   },
-  "rule_form_title_matcher_help": {
-    "message": "Expression régulière pour rechercher des fragments de chaîne dans le titre"
+  "help_action_protected": {
+    "message": "Protégé"
   },
-  "rule_form_url_matcher": {
-    "message": "Correspondance d'URL"
+  "help_action_protected_description": {
+    "message": "Cette action vous demandera avant de rafraîchir ou de fermer l'onglet."
   },
-  "rule_form_url_matcher_placeholder": {
-    "message": "Correspondance d'URL"
+  "help_action_title": {
+    "message": "Titre"
   },
-  "rule_form_url_matcher_help": {
-    "message": "Expression régulière pour rechercher des fragments de chaîne dans l'URL"
+  "help_action_title_description": {
+    "message": "Cette action réécrira le titre du site web."
   },
-  "rule_form_remember_refresh": {
-    "message": "N'oubliez pas de rafraîchir vos onglets après avoir enregistré"
+  "help_action_unique": {
+    "message": "Unique"
   },
-  "rule_form_close_button": {
-    "message": "Fermer"
+  "help_action_unique_description": {
+    "message": "Cette action fermera automatiquement les onglets en double. De plus, l'extension ne se concentrera pas sur l'onglet original après la fermeture du doublon."
   },
-  "rule_form_save_button": {
-    "message": "Enregistrer"
+  "help_additional_notes_1": {
+    "message": "Après avoir créé ou modifié une règle, actualisez l(es) onglet(s) pour appliquer les modifications."
   },
-  "rule_form_save_successfully": {
-    "message": "Enregistré avec succès !"
+  "help_additional_notes_2": {
+    "message": "L'ordre de vos règles est important, si une URL déclenche plus d'une règle, la première sera appliquée. Vous pouvez réorganiser vos règles à tout moment."
   },
-  "settings_general_title": {
-    "message": "Général"
+  "help_additional_notes_3": {
+    "message": "Certaines règles d'onglets intéressantes sont listées ici à des fins d'inspiration."
   },
-  "settings_theme": {
-    "message": "Thème"
-  },
-  "settings_change_theme": {
-    "message": "Changer le thème de Tab Modifier"
-  },
-  "settings_backup_title": {
-    "message": "Sauvegarde"
-  },
-  "settings_import_tab_rules": {
-    "message": "Importer des règles d'onglets"
-  },
-  "settings_restore_tab_rules": {
-    "message": "Restaurer vos paramètres de règles d'onglets à partir d'un fichier JSON externe."
-  },
-  "settings_import": {
-    "message": "Importer"
-  },
-  "settings_close": {
-    "message": "Fermer"
-  },
-  "settings_import_replace": {
-    "message": "Importer & Remplacer"
-  },
-  "settings_import_merge": {
-    "message": "Importer & Fusionner"
-  },
-  "settings_export_tab_rules": {
-    "message": "Exporter des règles d'onglets"
-  },
-  "settings_export_tab_rules_description": {
-    "message": "Exportez vos règles d'onglets à des fins de sauvegarde ou de partage avec des amis."
-  },
-  "settings_export": {
-    "message": "Exporter"
-  },
-  "settings_danger_zone": {
-    "message": "Zone de danger"
-  },
-  "settings_delete_all_rules": {
-    "message": "Supprimer toutes les règles"
-  },
-  "settings_delete_all_rules_warning": {
-    "message": "Une fois que vous avez supprimé toutes les règles, il n'y a pas de retour en arrière sauf à partir d'une sauvegarde. Veuillez en être certain."
-  },
-  "settings_delete": {
-    "message": "Supprimer"
-  },
-  "settings_delete_all_rules_confirm": {
-    "message": "Êtes-vous sûr de vouloir supprimer toutes les règles ?"
-  },
-  "settings_delete_all_rules_success": {
-    "message": "Toutes les règles ont été supprimées avec succès !"
-  },
-  "settings_import_success": {
-    "message": "Importation réussie !"
-  },
-  "settings_replace_settings_confirm": {
-    "message": "Tous vos paramètres actuels seront remplacés. Êtes-vous sûr ?"
-  },
-  "settings_no_config_found": {
-    "message": "Aucune configuration trouvée"
-  },
-  "settings_export_success": {
-    "message": "Exportation réussie !"
-  },
-  "help_concept_title": {
-    "message": "Concept"
+  "help_additional_notes_title": {
+    "message": "Notes supplémentaires"
   },
   "help_concept_description": {
     "message": "Prenez le contrôle de vos onglets de navigateur ! Avec cette extension, vous pouvez modifier certains comportements sur n'importe quel site web. Définissez vos règles et laissez l'extension faire le travail automatiquement."
   },
+  "help_concept_title": {
+    "message": "Concept"
+  },
   "help_data_privacy": {
     "message": "Toutes vos données sont stockées sur votre ordinateur, nous n'y avons pas accès."
-  },
-  "help_features_title": {
-    "message": "Fonctionnalités"
   },
   "help_feature_1": {
     "message": "Vous pouvez renommer un onglet."
@@ -323,50 +146,8 @@
   "help_feature_8": {
     "message": "Et le meilleur pour la fin... Combinez-les tous !"
   },
-  "help_tab_rules_title": {
-    "message": "Règles d'Onglet"
-  },
-  "help_tab_rule_description": {
-    "message": "Vous devez créer une 'règle d'onglet'. Une règle d'onglet comprend :"
-  },
-  "help_rule_name": {
-    "message": "Nom"
-  },
-  "help_rule_name_description": {
-    "message": "Ce nom est utilisé pour vous, juste pour retrouver votre règle parmi d'autres."
-  },
-  "help_rule_detection": {
-    "message": "Détection"
-  },
-  "help_rule_detection_description": {
-    "message": "Les choix sont 'Commence par', 'Contient', 'Exact', 'Se termine par' ou 'RegExp'. L'extension doit savoir comment appliquer votre règle en fonction de la détection dont vous avez besoin. Vous pouvez avoir besoin de capturer un mot dans l'URL, donc vous sélectionnerez 'Contient' ou capturer uniquement les fichiers PNG, donc vous sélectionnerez 'Se termine par', etc. La plupart du temps, 'Contient' fait ce que vous voulez, c'est la détection sélectionnée par défaut."
-  },
-  "help_url_fragment": {
-    "message": "Fragment d'URL"
-  },
-  "help_url_fragment_description": {
-    "message": "C'est la clé de votre règle. Elle déterminera si votre règle sera appliquée ou non. Vous voulez capturer GMail ? Vous pouvez configurer votre règle avec la détection 'Contient' et le fragment d'URL 'mail.google.com'. Une autre solution pourrait être de configurer la détection 'Commence par' et 'https://mail.google.com'. Essayez n'importe quelle combinaison pour atteindre ce que vous voulez."
-  },
-  "help_rule_core_note": {
-    "message": "Après avoir défini le cœur de votre règle, vous pouvez sélectionner certaines actions listées ci-dessous."
-  },
-  "help_action_title": {
-    "message": "Titre"
-  },
-  "help_action_title_description": {
-    "message": "Cette action réécrira le titre du site web."
-  },
-  "help_title_advanced_usage_1": {
-    "message": "Une autre utilisation avancée peut être utilisée avec le titre, vous pouvez injecter certaines parties de l'URL avec la syntaxe dollar. Cette fonctionnalité est liée à l'action 'Correspondance URL', voir après. Utilisez $0, $1, etc. en fonction de votre expression régulière définie dans 'Correspondance URL'."
-  },
-  "help_title_advanced_usage_2": {
-    "message": "Comme vous pouvez analyser l'URL, vous pouvez également analyser le titre et y injecter certaines parties avec la syntaxe 'at (@)'. Cette fonctionnalité est liée à l'action 'Correspondance Titre', voir après. Utilisez @0, @1, etc. en fonction de votre expression régulière définie dans 'Correspondance Titre'."
-  },
-  "help_action_icon": {
-    "message": "Icône"
-  },
-  "help_action_icon_description": {
-    "message": "Cette action remplacera l'icône (fav) du site web."
+  "help_features_title": {
+    "message": "Fonctionnalités"
   },
   "help_icon_option_1": {
     "message": "Vous pouvez sélectionner une icône fournie par l'extension."
@@ -383,44 +164,38 @@
   "help_icon_option_3b": {
     "message": "allez sur https://base64.guru/converter/encode/image et glissez-déposez votre icône, puis cliquez sur 'Copier comme DataURI' et collez-le. C'est votre icône transformée au format Data URI"
   },
-  "help_action_group": {
-    "message": "Groupe"
-  },
-  "help_action_group_description": {
-    "message": "Cette action déplacera votre onglet dans un groupe."
-  },
-  "help_action_pinned": {
-    "message": "Épinglé"
-  },
-  "help_action_pinned_description": {
-    "message": "Cette action épinglera l'onglet."
-  },
-  "help_action_protected": {
-    "message": "Protégé"
-  },
-  "help_action_protected_description": {
-    "message": "Cette action vous demandera avant de rafraîchir ou de fermer l'onglet."
+  "help_muted_requirement": {
+    "message": "Pour fonctionner, cette fonctionnalité nécessite que vous activiez ce drapeau : chrome://flags/#enable-tab-audio-muting puis redémarrez votre navigateur."
   },
   "help_protected_note": {
     "message": "Note : Nécessite l'activation persistante pour que la boîte de dialogue s'affiche. En d'autres termes, le navigateur n'affichera la boîte de dialogue que si le cadre ou tout cadre intégré reçoit un geste ou une interaction de l'utilisateur. Si vous n'avez jamais interagi avec la page, la boîte de dialogue ne s'affichera pas."
   },
-  "help_action_unique": {
-    "message": "Unique"
+  "help_rule_core_note": {
+    "message": "Après avoir défini le cœur de votre règle, vous pouvez sélectionner certaines actions listées ci-dessous."
   },
-  "help_action_unique_description": {
-    "message": "Cette action fermera automatiquement les onglets en double. De plus, l'extension ne se concentrera pas sur l'onglet original après la fermeture du doublon."
+  "help_rule_detection": {
+    "message": "Détection"
   },
-  "help_unique_scenario": {
-    "message": "Scénario : créez une règle basée sur GMail avec l'action unique. Ouvrez GMail, ouvrez un autre GMail, le dernier sera fermé."
+  "help_rule_detection_description": {
+    "message": "Les choix sont 'Commence par', 'Contient', 'Exact', 'Se termine par' ou 'RegExp'. L'extension doit savoir comment appliquer votre règle en fonction de la détection dont vous avez besoin. Vous pouvez avoir besoin de capturer un mot dans l'URL, donc vous sélectionnerez 'Contient' ou capturer uniquement les fichiers PNG, donc vous sélectionnerez 'Se termine par', etc. La plupart du temps, 'Contient' fait ce que vous voulez, c'est la détection sélectionnée par défaut."
   },
-  "help_action_muted": {
-    "message": "Muet"
+  "help_rule_name": {
+    "message": "Nom"
   },
-  "help_action_muted_description": {
-    "message": "Cette action empêchera l'onglet de jouer des sons."
+  "help_rule_name_description": {
+    "message": "Ce nom est utilisé pour vous, juste pour retrouver votre règle parmi d'autres."
   },
-  "help_muted_requirement": {
-    "message": "Pour fonctionner, cette fonctionnalité nécessite que vous activiez ce drapeau : chrome://flags/#enable-tab-audio-muting puis redémarrez votre navigateur."
+  "help_tab_rule_description": {
+    "message": "Vous devez créer une 'règle d'onglet'. Une règle d'onglet comprend :"
+  },
+  "help_tab_rules_title": {
+    "message": "Règles d'Onglet"
+  },
+  "help_title_advanced_usage_1": {
+    "message": "Une autre utilisation avancée peut être utilisée avec le titre, vous pouvez injecter certaines parties de l'URL avec la syntaxe dollar. Cette fonctionnalité est liée à l'action 'Correspondance URL', voir après. Utilisez $0, $1, etc. en fonction de votre expression régulière définie dans 'Correspondance URL'."
+  },
+  "help_title_advanced_usage_2": {
+    "message": "Comme vous pouvez analyser l'URL, vous pouvez également analyser le titre et y injecter certaines parties avec la syntaxe 'at (@)'. Cette fonctionnalité est liée à l'action 'Correspondance Titre', voir après. Utilisez @0, @1, etc. en fonction de votre expression régulière définie dans 'Correspondance Titre'."
   },
   "help_title_matcher": {
     "message": "Correspondance Titre"
@@ -428,22 +203,247 @@
   "help_title_matcher_description": {
     "message": "Une utilisation avancée, entrez une expression régulière pour identifier certaines parties du titre et les utiliser à l'intérieur du titre lui-même, cela est utile pour réorganiser les mots ou exclure certaines parties du titre, comme [a-z]*@gmail.com et utilisez @0 dans le champ de titre pour injecter la variable."
   },
+  "help_unique_scenario": {
+    "message": "Scénario : créez une règle basée sur GMail avec l'action unique. Ouvrez GMail, ouvrez un autre GMail, le dernier sera fermé."
+  },
+  "help_url_fragment": {
+    "message": "Fragment d'URL"
+  },
+  "help_url_fragment_description": {
+    "message": "C'est la clé de votre règle. Elle déterminera si votre règle sera appliquée ou non. Vous voulez capturer GMail ? Vous pouvez configurer votre règle avec la détection 'Contient' et le fragment d'URL 'mail.google.com'. Une autre solution pourrait être de configurer la détection 'Commence par' et 'https://mail.google.com'. Essayez n'importe quelle combinaison pour atteindre ce que vous voulez."
+  },
   "help_url_matcher": {
     "message": "Correspondance URL"
   },
   "help_url_matcher_description": {
     "message": "Une utilisation avancée, entrez une expression régulière pour identifier certaines parties de l'URL et les utiliser à l'intérieur du titre, comme q=([^&]+) et utilisez $0 dans le champ de titre pour injecter la variable."
   },
-  "help_additional_notes_title": {
-    "message": "Notes supplémentaires"
+  "options_resource_item_donate": {
+    "message": "Faire un don"
   },
-  "help_additional_notes_1": {
-    "message": "Après avoir créé ou modifié une règle, actualisez l(es) onglet(s) pour appliquer les modifications."
+  "options_section_item_groups": {
+    "message": "Groupes"
   },
-  "help_additional_notes_2": {
-    "message": "L'ordre de vos règles est important, si une URL déclenche plus d'une règle, la première sera appliquée. Vous pouvez réorganiser vos règles à tout moment."
+  "options_section_item_help": {
+    "message": "Aide"
   },
-  "help_additional_notes_3": {
-    "message": "Certaines règles d'onglets intéressantes sont listées ici à des fins d'inspiration."
+  "options_section_item_rules": {
+    "message": "Règles"
+  },
+  "options_section_item_settings": {
+    "message": "Paramètres"
+  },
+  "rule_form_add_new_rule": {
+    "message": "Ajouter une nouvelle règle"
+  },
+  "rule_form_advanced": {
+    "message": "Avancé"
+  },
+  "rule_form_ask_before_closing": {
+    "message": "Demander avant de fermer"
+  },
+  "rule_form_close_button": {
+    "message": "Fermer"
+  },
+  "rule_form_create_new_group": {
+    "message": "Créer un nouveau groupe"
+  },
+  "rule_form_custom_icon": {
+    "message": "Icône personnalisée"
+  },
+  "rule_form_custom_icon_help": {
+    "message": "Vous pouvez définir une URL personnalisée ou un URI de données pour la nouvelle icône, aucun chemin local accepté"
+  },
+  "rule_form_custom_icon_placeholder": {
+    "message": "ex. https://google.com/favicon.ico"
+  },
+  "rule_form_detection": {
+    "message": "Détection"
+  },
+  "rule_form_edit_rule": {
+    "message": "Modifier la règle"
+  },
+  "rule_form_group": {
+    "message": "Groupe"
+  },
+  "rule_form_icon": {
+    "message": "Icône"
+  },
+  "rule_form_muted": {
+    "message": "Muet"
+  },
+  "rule_form_name": {
+    "message": "Nom"
+  },
+  "rule_form_name_help": {
+    "message": "Donnez un nom explicite, juste pour vous"
+  },
+  "rule_form_name_placeholder": {
+    "message": "ex. GMail Épinglé"
+  },
+  "rule_form_pinned": {
+    "message": "Épinglé"
+  },
+  "rule_form_remember_refresh": {
+    "message": "N'oubliez pas de rafraîchir vos onglets après avoir enregistré"
+  },
+  "rule_form_save_button": {
+    "message": "Enregistrer"
+  },
+  "rule_form_save_successfully": {
+    "message": "Enregistré avec succès !"
+  },
+  "rule_form_tab_title": {
+    "message": "Titre de l'onglet"
+  },
+  "rule_form_tab_title_help": {
+    "message": "Vous pouvez injecter tout contenu DOM avec {selector}. Exemples : {title} pour le titre du site web, {h1}, {#id}, {.class}, etc."
+  },
+  "rule_form_tab_title_placeholder": {
+    "message": "ex. Hey {title}"
+  },
+  "rule_form_title_matcher": {
+    "message": "Correspondance de titre"
+  },
+  "rule_form_title_matcher_help": {
+    "message": "Expression régulière pour rechercher des fragments de chaîne dans le titre"
+  },
+  "rule_form_title_matcher_placeholder": {
+    "message": "Correspondance de titre"
+  },
+  "rule_form_unique": {
+    "message": "Unique"
+  },
+  "rule_form_url_fragment": {
+    "message": "Fragment d'URL"
+  },
+  "rule_form_url_fragment_help": {
+    "message": "Fragment d'URL à trouver"
+  },
+  "rule_form_url_fragment_placeholder": {
+    "message": "ex. mail.google.com"
+  },
+  "rule_form_url_matcher": {
+    "message": "Correspondance d'URL"
+  },
+  "rule_form_url_matcher_help": {
+    "message": "Expression régulière pour rechercher des fragments de chaîne dans l'URL"
+  },
+  "rule_form_url_matcher_placeholder": {
+    "message": "Correspondance d'URL"
+  },
+  "rule_form_use_custom_icon": {
+    "message": "Icône personnalisée"
+  },
+  "settings_backup_title": {
+    "message": "Sauvegarde"
+  },
+  "settings_change_theme": {
+    "message": "Changer le thème de Tab Modifier"
+  },
+  "settings_close": {
+    "message": "Fermer"
+  },
+  "settings_danger_zone": {
+    "message": "Zone de danger"
+  },
+  "settings_delete": {
+    "message": "Supprimer"
+  },
+  "settings_delete_all_rules": {
+    "message": "Supprimer toutes les règles"
+  },
+  "settings_delete_all_rules_confirm": {
+    "message": "Êtes-vous sûr de vouloir supprimer toutes les règles ?"
+  },
+  "settings_delete_all_rules_success": {
+    "message": "Toutes les règles ont été supprimées avec succès !"
+  },
+  "settings_delete_all_rules_warning": {
+    "message": "Une fois que vous avez supprimé toutes les règles, il n'y a pas de retour en arrière sauf à partir d'une sauvegarde. Veuillez en être certain."
+  },
+  "settings_export": {
+    "message": "Exporter"
+  },
+  "settings_export_success": {
+    "message": "Exportation réussie !"
+  },
+  "settings_export_tab_rules": {
+    "message": "Exporter des règles d'onglets"
+  },
+  "settings_export_tab_rules_description": {
+    "message": "Exportez vos règles d'onglets à des fins de sauvegarde ou de partage avec des amis."
+  },
+  "settings_general_title": {
+    "message": "Général"
+  },
+  "settings_import": {
+    "message": "Importer"
+  },
+  "settings_import_merge": {
+    "message": "Importer & Fusionner"
+  },
+  "settings_import_replace": {
+    "message": "Importer & Remplacer"
+  },
+  "settings_import_success": {
+    "message": "Importation réussie !"
+  },
+  "settings_import_tab_rules": {
+    "message": "Importer des règles d'onglets"
+  },
+  "settings_no_config_found": {
+    "message": "Aucune configuration trouvée"
+  },
+  "settings_replace_settings_confirm": {
+    "message": "Tous vos paramètres actuels seront remplacés. Êtes-vous sûr ?"
+  },
+  "settings_restore_tab_rules": {
+    "message": "Restaurer vos paramètres de règles d'onglets à partir d'un fichier JSON externe."
+  },
+  "settings_theme": {
+    "message": "Thème"
+  },
+  "table_groups_collapsed": {
+    "message": "Réduit"
+  },
+  "table_groups_color": {
+    "message": "Couleur"
+  },
+  "table_groups_delete_confirm": {
+    "message": "Êtes-vous sûr de vouloir supprimer ce groupe ?"
+  },
+  "table_groups_title": {
+    "message": "Titre"
+  },
+  "table_rules_delete": {
+    "message": "Supprimer"
+  },
+  "table_rules_delete_confirm": {
+    "message": "Êtes-vous sûr de vouloir supprimer cette règle ?"
+  },
+  "table_rules_detection": {
+    "message": "Détection"
+  },
+  "table_rules_duplicate": {
+    "message": "Dupliquer"
+  },
+  "table_rules_group": {
+    "message": "Groupe"
+  },
+  "table_rules_move_down": {
+    "message": "Déplacer vers le bas"
+  },
+  "table_rules_move_up": {
+    "message": "Déplacer vers le haut"
+  },
+  "table_rules_name": {
+    "message": "Nom"
+  },
+  "table_rules_title": {
+    "message": "Titre"
+  },
+  "table_rules_url_fragment": {
+    "message": "Fragment d'URL"
   }
 }

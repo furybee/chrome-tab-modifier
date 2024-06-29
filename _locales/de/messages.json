@@ -1,0 +1,449 @@
+{
+  "donation_subtitle": {
+    "message": "Wenn Sie diese Erweiterung mögen und ihre Entwicklung unterstützen möchten, können Sie eine Spende tätigen, indem Sie auf eine der folgenden Schaltflächen klicken."
+  },
+  "donation_title": {
+    "message": "Spenden"
+  },
+  "empty_groups_action": {
+    "message": "Meine erste Gruppe erstellen"
+  },
+  "empty_groups_subtitle": {
+    "message": "Es gibt noch keine Gruppe! Klicken Sie auf die folgende Schaltfläche, um Ihre erste Gruppe zu erstellen."
+  },
+  "empty_groups_title": {
+    "message": "Hallo"
+  },
+  "empty_rules_action": {
+    "message": "Meine erste Regel erstellen"
+  },
+  "empty_rules_subtitle": {
+    "message": "Es gibt noch keine Regel! Klicken Sie auf die folgende Schaltfläche, um Ihre erste Regel zu erstellen."
+  },
+  "empty_rules_title": {
+    "message": "Hallo"
+  },
+  "group_form_add_new_group": {
+    "message": "Neue Gruppe hinzufügen"
+  },
+  "group_form_close_button": {
+    "message": "Schließen"
+  },
+  "group_form_collapsed": {
+    "message": "Eingeklappt"
+  },
+  "group_form_color": {
+    "message": "Farbe"
+  },
+  "group_form_color_help": {
+    "message": "Sie können eine Farbe für Ihre Gruppe festlegen"
+  },
+  "group_form_edit_group": {
+    "message": "Gruppe bearbeiten"
+  },
+  "group_form_remember_refresh": {
+    "message": "Denken Sie daran, Ihre Tabs nach dem Speichern zu aktualisieren"
+  },
+  "group_form_save_button": {
+    "message": "Speichern"
+  },
+  "group_form_save_successfully": {
+    "message": "Erfolgreich gespeichert!"
+  },
+  "group_form_title": {
+    "message": "Title"
+  },
+  "group_form_title_help": {
+    "message": "Sie können einen Titel für Ihren Tab festlegen"
+  },
+  "group_form_title_placeholder": {
+    "message": "z.B. Google"
+  },
+  "help_action_group": {
+    "message": "Gruppe"
+  },
+  "help_action_group_description": {
+    "message": "Diese Aktion verschiebt Ihren Tab in eine Gruppe."
+  },
+  "help_action_icon": {
+    "message": "Symbol"
+  },
+  "help_action_icon_description": {
+    "message": "Diese Aktion ersetzt das Website-Symbol (Fav)."
+  },
+  "help_action_muted": {
+    "message": "Stummgeschaltet"
+  },
+  "help_action_muted_description": {
+    "message": "Diese Aktion verhindert, dass die Registerkarte Sounds wiedergibt."
+  },
+  "help_action_pinned": {
+    "message": "Angepinnt"
+  },
+  "help_action_pinned_description": {
+    "message": "Durch diese Aktion wird die Registerkarte angeheftet."
+  },
+  "help_action_protected": {
+    "message": "Geschützt"
+  },
+  "help_action_protected_description": {
+    "message": "Bei dieser Aktion werden Sie gefragt, bevor Sie die Registerkarte aktualisieren oder schließen."
+  },
+  "help_action_title": {
+    "message": "Title"
+  },
+  "help_action_title_description": {
+    "message": "Mit dieser Aktion wird der Website-Titel neu geschrieben."
+  },
+  "help_action_unique": {
+    "message": "Einzigartig"
+  },
+  "help_action_unique_description": {
+    "message": "Mit dieser Aktion werden doppelte Registerkarten automatisch geschlossen. Außerdem wird die Erweiterung die ursprüngliche Registerkarte nach dem Schließen der doppelten Registerkarte nicht fokussieren."
+  },
+  "help_additional_notes_1": {
+    "message": "Nachdem Sie eine Regel erstellt oder bearbeitet haben, aktualisieren Sie die Registerkarte(n), um die Änderungen anzuwenden."
+  },
+  "help_additional_notes_2": {
+    "message": "Die Reihenfolge Ihrer Regeln ist wichtig. Wenn eine URL mehr als eine Regel auslöst, wird die erste angewendet. Du kannst deine Regeln trotzdem nachbestellen."
+  },
+  "help_additional_notes_3": {
+    "message": "Einige interessante Tab-Regeln sind hier zu Inspirationszwecken aufgelistet."
+  },
+  "help_additional_notes_title": {
+    "message": "Zusaetzliche Anmerkungen"
+  },
+  "help_concept_description": {
+    "message": "Übernehmen Sie die Kontrolle über Ihre Browser-Tabs! Mit dieser Erweiterung können Sie einige Verhaltensweisen auf jeder Website ändern. Definieren Sie Ihre Regeln und lassen Sie die Erweiterung den Job automatisch ausführen."
+  },
+  "help_concept_title": {
+    "message": "Konzept"
+  },
+  "help_data_privacy": {
+    "message": "Alle Ihre Daten werden auf Ihrem Computer gespeichert. Wir haben keinen Zugriff darauf."
+  },
+  "help_feature_1": {
+    "message": "Sie können einen Tab umbenennen."
+  },
+  "help_feature_2": {
+    "message": "Sie können jedes Tabulatorsymbol (Fav)ändern."
+  },
+  "help_feature_3": {
+    "message": "Sie können eine Website ohne Aufwand anheften."
+  },
+  "help_feature_4": {
+    "message": "Sie können Ihre Tabs einfach gruppieren."
+  },
+  "help_feature_5": {
+    "message": "Sie können einige Websites mit einem Bestätigungsfeld vor versehentlichem Schließen schützen."
+  },
+  "help_feature_6": {
+    "message": "Du kannst doppelte Registerkarten vermeiden, indem du die eindeutige Eigenschaft einrichtest."
+  },
+  "help_feature_7": {
+    "message": "Sie können den Ton einer Website stummschalten, bevor sie abgespielt wird."
+  },
+  "help_feature_8": {
+    "message": "Und das Sahnehäubchen... Kombinieren Sie sie alle!"
+  },
+  "help_features_title": {
+    "message": "Funktionen"
+  },
+  "help_icon_option_1": {
+    "message": "Sie können ein Symbol auswählen, das von der Erweiterung bereitgestellt wird."
+  },
+  "help_icon_option_2": {
+    "message": "Andernfalls können Sie eine Symbol-URL in der Eingabe wie \"https://www.google.com/favicon.ico\" definieren."
+  },
+  "help_icon_option_3": {
+    "message": "Wenn Sie ein lokales Symbol von Ihrem Computer aus definieren möchten, haben Sie zwei Möglichkeiten:"
+  },
+  "help_icon_option_3a": {
+    "message": "laden Sie Ihr Symbol irgendwo wie imgur.com hoch und fügen Sie den direkten Link ein"
+  },
+  "help_icon_option_3b": {
+    "message": "gehen Sie zu https://base64.guru/converter/encode/image und ziehen Sie Ihr Symbol per Drag & Drop, klicken Sie dann auf „Als DataURI kopieren“ und fügen Sie es ein. Dies ist Ihr Symbol, das in das Daten-URI-Format umgewandelt wurde"
+  },
+  "help_muted_requirement": {
+    "message": "Damit diese Funktion funktioniert, müssen Sie dieses Flag aktivieren: chrome://flags/# enable-tab-audio-muting und dann Ihren Browser neu starten."
+  },
+  "help_protected_note": {
+    "message": "Hinweis: Für die Anzeige des Dialogs ist eine Sticky-Aktivierung erforderlich. Mit anderen Worten, der Browser zeigt das Dialogfeld nur an, wenn der Frame oder ein eingebetteter Frame eine Benutzergeste oder Benutzerinteraktion erhält. Wenn Sie noch nie mit der Seite interagiert haben, wird der Dialog nicht angezeigt."
+  },
+  "help_rule_core_note": {
+    "message": "Nachdem Sie den Kern Ihrer Regel definiert haben, können Sie einige der unten aufgeführten Aktionen auswählen."
+  },
+  "help_rule_detection": {
+    "message": "Detection"
+  },
+  "help_rule_detection_description": {
+    "message": "Die Auswahlmöglichkeiten sind entweder \"Beginnt mit\", \"Enthält\", \"Exakt\", \"Endet mit\" oder \"RegExp\". Die Erweiterung muss wissen, wie Sie Ihre Regel anwenden, je nachdem, welche Erkennung Sie benötigen. Möglicherweise müssen Sie ein Wort in der URL einfangen, damit Sie \"Enthält\" auswählen, oder nur PNG-Dateien einfangen, damit Sie \"Endet mit\" usw. auswählen. Meistens macht \"Enthält\", was Sie wollen, dies ist die standardmäßig ausgewählte Erkennung."
+  },
+  "help_rule_name": {
+    "message": "Name"
+  },
+  "help_rule_name_description": {
+    "message": "Dieser Name wird für Sie verwendet, nur um unter anderem Ihre Regel zu finden."
+  },
+  "help_tab_rule_description": {
+    "message": "Sie müssen eine \"Tab-Regel\" erstellen. Eine Tab-Regel hat:"
+  },
+  "help_tab_rules_title": {
+    "message": "Tab-Regeln"
+  },
+  "help_title_advanced_usage_1": {
+    "message": "Eine weitere erweiterte Verwendung kann mit dem Titel verwendet werden. Sie können einige Teile der URL mit der Dollarsyntax einfügen. Diese Funktion ist mit der Aktion \"URL-Matcher\" verknüpft, siehe später. Verwenden Sie $ 0, $ 1 usw. abhängig von Ihrem regulären Ausdruck, der in 'URL-Matcher' definiert ist."
+  },
+  "help_title_advanced_usage_2": {
+    "message": "Da Sie die URL scannen können, können Sie auch den Titel scannen und einige Teile davon mit der Syntax 'at (@)' injizieren. Diese Funktion ist mit der Aktion \"Titelabgleich\" verknüpft, siehe später. Verwenden Sie @0, @1 usw. abhängig von Ihrem regulären Ausdruck, der in 'Title Matcher' definiert ist."
+  },
+  "help_title_matcher": {
+    "message": "Titel-Matcher"
+  },
+  "help_title_matcher_description": {
+    "message": "Eine erweiterte Verwendung, geben Sie einen regulären Ausdruck ein, um einige Titelteile zu identifizieren, und verwenden Sie sie im Titel selbst. Dies ist nützlich, um Wörter neu anzuordnen oder einige Teile des Titels auszuschließen, z. B. [a-z]*@gmail.com, und verwenden Sie @0 in der Titeleingabe, um die Variable einzufügen."
+  },
+  "help_unique_scenario": {
+    "message": "Szenario: Erstellen Sie eine auf GMail basierende Regel mit einzigartiger Aktion. Öffnen Sie GMail, öffnen Sie eine andere GMail, die letzte wird geschlossen."
+  },
+  "help_url_fragment": {
+    "message": "URL-Fragment"
+  },
+  "help_url_fragment_description": {
+    "message": "Das ist der Schlüssel zu deiner Regel. Es wird bestimmt, ob Ihre Regel angewendet wird oder nicht. Du willst GMail fangen? Sie können Ihre Regel mit der Erkennung \"Enthält\" und dem URL-Fragment \"mail.google.com\" festlegen. Eine andere Lösung könnte darin bestehen, \"Startet mit\" Erkennung und \"https://mail.google.com\" einzustellen. Versuchen Sie eine beliebige Kombination, um das zu erreichen, was Sie wollen."
+  },
+  "help_url_matcher": {
+    "message": "URL-Matcher"
+  },
+  "help_url_matcher_description": {
+    "message": "Eine erweiterte Verwendung. Geben Sie einen regulären Ausdruck ein, um einige URL-Teile zu identifizieren, und verwenden Sie sie im Titel, z. B. q=([^&]+), und verwenden Sie $ 0 in der Titeleingabe, um die Variable einzufügen."
+  },
+  "options_resource_item_donate": {
+    "message": "Spenden"
+  },
+  "options_section_item_groups": {
+    "message": "Gruppen"
+  },
+  "options_section_item_help": {
+    "message": "Hilfe"
+  },
+  "options_section_item_rules": {
+    "message": "Regeln"
+  },
+  "options_section_item_settings": {
+    "message": "Einstellungen"
+  },
+  "rule_form_add_new_rule": {
+    "message": "Neue Regel hinzufügen"
+  },
+  "rule_form_advanced": {
+    "message": "Erweitert"
+  },
+  "rule_form_ask_before_closing": {
+    "message": "Vor Abschluss"
+  },
+  "rule_form_close_button": {
+    "message": "Schließen"
+  },
+  "rule_form_create_new_group": {
+    "message": "Neue Gruppe erstellen"
+  },
+  "rule_form_custom_icon": {
+    "message": "Benutzerdefiniertes Icon"
+  },
+  "rule_form_custom_icon_help": {
+    "message": "Sie können eine benutzerdefinierte URL oder Daten-URI für das neue Symbol festlegen, kein lokaler Pfad akzeptiert"
+  },
+  "rule_form_custom_icon_placeholder": {
+    "message": "z.B. https://google.com/favicon.ico"
+  },
+  "rule_form_detection": {
+    "message": "Detection"
+  },
+  "rule_form_edit_rule": {
+    "message": "Regel bearbeiten"
+  },
+  "rule_form_group": {
+    "message": "Gruppe"
+  },
+  "rule_form_icon": {
+    "message": "Symbol"
+  },
+  "rule_form_muted": {
+    "message": "Stummgeschaltet"
+  },
+  "rule_form_name": {
+    "message": "Name"
+  },
+  "rule_form_name_help": {
+    "message": "Geben Sie einen expliziten Namen an, nur für Sie"
+  },
+  "rule_form_name_placeholder": {
+    "message": "z. B. gepinnte GMail"
+  },
+  "rule_form_pinned": {
+    "message": "Angepinnt"
+  },
+  "rule_form_remember_refresh": {
+    "message": "Denken Sie daran, Ihre Tabs nach dem Speichern zu aktualisieren"
+  },
+  "rule_form_save_button": {
+    "message": "Speichern"
+  },
+  "rule_form_save_successfully": {
+    "message": "Erfolgreich gespeichert!"
+  },
+  "rule_form_tab_title": {
+    "message": "&nbsp;"
+  },
+  "rule_form_tab_title_help": {
+    "message": "Sie können jeden DOM-Inhalt mit {selector} injizieren. Beispiele: {title} für Website-Titel, {h1}, {#id}, {.class} usw."
+  },
+  "rule_form_tab_title_placeholder": {
+    "message": "z. B. Hallo {title}"
+  },
+  "rule_form_title_matcher": {
+    "message": "Titel-Matcher"
+  },
+  "rule_form_title_matcher_help": {
+    "message": "Regulärer Ausdruck, um String-Fragmente im Titel zu suchen"
+  },
+  "rule_form_title_matcher_placeholder": {
+    "message": "Titel-Matcher"
+  },
+  "rule_form_unique": {
+    "message": "Einzigartig"
+  },
+  "rule_form_url_fragment": {
+    "message": "URL-Fragment"
+  },
+  "rule_form_url_fragment_help": {
+    "message": "URL-Fragment zu finden"
+  },
+  "rule_form_url_fragment_placeholder": {
+    "message": "z.B. mail.google.com"
+  },
+  "rule_form_url_matcher": {
+    "message": "URL-Matcher"
+  },
+  "rule_form_url_matcher_help": {
+    "message": "Regulärer Ausdruck zur Suche nach String-Fragmenten in der URL"
+  },
+  "rule_form_url_matcher_placeholder": {
+    "message": "URL-Matcher"
+  },
+  "rule_form_use_custom_icon": {
+    "message": "Benutzerdefiniertes Symbol verwenden"
+  },
+  "settings_backup_title": {
+    "message": "Backup"
+  },
+  "settings_change_theme": {
+    "message": "Tabulator-Modifikatorthema ändern"
+  },
+  "settings_close": {
+    "message": "Schließen"
+  },
+  "settings_danger_zone": {
+    "message": "Gefahrenzone"
+  },
+  "settings_delete": {
+    "message": "Löschen"
+  },
+  "settings_delete_all_rules": {
+    "message": "Alle Regeln löschen"
+  },
+  "settings_delete_all_rules_confirm": {
+    "message": "Sind Sie sicher, dass Sie alle Daten löschen möchten? "
+  },
+  "settings_delete_all_rules_success": {
+    "message": "Alle Regeln wurden erfolgreich gelöscht!"
+  },
+  "settings_delete_all_rules_warning": {
+    "message": "Sobald Sie alle Regeln gelöscht haben, gibt es kein Zurück mehr, außer aus dem Backup. Bitte seien Sie sicher."
+  },
+  "settings_export": {
+    "message": "Export"
+  },
+  "settings_export_success": {
+    "message": "Erfolgreich exportiert."
+  },
+  "settings_export_tab_rules": {
+    "message": "Tab-Regeln exportieren"
+  },
+  "settings_export_tab_rules_description": {
+    "message": "Exportieren Sie Ihre Tab-Regeln für Backup-Zwecke oder zum Teilen mit Freunden."
+  },
+  "settings_general_title": {
+    "message": "Allgemein"
+  },
+  "settings_import": {
+    "message": "Importieren"
+  },
+  "settings_import_merge": {
+    "message": "Importieren & Zusammenführen"
+  },
+  "settings_import_replace": {
+    "message": "Importieren & Ersetzen"
+  },
+  "settings_import_success": {
+    "message": "Import Erfolgreich!"
+  },
+  "settings_import_tab_rules": {
+    "message": "Tab-Regeln importieren"
+  },
+  "settings_no_config_found": {
+    "message": "Keine Konfiguration gefunden"
+  },
+  "settings_replace_settings_confirm": {
+    "message": "Alle Ihre aktuellen Einstellungen werden ersetzt. Sind Sie sicher?"
+  },
+  "settings_restore_tab_rules": {
+    "message": "Stellen Sie Ihre Tab-Regeleinstellungen aus einer externen JSON-Datei wieder her."
+  },
+  "settings_theme": {
+    "message": "Thema"
+  },
+  "table_groups_collapsed": {
+    "message": "Eingeklappt"
+  },
+  "table_groups_color": {
+    "message": "Farbe"
+  },
+  "table_groups_delete_confirm": {
+    "message": "Diese Gruppe wirklich löschen?"
+  },
+  "table_groups_title": {
+    "message": "Title"
+  },
+  "table_rules_delete": {
+    "message": "Löschen"
+  },
+  "table_rules_delete_confirm": {
+    "message": "Bist Du sicher, dass Du diese Regel löschen möchten?"
+  },
+  "table_rules_detection": {
+    "message": "Detection"
+  },
+  "table_rules_duplicate": {
+    "message": "Duplizieren"
+  },
+  "table_rules_group": {
+    "message": "Gruppe"
+  },
+  "table_rules_move_down": {
+    "message": "Sich abwärts bewegen"
+  },
+  "table_rules_move_up": {
+    "message": "Nach oben bewegen"
+  },
+  "table_rules_name": {
+    "message": "Name"
+  },
+  "table_rules_title": {
+    "message": "Title"
+  },
+  "table_rules_url_fragment": {
+    "message": "URL-Fragment"
+  }
+}

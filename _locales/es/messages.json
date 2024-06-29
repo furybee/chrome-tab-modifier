@@ -1,0 +1,449 @@
+{
+  "donation_subtitle": {
+    "message": "Si te gusta esta extensión y quieres apoyar su desarrollo, puedes hacer una donación haciendo clic en uno de los botones a continuación."
+  },
+  "donation_title": {
+    "message": "Donar"
+  },
+  "empty_groups_action": {
+    "message": "Crear mi primer grupo"
+  },
+  "empty_groups_subtitle": {
+    "message": "¡Aún no hay grupo! Pulsa el siguiente botón para crear tu primer grupo."
+  },
+  "empty_groups_title": {
+    "message": "Hola"
+  },
+  "empty_rules_action": {
+    "message": "Crear mi primera regla"
+  },
+  "empty_rules_subtitle": {
+    "message": "¡Todavía no hay ninguna regla! Pulse el siguiente botón para crear su primera regla."
+  },
+  "empty_rules_title": {
+    "message": "Hola"
+  },
+  "group_form_add_new_group": {
+    "message": "Añadir un nuevo Puesto"
+  },
+  "group_form_close_button": {
+    "message": "Cerrar"
+  },
+  "group_form_collapsed": {
+    "message": "Colapsado"
+  },
+  "group_form_color": {
+    "message": "Color"
+  },
+  "group_form_color_help": {
+    "message": "Puedes establecer un color para tu grupo"
+  },
+  "group_form_edit_group": {
+    "message": "Editar grupo"
+  },
+  "group_form_remember_refresh": {
+    "message": "Recuerda actualizar tus pestañas después de guardar"
+  },
+  "group_form_save_button": {
+    "message": "Guardar"
+  },
+  "group_form_save_successfully": {
+    "message": "Guardado correctamente!"
+  },
+  "group_form_title": {
+    "message": "Sr. / Sra."
+  },
+  "group_form_title_help": {
+    "message": "Puedes establecer un título para tu pestaña"
+  },
+  "group_form_title_placeholder": {
+    "message": "(por ejemplo Google "
+  },
+  "help_action_group": {
+    "message": "Grupo"
+  },
+  "help_action_group_description": {
+    "message": "Esta acción moverá tu pestaña a un grupo."
+  },
+  "help_action_icon": {
+    "message": "Ícono"
+  },
+  "help_action_icon_description": {
+    "message": "Esta acción reemplazará el icono del sitio web (fav)."
+  },
+  "help_action_muted": {
+    "message": "Silenciada"
+  },
+  "help_action_muted_description": {
+    "message": "Esta acción evitará que la pestaña reproduzca sonidos."
+  },
+  "help_action_pinned": {
+    "message": "Destacar"
+  },
+  "help_action_pinned_description": {
+    "message": "Esta acción fijará la pestaña."
+  },
+  "help_action_protected": {
+    "message": "Protegido"
+  },
+  "help_action_protected_description": {
+    "message": "Esta acción le preguntará antes de actualizar o cerrar la pestaña."
+  },
+  "help_action_title": {
+    "message": "Sr. / Sra."
+  },
+  "help_action_title_description": {
+    "message": "Esta acción reescribirá el título del sitio web."
+  },
+  "help_action_unique": {
+    "message": "El diseño único"
+  },
+  "help_action_unique_description": {
+    "message": "Esta acción cerrará automáticamente las pestañas duplicadas. Además, la extensión no enfocará la pestaña original después de cerrar la duplicada."
+  },
+  "help_additional_notes_1": {
+    "message": "Después de crear o editar una regla, actualiza las pestañas para aplicar los cambios."
+  },
+  "help_additional_notes_2": {
+    "message": "El orden de tus reglas es importante, si una URL activa más de una regla, se aplicará la primera. Puedes reordenar tus reglas de todos modos."
+  },
+  "help_additional_notes_3": {
+    "message": "Aquí se enumeran algunas reglas de pestañas interesantes con fines de inspiración."
+  },
+  "help_additional_notes_title": {
+    "message": "Notas complementarias"
+  },
+  "help_concept_description": {
+    "message": "¡Toma el control de las pestañas de tu navegador! Con esta extensión puedes cambiar algunos comportamientos en cualquier sitio web. Define tus reglas y deja que la extensión haga el trabajo automáticamente."
+  },
+  "help_concept_title": {
+    "message": "Concepto"
+  },
+  "help_data_privacy": {
+    "message": "Todos sus datos se almacenan en su ordenador, no tenemos acceso a ellos."
+  },
+  "help_feature_1": {
+    "message": "Puede cambiar el nombre de una pestaña."
+  },
+  "help_feature_2": {
+    "message": "Puede cambiar cualquier icono de pestaña (fav)."
+  },
+  "help_feature_3": {
+    "message": "Puedes anclar un sitio web sin esfuerzo."
+  },
+  "help_feature_4": {
+    "message": "Puedes agrupar tus pestañas fácilmente."
+  },
+  "help_feature_5": {
+    "message": "Puede proteger algunos sitios web del cierre accidental con un cuadro de confirmación."
+  },
+  "help_feature_6": {
+    "message": "Puedes evitar la duplicación de pestañas configurando la propiedad única."
+  },
+  "help_feature_7": {
+    "message": "Puedes silenciar el sonido de cualquier sitio web antes de que lo reproduzca."
+  },
+  "help_feature_8": {
+    "message": "Y la guinda del pastel... ¡Combínalas todas!"
+  },
+  "help_features_title": {
+    "message": "Características"
+  },
+  "help_icon_option_1": {
+    "message": "Puede seleccionar un icono proporcionado por la extensión."
+  },
+  "help_icon_option_2": {
+    "message": "De lo contrario, puede definir una URL de icono en la entrada como 'https://www.google.com/favicon.ico'."
+  },
+  "help_icon_option_3": {
+    "message": "En caso de que quieras definir un icono local desde tu ordenador, tienes 2 opciones:"
+  },
+  "help_icon_option_3a": {
+    "message": "sube tu icono en algún lugar como imgur.com y pega el enlace directo"
+  },
+  "help_icon_option_3b": {
+    "message": "vaya a https://base64.guru/converter/encode/image y arrastre y suelte su icono, luego haga clic en \"Copiar como DataURI\" y péguelo. Este es su icono transformado en el formato Data URI"
+  },
+  "help_muted_requirement": {
+    "message": "Para que funcione, esta función requiere que habilite este indicador: chrome://flags/# enable-tab-audio-mutingy luego reinicie su navegador."
+  },
+  "help_protected_note": {
+    "message": "Nota: Requerir activación adhesiva para que se muestre el cuadro de diálogo. En otras palabras, el navegador solo mostrará el cuadro de diálogo si el marco o cualquier marco incrustado recibe un gesto o interacción del usuario. Si nunca ha interactuado con la página, no se mostrará el cuadro de diálogo."
+  },
+  "help_rule_core_note": {
+    "message": "Después de definir el núcleo de su regla, puede seleccionar algunas acciones que se enumeran a continuación."
+  },
+  "help_rule_detection": {
+    "message": "Detección"
+  },
+  "help_rule_detection_description": {
+    "message": "Las opciones son 'Comienza con', 'Contiene', 'Exacto', 'Termina con' o 'RegExp'. La extensión debe saber aplicar tu regla en función de la detección que necesites. Es posible que deba capturar una palabra dentro de la URL para seleccionar \"Contiene\" o capturar solo archivos PNG para seleccionar \"Termina con\", etc. La mayoría de las veces, 'Contiene' hace lo que quieres, esta es la detección seleccionada por defecto."
+  },
+  "help_rule_name": {
+    "message": "Nombre"
+  },
+  "help_rule_name_description": {
+    "message": "Este nombre se usa para usted, solo para encontrar su regla entre otros."
+  },
+  "help_tab_rule_description": {
+    "message": "Tienes que crear una 'regla de tabulación'. Una regla de tabulación tiene:"
+  },
+  "help_tab_rules_title": {
+    "message": "Reglas de pestañas"
+  },
+  "help_title_advanced_usage_1": {
+    "message": "Se puede usar otro uso avanzado con el título, puede inyectar algunas partes de la URL con la sintaxis del dólar. Esta función está vinculada a la acción 'URL matcher', consulte más adelante. Utilice $ 0, $ 1, etc. dependiendo de su expresión regular definida en 'URL matcher'."
+  },
+  "help_title_advanced_usage_2": {
+    "message": "Como puede escanear la URL, también puede escanear el título e inyectar algunas partes de él con la sintaxis 'at (@)'. Esta función está vinculada a la acción \"Emparejador de títulos\", consulte más adelante. Utilice @0, @1, etc. dependiendo de su expresión regular definida en 'Title matcher'."
+  },
+  "help_title_matcher": {
+    "message": "Coincidente de títulos"
+  },
+  "help_title_matcher_description": {
+    "message": "Un uso avanzado, ingrese una expresión regular para identificar algunas partes del título y úselas dentro del título mismo, esto es útil para reordenar palabras o excluir algunas partes del título, como [a-z]*@gmail.com y use @0 en la entrada del título para inyectar la variable."
+  },
+  "help_unique_scenario": {
+    "message": "Escenario: crea una regla basada en GMail con una acción única. Abra GMail, abra otro GMail, el último se cerrará."
+  },
+  "help_url_fragment": {
+    "message": "Fragmento de URL"
+  },
+  "help_url_fragment_description": {
+    "message": "Esta es la clave de tu regla. Determinará si se aplicará su regla o no. ¿Quieres coger GMail? Puede establecer su regla con la detección 'Contiene' y el fragmento de URL 'mail.google.com'. Otra solución podría ser configurar 'Comienza con' detección y 'https://mail.google.com'. Prueba cualquier combinación para lograr lo que quieres."
+  },
+  "help_url_matcher": {
+    "message": "Coincidente de URL"
+  },
+  "help_url_matcher_description": {
+    "message": "Un uso avanzado, ingrese una expresión regular para identificar algunas partes de la URL y utilícelas dentro del título, como q=([^&]+) y use $ 0 en la entrada del título para inyectar la variable."
+  },
+  "options_resource_item_donate": {
+    "message": "Donar"
+  },
+  "options_section_item_groups": {
+    "message": "Grupos"
+  },
+  "options_section_item_help": {
+    "message": "Ayuda"
+  },
+  "options_section_item_rules": {
+    "message": "Reglas"
+  },
+  "options_section_item_settings": {
+    "message": "Ajustes"
+  },
+  "rule_form_add_new_rule": {
+    "message": "Add a new rule"
+  },
+  "rule_form_advanced": {
+    "message": "Avanzado"
+  },
+  "rule_form_ask_before_closing": {
+    "message": "Antes del cierre "
+  },
+  "rule_form_close_button": {
+    "message": "Cerrar"
+  },
+  "rule_form_create_new_group": {
+    "message": "Crear nuevo grupo"
+  },
+  "rule_form_custom_icon": {
+    "message": "Icono personalizado"
+  },
+  "rule_form_custom_icon_help": {
+    "message": "Puede establecer una URL personalizada o un URI de datos para el nuevo icono, no se acepta ninguna ruta local"
+  },
+  "rule_form_custom_icon_placeholder": {
+    "message": "por ejemplo, https://google.com/favicon.ico"
+  },
+  "rule_form_detection": {
+    "message": "Detección"
+  },
+  "rule_form_edit_rule": {
+    "message": "Modificar regla"
+  },
+  "rule_form_group": {
+    "message": "Grupo"
+  },
+  "rule_form_icon": {
+    "message": "Ícono"
+  },
+  "rule_form_muted": {
+    "message": "Silenciada"
+  },
+  "rule_form_name": {
+    "message": "Nombre"
+  },
+  "rule_form_name_help": {
+    "message": "Dé un nombre explícito, solo para usted"
+  },
+  "rule_form_name_placeholder": {
+    "message": "por ejemplo, GMail anclado"
+  },
+  "rule_form_pinned": {
+    "message": "Destacar"
+  },
+  "rule_form_remember_refresh": {
+    "message": "Recuerda actualizar tus pestañas después de guardar"
+  },
+  "rule_form_save_button": {
+    "message": "Guardar"
+  },
+  "rule_form_save_successfully": {
+    "message": "Guardado correctamente!"
+  },
+  "rule_form_tab_title": {
+    "message": "Título de pestaña"
+  },
+  "rule_form_tab_title_help": {
+    "message": "Puede inyectar cualquier contenido DOM con {selector}. Ejemplos: {title} para el título del sitio web, {h1}, {#id}, {.class}, etc."
+  },
+  "rule_form_tab_title_placeholder": {
+    "message": "por ejemplo, Hola {title}"
+  },
+  "rule_form_title_matcher": {
+    "message": "Coincidente de títulos"
+  },
+  "rule_form_title_matcher_help": {
+    "message": "Expresión regular para buscar fragmentos de cadena en el título"
+  },
+  "rule_form_title_matcher_placeholder": {
+    "message": "Coincidente de títulos"
+  },
+  "rule_form_unique": {
+    "message": "El diseño único"
+  },
+  "rule_form_url_fragment": {
+    "message": "Fragmento de URL"
+  },
+  "rule_form_url_fragment_help": {
+    "message": "Fragmento de URL para encontrar"
+  },
+  "rule_form_url_fragment_placeholder": {
+    "message": "por ejemplo, mail.google.com"
+  },
+  "rule_form_url_matcher": {
+    "message": "Coincidente de URL"
+  },
+  "rule_form_url_matcher_help": {
+    "message": "Expresión regular para buscar fragmentos de cadena en URL"
+  },
+  "rule_form_url_matcher_placeholder": {
+    "message": "Coincidente de URL"
+  },
+  "rule_form_use_custom_icon": {
+    "message": "¿Utilizar un ícono personalizado?"
+  },
+  "settings_backup_title": {
+    "message": "Copia de seguridad"
+  },
+  "settings_change_theme": {
+    "message": "Cambiar tema del modificador de pestaña"
+  },
+  "settings_close": {
+    "message": "Cerrar"
+  },
+  "settings_danger_zone": {
+    "message": "Zona de peligro"
+  },
+  "settings_delete": {
+    "message": "Eliminar"
+  },
+  "settings_delete_all_rules": {
+    "message": "Eliminar todas las normas"
+  },
+  "settings_delete_all_rules_confirm": {
+    "message": "¿Está seguro de querer borrar las reglas?"
+  },
+  "settings_delete_all_rules_success": {
+    "message": "¡Todas las reglas se han eliminado correctamente!"
+  },
+  "settings_delete_all_rules_warning": {
+    "message": "Una vez que eliminas todas las reglas, no hay vuelta atrás, excepto desde la copia de seguridad. Por favor, asegúrese."
+  },
+  "settings_export": {
+    "message": "Exportar"
+  },
+  "settings_export_success": {
+    "message": "Exportado con éxito."
+  },
+  "settings_export_tab_rules": {
+    "message": "Reglas de la pestaña Exportar"
+  },
+  "settings_export_tab_rules_description": {
+    "message": "Exporta las reglas de la pestaña para realizar una copia de seguridad o para compartirlas con un amigo."
+  },
+  "settings_general_title": {
+    "message": "General"
+  },
+  "settings_import": {
+    "message": "Importar"
+  },
+  "settings_import_merge": {
+    "message": "Importar y combinar"
+  },
+  "settings_import_replace": {
+    "message": "Importar y reemplazar"
+  },
+  "settings_import_success": {
+    "message": "¡Importación exitosa!"
+  },
+  "settings_import_tab_rules": {
+    "message": "Importar reglas de pestañas"
+  },
+  "settings_no_config_found": {
+    "message": "No se ha encontrado ninguna configuración"
+  },
+  "settings_replace_settings_confirm": {
+    "message": "Se sustituirán todos los ajustes actuales. ¿Seguro?"
+  },
+  "settings_restore_tab_rules": {
+    "message": "Restaure la configuración de las reglas de la pestaña desde un archivo JSON externo."
+  },
+  "settings_theme": {
+    "message": "Tema"
+  },
+  "table_groups_collapsed": {
+    "message": "Colapsado"
+  },
+  "table_groups_color": {
+    "message": "Color"
+  },
+  "table_groups_delete_confirm": {
+    "message": "¿Está seguro de que desea eliminar este grupo?"
+  },
+  "table_groups_title": {
+    "message": "Sr. / Sra."
+  },
+  "table_rules_delete": {
+    "message": "Eliminar"
+  },
+  "table_rules_delete_confirm": {
+    "message": "¿Está seguro de querer borrar ésta regla?"
+  },
+  "table_rules_detection": {
+    "message": "Detección"
+  },
+  "table_rules_duplicate": {
+    "message": "Duplicar"
+  },
+  "table_rules_group": {
+    "message": "Grupo"
+  },
+  "table_rules_move_down": {
+    "message": "Mover hacia abajo"
+  },
+  "table_rules_move_up": {
+    "message": "Mover Arriba"
+  },
+  "table_rules_name": {
+    "message": "Nombre"
+  },
+  "table_rules_title": {
+    "message": "Sr. / Sra."
+  },
+  "table_rules_url_fragment": {
+    "message": "Fragmento de URL"
+  }
+}
