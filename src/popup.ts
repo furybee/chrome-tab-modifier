@@ -12,4 +12,6 @@ const app = createApp(Popup).use(pinia).provide('emitter', emitter);
 
 app.config.globalProperties.$translate = translate;
 
-app.mount('#app');
+if (chrome && chrome.i18n) {
+	app.mount('#app');
+}

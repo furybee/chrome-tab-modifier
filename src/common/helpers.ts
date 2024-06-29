@@ -50,11 +50,7 @@ export function _chromeGroupColor(color: string) {
 }
 
 export const translate = (key: string): string => {
-	if (chrome && chrome.i18n) {
-		return chrome.i18n.getMessage(key);
-	}
-
-	return key;
+	return chrome.i18n.getMessage(key);
 };
 
 export function _isDefined(...args: any[]) {

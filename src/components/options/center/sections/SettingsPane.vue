@@ -113,7 +113,7 @@ import { inject, ref, watch } from 'vue';
 import { useRulesStore } from '../../../../stores/rules.store.ts';
 import NewFeature from '../../../global/NewFeature.vue';
 import { GLOBAL_EVENTS } from '../../../../common/types.ts';
-import { _getThemes } from '../../../../common/helpers.ts';
+import { _getThemes, translate } from '../../../../common/helpers.ts';
 
 const emitter: any = inject('emitter');
 
@@ -142,12 +142,12 @@ const onFileChanged = (event: any) => {
 };
 
 const onDeleteAllRules = async () => {
-	if (confirm($translate('settings_delete_all_rules_confirm'))) {
+	if (confirm(translate('settings_delete_all_rules_confirm'))) {
 		await rulesStore.deleteAllRules();
 
 		emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
 			type: 'success',
-			message: $translate('settings_delete_all_rules_success'),
+			message: translate('settings_delete_all_rules_success'),
 		});
 	}
 };
@@ -173,7 +173,7 @@ const importMergeConfig = async () => {
 
 		emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
 			type: 'success',
-			message: $translate('settings_import_success'),
+			message: translate('settings_import_success'),
 		});
 
 		if (fileInput.value) {
@@ -193,7 +193,7 @@ const importReplaceConfig = async () => {
 	if (!fileInput.value) return;
 	if (!fileInput.value.files) return;
 
-	if (!confirm($translate('settings_replace_settings_confirm'))) {
+	if (!confirm(translate('settings_replace_settings_confirm'))) {
 		return;
 	}
 
@@ -207,7 +207,7 @@ const importReplaceConfig = async () => {
 
 		emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
 			type: 'success',
-			message: $translate('settings_import_success'),
+			message: translate('settings_import_success'),
 		});
 
 		if (fileInput.value) {
@@ -229,7 +229,7 @@ const exportConfig = async () => {
 	if (!config) {
 		emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
 			type: 'error',
-			message: $translate('settings_no_config_found'),
+			message: translate('settings_no_config_found'),
 		});
 
 		return;
