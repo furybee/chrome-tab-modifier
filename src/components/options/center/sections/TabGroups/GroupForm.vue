@@ -75,7 +75,7 @@
 import { useRulesStore } from '../../../../../stores/rules.store.ts';
 import { computed, inject, onMounted, ref, watch } from 'vue';
 import CustomSelect from '../../../../global/CustomSelect.vue';
-import { _clone, _groupColors } from '../../../../../common/helpers.ts';
+import { _clone, _groupColors, translate } from '../../../../../common/helpers.ts';
 import { GLOBAL_EVENTS, Group } from '../../../../../common/types.ts';
 import HelpSwap from '../../../../global/HelpSwap.vue';
 
@@ -113,7 +113,7 @@ const save = async () => {
 
 	emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
 		type: 'success',
-		message: 'Saved successfully!',
+		message: translate('group_form_save_successfully'),
 	});
 };
 

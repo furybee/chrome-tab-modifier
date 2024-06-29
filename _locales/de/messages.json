@@ -48,7 +48,7 @@
     "message": "Speichern"
   },
   "group_form_save_successfully": {
-    "message": "Erfolgreich gespeichert!"
+    "message": "Saved successfully!"
   },
   "group_form_title": {
     "message": "Title"
@@ -290,8 +290,8 @@
   "rule_form_save_button": {
     "message": "Speichern"
   },
-  "rule_form_save_successfully": {
-    "message": "Erfolgreich gespeichert!"
+  "rule_form_saved_successfully": {
+    "message": "Saved successfully!"
   },
   "rule_form_tab_title": {
     "message": "&nbsp;"

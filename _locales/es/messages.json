@@ -48,7 +48,7 @@
     "message": "Guardar"
   },
   "group_form_save_successfully": {
-    "message": "Guardado correctamente!"
+    "message": "Saved successfully!"
   },
   "group_form_title": {
     "message": "Sr. / Sra."
@@ -290,8 +290,8 @@
   "rule_form_save_button": {
     "message": "Guardar"
   },
-  "rule_form_save_successfully": {
-    "message": "Guardado correctamente!"
+  "rule_form_saved_successfully": {
+    "message": "Saved successfully!"
   },
   "rule_form_tab_title": {
     "message": "Título de pestaña"

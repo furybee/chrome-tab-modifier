@@ -48,7 +48,7 @@
     "message": "Enregistrer"
   },
   "group_form_save_successfully": {
-    "message": "Enregistré avec succès !"
+    "message": "Saved successfully!"
   },
   "group_form_title": {
     "message": "Titre"
@@ -290,8 +290,8 @@
   "rule_form_save_button": {
     "message": "Enregistrer"
   },
-  "rule_form_save_successfully": {
-    "message": "Enregistré avec succès !"
+  "rule_form_saved_successfully": {
+    "message": "Saved successfully!"
   },
   "rule_form_tab_title": {
     "message": "Titre de l'onglet"
