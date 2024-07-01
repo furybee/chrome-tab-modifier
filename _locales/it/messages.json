@@ -338,6 +338,9 @@
   "settings_backup_title": {
     "message": "Backup"
   },
+  "settings_change_locale": {
+    "message": "Cambia lingua corrente a"
+  },
   "settings_change_theme": {
     "message": "Cambia tema modificatore scheda"
   },
@@ -391,6 +394,9 @@
   },
   "settings_import_tab_rules": {
     "message": "Importa regole scheda"
+  },
+  "settings_locale": {
+    "message": "Lingua"
   },
   "settings_no_config_found": {
     "message": "Nessuna configurazione trovata"

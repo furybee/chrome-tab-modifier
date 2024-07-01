@@ -338,6 +338,9 @@
   "settings_backup_title": {
     "message": "Backup"
   },
+  "settings_change_locale": {
+    "message": "Aktuelle Sprache ändern"
+  },
   "settings_change_theme": {
     "message": "Tabulator-Modifikatorthema ändern"
   },
@@ -391,6 +394,9 @@
   },
   "settings_import_tab_rules": {
     "message": "Tab-Regeln importieren"
+  },
+  "settings_locale": {
+    "message": "Sprache"
   },
   "settings_no_config_found": {
     "message": "Keine Konfiguration gefunden"

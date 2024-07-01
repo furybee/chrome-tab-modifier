@@ -338,6 +338,9 @@
   "settings_backup_title": {
     "message": "Backup"
   },
+  "settings_change_locale": {
+    "message": "Change current language"
+  },
   "settings_change_theme": {
     "message": "Change Tab Modifier theme"
   },
@@ -391,6 +394,9 @@
   },
   "settings_import_tab_rules": {
     "message": "Import tab rules"
+  },
+  "settings_locale": {
+    "message": "Language"
   },
   "settings_no_config_found": {
     "message": "No config found"

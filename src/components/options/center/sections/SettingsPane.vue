@@ -16,6 +16,19 @@
 						<CustomSelect v-model="currentTheme" :items="themes" :show-clear-btn="false" />
 					</div>
 				</div>
+
+				<div class="grid grid-cols-6 mt-4">
+					<div class="col-span-5">
+						<h3 class="font-bold">
+							{{ $translate('settings_locale') }} -
+							<NewFeature />
+						</h3>
+						<p>{{ $translate('settings_change_locale') }}</p>
+					</div>
+					<div class="col-span-1">
+						<CustomSelect v-model="currentLocale" :items="locales" :show-clear-btn="false" />
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -113,21 +126,28 @@ import { inject, ref, watch } from 'vue';
 import { useRulesStore } from '../../../../stores/rules.store.ts';
 import NewFeature from '../../../global/NewFeature.vue';
 import { GLOBAL_EVENTS } from '../../../../common/types.ts';
-import { _getThemes, translate } from '../../../../common/helpers.ts';
+import { _getLocales, _getThemes, translate } from '../../../../common/helpers.ts';
+import { _getLocale, _setLocale } from '../../../../common/storage.ts';
 
 const emitter: any = inject('emitter');
 
 const rulesStore = useRulesStore();
 
 const currentTheme = ref(rulesStore.settings.theme);
+const currentLocale = ref(_getLocale());
 const importModal = ref(null);
 const fileInput = ref<HTMLInputElement | null>(null);
 const fileLoaded = ref(false);
 
 const themes = _getThemes();
+const locales = _getLocales();
 
 watch(currentTheme, (theme) => {
 	rulesStore.applyTheme(theme);
+});
+
+watch(currentLocale, (locale) => {
+	_setLocale(locale);
 });
 
 const onFileChanged = (event: any) => {

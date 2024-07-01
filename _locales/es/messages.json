@@ -338,6 +338,9 @@
   "settings_backup_title": {
     "message": "Copia de seguridad"
   },
+  "settings_change_locale": {
+    "message": "Cambiar idioma actual"
+  },
   "settings_change_theme": {
     "message": "Cambiar tema del modificador de pestaña"
   },
@@ -391,6 +394,9 @@
   },
   "settings_import_tab_rules": {
     "message": "Importar reglas de pestañas"
+  },
+  "settings_locale": {
+    "message": "Idioma"
   },
   "settings_no_config_found": {
     "message": "No se ha encontrado ninguna configuración"

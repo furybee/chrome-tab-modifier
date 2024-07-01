@@ -338,6 +338,9 @@
   "settings_backup_title": {
     "message": "Cópia de segurança"
   },
+  "settings_change_locale": {
+    "message": "Alterar idioma atual"
+  },
   "settings_change_theme": {
     "message": "Alterar tema do modificador de separador"
   },
@@ -391,6 +394,9 @@
   },
   "settings_import_tab_rules": {
     "message": "Importar regras de tabulação"
+  },
+  "settings_locale": {
+    "message": "Língua"
   },
   "settings_no_config_found": {
     "message": "Nenhuma configuração encontrada"

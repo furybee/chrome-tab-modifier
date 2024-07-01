@@ -338,6 +338,9 @@
   "settings_backup_title": {
     "message": "Sauvegarde"
   },
+  "settings_change_locale": {
+    "message": "Changer la langue actuelle"
+  },
   "settings_change_theme": {
     "message": "Changer le thème de Tab Modifier"
   },
@@ -391,6 +394,9 @@
   },
   "settings_import_tab_rules": {
     "message": "Importer des règles d'onglets"
+  },
+  "settings_locale": {
+    "message": "Langue"
   },
   "settings_no_config_found": {
     "message": "Aucune configuration trouvée"

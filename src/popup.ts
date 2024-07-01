@@ -3,6 +3,8 @@ import './style.css';
 import Popup from './Popup.vue';
 import { createPinia } from 'pinia';
 import mitt from 'mitt';
+import i18n from './i18n';
+import { loadLocaleMessages } from './i18n-loader.ts';
 import { translate } from './common/helpers';
 
 const pinia = createPinia();
@@ -10,8 +12,13 @@ const emitter = mitt();
 
 const app = createApp(Popup).use(pinia).provide('emitter', emitter);
 
-app.config.globalProperties.$translate = translate;
-
 if (chrome && chrome.i18n) {
+	const locale = chrome.i18n.getUILanguage() || 'en';
+	await loadLocaleMessages(locale);
+
+	app.use(i18n);
+
+	app.config.globalProperties.$translate = translate;
+
 	app.mount('#app');
 }
