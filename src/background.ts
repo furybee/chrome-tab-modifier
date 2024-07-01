@@ -229,7 +229,12 @@ async function applyGroupRuleToTab(
 
 	if (!tmGroup) return;
 
-	const tabGroupsQueryInfo = { title: tmGroup.title, windowId: tab.windowId };
+	const tabGroupsQueryInfo = {
+		title: tmGroup.title,
+		color: tmGroup.color,
+		collapsed: tmGroup.collapsed,
+		windowId: tab.windowId,
+	};
 
 	chrome.tabGroups.query(tabGroupsQueryInfo, (groups: chrome.tabGroups.TabGroup[]) =>
 		handleTabGroups(groups, tab, tmGroup)
