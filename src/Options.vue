@@ -75,6 +75,7 @@ import { useRulesStore } from './stores/rules.store.ts';
 import Toaster from './components/global/Toaster.vue';
 import PlusIcon from './components/icons/PlusIcon.vue';
 import { useMenuStore } from './stores/menu.store.ts';
+import { translate } from './common/helpers.ts';
 
 const emitter: any = inject('emitter');
 
@@ -88,22 +89,22 @@ const panes: Components = {
 
 const sectionItems = [
 	{
-		title: 'Rules',
+		title: translate('options_section_item_rules'),
 		icon: 'TabRulesIcon',
 		component: 'TabRulesPane',
 	},
 	{
-		title: 'Groups',
+		title: translate('options_section_item_groups'),
 		icon: 'TabGroupsIcon',
 		component: 'TabGroupsPane',
 	},
 	{
-		title: 'Settings',
+		title: translate('options_section_item_settings'),
 		icon: 'SettingsIcon',
 		component: 'SettingsPane',
 	},
 	{
-		title: 'Help',
+		title: translate('options_section_item_help'),
 		icon: 'HelpIcon',
 		component: 'HelpPane',
 	},
@@ -121,7 +122,7 @@ const resourceItems = [
 		link: 'https://github.com/furybee/chrome-tab-modifier',
 	},
 	{
-		title: 'Donate',
+		title: translate('options_resource_item_donate'),
 		icon: 'DonationIcon',
 		component: 'DonationPane',
 	},

@@ -2,6 +2,31 @@ import { Group, Rule, TabModifierSettings } from './types.ts';
 import { _clone, _generateRandomId } from './helpers.ts';
 
 export const STORAGE_KEY = 'tab_modifier';
+export const LOCALE_STORAGE_KEY = 'tab_modifier_locale';
+
+let locale: string | undefined;
+export function _getLocale(): string {
+	if (locale) {
+		return locale;
+	}
+
+	locale = localStorage.getItem(LOCALE_STORAGE_KEY) ?? chrome.i18n.getUILanguage();
+
+	return locale;
+}
+
+export function _setLocale(value: string): void {
+	const currentLocale = locale ?? _getLocale();
+
+	if (currentLocale === value) {
+		return;
+	}
+
+	localStorage.setItem(LOCALE_STORAGE_KEY, value);
+
+	// reload the page to apply the new locale
+	location.reload();
+}
 
 export function _getDefaultTabModifierSettings(): TabModifierSettings {
 	return {

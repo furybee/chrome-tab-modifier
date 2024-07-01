@@ -3,9 +3,9 @@
 		<table class="table table-zebra">
 			<thead>
 				<tr>
-					<th>Title</th>
-					<th>Color</th>
-					<th>Collapsed</th>
+					<th>{{ $translate('table_groups_title') }}</th>
+					<th>{{ $translate('table_groups_color') }}</th>
+					<th>{{ $translate('table_groups_collapsed') }}</th>
 					<th />
 				</tr>
 			</thead>
@@ -43,7 +43,7 @@ import DeleteIcon from '../../../../icons/DeleteIcon.vue';
 import { inject } from 'vue';
 import { GLOBAL_EVENTS, Group, GroupModalParams } from '../../../../../common/types.ts';
 import { useRulesStore } from '../../../../../stores/rules.store.ts';
-import { _chromeGroupColor } from '../../../../../common/helpers.ts';
+import { _chromeGroupColor, translate } from '../../../../../common/helpers.ts';
 import ColorVisualizer from './ColorVisualizer.vue';
 
 const props = defineProps<{
@@ -62,7 +62,7 @@ const editGroup = (group: Group) => {
 const deleteGroup = async (event: any, groupId: string) => {
 	event.stopPropagation();
 
-	if (confirm('Are you sure you want to delete this group?')) {
+	if (confirm(translate('table_groups_delete_confirm'))) {
 		await rulesStore.deleteGroup(groupId);
 	}
 };

@@ -2,10 +2,11 @@
 	<div class="container mx-auto max-w-5xl p-4">
 		<div class="card bg-base-200 mb-4">
 			<div class="card-body">
-				<h2 class="card-title">Donation</h2>
+				<h2 class="card-title">
+					{{ $translate('donation_title') }}
+				</h2>
 				<p>
-					If you like this extension and want to support its development, you can make a donation by
-					clicking one of the buttons below.
+					{{ $translate('donation_subtitle') }}
 				</p>
 			</div>
 		</div>

@@ -74,3 +74,11 @@ export type Components = Record<
 	string,
 	DefineComponent<NonNullable<unknown>, NonNullable<unknown>, any>
 >;
+
+export interface Message {
+	message: string;
+}
+
+export interface Messages {
+	[key: string]: Message;
+}
