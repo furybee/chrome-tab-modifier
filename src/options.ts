@@ -15,7 +15,6 @@ const app = createApp(Options).use(pinia).provide('emitter', emitter);
 
 if (chrome && chrome.i18n) {
 	const locale = _getLocale();
-
 	await loadLocaleMessages(locale);
 
 	app.use(i18n);
