@@ -1,0 +1,449 @@
+{
+  "donation_subtitle": {
+    "message": "Se gostas desta extensão e queres apoiar o seu desenvolvimento, podes fazer um donativo clicando num dos botões abaixo."
+  },
+  "donation_title": {
+    "message": "Doar"
+  },
+  "empty_groups_action": {
+    "message": "Criar o meu primeiro Grupo"
+  },
+  "empty_groups_subtitle": {
+    "message": "Ainda não há grupo! Clique no botão a seguir para criar o seu primeiro grupo."
+  },
+  "empty_groups_title": {
+    "message": "Olá,"
+  },
+  "empty_rules_action": {
+    "message": "Criar a minha primeira regra"
+  },
+  "empty_rules_subtitle": {
+    "message": "Ainda não há regra! Clique no botão a seguir para criar a sua primeira regra."
+  },
+  "empty_rules_title": {
+    "message": "Olá,"
+  },
+  "group_form_add_new_group": {
+    "message": "Adicionar um novo grupo"
+  },
+  "group_form_close_button": {
+    "message": "Close (Fechar)"
+  },
+  "group_form_collapsed": {
+    "message": "Em Colapso"
+  },
+  "group_form_color": {
+    "message": "Cor"
+  },
+  "group_form_color_help": {
+    "message": "Pode definir uma cor para o seu grupo"
+  },
+  "group_form_edit_group": {
+    "message": "Editar grupo"
+  },
+  "group_form_remember_refresh": {
+    "message": "Lembre-se de atualizar os separadores depois de guardar"
+  },
+  "group_form_save_button": {
+    "message": "Salvar"
+  },
+  "group_form_save_successfully": {
+    "message": "Gravado com sucesso"
+  },
+  "group_form_title": {
+    "message": "Título"
+  },
+  "group_form_title_help": {
+    "message": "Pode definir um título para o seu separador"
+  },
+  "group_form_title_placeholder": {
+    "message": "por exemplo, Google"
+  },
+  "help_action_group": {
+    "message": "Grupo"
+  },
+  "help_action_group_description": {
+    "message": "Esta ação moverá o seu separador para um grupo."
+  },
+  "help_action_icon": {
+    "message": "Ícone"
+  },
+  "help_action_icon_description": {
+    "message": "Esta ação substituirá o ícone do site (fav)."
+  },
+  "help_action_muted": {
+    "message": "Esbatido"
+  },
+  "help_action_muted_description": {
+    "message": "Esta ação impedirá que o separador reproduza sons."
+  },
+  "help_action_pinned": {
+    "message": "Fixo"
+  },
+  "help_action_pinned_description": {
+    "message": "Esta ação fixará o separador."
+  },
+  "help_action_protected": {
+    "message": "Protegido"
+  },
+  "help_action_protected_description": {
+    "message": "Esta ação irá perguntar-lhe antes de atualizar ou fechar o separador."
+  },
+  "help_action_title": {
+    "message": "Título"
+  },
+  "help_action_title_description": {
+    "message": "Esta ação irá reescrever o título do site."
+  },
+  "help_action_unique": {
+    "message": "Exclusivo"
+  },
+  "help_action_unique_description": {
+    "message": "Esta ação fechará automaticamente os separadores duplicados. Além disso, a extensão não focalizará a guia original após fechar a duplicada."
+  },
+  "help_additional_notes_1": {
+    "message": "Depois de criar ou editar uma regra, atualize a (s) guia(s) para aplicar as alterações."
+  },
+  "help_additional_notes_2": {
+    "message": "A ordem das suas regras é importante, se uma URL disparar mais de uma regra, a primeira será aplicada. Pode reordenar as suas regras de qualquer maneira."
+  },
+  "help_additional_notes_3": {
+    "message": "Algumas regras de guia interessantes estão listadas aqui para fins de inspiração."
+  },
+  "help_additional_notes_title": {
+    "message": "Notas adicionais"
+  },
+  "help_concept_description": {
+    "message": "Assuma o controlo dos separadores do seu navegador! Com esta extensão, você pode alterar alguns comportamentos em qualquer site. Defina suas regras e deixe a extensão fazer o trabalho automaticamente."
+  },
+  "help_concept_title": {
+    "message": "Conceito"
+  },
+  "help_data_privacy": {
+    "message": "Todos os seus dados são armazenados no seu computador. Não temos acesso a eles."
+  },
+  "help_feature_1": {
+    "message": "Pode mudar o nome de um separador."
+  },
+  "help_feature_2": {
+    "message": "Você pode alterar qualquer ícone de guia (fav)."
+  },
+  "help_feature_3": {
+    "message": "Você pode fixar um site sem esforço."
+  },
+  "help_feature_4": {
+    "message": "Pode agrupar facilmente os seus separadores."
+  },
+  "help_feature_5": {
+    "message": "Pode proteger alguns sites contra o encerramento acidental com uma caixa de confirmação."
+  },
+  "help_feature_6": {
+    "message": "Você pode evitar guias duplicadas configurando a propriedade exclusiva."
+  },
+  "help_feature_7": {
+    "message": "Você pode silenciar o som de qualquer site antes que ele seja reproduzido."
+  },
+  "help_feature_8": {
+    "message": "E a cereja no topo do bolo... Combine todos eles!"
+  },
+  "help_features_title": {
+    "message": "Características"
+  },
+  "help_icon_option_1": {
+    "message": "Pode selecionar um ícone fornecido pela extensão."
+  },
+  "help_icon_option_2": {
+    "message": "Caso contrário, você pode definir uma URL de ícone na entrada como 'https://www.google.com/favicon.ico'."
+  },
+  "help_icon_option_3": {
+    "message": "Caso pretenda definir um ícone local a partir do seu computador, tem 2 opções:"
+  },
+  "help_icon_option_3a": {
+    "message": "carregue o seu ícone em algum lugar como imgur.com e cole o link direto"
+  },
+  "help_icon_option_3b": {
+    "message": "acesse https://base64.guru/converter/encode/image e arraste e solte o ícone, depois clique em 'Copiar como DataURI' e cole-o. Este é o seu ícone transformado no formato URI de dados"
+  },
+  "help_muted_requirement": {
+    "message": "Para funcionar, este recurso requer que você ative este sinalizador: chrome://flags/#enable-tab-audio-muting e reinicie o navegador."
+  },
+  "help_protected_note": {
+    "message": "Nota: Requer ativação fixa para que a caixa de diálogo seja exibida. Em outras palavras, o navegador só mostrará a caixa de diálogo se o quadro ou qualquer quadro incorporado receber um gesto ou interação do usuário. Se nunca interagiu com a página, a caixa de diálogo não será exibida."
+  },
+  "help_rule_core_note": {
+    "message": "Depois de definir o núcleo da sua regra, pode selecionar algumas ações listadas abaixo."
+  },
+  "help_rule_detection": {
+    "message": "Detecção"
+  },
+  "help_rule_detection_description": {
+    "message": "As opções são 'Começa com', 'Contém', 'Exato', 'Termina com' ou 'RegExp'. A extensão deve saber como aplicar a sua regra, dependendo da deteção de que precisa. Pode ser necessário captar uma palavra dentro do URL para selecionar \"Contém\" ou captar apenas ficheiros PNG para selecionar \"Termina com\", etc. Na maioria das vezes, 'Contém' faz o que você quer, esta é a detecção padrão selecionada."
+  },
+  "help_rule_name": {
+    "message": "Nome"
+  },
+  "help_rule_name_description": {
+    "message": "Este nome é usado para você, apenas para encontrar a sua regra, entre outros."
+  },
+  "help_tab_rule_description": {
+    "message": "Tem de criar uma 'regra de tabulação'. Uma regra de tabulação tem:"
+  },
+  "help_tab_rules_title": {
+    "message": "Regras da guia"
+  },
+  "help_title_advanced_usage_1": {
+    "message": "Outro uso avançado pode ser usado com o título, você pode injetar algumas partes da URL com a sintaxe dollar. Este recurso está vinculado à ação \"Correspondente de URL\", consulte posteriormente. Use $ 0, $ 1, etc. dependendo da sua expressão regular definida em 'Correspondente de URL'."
+  },
+  "help_title_advanced_usage_2": {
+    "message": "Como você pode digitalizar a URL, também pode digitalizar o título e injetar algumas partes dele com a sintaxe 'at (@)'. Este recurso está vinculado à ação 'Correspondente de título', veja depois. Use @0, @1, etc. dependendo da sua expressão regular definida em 'Correspondente de título'."
+  },
+  "help_title_matcher": {
+    "message": "Correspondente de título"
+  },
+  "help_title_matcher_description": {
+    "message": "Um uso avançado, insira uma expressão regular para identificar algumas partes do título e use-as dentro do próprio título, isso é útil para reordenar palavras ou excluir algumas partes do título, como [a-z]*@gmail.com e use @0 na entrada do título para injetar a variável."
+  },
+  "help_unique_scenario": {
+    "message": "Cenário: criar uma regra baseada no GMail com ação única. Abra o GMail, abra outro GMail, o último será fechado."
+  },
+  "help_url_fragment": {
+    "message": "Fragmento de URL"
+  },
+  "help_url_fragment_description": {
+    "message": "Esta é a chave da sua regra. Ele determinará se a sua regra será aplicada ou não. Queres apanhar o GMail? Você pode definir sua regra com a detecção \"Contém\" e o fragmento de URL \"mail.google.com\". Outra solução poderia ser definir a detecção \"Começa com\" e \"https://mail.google.com\". Experimente qualquer combinação para alcançar o que deseja."
+  },
+  "help_url_matcher": {
+    "message": "Correspondente de URL"
+  },
+  "help_url_matcher_description": {
+    "message": "Um uso avançado, insira uma expressão regular para identificar algumas partes da URL e usá-las dentro do título, como q=([^&]+) e use $ 0 na entrada do título para injetar a variável."
+  },
+  "options_resource_item_donate": {
+    "message": "Doar"
+  },
+  "options_section_item_groups": {
+    "message": "Grupos"
+  },
+  "options_section_item_help": {
+    "message": "Ajuda"
+  },
+  "options_section_item_rules": {
+    "message": "Regras"
+  },
+  "options_section_item_settings": {
+    "message": "Settings (Configurações)"
+  },
+  "rule_form_add_new_rule": {
+    "message": "Adicionar uma regra"
+  },
+  "rule_form_advanced": {
+    "message": "Avançado"
+  },
+  "rule_form_ask_before_closing": {
+    "message": "Antes do fechamento"
+  },
+  "rule_form_close_button": {
+    "message": "Close (Fechar)"
+  },
+  "rule_form_create_new_group": {
+    "message": "Criar novo grupo"
+  },
+  "rule_form_custom_icon": {
+    "message": "Ícone custodiado"
+  },
+  "rule_form_custom_icon_help": {
+    "message": "Você pode definir um URL personalizado ou um URI de dados para o novo ícone, nenhum caminho local aceito"
+  },
+  "rule_form_custom_icon_placeholder": {
+    "message": "por exemplo, https://google.com/favicon.ico"
+  },
+  "rule_form_detection": {
+    "message": "Detecção"
+  },
+  "rule_form_edit_rule": {
+    "message": "Editar regra"
+  },
+  "rule_form_group": {
+    "message": "Grupo"
+  },
+  "rule_form_icon": {
+    "message": "Ícone"
+  },
+  "rule_form_muted": {
+    "message": "Esbatido"
+  },
+  "rule_form_name": {
+    "message": "Nome"
+  },
+  "rule_form_name_help": {
+    "message": "Dê um nome explícito, apenas para si"
+  },
+  "rule_form_name_placeholder": {
+    "message": "por exemplo, GMail Fixado"
+  },
+  "rule_form_pinned": {
+    "message": "Fixo"
+  },
+  "rule_form_remember_refresh": {
+    "message": "Lembre-se de atualizar os separadores depois de guardar"
+  },
+  "rule_form_save_button": {
+    "message": "Salvar"
+  },
+  "rule_form_saved_successfully": {
+    "message": "Gravado com sucesso"
+  },
+  "rule_form_tab_title": {
+    "message": "Título do separador"
+  },
+  "rule_form_tab_title_help": {
+    "message": "Pode injetar qualquer conteúdo DOM com {selector}. Exemplos: {title} para o título do site, {h1}, {#id}, {.class}, etc."
+  },
+  "rule_form_tab_title_placeholder": {
+    "message": "por exemplo, Olá {title}"
+  },
+  "rule_form_title_matcher": {
+    "message": "Correspondente de título"
+  },
+  "rule_form_title_matcher_help": {
+    "message": "Expressão regular para pesquisar fragmentos de string no título"
+  },
+  "rule_form_title_matcher_placeholder": {
+    "message": "Correspondente de título"
+  },
+  "rule_form_unique": {
+    "message": "Exclusivo"
+  },
+  "rule_form_url_fragment": {
+    "message": "Fragmento de URL"
+  },
+  "rule_form_url_fragment_help": {
+    "message": "Fragmento de URL para encontrar"
+  },
+  "rule_form_url_fragment_placeholder": {
+    "message": "por exemplo, mail.google.com"
+  },
+  "rule_form_url_matcher": {
+    "message": "Correspondente de URL"
+  },
+  "rule_form_url_matcher_help": {
+    "message": "Expressão regular para pesquisar fragmentos de cadeia de caracteres no URL"
+  },
+  "rule_form_url_matcher_placeholder": {
+    "message": "Correspondente de URL"
+  },
+  "rule_form_use_custom_icon": {
+    "message": "Usar ícone customizado"
+  },
+  "settings_backup_title": {
+    "message": "Cópia de segurança"
+  },
+  "settings_change_theme": {
+    "message": "Alterar tema do modificador de separador"
+  },
+  "settings_close": {
+    "message": "Close (Fechar)"
+  },
+  "settings_danger_zone": {
+    "message": "Zona de perigo"
+  },
+  "settings_delete": {
+    "message": "Excluir"
+  },
+  "settings_delete_all_rules": {
+    "message": "Eliminar todas as regras"
+  },
+  "settings_delete_all_rules_confirm": {
+    "message": "Tem a certeza de que pretende eliminar todas as regras?"
+  },
+  "settings_delete_all_rules_success": {
+    "message": "Todas as regras foram excluídas com sucesso!"
+  },
+  "settings_delete_all_rules_warning": {
+    "message": "Depois de excluir todas as regras, não há como voltar atrás, exceto a partir do backup. Por favor, tenha certeza."
+  },
+  "settings_export": {
+    "message": "Exportar"
+  },
+  "settings_export_success": {
+    "message": "Exportado com sucesso"
+  },
+  "settings_export_tab_rules": {
+    "message": "Exportar regras de separador"
+  },
+  "settings_export_tab_rules_description": {
+    "message": "Exporte as suas regras de separador para fins de cópia de segurança ou para partilhar com amigos."
+  },
+  "settings_general_title": {
+    "message": "Geral"
+  },
+  "settings_import": {
+    "message": "Importar"
+  },
+  "settings_import_merge": {
+    "message": "Importar e Mesclar"
+  },
+  "settings_import_replace": {
+    "message": "Importar e Substituir"
+  },
+  "settings_import_success": {
+    "message": "Importação concluída com sucesso"
+  },
+  "settings_import_tab_rules": {
+    "message": "Importar regras de tabulação"
+  },
+  "settings_no_config_found": {
+    "message": "Nenhuma configuração encontrada"
+  },
+  "settings_replace_settings_confirm": {
+    "message": "Todas as suas definições atuais serão substituídas. Tem certeza?"
+  },
+  "settings_restore_tab_rules": {
+    "message": "Restaure as definições das regras do separador a partir de um ficheiro JSON externo."
+  },
+  "settings_theme": {
+    "message": "Tema"
+  },
+  "table_groups_collapsed": {
+    "message": "Em Colapso"
+  },
+  "table_groups_color": {
+    "message": "Cor"
+  },
+  "table_groups_delete_confirm": {
+    "message": "Tem a certeza de que deseja eliminar este grupo?"
+  },
+  "table_groups_title": {
+    "message": "Título"
+  },
+  "table_rules_delete": {
+    "message": "Excluir"
+  },
+  "table_rules_delete_confirm": {
+    "message": "Tem a certeza que deseja apagar isto ?"
+  },
+  "table_rules_detection": {
+    "message": "Detecção"
+  },
+  "table_rules_duplicate": {
+    "message": "Duplicar"
+  },
+  "table_rules_group": {
+    "message": "Grupo"
+  },
+  "table_rules_move_down": {
+    "message": "Mover para baixo"
+  },
+  "table_rules_move_up": {
+    "message": "Mover para cima"
+  },
+  "table_rules_name": {
+    "message": "Nome"
+  },
+  "table_rules_title": {
+    "message": "Título"
+  },
+  "table_rules_url_fragment": {
+    "message": "Fragmento de URL"
+  }
+}

@@ -1,0 +1,449 @@
+{
+  "donation_subtitle": {
+    "message": "Se ti piace questa estensione e vuoi sostenerne lo sviluppo, puoi fare una donazione cliccando su uno dei pulsanti qui sotto."
+  },
+  "donation_title": {
+    "message": "Donare"
+  },
+  "empty_groups_action": {
+    "message": "Crea il mio primo gruppo"
+  },
+  "empty_groups_subtitle": {
+    "message": "Non c'è ancora nessun gruppo! Premi il seguente pulsante per creare il tuo primo gruppo."
+  },
+  "empty_groups_title": {
+    "message": "CiaoMondo!"
+  },
+  "empty_rules_action": {
+    "message": "Crea la mia prima regola"
+  },
+  "empty_rules_subtitle": {
+    "message": "Non c'è ancora nessuna regola! Premi il seguente pulsante per creare la tua prima regola."
+  },
+  "empty_rules_title": {
+    "message": "CiaoMondo!"
+  },
+  "group_form_add_new_group": {
+    "message": "Aggiungi un nuovo gruppo"
+  },
+  "group_form_close_button": {
+    "message": "Chiudere"
+  },
+  "group_form_collapsed": {
+    "message": "Compresso"
+  },
+  "group_form_color": {
+    "message": "Colore"
+  },
+  "group_form_color_help": {
+    "message": "Puoi impostare un colore per il tuo gruppo"
+  },
+  "group_form_edit_group": {
+    "message": "Modifica gruppo"
+  },
+  "group_form_remember_refresh": {
+    "message": "Ricorda di aggiornare le schede dopo il salvataggio"
+  },
+  "group_form_save_button": {
+    "message": "Salvare"
+  },
+  "group_form_save_successfully": {
+    "message": "Salvataggio riuscito "
+  },
+  "group_form_title": {
+    "message": "Titolo"
+  },
+  "group_form_title_help": {
+    "message": "Puoi impostare un titolo per la tua scheda"
+  },
+  "group_form_title_placeholder": {
+    "message": "ad es. Google"
+  },
+  "help_action_group": {
+    "message": "Gruppo"
+  },
+  "help_action_group_description": {
+    "message": "Questa azione sposterà la scheda in un gruppo."
+  },
+  "help_action_icon": {
+    "message": "Icona"
+  },
+  "help_action_icon_description": {
+    "message": "Questa azione sostituirà l'icona del sito web (fav)."
+  },
+  "help_action_muted": {
+    "message": "Silenziato"
+  },
+  "help_action_muted_description": {
+    "message": "Questa azione impedirà alla scheda di riprodurre suoni."
+  },
+  "help_action_pinned": {
+    "message": "Appuntato"
+  },
+  "help_action_pinned_description": {
+    "message": "Questa azione bloccherà la scheda."
+  },
+  "help_action_protected": {
+    "message": "Protetti"
+  },
+  "help_action_protected_description": {
+    "message": "Questa azione ti chiederà prima di aggiornare o chiudere la scheda."
+  },
+  "help_action_title": {
+    "message": "Titolo"
+  },
+  "help_action_title_description": {
+    "message": "Questa azione riscriverà il titolo del sito web."
+  },
+  "help_action_unique": {
+    "message": "Univoco"
+  },
+  "help_action_unique_description": {
+    "message": "Questa azione chiuderà automaticamente le schede duplicate. Inoltre l'estensione non metterà a fuoco la scheda originale dopo aver chiuso quella duplicata."
+  },
+  "help_additional_notes_1": {
+    "message": "Dopo aver creato o modificato una regola, aggiorna le schede per applicare le modifiche."
+  },
+  "help_additional_notes_2": {
+    "message": "L'ordine delle tue regole è importante, se un URL attiva più di una regola, verrà applicata la prima. Puoi comunque riordinare le tue regole."
+  },
+  "help_additional_notes_3": {
+    "message": "Alcune regole di tabulazione interessanti sono elencate qui a scopo di ispirazione."
+  },
+  "help_additional_notes_title": {
+    "message": "Note complementari"
+  },
+  "help_concept_description": {
+    "message": "Prendi il controllo delle schede del tuo browser! Con questa estensione sei in grado di modificare alcuni comportamenti su qualsiasi sito web. Definisci le tue regole e lascia che l'estensione faccia il lavoro automaticamente."
+  },
+  "help_concept_title": {
+    "message": "Concetto"
+  },
+  "help_data_privacy": {
+    "message": "Tutti i tuoi dati sono memorizzati sul tuo computer, non abbiamo alcun accesso ad essi."
+  },
+  "help_feature_1": {
+    "message": "È possibile rinominare una scheda."
+  },
+  "help_feature_2": {
+    "message": "È possibile modificare qualsiasi icona della scheda (fav)."
+  },
+  "help_feature_3": {
+    "message": "Puoi aggiungere un sito web senza sforzo."
+  },
+  "help_feature_4": {
+    "message": "Puoi raggruppare facilmente le tue schede."
+  },
+  "help_feature_5": {
+    "message": "Puoi proteggere alcuni siti web dalla chiusura accidentale con una casella di conferma."
+  },
+  "help_feature_6": {
+    "message": "È possibile evitare schede duplicate impostando la proprietà univoca."
+  },
+  "help_feature_7": {
+    "message": "Puoi disattivare il suono di qualsiasi sito web prima che venga riprodotto."
+  },
+  "help_feature_8": {
+    "message": "E la ciliegina sulla torta... uniscili tutti!"
+  },
+  "help_features_title": {
+    "message": "Caratteristiche"
+  },
+  "help_icon_option_1": {
+    "message": "È possibile selezionare un'icona fornita dall'interno."
+  },
+  "help_icon_option_2": {
+    "message": "In caso contrario, è possibile definire un URL icona nell'input come \"https://www.google.com/favicon.ico\"."
+  },
+  "help_icon_option_3": {
+    "message": "Nel caso in cui si desideri definire un'icona locale dal computer, sono disponibili 2 opzioni:"
+  },
+  "help_icon_option_3a": {
+    "message": "carica la tua icona da qualche parte come imgur.com e incolla il link diretto"
+  },
+  "help_icon_option_3b": {
+    "message": "vai su https://base64.guru/converter/encode/image e trascina l'icona, quindi fai clic su \"Copia come DataURI\" e incollala. Questa è la tua icona trasformata nel formato URI di dati"
+  },
+  "help_muted_requirement": {
+    "message": "Per funzionare, questa funzione richiede l'attivazione di questo flag: chrome://flags/#enable-tab-audio-muting, quindi il riavvio del browser."
+  },
+  "help_protected_note": {
+    "message": "Nota: richiedi l'attivazione permanente per visualizzare la finestra di dialogo. In altre parole, il browser mostrerà la finestra di dialogo solo se il frame o qualsiasi frame incorporato riceve un gesto o un'interazione dell'utente. Se non hai mai interagito con la pagina, la finestra di dialogo non verrà visualizzata."
+  },
+  "help_rule_core_note": {
+    "message": "Dopo aver definito il nucleo della tua regola, puoi selezionare alcune azioni elencate di seguito."
+  },
+  "help_rule_detection": {
+    "message": "Identificazione"
+  },
+  "help_rule_detection_description": {
+    "message": "Le opzioni disponibili sono \"Inizia con\", \"Contiene\", \"Esatto\", \"Finisce con\" o \"RegExp\". L'estensione deve sapere come applicare la tua regola a seconda del rilevamento di cui hai bisogno. Potrebbe essere necessario catturare una parola all'interno dell'URL in modo da selezionare \"Contiene\" o catturare solo i file PNG in modo da selezionare \"Termina con\", ecc. La maggior parte delle volte, \"Contiene\" fa quello che vuoi, questo è il rilevamento selezionato predefinito."
+  },
+  "help_rule_name": {
+    "message": "Nome"
+  },
+  "help_rule_name_description": {
+    "message": "Questo nome è usato per te, solo per trovare la tua regola tra le altre."
+  },
+  "help_tab_rule_description": {
+    "message": "Devi creare una \"regola di tabulazione\". Una regola di tabulazione ha:"
+  },
+  "help_tab_rules_title": {
+    "message": "Regole scheda"
+  },
+  "help_title_advanced_usage_1": {
+    "message": "Un altro utilizzo avanzato può essere utilizzato con il titolo, è possibile iniettare alcune parti dell'URL con la sintassi del dollaro. Questa funzione è collegata all'azione \"Corrispondenza URL\", vedi in seguito. Usa $0, $1, ecc. a seconda della tua espressione regolare definita in \"URL matcher\"."
+  },
+  "help_title_advanced_usage_2": {
+    "message": "Come puoi scansionare l'URL, puoi anche scansionare il titolo e iniettarne alcune parti con la sintassi \"at (@)\". Questa funzione è legata all'azione \"Title matcher\", vedi in seguito. Utilizzare @0, @1, ecc. a seconda dell'espressione regolare definita in 'Title matcher'."
+  },
+  "help_title_matcher": {
+    "message": "Title matcher"
+  },
+  "help_title_matcher_description": {
+    "message": "Un uso avanzato, inserire un'espressione regolare per identificare alcune parti del titolo e utilizzarle all'interno del titolo stesso, questo è utile per riordinare le parole o escludere alcune parti del titolo, come [a-z]*@gmail.com e utilizzare @0 nell'input del titolo per inserire la variabile."
+  },
+  "help_unique_scenario": {
+    "message": "Scenario: crea una regola basata su GMail con un'azione unica. Apri GMail, apri un altro GMail, l'ultimo sarà chiuso."
+  },
+  "help_url_fragment": {
+    "message": "Frammento di URL"
+  },
+  "help_url_fragment_description": {
+    "message": "Questa è la chiave della tua regola. Determinerà se la tua regola verrà applicata o meno. Vuoi catturare GMail? Puoi impostare la tua regola con il rilevamento \"Contiene\" e il frammento URL \"mail.google.com\". Un'altra soluzione potrebbe essere quella di impostare il rilevamento \"Inizia con\" e \"https://mail.google.com\". Prova qualsiasi combinazione per ottenere ciò che vuoi."
+  },
+  "help_url_matcher": {
+    "message": "Corrispondenza URL"
+  },
+  "help_url_matcher_description": {
+    "message": "Un uso avanzato, inserire un'espressione regolare per identificare alcune parti dell'URL e utilizzarle all'interno del titolo, come q=([^&]+) e utilizzare $0 nell'input del titolo per inserire la variabile."
+  },
+  "options_resource_item_donate": {
+    "message": "Donare"
+  },
+  "options_section_item_groups": {
+    "message": "Gruppi"
+  },
+  "options_section_item_help": {
+    "message": "Assistenza"
+  },
+  "options_section_item_rules": {
+    "message": "Regole"
+  },
+  "options_section_item_settings": {
+    "message": "Impostazioni"
+  },
+  "rule_form_add_new_rule": {
+    "message": "Aggiungi una nuova regola 3DS"
+  },
+  "rule_form_advanced": {
+    "message": "Avanzata"
+  },
+  "rule_form_ask_before_closing": {
+    "message": "Chiedi prima di chiudere"
+  },
+  "rule_form_close_button": {
+    "message": "Chiudere"
+  },
+  "rule_form_create_new_group": {
+    "message": "Crea nuovo gruppo"
+  },
+  "rule_form_custom_icon": {
+    "message": "Icona personalizzata"
+  },
+  "rule_form_custom_icon_help": {
+    "message": "È possibile impostare un URL personalizzato o un URI di dati per la nuova icona, nessun percorso locale accettato"
+  },
+  "rule_form_custom_icon_placeholder": {
+    "message": "es: https://google.com/favicon.ico"
+  },
+  "rule_form_detection": {
+    "message": "Identificazione"
+  },
+  "rule_form_edit_rule": {
+    "message": "Modifica regola"
+  },
+  "rule_form_group": {
+    "message": "Gruppo"
+  },
+  "rule_form_icon": {
+    "message": "Icona"
+  },
+  "rule_form_muted": {
+    "message": "Silenziato"
+  },
+  "rule_form_name": {
+    "message": "Nome"
+  },
+  "rule_form_name_help": {
+    "message": "Dai un nome esplicito, solo per te"
+  },
+  "rule_form_name_placeholder": {
+    "message": "ad es. GMail appuntato"
+  },
+  "rule_form_pinned": {
+    "message": "Appuntato"
+  },
+  "rule_form_remember_refresh": {
+    "message": "Ricorda di aggiornare le schede dopo il salvataggio"
+  },
+  "rule_form_save_button": {
+    "message": "Salvare"
+  },
+  "rule_form_saved_successfully": {
+    "message": "Salvataggio riuscito "
+  },
+  "rule_form_tab_title": {
+    "message": "Titolo Scheda"
+  },
+  "rule_form_tab_title_help": {
+    "message": "Puoi inserire qualsiasi contenuto DOM con {selector}. Esempi: {title} per il titolo del sito web, {h1}, {#id}, {.class}, ecc."
+  },
+  "rule_form_tab_title_placeholder": {
+    "message": "ad es. Ciao {title}"
+  },
+  "rule_form_title_matcher": {
+    "message": "Title matcher"
+  },
+  "rule_form_title_matcher_help": {
+    "message": "Espressione regolare per cercare frammenti di stringa nel titolo"
+  },
+  "rule_form_title_matcher_placeholder": {
+    "message": "Title matcher"
+  },
+  "rule_form_unique": {
+    "message": "Univoco"
+  },
+  "rule_form_url_fragment": {
+    "message": "Frammento di URL"
+  },
+  "rule_form_url_fragment_help": {
+    "message": "Frammento di URL da trovare"
+  },
+  "rule_form_url_fragment_placeholder": {
+    "message": "ad es. mail.google.com"
+  },
+  "rule_form_url_matcher": {
+    "message": "Corrispondenza URL"
+  },
+  "rule_form_url_matcher_help": {
+    "message": "Espressione regolare per cercare frammenti di stringa nell'URL"
+  },
+  "rule_form_url_matcher_placeholder": {
+    "message": "Corrispondenza URL"
+  },
+  "rule_form_use_custom_icon": {
+    "message": "Usa Icona Personalizzata"
+  },
+  "settings_backup_title": {
+    "message": "Backup"
+  },
+  "settings_change_theme": {
+    "message": "Cambia tema modificatore scheda"
+  },
+  "settings_close": {
+    "message": "Chiudere"
+  },
+  "settings_danger_zone": {
+    "message": "Zona di pericolo"
+  },
+  "settings_delete": {
+    "message": "Eliminare"
+  },
+  "settings_delete_all_rules": {
+    "message": "Elimina tutte le regole"
+  },
+  "settings_delete_all_rules_confirm": {
+    "message": "Sei sicuro di voler cancellare tutto?"
+  },
+  "settings_delete_all_rules_success": {
+    "message": "Tutte le regole sono state eliminate con successo!"
+  },
+  "settings_delete_all_rules_warning": {
+    "message": "Una volta eliminate tutte le regole, non è possibile tornare indietro se non dal backup. Si prega di esserne certi."
+  },
+  "settings_export": {
+    "message": "Esportazione"
+  },
+  "settings_export_success": {
+    "message": "Esportazione eseguita correttamente"
+  },
+  "settings_export_tab_rules": {
+    "message": "Esporta regole scheda"
+  },
+  "settings_export_tab_rules_description": {
+    "message": "Esporta le regole della scheda a scopo di backup o per condividerle con gli amici."
+  },
+  "settings_general_title": {
+    "message": "Generalità"
+  },
+  "settings_import": {
+    "message": "Importazione"
+  },
+  "settings_import_merge": {
+    "message": "Importa e unisci"
+  },
+  "settings_import_replace": {
+    "message": "Importa e sostituisci"
+  },
+  "settings_import_success": {
+    "message": "Importazione Dati ottenuti con Successo."
+  },
+  "settings_import_tab_rules": {
+    "message": "Importa regole scheda"
+  },
+  "settings_no_config_found": {
+    "message": "Nessuna configurazione trovata"
+  },
+  "settings_replace_settings_confirm": {
+    "message": "Tutte le impostazioni correnti verranno sostituite. Sei sicuro?"
+  },
+  "settings_restore_tab_rules": {
+    "message": "Ripristina le impostazioni delle regole della scheda da un file JSON esterno."
+  },
+  "settings_theme": {
+    "message": "Tema"
+  },
+  "table_groups_collapsed": {
+    "message": "Compresso"
+  },
+  "table_groups_color": {
+    "message": "Colore"
+  },
+  "table_groups_delete_confirm": {
+    "message": "Sei sicuro di voler eliminare questo gruppo?"
+  },
+  "table_groups_title": {
+    "message": "Titolo"
+  },
+  "table_rules_delete": {
+    "message": "Eliminare"
+  },
+  "table_rules_delete_confirm": {
+    "message": "Sicuro di voler cancellare questa regola?"
+  },
+  "table_rules_detection": {
+    "message": "Identificazione"
+  },
+  "table_rules_duplicate": {
+    "message": "Duplica"
+  },
+  "table_rules_group": {
+    "message": "Gruppo"
+  },
+  "table_rules_move_down": {
+    "message": "Sposta giù"
+  },
+  "table_rules_move_up": {
+    "message": "Sposta su"
+  },
+  "table_rules_name": {
+    "message": "Nome"
+  },
+  "table_rules_title": {
+    "message": "Titolo"
+  },
+  "table_rules_url_fragment": {
+    "message": "Frammento di URL"
+  }
+}

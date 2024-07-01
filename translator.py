@@ -7,7 +7,7 @@ from tqdm import tqdm
 locales_dir = '_locales'
 translator_provider = 'mymemory' # mymemory, google, microsoft, yandex, deepl
 reference_locale = 'en'
-target_locales = ['fr', 'es', 'de']  # Add more locales as needed
+target_locales = ['fr', 'es', 'de', 'pt', 'it']  # Add more locales as needed
 src_dir = 'src'
 extensions = ['js', 'ts', 'vue']
 
@@ -63,7 +63,7 @@ def translate_json_file(reference_filepath, target_filepath, target_language):
     missing_keys = []
     translated_data = {}
 
-    translator = Translator(provider=translator_provider to_lang=target_language)
+    translator = Translator(provider=translator_provider, to_lang=target_language)
 
     keys = list(reference_data.keys())
 
