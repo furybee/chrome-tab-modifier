@@ -1,6 +1,9 @@
 import { vi } from 'vitest';
 
 export const chrome = {
+	i18n: {
+		getUILanguage: vi.fn().mockReturnValue('en'),
+	},
 	runtime: {
 		sendMessage: vi.fn(),
 		onMessage: {
