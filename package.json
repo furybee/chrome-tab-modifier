@@ -1,7 +1,7 @@
 {
   "name": "tab-modifier",
   "private": true,
-  "version": "1.0.8",
+  "version": "1.0.9",
   "type": "module",
   "scripts": {
     "test": "vitest --run",
