@@ -107,6 +107,26 @@ describe('Content', () => {
 			expect(result).toBe('john@gmail.com | mail.google.com');
 		});
 
+		it('should process title with URL matcher - procore', async () => {
+			const rule = {
+				tab: {
+					title: '{title} $1',
+					detection: 'REGEX',
+					url_fragment: 'app[.]procore[.]com/754712/project/daily_log/list?',
+					url_matcher: 'date=[0-9]{4}-([0-9]{2}-[0-9]{2})',
+				},
+			};
+
+			document.title = 'GMP1';
+
+			const result = processTitle(
+				'app.procore.com/754712/project/daily_log/list?date=2021-07-01',
+				'GMP1',
+				rule
+			);
+			expect(result).toBe('GMP1 07-01');
+		});
+
 		it('should match github repositories', () => {
 			const rule = {
 				tab: {

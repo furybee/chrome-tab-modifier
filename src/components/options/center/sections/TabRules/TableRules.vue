@@ -8,14 +8,13 @@
 					<th scope="col">{{ $translate('table_rules_title') }}</th>
 					<th scope="col">{{ $translate('table_rules_detection') }}</th>
 					<th scope="col">{{ $translate('table_rules_url_fragment') }}</th>
-					<th scope="col"></th>
 					<th scope="col" class="text-right">
 						<RefreshButton @on-refresh-click="refresh"></RefreshButton>
 					</th>
 				</tr>
 			</thead>
 			<draggable v-model="rules" tag="tbody" item-key="id" @end="onDragEnd">
-				<template #item="{ element: rule, index }">
+				<template #item="{ element: rule }">
 					<tr class="group cursor-pointer hover:bg-base-100" @click="editRule(rule)">
 						<td scope="row">{{ rule.name }}</td>
 						<td>
@@ -42,27 +41,6 @@
 						<td>
 							<div class="tooltip" :data-tip="rule.url_fragment">
 								{{ _shortify(rule.url_fragment, 20) }}
-							</div>
-						</td>
-						<td>
-							<div class="flex gap-4 invisible group-hover:visible overflow-hidden">
-								<button
-									class="btn btn-xs btn-circle tooltip flex items-center justify-items-center"
-									:class="{ invisible: index === 0 }"
-									:data-tip="$translate('table_rules_move_up')"
-									@click.prevent="(event) => moveUp(event, rule.id)"
-								>
-									<ArrowUpIcon class="!w-4 !h-4" />
-								</button>
-
-								<button
-									class="btn btn-xs btn-circle tooltip flex items-center justify-items-center"
-									:class="{ invisible: index === props.rules.length - 1 }"
-									:data-tip="$translate('table_rules_move_down')"
-									@click.prevent="(event) => moveDown(event, rule.id)"
-								>
-									<ArrowDownIcon class="!w-4 !h-4" />
-								</button>
 							</div>
 						</td>
 						<td>
@@ -100,8 +78,6 @@ import RefreshButton from '../../../../global/RefreshButton.vue';
 import { _chromeGroupColor, _shortify, translate } from '../../../../../common/helpers.ts';
 import ColorVisualizer from '../TabGroups/ColorVisualizer.vue';
 import { computed, watch } from 'vue';
-import ArrowDownIcon from '../../../../icons/ArrowDownIcon.vue';
-import ArrowUpIcon from '../../../../icons/ArrowUpIcon.vue';
 import draggable from 'vuedraggable';
 
 const props = defineProps<{
@@ -157,18 +133,6 @@ const duplicateRule = async (event: MouseEvent, ruleId: string) => {
 	event.stopPropagation();
 	await rulesStore.duplicateRule(ruleId);
 	rules.value = [...rulesStore.rules]; // Update the rules array after duplication
-};
-
-const moveUp = async (event: MouseEvent, ruleId: string) => {
-	event.stopPropagation();
-	await rulesStore.moveUp(ruleId);
-	rules.value = [...rulesStore.rules]; // Update the rules array after moving up
-};
-
-const moveDown = async (event: MouseEvent, ruleId: string) => {
-	event.stopPropagation();
-	await rulesStore.moveDown(ruleId);
-	rules.value = [...rulesStore.rules]; // Update the rules array after moving down
 };
 
 const deleteRule = async (event: MouseEvent, ruleId: string) => {
