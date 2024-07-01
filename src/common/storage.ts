@@ -88,6 +88,7 @@ export async function _getRuleFromUrl(url: string): Promise<Rule | undefined> {
 			case 'ENDS':
 			case 'ENDS_WITH':
 				return url.endsWith(urlFragment);
+			case 'REGEX':
 			case 'REGEXP':
 				return new RegExp(urlFragment).test(url);
 			case 'EXACT':
