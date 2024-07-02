@@ -9,7 +9,7 @@
     "message": "Créer mon premier groupe"
   },
   "empty_groups_subtitle": {
-    "message": "Il n'y a pas encore de groupe. Appuyez sur le bouton suivant pour créer votre premièr groupe."
+    "message": "Il n'y a pas encore de groupe. Appuyez sur le bouton pour créer votre premier groupe."
   },
   "empty_groups_title": {
     "message": "Bonjour"
@@ -18,7 +18,7 @@
     "message": "Créer ma première règle"
   },
   "empty_rules_subtitle": {
-    "message": "Il n'y a pas encore de règle. Appuyez sur le bouton suivant pour créer votre première règle."
+    "message": "Il n'y a pas encore de règle. Appuyez sur le bouton pour créer votre première règle."
   },
   "empty_rules_title": {
     "message": "Bonjour"
@@ -372,10 +372,10 @@
     "message": "Exportation réussie !"
   },
   "settings_export_tab_rules": {
-    "message": "Exporter des règles d'onglets"
+    "message": "Exporter des règles"
   },
   "settings_export_tab_rules_description": {
-    "message": "Exportez vos règles d'onglets à des fins de sauvegarde ou de partage avec des amis."
+    "message": "Exportez vos règles à des fins de sauvegarde ou de partage avec des amis."
   },
   "settings_general_title": {
     "message": "Général"
@@ -393,7 +393,7 @@
     "message": "Importation réussie !"
   },
   "settings_import_tab_rules": {
-    "message": "Importer des règles d'onglets"
+    "message": "Importer des règles"
   },
   "settings_locale": {
     "message": "Langue"
@@ -405,7 +405,7 @@
     "message": "Tous vos paramètres actuels seront remplacés. Êtes-vous sûr ?"
   },
   "settings_restore_tab_rules": {
-    "message": "Restaurer vos paramètres de règles d'onglets à partir d'un fichier JSON externe."
+    "message": "Restaurer vos règles à partir d'un fichier JSON externe."
   },
   "settings_theme": {
     "message": "Thème"
