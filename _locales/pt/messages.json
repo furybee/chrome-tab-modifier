@@ -1,4 +1,10 @@
 {
+  "context_menu_rename_tab_action": {
+    "message": "Alterar o nome do separador"
+  },
+  "context_menu_rename_tab_title": {
+    "message": "Introduza o novo título, será criada automaticamente uma regra de tabulação para si com base no URL atual"
+  },
   "donation_subtitle": {
     "message": "Se gostas desta extensão e queres apoiar o seu desenvolvimento, podes fazer um donativo clicando num dos botões abaixo."
   },
@@ -436,12 +442,6 @@
   },
   "table_rules_group": {
     "message": "Grupo"
-  },
-  "table_rules_move_down": {
-    "message": "Mover para baixo"
-  },
-  "table_rules_move_up": {
-    "message": "Mover para cima"
   },
   "table_rules_name": {
     "message": "Nome"

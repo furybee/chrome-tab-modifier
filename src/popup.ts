@@ -15,12 +15,11 @@ const app = createApp(Popup).use(pinia).provide('emitter', emitter);
 
 if (chrome && chrome.i18n) {
 	const locale = _getLocale();
+	loadLocaleMessages(locale);
 
-	loadLocaleMessages(locale).then(() => {
-		app.use(i18n);
+	app.use(i18n);
 
-		app.config.globalProperties.$translate = translate;
+	app.config.globalProperties.$translate = translate;
 
-		app.mount('#app');
-	});
+	app.mount('#app');
 }

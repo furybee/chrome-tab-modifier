@@ -10,6 +10,12 @@ export function _getLocale(): string {
 		return locale;
 	}
 
+	if (localStorage === undefined) {
+		console.error('localStorage is not available');
+
+		return chrome.i18n.getUILanguage();
+	}
+
 	locale = localStorage.getItem(LOCALE_STORAGE_KEY) ?? chrome.i18n.getUILanguage();
 
 	return locale;

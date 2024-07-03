@@ -1,4 +1,10 @@
 {
+  "context_menu_rename_tab_action": {
+    "message": "Renombrar pestaña"
+  },
+  "context_menu_rename_tab_title": {
+    "message": "Introduzca el nuevo título, se creará automáticamente una regla de pestaña para usted en función de la URL actual"
+  },
   "donation_subtitle": {
     "message": "Si te gusta esta extensión y quieres apoyar su desarrollo, puedes hacer una donación haciendo clic en uno de los botones a continuación."
   },
@@ -436,12 +442,6 @@
   },
   "table_rules_group": {
     "message": "Grupo"
-  },
-  "table_rules_move_down": {
-    "message": "Mover hacia abajo"
-  },
-  "table_rules_move_up": {
-    "message": "Mover Arriba"
   },
   "table_rules_name": {
     "message": "Nombre"

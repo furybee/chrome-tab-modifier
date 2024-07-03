@@ -1,4 +1,10 @@
 {
+  "context_menu_rename_tab_action": {
+    "message": "Rinomina scheda"
+  },
+  "context_menu_rename_tab_title": {
+    "message": "Inserisci il nuovo titolo, verrà creata automaticamente una regola di tabulazione in base all'URL corrente"
+  },
   "donation_subtitle": {
     "message": "Se ti piace questa estensione e vuoi sostenerne lo sviluppo, puoi fare una donazione cliccando su uno dei pulsanti qui sotto."
   },
@@ -436,12 +442,6 @@
   },
   "table_rules_group": {
     "message": "Gruppo"
-  },
-  "table_rules_move_down": {
-    "message": "Sposta giù"
-  },
-  "table_rules_move_up": {
-    "message": "Sposta su"
   },
   "table_rules_name": {
     "message": "Nome"

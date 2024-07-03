@@ -1,4 +1,10 @@
 {
+  "context_menu_rename_tab_action": {
+    "message": "Registerkarte umbenennen"
+  },
+  "context_menu_rename_tab_title": {
+    "message": "Geben Sie den neuen Titel ein, eine Tab-Regel wird automatisch für Sie erstellt, basierend auf der aktuellen URL"
+  },
   "donation_subtitle": {
     "message": "Wenn Sie diese Erweiterung mögen und ihre Entwicklung unterstützen möchten, können Sie eine Spende tätigen, indem Sie auf eine der folgenden Schaltflächen klicken."
   },
@@ -436,12 +442,6 @@
   },
   "table_rules_group": {
     "message": "Gruppe"
-  },
-  "table_rules_move_down": {
-    "message": "Sich abwärts bewegen"
-  },
-  "table_rules_move_up": {
-    "message": "Nach oben bewegen"
   },
   "table_rules_name": {
     "message": "Name"

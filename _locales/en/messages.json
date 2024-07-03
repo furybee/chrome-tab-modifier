@@ -1,4 +1,10 @@
 {
+  "context_menu_rename_tab_action": {
+    "message": "Rename tab"
+  },
+  "context_menu_rename_tab_title": {
+    "message": "Enter the new title, a tab rule will be automatically created for you based on current URL"
+  },
   "donation_subtitle": {
     "message": "If you like this extension and want to support its development, you can make a donation by clicking one of the buttons below."
   },
@@ -436,12 +442,6 @@
   },
   "table_rules_group": {
     "message": "Group"
-  },
-  "table_rules_move_down": {
-    "message": "Move Down"
-  },
-  "table_rules_move_up": {
-    "message": "Move Up"
   },
   "table_rules_name": {
     "message": "Name"

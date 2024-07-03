@@ -53,8 +53,12 @@ export function _chromeGroupColor(color: string) {
 	return '#dadce0';
 }
 
-export const translate = (key: string): string => {
-	const messages = i18n.global.getLocaleMessage(_getLocale()) as Messages;
+export const translate = (key: string, locale: string | undefined): string => {
+	if (!locale) {
+		locale = _getLocale();
+	}
+
+	const messages = i18n.global.getLocaleMessage(locale) as Messages;
 
 	const translation = messages[key]?.message ?? key;
 

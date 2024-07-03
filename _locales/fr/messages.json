@@ -1,4 +1,10 @@
 {
+  "context_menu_rename_tab_action": {
+    "message": "Renommer l'onglet"
+  },
+  "context_menu_rename_tab_title": {
+    "message": "Entrez le nouveau titre, une règle d'onglet sera automatiquement créée pour vous en fonction de l'URL actuelle"
+  },
   "donation_subtitle": {
     "message": "Si vous aimez cette extension et souhaitez soutenir son développement, vous pouvez faire un don en cliquant sur l'un des boutons ci-dessous."
   },
@@ -436,12 +442,6 @@
   },
   "table_rules_group": {
     "message": "Groupe"
-  },
-  "table_rules_move_down": {
-    "message": "Déplacer vers le bas"
-  },
-  "table_rules_move_up": {
-    "message": "Déplacer vers le haut"
   },
   "table_rules_name": {
     "message": "Nom"
