@@ -1,5 +1,6 @@
 import { Group, Rule, TabModifierSettings } from './types.ts';
 import { _clone, _generateRandomId } from './helpers.ts';
+import { loadedLocales } from '../i18n-loader.ts';
 
 export const STORAGE_KEY = 'tab_modifier';
 export const LOCALE_STORAGE_KEY = 'tab_modifier_locale';
@@ -10,15 +11,27 @@ export function _getLocale(): string {
 		return locale;
 	}
 
-	if (localStorage === undefined) {
+	if (!localStorage) {
 		console.error('localStorage is not available');
 
-		return chrome.i18n.getUILanguage();
+		return 'en';
 	}
 
-	locale = localStorage.getItem(LOCALE_STORAGE_KEY) ?? chrome.i18n.getUILanguage();
+	const storageLanguage = localStorage.getItem(LOCALE_STORAGE_KEY);
+	if (storageLanguage) {
+		locale = storageLanguage;
 
-	return locale;
+		return locale;
+	}
+
+	const chromeUILanguage = chrome.i18n.getUILanguage();
+	if (loadedLocales.has(chromeUILanguage)) {
+		locale = chromeUILanguage;
+
+		return locale;
+	}
+
+	return 'en';
 }
 
 export function _setLocale(value: string): void {
@@ -26,6 +39,10 @@ export function _setLocale(value: string): void {
 
 	if (currentLocale === value) {
 		return;
+	}
+
+	if (!loadedLocales.has(value)) {
+		value = 'en';
 	}
 
 	localStorage.setItem(LOCALE_STORAGE_KEY, value);

@@ -1,13 +1,13 @@
 import i18n from './i18n';
-import fr from '../_locales/fr/messages.json';
 import en from '../_locales/en/messages.json';
+import fr from '../_locales/fr/messages.json';
 import es from '../_locales/es/messages.json';
 import de from '../_locales/de/messages.json';
 import it from '../_locales/it/messages.json';
 
-const loadedLocales = new Map<string, any>();
-loadedLocales.set('fr', fr);
+export const loadedLocales = new Map<string, any>();
 loadedLocales.set('en', en);
+loadedLocales.set('fr', fr);
 loadedLocales.set('es', es);
 loadedLocales.set('de', de);
 loadedLocales.set('it', it);

@@ -66,6 +66,10 @@ export const translate = (key: string, locale: string | undefined): string => {
 		console.error(
 			`[intlify] Not found '${key}' key in '${i18n.global.locale.value}' locale messages.`
 		);
+
+		if (locale !== 'en') {
+			return translate(key, 'en');
+		}
 	}
 
 	return translation;
