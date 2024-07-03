@@ -23,7 +23,9 @@ def extract_keys_from_files():
     keys = set()
     patterns = [
         re.compile(r"translate\(['\"]([\w.]+)['\"]\)"),
-        re.compile(r"\$translate\(['\"]([\w.]+)['\"]\)")
+        re.compile(r"\$translate\(['\"]([\w.]+)['\"]\)"),
+        re.compile(r"translate\(['\"]([\w.]+)['\"],\s*locale\)"),
+        re.compile(r"\$translate\(['\"]([\w.]+)['\"],\s*locale\)")
     ]
 
     for root, _, files in os.walk(src_dir):
