@@ -1,6 +1,6 @@
 import i18n from '../i18n';
 import { Messages } from './types.ts';
-import { _getLocale } from './storage.ts';
+import { _getLocale, globalLocale } from './storage.ts';
 
 export function _clone(obj: any) {
 	if (obj === null || typeof obj !== 'object') {
@@ -53,9 +53,9 @@ export function _chromeGroupColor(color: string) {
 	return '#dadce0';
 }
 
-export const translate = (key: string, locale: string | undefined): string => {
+export const translate = (key: string, locale: string | undefined = undefined): string => {
 	if (!locale) {
-		locale = _getLocale();
+		locale = globalLocale ?? 'en';
 	}
 
 	const messages = i18n.global.getLocaleMessage(locale) as Messages;
@@ -73,16 +73,6 @@ export const translate = (key: string, locale: string | undefined): string => {
 	}
 
 	return translation;
-
-	// TODO : not working
-	// const translation = i18n.global.t(key);
-	// if (translation === key) {
-	// 	console.error(
-	// 		`[intlify] Not found '${key}' key in '${i18n.global.locale.value}' locale messages.`
-	// 	);
-	// }
-	// return translation;
-	// return chrome.i18n.getMessage(key);
 };
 
 export function _isDefined(...args: any[]) {

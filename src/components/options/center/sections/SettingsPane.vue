@@ -127,14 +127,14 @@ import { useRulesStore } from '../../../../stores/rules.store.ts';
 import NewFeature from '../../../global/NewFeature.vue';
 import { GLOBAL_EVENTS } from '../../../../common/types.ts';
 import { _getLocales, _getThemes, translate } from '../../../../common/helpers.ts';
-import { _getLocale, _setLocale } from '../../../../common/storage.ts';
+import { _setLocale, globalLocale } from '../../../../common/storage.ts';
 
 const emitter: any = inject('emitter');
 
 const rulesStore = useRulesStore();
 
 const currentTheme = ref(rulesStore.settings.theme);
-const currentLocale = ref(_getLocale());
+const currentLocale = ref(globalLocale ?? 'en');
 const importModal = ref(null);
 const fileInput = ref<HTMLInputElement | null>(null);
 const fileLoaded = ref(false);

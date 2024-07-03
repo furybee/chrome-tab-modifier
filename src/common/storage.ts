@@ -5,39 +5,51 @@ import { loadedLocales } from '../i18n-loader.ts';
 export const STORAGE_KEY = 'tab_modifier';
 export const LOCALE_STORAGE_KEY = 'tab_modifier_locale';
 
-let locale: string | undefined;
-export function _getLocale(): string {
-	if (locale) {
-		return locale;
+export let globalLocale: string | undefined = undefined;
+
+export async function _getLocale(): Promise<string> {
+	if (globalLocale) {
+		await _setLocalStorage(globalLocale);
+
+		return globalLocale;
 	}
 
-	if (!localStorage) {
+	if (!chrome.storage.local) {
 		console.error('localStorage is not available');
 
-		return 'en';
+		globalLocale = 'en';
+
+		return globalLocale;
 	}
 
-	const storageLanguage = localStorage.getItem(LOCALE_STORAGE_KEY);
+	const storageLanguage = await _getLocalStorageAsync();
+	console.log('storageLanguage', storageLanguage);
 	if (storageLanguage) {
-		locale = storageLanguage;
+		globalLocale = storageLanguage;
 
-		return locale;
+		await _setLocalStorage(globalLocale);
+
+		return globalLocale;
 	}
 
 	const chromeUILanguage = chrome.i18n.getUILanguage();
 	if (loadedLocales.has(chromeUILanguage)) {
-		locale = chromeUILanguage;
+		globalLocale = chromeUILanguage;
 
-		return locale;
+		await _setLocalStorage(globalLocale);
+
+		return globalLocale;
 	}
+
+	await _setLocale('en');
 
 	return 'en';
 }
 
-export function _setLocale(value: string): void {
-	const currentLocale = locale ?? _getLocale();
+export async function _setLocale(value: string): Promise<void> {
+	console.log('setLocale', value);
 
-	if (currentLocale === value) {
+	if (globalLocale === value) {
 		return;
 	}
 
@@ -45,7 +57,7 @@ export function _setLocale(value: string): void {
 		value = 'en';
 	}
 
-	localStorage.setItem(LOCALE_STORAGE_KEY, value);
+	await _setLocalStorage(value);
 
 	// reload the page to apply the new locale
 	location.reload();
@@ -103,8 +115,21 @@ export function _getStorageAsync(): Promise<TabModifierSettings | undefined> {
 	});
 }
 
+export function _getLocalStorageAsync(): Promise<string | undefined> {
+	return new Promise((resolve, reject) => {
+		chrome.storage.local.get(LOCALE_STORAGE_KEY, (items) => {
+			if (chrome.runtime.lastError) {
+				reject(new Error(chrome.runtime.lastError.message));
+			} else {
+				resolve(items[LOCALE_STORAGE_KEY]);
+			}
+		});
+	});
+}
+
 export async function _clearStorage(): Promise<void> {
 	await chrome.storage.local.remove(STORAGE_KEY);
+	await chrome.storage.local.remove(LOCALE_STORAGE_KEY);
 }
 
 export async function _setStorage(tabModifier: TabModifierSettings): Promise<void> {
@@ -114,6 +139,14 @@ export async function _setStorage(tabModifier: TabModifierSettings): Promise<voi
 			groups: tabModifier.groups,
 			settings: tabModifier.settings,
 		}),
+	});
+}
+
+export async function _setLocalStorage(locale: string): Promise<void> {
+	console.log('setLocalStorage', locale);
+
+	await chrome.storage.local.set({
+		tab_modifier_locale: locale,
 	});
 }
 

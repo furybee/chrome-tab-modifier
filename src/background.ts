@@ -2,10 +2,10 @@ import { Group, Rule, TabModifierSettings } from './common/types.ts';
 import {
 	_getDefaultRule,
 	_getDefaultTabModifierSettings,
-	_getLocale,
 	_getRuleFromUrl,
 	_getStorageAsync,
 	_setStorage,
+	LOCALE_STORAGE_KEY,
 } from './common/storage.ts';
 import ColorEnum = chrome.tabGroups.ColorEnum;
 import { loadLocaleMessages } from './i18n-loader.ts';
@@ -90,6 +90,19 @@ chrome.tabs.onMoved.addListener(async (tabId) => {
 	await applyGroupRuleToTab(rule, tab, tabModifier);
 });
 
+chrome.storage.local.get(LOCALE_STORAGE_KEY, async (items) => {
+	console.log('background', items);
+});
+
+const createContextMenu = (locale: string) => {
+	chrome.contextMenus.removeAll();
+	chrome.contextMenus.create({
+		id: 'rename-tab',
+		title: translate('context_menu_rename_tab_action', locale),
+		contexts: ['all'],
+	});
+};
+
 chrome.runtime.onMessage.addListener(async (message, sender) => {
 	if (!sender.tab) return;
 
@@ -99,15 +112,8 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
 	switch (message.action) {
 		case 'setLocale':
 			locale = message.locale;
-
 			loadLocaleMessages(locale);
-
-			chrome.contextMenus.create({
-				id: 'rename-tab',
-				title: translate('context_menu_rename_tab_action', locale),
-				contexts: ['all'],
-			});
-
+			createContextMenu(locale);
 			break;
 		case 'setUnique':
 			await handleSetUnique(message, tab);
