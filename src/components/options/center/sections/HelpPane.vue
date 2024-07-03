@@ -122,6 +122,18 @@
 					{{ $translate('help_additional_notes_2') }}
 				</p>
 				<p>{{ $translate('help_additional_notes_3') }}</p>
+
+				<hr class="border-base-300" />
+
+				<p class="font-semibold text-primary">
+					If you notice any translation errors, feel free to suggest a new translation on our
+					<a
+						href="https://github.com/furybee/chrome-tab-modifier/issues"
+						target="_blank"
+						class="text-accent hover:opacity-90"
+						>GitHub!</a
+					>
+				</p>
 			</div>
 		</div>
 	</div>
