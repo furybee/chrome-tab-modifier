@@ -7,8 +7,33 @@ export function updateTitle(title, tag, value) {
 }
 
 export function getTextBySelector(selector) {
-	let el = document.querySelector(selector),
-		value = '';
+	let el = null;
+
+	if (selector.includes('*')) {
+		const parts = selector.split(' ');
+
+		const modifiedParts = parts.map((part) => {
+			if (part.includes('*')) {
+				if (part.startsWith('.')) {
+					return `[class*="${part.replace('.', '').replace('*', '')}"]`;
+				} else {
+					return `[${part.replace('*', '')}]`;
+				}
+			}
+			return part;
+		});
+
+		const modifiedSelector = modifiedParts.join(' ');
+		const elements = document.querySelectorAll(modifiedSelector);
+
+		if (elements.length > 0) {
+			el = elements[0];
+		}
+	} else {
+		el = document.querySelector(selector);
+	}
+
+	let value = '';
 
 	if (el) {
 		if (el.childNodes.length > 0) {
