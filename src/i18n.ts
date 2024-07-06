@@ -5,9 +5,7 @@ const i18n = createI18n({
 	globalInjection: true,
 	locale: chrome.i18n?.getUILanguage() || 'en',
 	fallbackLocale: 'en',
-	messages: {
-		// Messages initialement vides, ils seront chargés dynamiquement
-	},
+	messages: {},
 });
 
 export default i18n;
