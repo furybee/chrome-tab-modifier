@@ -33,10 +33,18 @@ describe('Content', () => {
 			expect(result).toBe('Hello');
 		});
 
-		it('should get value from an input element', () => {
-			document.body.innerHTML = '<input id="test" value="Hello">';
-			const result = getTextBySelector('#test');
-			expect(result).toBe('Hello');
+		it('should get value from an nested input element', () => {
+			document.body.innerHTML = `<div id="header-search-form">
+        <div>
+            <form id="search" action="#" method="get">
+                <input type="text" id="q" name="q" value="bar" placeholder="Search...">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </div>`;
+
+			const result = getTextBySelector('div#header-search-form div form#search input#q');
+			expect(result).toBe('bar');
 		});
 
 		it('should return empty string if element is not found', () => {
