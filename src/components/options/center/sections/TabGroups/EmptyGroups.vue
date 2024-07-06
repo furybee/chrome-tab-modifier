@@ -2,11 +2,15 @@
 	<div class="hero min-h-screen bg-base-200">
 		<div class="hero-content text-center">
 			<div class="max-w-md">
-				<h1 class="text-5xl font-bold">Hello there</h1>
+				<h1 class="text-5xl font-bold">
+					{{ translate('empty_groups_title') }}
+				</h1>
 				<p class="py-6">
-					There is no group yet! Hit the following button to create your first group.
+					{{ translate('empty_groups_subtitle') }}
 				</p>
-				<button class="btn btn-primary" @click="onGetStartedClicked">Create my first Group</button>
+				<button class="btn btn-primary" @click="onGetStartedClicked">
+					{{ translate('empty_groups_action') }}
+				</button>
 			</div>
 		</div>
 	</div>
@@ -15,6 +19,7 @@
 <script lang="ts" setup>
 import { inject } from 'vue';
 import { GLOBAL_EVENTS } from '../../../../../common/types.ts';
+import { translate } from '../../../../../common/helpers.ts';
 
 const emitter: any = inject('emitter');
 

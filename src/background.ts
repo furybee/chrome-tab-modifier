@@ -6,6 +6,11 @@ import {
 	_getStorageAsync,
 	_setStorage,
 } from './common/storage.ts';
+import { loadLocaleMessages } from './i18n-loader.ts';
+import { translate } from './common/helpers.ts';
+import ColorEnum = chrome.tabGroups.ColorEnum;
+
+let locale: string;
 
 chrome.tabs.onUpdated.addListener(
 	async (_: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab) => {
@@ -84,6 +89,15 @@ chrome.tabs.onMoved.addListener(async (tabId) => {
 	await applyGroupRuleToTab(rule, tab, tabModifier);
 });
 
+const createContextMenu = (locale: string) => {
+	chrome.contextMenus.removeAll();
+	chrome.contextMenus.create({
+		id: 'rename-tab',
+		title: translate('context_menu_rename_tab_action', locale),
+		contexts: ['all'],
+	});
+};
+
 chrome.runtime.onMessage.addListener(async (message, sender) => {
 	if (!sender.tab) return;
 
@@ -91,6 +105,11 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
 	if (!tab.id) return;
 
 	switch (message.action) {
+		case 'setLocale':
+			locale = message.locale;
+			loadLocaleMessages(locale);
+			createContextMenu(locale);
+			break;
 		case 'setUnique':
 			await handleSetUnique(message, tab);
 			break;
@@ -106,7 +125,6 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
 			 * If the user has never interacted with the page, then there is no user data to save,
 			 * so no legitimate use case for the dialog.
 			 */
-
 			await chrome.scripting.executeScript({
 				target: { tabId: tab.id },
 				func: () => {
@@ -176,12 +194,6 @@ async function handleRenameTab(tab: chrome.tabs.Tab, title: string) {
 	await chrome.tabs.reload(tab.id);
 }
 
-chrome.contextMenus.create({
-	id: 'rename-tab',
-	title: 'Rename Tab',
-	contexts: ['all'],
-});
-
 chrome.contextMenus.onClicked.addListener(async function (info, tab) {
 	if (!tab?.id) return;
 
@@ -231,7 +243,7 @@ async function applyGroupRuleToTab(
 
 	const tabGroupsQueryInfo = {
 		title: tmGroup.title,
-		color: tmGroup.color,
+		color: tmGroup.color as ColorEnum,
 		collapsed: tmGroup.collapsed,
 		windowId: tab.windowId,
 	};

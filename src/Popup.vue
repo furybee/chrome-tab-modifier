@@ -12,7 +12,7 @@
 import { useRulesStore } from './stores/rules.store.ts';
 import { onMounted, ref } from 'vue';
 import RuleForm from './components/options/center/sections/TabRules/RuleForm.vue';
-import { _getRuleFromUrl, _getDefaultRule, _getStorageAsync } from './common/storage.ts';
+import { _getDefaultRule, _getRuleFromUrl } from './common/storage.ts';
 
 const rulesStore = useRulesStore();
 const isInit = ref(false);

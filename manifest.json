@@ -4,6 +4,7 @@
   "version": "1.0.9",
   "description": "Take control of your tabs",
   "homepage_url": "https://github.com/furybee/chrome-tab-modifier",
+  "default_locale": "en",
   "action": {
     "default_title": "Tab Modifier",
     "default_popup": "src/index.html",
