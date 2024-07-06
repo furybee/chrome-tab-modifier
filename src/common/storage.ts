@@ -23,7 +23,6 @@ export async function _getLocale(): Promise<string> {
 	}
 
 	const storageLanguage = await _getLocalStorageAsync();
-	console.log('storageLanguage', storageLanguage);
 	if (storageLanguage) {
 		globalLocale = storageLanguage;
 
@@ -47,8 +46,6 @@ export async function _getLocale(): Promise<string> {
 }
 
 export async function _setLocale(value: string): Promise<void> {
-	console.log('setLocale', value);
-
 	if (globalLocale === value) {
 		return;
 	}
@@ -143,8 +140,6 @@ export async function _setStorage(tabModifier: TabModifierSettings): Promise<voi
 }
 
 export async function _setLocalStorage(locale: string): Promise<void> {
-	console.log('setLocalStorage', locale);
-
 	await chrome.storage.local.set({
 		tab_modifier_locale: locale,
 	});

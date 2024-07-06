@@ -1,6 +1,6 @@
 import i18n from '../i18n';
 import { Messages } from './types.ts';
-import { _getLocale, globalLocale } from './storage.ts';
+import { globalLocale } from './storage.ts';
 
 export function _clone(obj: any) {
 	if (obj === null || typeof obj !== 'object') {

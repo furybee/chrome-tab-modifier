@@ -1,7 +1,7 @@
 <template>
 	<h3 class="font-bold text-lg flex justify-between">
-		<span v-if="isEditMode">{{ $translate('group_form_edit_group') }}</span>
-		<span v-else>{{ $translate('group_form_add_new_group') }}</span>
+		<span v-if="isEditMode">{{ translate('group_form_edit_group') }}</span>
+		<span v-else>{{ translate('group_form_add_new_group') }}</span>
 
 		<HelpSwap v-model="showHelp" />
 	</h3>
@@ -9,38 +9,38 @@
 	<div class="flex flex-col gap-2 mt-2">
 		<div class="form-control w-full flex-1">
 			<label class="label">
-				<span class="label-text text-sm">{{ $translate('group_form_title') }}</span>
+				<span class="label-text text-sm">{{ translate('group_form_title') }}</span>
 			</label>
 			<input
 				ref="currentGroupTitleInput"
 				v-model="currentGroup.title"
 				class="input input-xs input-bordered w-full"
-				:placeholder="$translate('group_form_title_placeholder')"
+				:placeholder="translate('group_form_title_placeholder')"
 				required
 				type="text"
 				autofocus
 			/>
 			<div v-if="showHelp" class="label opacity-80">
-				{{ $translate('group_form_title_help') }}
+				{{ translate('group_form_title_help') }}
 			</div>
 		</div>
 
 		<div class="form-control w-full flex-1">
 			<div class="label">
-				<span class="label-text text-sm">{{ $translate('group_form_color') }}</span>
+				<span class="label-text text-sm">{{ translate('group_form_color') }}</span>
 			</div>
 			<div class="flex gap-2">
 				<CustomSelect v-model="currentGroup.color" :items="availableGroupColors" />
 			</div>
 			<div v-if="showHelp" class="label">
 				<span class="text-xs label-text-alt opacity-80">{{
-					$translate('group_form_color_help')
+					translate('group_form_color_help')
 				}}</span>
 			</div>
 
 			<div class="form-control mt-4">
 				<label class="cursor-pointer label">
-					<span class="label-text text-sm">{{ $translate('group_form_collapsed') }}</span>
+					<span class="label-text text-sm">{{ translate('group_form_collapsed') }}</span>
 					<input
 						v-model="currentGroup.collapsed"
 						checked
@@ -53,11 +53,11 @@
 
 		<div class="modal-action items-center">
 			<p v-if="showHelp" class="py-4 opacity-80">
-				{{ $translate('group_form_remember_refresh') }}
+				{{ translate('group_form_remember_refresh') }}
 			</p>
 			<form method="dialog">
 				<button class="btn btn-sm">
-					{{ $translate('group_form_close_button') }}
+					{{ translate('group_form_close_button') }}
 					<kbd v-if="showHelp" class="kbd kbd-xs">esc</kbd>
 				</button>
 			</form>
@@ -66,7 +66,7 @@
 				class="btn btn-sm btn-outline btn-primary ml-4 group"
 				@click="save"
 			>
-				{{ $translate('group_form_save_button') }}
+				{{ translate('group_form_save_button') }}
 			</button>
 		</div>
 	</div>

@@ -3,10 +3,10 @@
 		<div class="card bg-base-200 mb-4">
 			<div class="card-body">
 				<h2 class="card-title">
-					{{ $translate('donation_title') }}
+					{{ translate('donation_title') }}
 				</h2>
 				<p>
-					{{ $translate('donation_subtitle') }}
+					{{ translate('donation_subtitle') }}
 				</p>
 			</div>
 		</div>
@@ -39,6 +39,7 @@ import BuyMeACoffeeIcon from '../../../global/donations/BuyMeACoffeeIcon.vue';
 import DonationIcon from '../../../icons/DonationIcon.vue';
 import PayPalIcon from '../../../global/donations/PayPalIcon.vue';
 import DonationCard from './DonationCard.vue';
+import { translate } from '../../../../common/helpers.ts';
 </script>
 
 <style scoped></style>

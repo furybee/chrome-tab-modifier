@@ -3,13 +3,13 @@
 		<div class="hero-content text-center">
 			<div class="max-w-md">
 				<h1 class="text-5xl font-bold">
-					{{ $translate('empty_rules_title') }}
+					{{ translate('empty_rules_title') }}
 				</h1>
 				<p class="py-6">
-					{{ $translate('empty_rules_subtitle') }}
+					{{ translate('empty_rules_subtitle') }}
 				</p>
 				<button class="btn btn-primary" @click="onGetStartedClicked">
-					{{ $translate('empty_rules_action') }}
+					{{ translate('empty_rules_action') }}
 				</button>
 			</div>
 		</div>
@@ -19,6 +19,7 @@
 <script lang="ts" setup>
 import { inject } from 'vue';
 import { GLOBAL_EVENTS } from '../../../../../common/types.ts';
+import { translate } from '../../../../../common/helpers.ts';
 
 const emitter: any = inject('emitter');
 

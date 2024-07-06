@@ -3,11 +3,11 @@
 		<table class="table table-zebra">
 			<thead>
 				<tr>
-					<th scope="col">{{ $translate('table_rules_name') }}</th>
-					<th scope="col">{{ $translate('table_rules_group') }}</th>
-					<th scope="col">{{ $translate('table_rules_title') }}</th>
-					<th scope="col">{{ $translate('table_rules_detection') }}</th>
-					<th scope="col">{{ $translate('table_rules_url_fragment') }}</th>
+					<th scope="col">{{ translate('table_rules_name') }}</th>
+					<th scope="col">{{ translate('table_rules_group') }}</th>
+					<th scope="col">{{ translate('table_rules_title') }}</th>
+					<th scope="col">{{ translate('table_rules_detection') }}</th>
+					<th scope="col">{{ translate('table_rules_url_fragment') }}</th>
 					<th scope="col" class="text-right">
 						<RefreshButton @on-refresh-click="refresh"></RefreshButton>
 					</th>
@@ -47,7 +47,7 @@
 							<div class="flex justify-end gap-8 invisible group-hover:visible overflow-hidden">
 								<button
 									class="btn btn-xs btn-circle tooltip flex items-center justify-items-center"
-									:data-tip="$translate('table_rules_duplicate')"
+									:data-tip="translate('table_rules_duplicate')"
 									@click.prevent="(event) => duplicateRule(event, rule.id)"
 								>
 									<DuplicateIcon class="!w-4 !h-4" />
@@ -55,7 +55,7 @@
 
 								<button
 									class="btn btn-xs btn-circle btn-outline tooltip flex items-center justify-items-center btn-error"
-									:data-tip="$translate('table_rules_delete')"
+									:data-tip="translate('table_rules_delete')"
 									@click.prevent="(event) => deleteRule(event, rule.id)"
 								>
 									<DeleteIcon class="!w-4 !h-4" />
@@ -71,13 +71,12 @@
 <script lang="ts" setup>
 import DuplicateIcon from '../../../../icons/DuplicateIcon.vue';
 import DeleteIcon from '../../../../icons/DeleteIcon.vue';
-import { inject, ref } from 'vue';
+import { computed, inject, ref, watch } from 'vue';
 import { GLOBAL_EVENTS, Group, Rule, RuleModalParams } from '../../../../../common/types.ts';
 import { useRulesStore } from '../../../../../stores/rules.store.ts';
 import RefreshButton from '../../../../global/RefreshButton.vue';
 import { _chromeGroupColor, _shortify, translate } from '../../../../../common/helpers.ts';
 import ColorVisualizer from '../TabGroups/ColorVisualizer.vue';
-import { computed, watch } from 'vue';
 import draggable from 'vuedraggable';
 
 const props = defineProps<{

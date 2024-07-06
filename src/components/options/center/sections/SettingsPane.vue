@@ -2,15 +2,15 @@
 	<div class="container mx-auto max-w-5xl p-4">
 		<div class="card bg-base-200">
 			<div class="card-body">
-				<h2 class="card-title">{{ $translate('settings_general_title') }}</h2>
+				<h2 class="card-title">{{ translate('settings_general_title') }}</h2>
 
 				<div class="grid grid-cols-6">
 					<div class="col-span-5">
 						<h3 class="font-bold">
-							{{ $translate('settings_theme') }} -
+							{{ translate('settings_theme') }} -
 							<NewFeature />
 						</h3>
-						<p>{{ $translate('settings_change_theme') }}</p>
+						<p>{{ translate('settings_change_theme') }}</p>
 					</div>
 					<div class="col-span-1">
 						<CustomSelect v-model="currentTheme" :items="themes" :show-clear-btn="false" />
@@ -20,10 +20,10 @@
 				<div class="grid grid-cols-6 mt-4">
 					<div class="col-span-5">
 						<h3 class="font-bold">
-							{{ $translate('settings_locale') }} -
+							{{ translate('settings_locale') }} -
 							<NewFeature />
 						</h3>
-						<p>{{ $translate('settings_change_locale') }}</p>
+						<p>{{ translate('settings_change_locale') }}</p>
 					</div>
 					<div class="col-span-1">
 						<CustomSelect v-model="currentLocale" :items="locales" :show-clear-btn="false" />
@@ -34,21 +34,21 @@
 
 		<div class="card bg-base-200 mt-4">
 			<div class="card-body">
-				<h2 class="card-title">{{ $translate('settings_backup_title') }}</h2>
+				<h2 class="card-title">{{ translate('settings_backup_title') }}</h2>
 
 				<div class="grid grid-cols-6">
 					<div class="col-span-5">
-						<h3 class="font-bold">{{ $translate('settings_import_tab_rules') }}</h3>
-						<p>{{ $translate('settings_restore_tab_rules') }}</p>
+						<h3 class="font-bold">{{ translate('settings_import_tab_rules') }}</h3>
+						<p>{{ translate('settings_restore_tab_rules') }}</p>
 					</div>
 					<div class="col-span-1">
 						<button class="btn btn-sm btn-outline w-full" @click="showImportModal">
-							{{ $translate('settings_import') }}
+							{{ translate('settings_import') }}
 						</button>
 						<dialog ref="importModal" class="modal">
 							<div class="modal-box">
-								<h3 class="font-bold text-lg">{{ $translate('settings_import') }}</h3>
-								<p>{{ $translate('settings_import_tab_rules') }}</p>
+								<h3 class="font-bold text-lg">{{ translate('settings_import') }}</h3>
+								<p>{{ translate('settings_import_tab_rules') }}</p>
 
 								<label class="form-control w-full mt-4">
 									<input
@@ -62,7 +62,7 @@
 
 								<div class="modal-action">
 									<form method="dialog">
-										<button class="btn btn-sm">{{ $translate('settings_close') }}</button>
+										<button class="btn btn-sm">{{ translate('settings_close') }}</button>
 									</form>
 
 									<button
@@ -70,7 +70,7 @@
 										class="btn btn-sm btn-outline btn-accent ml-4 group"
 										@click="importReplaceConfig"
 									>
-										{{ $translate('settings_import_replace') }}
+										{{ translate('settings_import_replace') }}
 									</button>
 
 									<button
@@ -78,7 +78,7 @@
 										class="btn btn-sm btn-outline btn-primary ml-4 group"
 										@click="importMergeConfig"
 									>
-										{{ $translate('settings_import_merge') }}
+										{{ translate('settings_import_merge') }}
 									</button>
 								</div>
 							</div>
@@ -88,12 +88,12 @@
 
 				<div class="grid grid-cols-6 mt-4">
 					<div class="col-span-5">
-						<h3 class="font-bold">{{ $translate('settings_export_tab_rules') }}</h3>
-						<p>{{ $translate('settings_export_tab_rules_description') }}</p>
+						<h3 class="font-bold">{{ translate('settings_export_tab_rules') }}</h3>
+						<p>{{ translate('settings_export_tab_rules_description') }}</p>
 					</div>
 					<div class="col-span-1">
 						<button class="btn btn-sm btn-outline w-full" @click="exportConfig">
-							{{ $translate('settings_export') }}
+							{{ translate('settings_export') }}
 						</button>
 					</div>
 				</div>
@@ -102,16 +102,16 @@
 
 		<div class="card bg-base-200 border border-error mt-4">
 			<div class="card-body">
-				<h2 class="card-title text-error">{{ $translate('settings_danger_zone') }}</h2>
+				<h2 class="card-title text-error">{{ translate('settings_danger_zone') }}</h2>
 
 				<div class="grid grid-cols-6">
 					<div class="col-span-5">
-						<h3 class="font-bold">{{ $translate('settings_delete_all_rules') }}</h3>
-						<p>{{ $translate('settings_delete_all_rules_warning') }}</p>
+						<h3 class="font-bold">{{ translate('settings_delete_all_rules') }}</h3>
+						<p>{{ translate('settings_delete_all_rules_warning') }}</p>
 					</div>
 					<div class="col-span-1">
 						<button class="btn btn-sm btn-error btn-outline w-full" @click="onDeleteAllRules">
-							{{ $translate('settings_delete') }}
+							{{ translate('settings_delete') }}
 						</button>
 					</div>
 				</div>
@@ -269,7 +269,7 @@ const exportConfig = async () => {
 
 	emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
 		type: 'success',
-		message: $translate('settings_export_success'),
+		message: translate('settings_export_success'),
 	});
 };
 </script>

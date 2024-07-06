@@ -5,11 +5,10 @@ import {
 	_getRuleFromUrl,
 	_getStorageAsync,
 	_setStorage,
-	LOCALE_STORAGE_KEY,
 } from './common/storage.ts';
-import ColorEnum = chrome.tabGroups.ColorEnum;
 import { loadLocaleMessages } from './i18n-loader.ts';
 import { translate } from './common/helpers.ts';
+import ColorEnum = chrome.tabGroups.ColorEnum;
 
 let locale: string;
 
@@ -88,10 +87,6 @@ chrome.tabs.onMoved.addListener(async (tabId) => {
 	if (!rule) return;
 
 	await applyGroupRuleToTab(rule, tab, tabModifier);
-});
-
-chrome.storage.local.get(LOCALE_STORAGE_KEY, async (items) => {
-	console.log('background', items);
 });
 
 const createContextMenu = (locale: string) => {

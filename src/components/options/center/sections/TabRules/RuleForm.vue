@@ -1,7 +1,7 @@
 <template>
 	<h3 v-if="options.showTitle" class="font-bold text-lg flex justify-between mb-2">
-		<span v-if="isEditMode">{{ $translate('rule_form_edit_rule') }}</span>
-		<span v-else>{{ $translate('rule_form_add_new_rule') }}</span>
+		<span v-if="isEditMode">{{ translate('rule_form_edit_rule') }}</span>
+		<span v-else>{{ translate('rule_form_add_new_rule') }}</span>
 
 		<div class="flex gap-2 items-center">
 			<HelpSwap v-model="showHelp" />
@@ -18,13 +18,13 @@
 	<div class="flex flex-wrap md:flex-nowrap gap-2">
 		<div class="form-control w-full md:max-w-xs md:flex-1">
 			<div class="label">
-				<span class="label-text text-sm">{{ $translate('rule_form_name') }}</span>
+				<span class="label-text text-sm">{{ translate('rule_form_name') }}</span>
 			</div>
 			<input
 				ref="currentRuleNameInput"
 				v-model="currentRule.name"
 				class="input input-xs input-bordered w-full"
-				:placeholder="$translate('rule_form_name_placeholder')"
+				:placeholder="translate('rule_form_name_placeholder')"
 				required
 				type="text"
 				autofocus
@@ -32,14 +32,14 @@
 			/>
 			<div v-if="showHelp" class="label">
 				<span class="text-xs opacity-80 label-text-alt">{{
-					$translate('rule_form_name_help')
+					translate('rule_form_name_help')
 				}}</span>
 			</div>
 		</div>
 
 		<div class="form-control w-full md:max-w-xs md:flex-0">
 			<div class="label">
-				<span class="label-text text-sm">{{ $translate('rule_form_detection') }}</span>
+				<span class="label-text text-sm">{{ translate('rule_form_detection') }}</span>
 			</div>
 			<select v-model="currentRule.detection" class="select select-xs select-bordered">
 				<option v-for="(detection, index) in detections" :key="index" :value="detection.value">
@@ -50,18 +50,18 @@
 
 		<div class="form-control w-full md:max-w-xs md:flex-1">
 			<div class="label">
-				<span class="label-text text-sm">{{ $translate('rule_form_url_fragment') }}</span>
+				<span class="label-text text-sm">{{ translate('rule_form_url_fragment') }}</span>
 			</div>
 			<input
 				v-model="currentRule.url_fragment"
 				class="input input-xs input-bordered w-full md:max-w-xs"
-				:placeholder="$translate('rule_form_url_fragment_placeholder')"
+				:placeholder="translate('rule_form_url_fragment_placeholder')"
 				required
 				type="text"
 			/>
 			<div v-if="showHelp" class="label">
 				<span class="text-xs opacity-80 label-text-alt">{{
-					$translate('rule_form_url_fragment_help')
+					translate('rule_form_url_fragment_help')
 				}}</span>
 			</div>
 		</div>
@@ -73,20 +73,20 @@
 		<div class="flex flex-wrap md:flex-nowrap gap-2 mt-4">
 			<div v-if="!isGroupFormVisible" class="form-control w-full md:max-w-xs md:flex-0">
 				<div class="label">
-					<span class="label-text text-sm">{{ $translate('rule_form_group') }} <NewFeature /></span>
+					<span class="label-text text-sm">{{ translate('rule_form_group') }} <NewFeature /></span>
 				</div>
 
 				<CustomSelect v-model="currentRule.tab.group_id" :items="availableGroups" />
 
 				<button class="btn-link mt-1" @click.prevent="(event) => showGroupForm(event)">
-					{{ $translate('rule_form_create_new_group') }}
+					{{ translate('rule_form_create_new_group') }}
 				</button>
 			</div>
 			<div v-else class="bg-base-300 rounded-md w-full md:max-w-xs md:flex-0 px-2 pb-2">
 				<div class="flex justify-between items-center">
 					<div class="label">
 						<span class="label-text text-sm"
-							>{{ $translate('rule_form_group') }} <NewFeature
+							>{{ translate('rule_form_group') }} <NewFeature
 						/></span>
 					</div>
 					<CloseIcon class="cursor-pointer hover:text-error !h-4 !w-4" @click="hideGroupForm" />
@@ -100,13 +100,13 @@
 				class="form-control w-full md:w-40 md:max-w-xs md:flex-0"
 			>
 				<div class="label">
-					<span class="label-text text-sm">{{ $translate('rule_form_icon') }}</span>
+					<span class="label-text text-sm">{{ translate('rule_form_icon') }}</span>
 				</div>
 
 				<CustomSelect v-model="currentRule.tab.icon" :items="icons" :show-label="false" />
 
 				<button class="btn-link mt-1" @click.prevent="(event) => showCustomIconForm(event)">
-					{{ $translate('rule_form_use_custom_icon') }}
+					{{ translate('rule_form_use_custom_icon') }}
 				</button>
 			</div>
 			<div
@@ -115,7 +115,7 @@
 			>
 				<div class="flex justify-between items-center">
 					<div class="label">
-						<span class="label-text text-sm">{{ $translate('rule_form_custom_icon') }}</span>
+						<span class="label-text text-sm">{{ translate('rule_form_custom_icon') }}</span>
 					</div>
 					<CloseIcon
 						class="cursor-pointer hover:text-error !h-4 !w-4"
@@ -132,32 +132,32 @@
 							'input-error':
 								!isCustomIcon && currentRule.tab.icon !== '' && currentRule.tab.icon !== null,
 						}"
-						:placeholder="$translate('rule_form_custom_icon_placeholder')"
+						:placeholder="translate('rule_form_custom_icon_placeholder')"
 						required
 						type="text"
 					/>
 				</div>
 				<div v-if="showHelp" class="label">
 					<span class="text-xs opacity-80 label-text-alt">{{
-						$translate('rule_form_custom_icon_help')
+						translate('rule_form_custom_icon_help')
 					}}</span>
 				</div>
 			</div>
 
 			<div class="form-control w-full md:flex-1">
 				<div class="label">
-					<span class="label-text text-sm">{{ $translate('rule_form_tab_title') }}</span>
+					<span class="label-text text-sm">{{ translate('rule_form_tab_title') }}</span>
 				</div>
 				<input
 					v-model="currentRule.tab.title"
 					class="input input-xs input-bordered w-full"
-					:placeholder="$translate('rule_form_tab_title_placeholder')"
+					:placeholder="translate('rule_form_tab_title_placeholder')"
 					required
 					type="text"
 				/>
 				<div class="label">
 					<span v-if="showHelp" class="text-xs opacity-80 label-text-alt">
-						{{ $translate('rule_form_tab_title_help') }}
+						{{ translate('rule_form_tab_title_help') }}
 					</span>
 				</div>
 			</div>
@@ -166,7 +166,7 @@
 		<div class="grid grid-cols-2 gap-2 mt-6">
 			<div class="form-control max-w-xs">
 				<label class="cursor-pointer label">
-					<span class="label-text text-xs">{{ $translate('rule_form_pinned') }}</span>
+					<span class="label-text text-xs">{{ translate('rule_form_pinned') }}</span>
 					<input
 						v-model="currentRule.tab.pinned"
 						:disabled="!!currentRule.tab.group_id"
@@ -178,7 +178,7 @@
 			</div>
 			<div class="form-control max-w-xs">
 				<label class="cursor-pointer label">
-					<span class="label-text text-xs">{{ $translate('rule_form_ask_before_closing') }}</span>
+					<span class="label-text text-xs">{{ translate('rule_form_ask_before_closing') }}</span>
 					<input
 						v-model="currentRule.tab.protected"
 						checked
@@ -189,7 +189,7 @@
 			</div>
 			<div class="form-control max-w-xs">
 				<label class="cursor-pointer label">
-					<span class="label-text text-xs">{{ $translate('rule_form_unique') }}</span>
+					<span class="label-text text-xs">{{ translate('rule_form_unique') }}</span>
 					<input
 						v-model="currentRule.tab.unique"
 						checked
@@ -200,7 +200,7 @@
 			</div>
 			<div class="form-control max-w-xs">
 				<label class="cursor-pointer label">
-					<span class="label-text text-xs">{{ $translate('rule_form_muted') }}</span>
+					<span class="label-text text-xs">{{ translate('rule_form_muted') }}</span>
 					<input
 						v-model="currentRule.tab.muted"
 						checked
@@ -212,24 +212,24 @@
 		</div>
 
 		<details class="mt-6" :open="isAdvancedOpenWhenMounted">
-			<summary class="mb-3 cursor-pointer">{{ $translate('rule_form_advanced') }}</summary>
+			<summary class="mb-3 cursor-pointer">{{ translate('rule_form_advanced') }}</summary>
 
 			<div class="grid grid-cols-1 md:grid-cols-2 gap-2">
 				<label class="form-control w-full flex-1">
 					<div class="label">
-						<span class="label-text text-sm">{{ $translate('rule_form_title_matcher') }}</span>
+						<span class="label-text text-sm">{{ translate('rule_form_title_matcher') }}</span>
 					</div>
 					<input
 						v-model="currentRule.tab.title_matcher"
 						class="input input-xs input-bordered w-full"
-						:placeholder="$translate('rule_form_title_matcher_placeholder')"
+						:placeholder="translate('rule_form_title_matcher_placeholder')"
 						required
 						type="text"
 					/>
 					<div v-if="showHelp">
 						<div class="label">
 							<span class="text-xs opacity-80 label-text-alt">{{
-								$translate('rule_form_title_matcher_help')
+								translate('rule_form_title_matcher_help')
 							}}</span>
 						</div>
 						<RegexVisualizer class="mt-2" tag="@" :regex="currentRule.tab.title_matcher" />
@@ -237,19 +237,19 @@
 				</label>
 				<label class="form-control w-full flex-1">
 					<div class="label">
-						<span class="label-text text-sm">{{ $translate('rule_form_url_matcher') }}</span>
+						<span class="label-text text-sm">{{ translate('rule_form_url_matcher') }}</span>
 					</div>
 					<input
 						v-model="currentRule.tab.url_matcher"
 						class="input input-xs input-bordered w-full"
-						:placeholder="$translate('rule_form_url_matcher_placeholder')"
+						:placeholder="translate('rule_form_url_matcher_placeholder')"
 						required
 						type="text"
 					/>
 					<div v-if="showHelp">
 						<div class="label">
 							<span class="text-xs opacity-80 label-text-alt">{{
-								$translate('rule_form_url_matcher_help')
+								translate('rule_form_url_matcher_help')
 							}}</span>
 						</div>
 						<RegexVisualizer class="mt-2" tag="$" :regex="currentRule.tab.url_matcher" />
@@ -260,10 +260,10 @@
 	</div>
 
 	<div class="modal-action items-center">
-		<p v-if="showHelp" class="py-4 opacity-80">{{ $translate('rule_form_remember_refresh') }}</p>
+		<p v-if="showHelp" class="py-4 opacity-80">{{ translate('rule_form_remember_refresh') }}</p>
 		<form v-if="options.showCancel" method="dialog">
 			<button class="btn btn-sm">
-				{{ $translate('rule_form_close_button') }} <kbd v-if="showHelp" class="kbd kbd-xs">esc</kbd>
+				{{ translate('rule_form_close_button') }} <kbd v-if="showHelp" class="kbd kbd-xs">esc</kbd>
 			</button>
 		</form>
 		<button
@@ -271,7 +271,7 @@
 			class="btn btn-sm btn-outline btn-primary ml-4 group"
 			@click="save"
 		>
-			{{ $translate('rule_form_save_button') }}
+			{{ translate('rule_form_save_button') }}
 		</button>
 	</div>
 </template>

@@ -3,9 +3,9 @@
 		<table class="table table-zebra">
 			<thead>
 				<tr>
-					<th>{{ $translate('table_groups_title') }}</th>
-					<th>{{ $translate('table_groups_color') }}</th>
-					<th>{{ $translate('table_groups_collapsed') }}</th>
+					<th>{{ translate('table_groups_title') }}</th>
+					<th>{{ translate('table_groups_color') }}</th>
+					<th>{{ translate('table_groups_collapsed') }}</th>
 					<th />
 				</tr>
 			</thead>

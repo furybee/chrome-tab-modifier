@@ -62,8 +62,8 @@
 
 <script lang="ts" setup>
 import Menu from './components/options/left/Menu.vue';
-import { GLOBAL_EVENTS, Components, MenuItem } from './common/types.ts';
-import { inject, onMounted, ref, computed } from 'vue';
+import { Components, GLOBAL_EVENTS, MenuItem } from './common/types.ts';
+import { computed, inject, onMounted, ref } from 'vue';
 import TabRulesPane from './components/options/center/sections/TabRulesPane.vue';
 import TabGroupsPane from './components/options/center/sections/TabGroupsPane.vue';
 import SettingsPane from './components/options/center/sections/SettingsPane.vue';
