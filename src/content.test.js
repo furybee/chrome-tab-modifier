@@ -33,10 +33,68 @@ describe('Content', () => {
 			expect(result).toBe('Hello');
 		});
 
-		it('should get value from an input element', () => {
-			document.body.innerHTML = '<input id="test" value="Hello">';
-			const result = getTextBySelector('#test');
-			expect(result).toBe('Hello');
+		it('should get value from an nested input element', () => {
+			document.body.innerHTML = `<div id="header-search-form">
+        <div>
+            <form id="search" action="#" method="get">
+                <input type="text" id="q" name="q" value="bar" placeholder="Search...">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </div>`;
+
+			const result = getTextBySelector('div#header-search-form div form#search input#q');
+			expect(result).toBe('bar');
+		});
+
+		it('should get value with a wildcard', () => {
+			document.body.innerHTML = `<div 
+				class="devices-module-link--1j5_7Hi7 devices-module-large--1IiO3pLC devices-module-machineName--vVcUTm3t" 
+				title="WKS-SCOTTB02">
+				WKS-SCOTTB02
+			</div>`;
+
+			const result = getTextBySelector('.devices-module-machineName*');
+			expect(result).toBe('WKS-SCOTTB02');
+		});
+
+		it('should get value with a wildcard in container id', () => {
+			document.body.innerHTML = `<div id="container">
+				<div 
+					class="devices-module-link--1j5_7Hi7 devices-module-large--1IiO3pLC devices-module-machineName--vVcUTm3t" 
+					title="WKS-SCOTTB02">
+					WKS-SCOTTB02
+				</div>
+			</div>`;
+
+			const result = getTextBySelector('#container .devices-module-machineName*');
+			expect(result).toBe('WKS-SCOTTB02');
+		});
+
+		it('should get value with a wildcard in container div', () => {
+			document.body.innerHTML = `<div>
+				<div 
+					class="devices-module-link--1j5_7Hi7 devices-module-large--1IiO3pLC devices-module-machineName--vVcUTm3t" 
+					title="WKS-SCOTTB02">
+					WKS-SCOTTB02
+				</div>
+			</div>`;
+
+			const result = getTextBySelector('div > .devices-module-machineName*');
+			expect(result).toBe('WKS-SCOTTB02');
+		});
+
+		it('should not return value with a wildcard & wrong selector', () => {
+			document.body.innerHTML = `<p>
+				<span 
+					class="devices-module-link--1j5_7Hi7 devices-module-large--1IiO3pLC devices-module-machineName--vVcUTm3t" 
+					title="WKS-SCOTTB02">
+					WKS-SCOTTB02
+				</span>
+			</p>`;
+
+			const result = getTextBySelector('div > .devices-module-machineName*');
+			expect(result).toBe('');
 		});
 
 		it('should return empty string if element is not found', () => {
@@ -105,6 +163,26 @@ describe('Content', () => {
 
 			const result = processTitle('mail.google.com', 'john@gmail.com', rule);
 			expect(result).toBe('john@gmail.com | mail.google.com');
+		});
+
+		it('should process title with URL matcher - procore', async () => {
+			const rule = {
+				tab: {
+					title: '{title} $1',
+					detection: 'REGEX',
+					url_fragment: 'app[.]procore[.]com/754712/project/daily_log/list?',
+					url_matcher: 'date=[0-9]{4}-([0-9]{2}-[0-9]{2})',
+				},
+			};
+
+			document.title = 'GMP1';
+
+			const result = processTitle(
+				'app.procore.com/754712/project/daily_log/list?date=2021-07-01',
+				'GMP1',
+				rule
+			);
+			expect(result).toBe('GMP1 07-01');
 		});
 
 		it('should match github repositories', () => {
