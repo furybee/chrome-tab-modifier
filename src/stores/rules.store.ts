@@ -160,7 +160,7 @@ export const useRulesStore = defineStore('rules', {
 					tabModifier.rules.push(...config.rules);
 				}
 
-				if (config.groups.length > 0) {
+				if (config.groups && config.groups.length > 0) {
 					tabModifier.groups.push(...config.groups);
 				}
 
