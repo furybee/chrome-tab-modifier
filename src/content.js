@@ -111,7 +111,16 @@ export function processTitle(currentUrl, currentTitle, rule) {
 
 export function processIcon(newIcon) {
 	const icons = document.querySelectorAll('head link[rel*="icon"]');
-	icons.forEach((icon) => icon.parentNode.removeChild(icon));
+
+	icons.forEach((icon) => {
+		// ⚠️ icon.remove() causes issues with some websites
+		// https://github.com/furybee/chrome-tab-modifier/issues/354
+		// icon.remove();
+		// Instead, remove all attributes
+		icon.getAttributeNames().forEach((attr) => {
+			icon.removeAttribute(attr);
+		});
+	});
 
 	const iconUrl = /^(https?|data):/.test(newIcon)
 		? newIcon
