@@ -103,6 +103,7 @@ export const useRulesStore = defineStore('rules', {
 					}
 
 					// FIX: Remove this later
+					tabModifier.groups = tabModifier.groups ?? [];
 					tabModifier.rules = this.handleMissingRuleSettings(tabModifier.rules);
 					tabModifier.rules = this.fixDuplicateRuleIds(tabModifier.rules);
 					tabModifier.groups = this.addMissingInvisibleChar(tabModifier.groups);
@@ -124,6 +125,8 @@ export const useRulesStore = defineStore('rules', {
 			shouldInit: boolean = true
 		): Promise<TabModifierSettings | undefined> {
 			try {
+				// FIX: Remove this later
+				config.groups = config.groups ?? [];
 				config.rules = this.handleMissingRuleSettings(config.rules);
 				config.rules = this.fixDuplicateRuleIds(config.rules);
 				config.groups = this.addMissingInvisibleChar(config.groups);
