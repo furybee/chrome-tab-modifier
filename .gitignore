@@ -31,3 +31,4 @@ dummy-*
 html/
 
 tsconfig.tsbuildinfo
+.venv

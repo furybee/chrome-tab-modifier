@@ -1,4 +1,5 @@
 import { _getRuleFromUrl } from './common/storage.ts';
+import { initTabSpot, refreshResults, refreshTabSpot } from './tabSpot.js';
 
 const STORAGE_KEY = 'tab_modifier';
 
@@ -254,6 +255,8 @@ chrome.storage.local.get(STORAGE_KEY, async (items) => {
 	}
 
 	await applyRule();
+
+	await initTabSpot();
 });
 
 chrome.runtime.onMessage.addListener(async function (request) {
@@ -273,5 +276,7 @@ chrome.runtime.onMessage.addListener(async function (request) {
 		await applyRule(request.rule, false);
 	} else if (request.action === 'ungroupTab') {
 		await chrome.tabs.ungroup(request.tabId);
+	} else if (request.action === 'tabSpot:showResults') {
+		await refreshResults(request.tabs, request.groups);
 	}
 });

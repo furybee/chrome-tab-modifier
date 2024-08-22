@@ -91,6 +91,71 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
 	if (!tab.id) return;
 
 	switch (message.action) {
+		case 'tabSpot:refresh':
+			console.log('refresh', message);
+			// eslint-disable-next-line no-case-declarations
+			const tabs = await chrome.tabs.query({});
+			// eslint-disable-next-line no-case-declarations
+			const groups = await chrome.tabGroups.query({});
+
+			// eslint-disable-next-line no-case-declarations
+			const filteredTabs = tabs
+				.map((tab) => {
+					let tabGroup = undefined;
+
+					if (groups) {
+						tabGroup = groups.filter((group) => group.id === tab.groupId)[0];
+					}
+
+					return {
+						id: tab.id,
+						title: tab.title,
+						url: tab.url,
+						favIconUrl: tab.favIconUrl,
+						windowId: tab.windowId,
+						groupId: tab.groupId,
+						groupTitle: tabGroup?.title,
+						groupColor: tabGroup?.color,
+					};
+				})
+				.filter((tab) => {
+					let titleFilter = true;
+
+					if (message.title) {
+						titleFilter =
+							!!tab.title?.toLowerCase()?.includes(message.title) ||
+							!!tab.url?.toLowerCase()?.includes(message.title) ||
+							!!tab.groupTitle?.toLowerCase()?.includes(message.title);
+					}
+
+					return titleFilter && !tab.url?.startsWith('chrome');
+				});
+
+			// eslint-disable-next-line no-case-declarations
+			const filteredGroups = groups.filter((group) => {
+				let titleFilter = true;
+				if (message.title) {
+					titleFilter = !!group.title?.toLowerCase()?.includes(message.title);
+				}
+
+				return titleFilter;
+			});
+
+			await chrome.tabs.sendMessage(tab.id, {
+				action: 'tabSpot:showResults',
+				tabs: filteredTabs,
+				groups: filteredGroups,
+			});
+
+			break;
+		case 'tabSpot:activateTab':
+			console.log('activateTab');
+			if (message.tabId) {
+				await chrome.tabs.update(message.tabId, { active: true });
+				// Move tab to selected window
+				await chrome.windows.update(message.windowId, { focused: true });
+			}
+			break;
 		case 'setUnique':
 			await handleSetUnique(message, tab);
 			break;
