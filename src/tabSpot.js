@@ -1,3 +1,5 @@
+import { _chromeGroupColor } from './common/helpers.ts';
+
 let tabListContainer;
 let searchInput;
 let tabItemListContainer;
@@ -22,10 +24,10 @@ export const initTabSpot = async () => {
 	tabListContainer = document.createElement('div');
 	tabListContainer.id = 'tab-list-container';
 	tabListContainer.style.display = 'none';
-	tabListContainer.style.backgroundColor = '#2a303c';
+	tabListContainer.style.backgroundColor = 'rgba(42, 48, 60, 0.95)';
 	tabListContainer.style.color = 'black';
 	tabListContainer.style.position = 'fixed';
-	tabListContainer.style.top = '45%';
+	tabListContainer.style.top = '30%';
 	tabListContainer.style.right = '0';
 	tabListContainer.style.left = '0';
 	tabListContainer.style.width = '100%';
@@ -162,7 +164,7 @@ export const refreshResults = async (tabs, groups) => {
 					tabItemGroupTitle.style.fontSize = '10pt';
 					tabItemGroupTitle.style.padding = '2px 6px';
 					tabItemGroupTitle.style.color = 'black';
-					tabItemGroupTitle.style.backgroundColor = tab.groupColor;
+					tabItemGroupTitle.style.backgroundColor = _chromeGroupColor(tab.groupColor);
 					tabItemGroupTitle.style.marginRight = '10px';
 					tabItemGroupTitle.style.borderRadius = '5px';
 				}
