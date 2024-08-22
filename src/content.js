@@ -1,5 +1,5 @@
 import { _getRuleFromUrl } from './common/storage.ts';
-import { initTabSpot, refreshResults, refreshTabSpot } from './tabSpot.js';
+import { initTabSpot, refreshResults } from './tabSpot.js';
 
 const STORAGE_KEY = 'tab_modifier';
 
