@@ -14,6 +14,86 @@ export const initTabSpot = async () => {
 	tabListContainer.appendChild(tabItemListContainer);
 	document.body.appendChild(tabListContainer);
 
+	document.head.appendChild(document.createElement('style')).textContent = `
+		.ts-tab-list-container {
+			display: none;
+			background-color: rgba(42, 48, 60, 0.95)!important;
+			color: white!important;
+			position: fixed!important;
+			top: 30%!important;
+			right: 0!important;
+			left: 0!important;
+			width: 100%!important;
+			max-width: 600px!important;
+			z-index: 99999!important;
+			margin: 0 auto!important;
+			overflow: hidden!important;
+			max-height: 500px!important;
+			box-shadow: 0 0 10px rgba(42, 48, 60, 0.7)!important;
+			border-radius: 15px!important;
+			font-family: Arial, sans-serif!important;
+			border: 1px solid #454f5b!important;
+		}
+		
+		.ts-tab-list-container input[type=search].ts-search-input {
+			width: 100%!important;
+			padding: 10px 16px!important;
+			font-family: Arial, sans-serif!important;
+			font-size: 16px!important;
+			box-sizing: border-box!important;
+			outline: none!important;
+			background-color: transparent!important;
+			border: none!important;
+			border-color: transparent!important;
+			outline: none!important;
+			color: #b3ccd6!important;
+			caret-color: #c792e9!important;
+		}
+		
+		.ts-tab-list-container .ts-tab-item-list-container {
+			display: none;
+			border-top: 1px solid #454f5b!important;
+			overflow-x: hidden!important;
+			overflow-y: auto!important;
+			max-height: 240px!important;
+			padding: 4px 5px 10px!important;
+			
+    	scrollbar-color: #ffffff40 #0000!important;
+		}
+		
+		.ts-tab-list-container .ts-tab-item-list-container .ts-tab-item {
+			padding: 6px 10px !important;
+			cursor: pointer!important;
+			border-radius: 5px!important;
+			display: flex!important;
+			flex-direction: row!important;
+			align-items: center!important;
+		}
+		
+		.ts-tab-list-container .ts-tab-item-list-container .ts-tab-item .ts-tab-item-title {
+			font-size: 12px!important;
+			white-space: nowrap!important;
+			overflow: hidden!important;
+			text-overflow: ellipsis!important;
+			color: #b3ccd6!important;
+		}
+		
+		.ts-tab-list-container .ts-tab-item-list-container .ts-tab-item .ts-tab-item-img {
+			width: 18px!important;
+			height: 18px!important;
+			margin-right: 10px!important;
+			display: inline-block!important;
+		}
+		
+		.ts-tab-list-container .ts-tab-item-list-container .ts-tab-item .ts-tab-group-title {
+			font-size: 11px!important;
+			padding: 2px 8px!important;
+			color: black!important;
+			margin-right: 10px!important;
+			border-radius: 5px!important;
+		}
+	`;
+
 	bindGlobalKeyEvents();
 };
 
@@ -38,44 +118,27 @@ export const refreshResults = async (tabs) => {
 };
 
 const highlightFoundItems = () => {
-	const tabItems = tabItemListContainer.querySelectorAll('.tab-item');
+	const tabItems = tabItemListContainer.querySelectorAll('.ts-tab-item');
 
 	highlightSelectedItem(tabItems);
 };
 
 const highlightSelectedItem = (tabItems) => {
-	tabItemListContainer.querySelectorAll('.tab-item').forEach((item) => {
-		item.parentElement.style.backgroundColor = 'transparent';
+	tabItemListContainer.querySelectorAll('.ts-tab-item').forEach((item) => {
+		item.style.backgroundColor = 'transparent';
 	});
 
 	currentIndex = currentIndex === -1 ? 0 : currentIndex;
 	if (currentIndex >= 0 && currentIndex < tabItems.length) {
-		tabItems[currentIndex].parentElement.style.backgroundColor = '#4f5d75';
-		tabItems[currentIndex].parentElement.scrollIntoView({ block: 'nearest' });
+		tabItems[currentIndex].style.backgroundColor = '#4f5d75';
+		tabItems[currentIndex].scrollIntoView({ block: 'nearest' });
 	}
 };
 
 const createTabListContainer = () => {
 	tabListContainer = document.createElement('div');
 	tabListContainer.id = 'tab-list-container';
-	tabListContainer.style.display = 'none';
-	tabListContainer.style.backgroundColor = 'rgba(42, 48, 60, 0.95)';
-	tabListContainer.style.color = 'white';
-	tabListContainer.style.position = 'fixed';
-	tabListContainer.style.top = '30%';
-	tabListContainer.style.right = '0';
-	tabListContainer.style.left = '0';
-	tabListContainer.style.width = '100%';
-	tabListContainer.style.maxWidth = '600px';
-	tabListContainer.style.zIndex = '99999';
-	tabListContainer.style.margin = '0 auto';
-	tabListContainer.style.overflowY = 'auto';
-	tabListContainer.style.overflowX = 'hidden';
-	tabListContainer.style.maxHeight = '500px';
-	tabListContainer.style.boxShadow = '0 0 10px rgba(42, 48, 60, 0.7)';
-	tabListContainer.style.borderRadius = '15px';
-	tabListContainer.style.fontFamily = 'Arial, sans-serif';
-	tabListContainer.style.border = '1px solid #454f5b';
+	tabListContainer.className = 'ts-tab-list-container';
 
 	return tabListContainer;
 };
@@ -84,18 +147,9 @@ const createSearchInput = () => {
 	searchInput = document.createElement('input');
 	searchInput.type = 'search';
 	searchInput.placeholder = 'Search tabs...';
-	searchInput.style.width = '100%';
-	searchInput.style.padding = '10px 16px';
-	searchInput.style.fontFamily = 'Arial, sans-serif';
-	searchInput.style.fontSize = '16px';
-	searchInput.style.boxSizing = 'border-box';
-	searchInput.style.outline = 'none';
-	searchInput.style.backgroundColor = 'transparent';
-	searchInput.style.border = 'none';
-	searchInput.style.outline = 'none';
-	searchInput.style.color = '#b3ccd6';
+	searchInput.className = 'ts-search-input';
 
-	searchInput.addEventListener('input', function () {
+	searchInput.addEventListener('input', () => {
 		const filter = searchInput.value.trim().toLowerCase();
 
 		if (filter.length === 0) {
@@ -113,8 +167,8 @@ const createSearchInput = () => {
 		searchInput.focus();
 	});
 
-	searchInput.addEventListener('keydown', function (event) {
-		const tabItems = Array.from(tabItemListContainer.querySelectorAll('.tab-item'));
+	searchInput.addEventListener('keydown', (event) => {
+		const tabItems = Array.from(tabItemListContainer.querySelectorAll('.ts-tab-item'));
 
 		if (tabItems.length === 0) {
 			currentIndex = -1;
@@ -152,10 +206,7 @@ const createSearchInput = () => {
 const createTabItemListContainer = () => {
 	tabItemListContainer = document.createElement('div');
 	tabItemListContainer.id = 'tab-item-list-container';
-	tabItemListContainer.style.display = 'none';
-	tabItemListContainer.style.borderTop = '1px solid #454f5b';
-	tabItemListContainer.style.overflow = 'hidden';
-	tabItemListContainer.style.padding = '14px 14px';
+	tabItemListContainer.className = 'ts-tab-item-list-container';
 
 	return tabItemListContainer;
 };
@@ -172,9 +223,7 @@ const bindGlobalKeyEvents = () => {
 
 				searchInput.focus();
 			}
-		}
-
-		if (event.key === 'Escape') {
+		} else if (event.key === 'Escape') {
 			closeTabSpot();
 		}
 	});
@@ -190,43 +239,24 @@ const closeTabSpot = () => {
 
 const createTabItem = (tab) => {
 	const tabItem = document.createElement('div');
-	tabItem.style.display = 'flex';
-	tabItem.style.flexDirection = 'row';
-	tabItem.style.padding = '4px 10px';
-	tabItem.style.alignItems = 'center';
-	tabItem.style.cursor = 'pointer';
-	tabItem.style.borderRadius = '10px';
-	tabItem.style.border = '1px solid #454f5b';
-	tabItem.style.marginBottom = '10px';
+	tabItem.className = 'ts-tab-item';
 
 	const tabItemGroupTitle = document.createElement('span');
 
 	if (tab.groupTitle) {
 		tabItemGroupTitle.textContent = tab.groupTitle;
-		tabItemGroupTitle.style.fontSize = '11px';
-		tabItemGroupTitle.style.padding = '2px 8px';
-		tabItemGroupTitle.style.color = 'black';
+		tabItemGroupTitle.className = 'ts-tab-group-title';
 		tabItemGroupTitle.style.backgroundColor = _chromeGroupColor(tab.groupColor);
-		tabItemGroupTitle.style.marginRight = '10px';
-		tabItemGroupTitle.style.borderRadius = '5px';
 	}
 
 	const tabItemTitle = document.createElement('span');
-	tabItemTitle.className = 'tab-item';
+	tabItemTitle.className = 'ts-tab-item-title';
 	tabItemTitle.textContent = tab.title;
-	tabItemTitle.style.fontSize = '12px';
-	tabItemTitle.style.whiteSpace = 'nowrap';
-	tabItemTitle.style.overflow = 'hidden';
-	tabItemTitle.style.textOverflow = 'ellipsis';
-	tabItemTitle.style.color = '#b3ccd6';
 
 	if (tab.favIconUrl) {
 		const tabItemImg = document.createElement('img');
 		tabItemImg.src = tab.favIconUrl;
-		tabItemImg.style.width = '18px';
-		tabItemImg.style.height = '18px';
-		tabItemImg.style.marginRight = '10px';
-		tabItemImg.style.display = 'inline-block';
+		tabItemImg.className = 'ts-tab-item-img';
 
 		tabItem.appendChild(tabItemImg);
 	}
