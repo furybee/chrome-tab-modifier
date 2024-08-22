@@ -57,7 +57,6 @@ export const initTabSpot = async () => {
 			overflow-y: auto!important;
 			max-height: 240px!important;
 			padding: 4px 5px 10px!important;
-			
     	scrollbar-color: #ffffff40 #0000!important;
 		}
 		
@@ -68,6 +67,11 @@ export const initTabSpot = async () => {
 			display: flex!important;
 			flex-direction: row!important;
 			align-items: center!important;
+			overflow: hidden!important;
+		}
+		
+		.ts-tab-list-container .ts-tab-item-list-container .ts-tab-item div {
+			overflow: hidden!important;
 		}
 		
 		.ts-tab-list-container .ts-tab-item-list-container .ts-tab-item .ts-tab-item-title {
@@ -76,6 +80,16 @@ export const initTabSpot = async () => {
 			overflow: hidden!important;
 			text-overflow: ellipsis!important;
 			color: #b3ccd6!important;
+		}
+		
+		.ts-tab-list-container .ts-tab-item-list-container .ts-tab-item .ts-tab-item-url {
+			font-size: 11px!important;
+			white-space: nowrap!important;
+			overflow: hidden!important;
+			text-overflow: ellipsis!important;
+			color: #b3ccd6!important;
+			opacity: 70%;
+			margin-top: 3px;
 		}
 		
 		.ts-tab-list-container .ts-tab-item-list-container .ts-tab-item .ts-tab-item-img {
@@ -253,16 +267,35 @@ const createTabItem = (tab) => {
 	tabItemTitle.className = 'ts-tab-item-title';
 	tabItemTitle.textContent = tab.title;
 
+	const tabItemUrl = document.createElement('div');
+	tabItemUrl.className = 'ts-tab-item-url';
+	tabItemUrl.textContent = tab.url;
+
 	if (tab.favIconUrl) {
 		const tabItemImg = document.createElement('img');
 		tabItemImg.src = tab.favIconUrl;
 		tabItemImg.className = 'ts-tab-item-img';
 
 		tabItem.appendChild(tabItemImg);
+	} else {
+		const tabItemImg = document.createElement('div');
+		tabItemImg.className = 'ts-tab-item-img';
+
+		tabItem.appendChild(tabItemImg);
 	}
 
-	tabItem.appendChild(tabItemGroupTitle);
-	tabItem.appendChild(tabItemTitle);
+	const tabItemTextGroup = document.createElement('div');
+	const tabItemText1 = document.createElement('div');
+	const tabItemText2 = document.createElement('div');
+
+	tabItemText1.appendChild(tabItemGroupTitle);
+	tabItemText1.appendChild(tabItemTitle);
+	tabItemText2.appendChild(tabItemUrl);
+
+	tabItemTextGroup.appendChild(tabItemText1);
+	tabItemTextGroup.appendChild(tabItemText2);
+
+	tabItem.appendChild(tabItemTextGroup);
 
 	tabItem.addEventListener('click', async () => {
 		closeTabSpot();
