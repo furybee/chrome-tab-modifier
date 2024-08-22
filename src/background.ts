@@ -92,7 +92,6 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
 
 	switch (message.action) {
 		case 'tabSpot:refresh':
-			console.log('refresh', message);
 			// eslint-disable-next-line no-case-declarations
 			const tabs = await chrome.tabs.query({});
 			// eslint-disable-next-line no-case-declarations
@@ -149,7 +148,6 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
 
 			break;
 		case 'tabSpot:activateTab':
-			console.log('activateTab');
 			if (message.tabId) {
 				await chrome.tabs.update(message.tabId, { active: true });
 				// Move tab to selected window
