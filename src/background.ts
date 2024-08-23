@@ -150,7 +150,6 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
 		case 'tabSpot:activateTab':
 			if (message.tabId) {
 				await chrome.tabs.update(message.tabId, { active: true });
-				// Move tab to selected window
 				await chrome.windows.update(message.windowId, { focused: true });
 			}
 			break;

@@ -57,7 +57,7 @@ export const initTabSpot = async () => {
 			overflow-y: auto!important;
 			max-height: 240px!important;
 			padding: 4px 5px 10px!important;
-    	scrollbar-color: #ffffff40 #0000!important;
+			scrollbar-color: #ffffff40 #0000!important;
 		}
 		
 		.ts-tab-list-container .ts-tab-item-list-container .ts-tab-item {
