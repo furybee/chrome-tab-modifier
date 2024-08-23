@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Tab Modifier",
-  "version": "1.0.9",
+  "version": "1.0.11",
   "description": "Take control of your tabs",
   "homepage_url": "https://github.com/furybee/chrome-tab-modifier",
   "default_locale": "en",

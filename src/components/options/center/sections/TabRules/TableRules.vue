@@ -77,6 +77,7 @@ import { useRulesStore } from '../../../../../stores/rules.store.ts';
 import RefreshButton from '../../../../global/RefreshButton.vue';
 import { _chromeGroupColor, _shortify, translate } from '../../../../../common/helpers.ts';
 import ColorVisualizer from '../TabGroups/ColorVisualizer.vue';
+import { computed, watch } from 'vue';
 import draggable from 'vuedraggable';
 
 const props = defineProps<{
