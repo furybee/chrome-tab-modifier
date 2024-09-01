@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "mitt": "^3.0.1",
-    "pinia": "^2.1.7",
+    "pinia": "^2.2.2",
     "vue": "^3.4.21",
     "vuedraggable": "^4.1.0"
   },
