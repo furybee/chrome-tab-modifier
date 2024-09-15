@@ -1,0 +1,10 @@
+certifi==2024.6.2
+charset-normalizer==3.3.2
+click==8.1.7
+idna==3.7
+libretranslatepy==2.1.1
+lxml==5.2.2
+requests==2.32.3
+tqdm==4.66.4
+translate==3.6.1
+urllib3==2.2.2

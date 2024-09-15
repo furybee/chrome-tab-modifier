@@ -1,6 +1,6 @@
-import { _getRuleFromUrl } from './common/storage.ts';
-
-const STORAGE_KEY = 'tab_modifier';
+import { _getRuleFromUrl, LOCALE_STORAGE_KEY, STORAGE_KEY } from './common/storage.ts';
+import { translate } from './common/helpers.ts';
+import { loadLocaleMessages } from './i18n-loader.ts';
 
 export function updateTitle(title, tag, value) {
 	return value ? title.replace(tag, decodeURI(value)) : title;
@@ -246,6 +246,21 @@ export async function applyRule(ruleParam, updateTitle) {
 	});
 }
 
+let locale = 'en';
+chrome.storage.local.get(LOCALE_STORAGE_KEY, async (items) => {
+	locale = items?.[LOCALE_STORAGE_KEY];
+	if (!locale) {
+		locale = 'en';
+	}
+
+	loadLocaleMessages(locale);
+
+	await chrome.runtime.sendMessage({
+		action: 'setLocale',
+		locale: locale,
+	});
+});
+
 chrome.storage.local.get(STORAGE_KEY, async (items) => {
 	const tabModifier = items?.[STORAGE_KEY];
 
@@ -258,9 +273,7 @@ chrome.storage.local.get(STORAGE_KEY, async (items) => {
 
 chrome.runtime.onMessage.addListener(async function (request) {
 	if (request.action === 'openPrompt') {
-		const title = prompt(
-			'Enter the new title, a Tab rule will be automatically created for you based on current URL'
-		);
+		const title = prompt(translate('context_menu_rename_tab_title', locale));
 
 		if (title) {
 			await chrome.runtime.sendMessage({

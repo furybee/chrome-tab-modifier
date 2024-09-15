@@ -62,8 +62,8 @@
 
 <script lang="ts" setup>
 import Menu from './components/options/left/Menu.vue';
-import { GLOBAL_EVENTS, Components, MenuItem } from './common/types.ts';
-import { inject, onMounted, ref, computed } from 'vue';
+import { Components, GLOBAL_EVENTS, MenuItem } from './common/types.ts';
+import { computed, inject, onMounted, ref } from 'vue';
 import TabRulesPane from './components/options/center/sections/TabRulesPane.vue';
 import TabGroupsPane from './components/options/center/sections/TabGroupsPane.vue';
 import SettingsPane from './components/options/center/sections/SettingsPane.vue';
@@ -75,6 +75,7 @@ import { useRulesStore } from './stores/rules.store.ts';
 import Toaster from './components/global/Toaster.vue';
 import PlusIcon from './components/icons/PlusIcon.vue';
 import { useMenuStore } from './stores/menu.store.ts';
+import { translate } from './common/helpers.ts';
 
 const emitter: any = inject('emitter');
 
@@ -88,22 +89,22 @@ const panes: Components = {
 
 const sectionItems = [
 	{
-		title: 'Rules',
+		title: translate('options_section_item_rules'),
 		icon: 'TabRulesIcon',
 		component: 'TabRulesPane',
 	},
 	{
-		title: 'Groups',
+		title: translate('options_section_item_groups'),
 		icon: 'TabGroupsIcon',
 		component: 'TabGroupsPane',
 	},
 	{
-		title: 'Settings',
+		title: translate('options_section_item_settings'),
 		icon: 'SettingsIcon',
 		component: 'SettingsPane',
 	},
 	{
-		title: 'Help',
+		title: translate('options_section_item_help'),
 		icon: 'HelpIcon',
 		component: 'HelpPane',
 	},
@@ -121,7 +122,7 @@ const resourceItems = [
 		link: 'https://github.com/furybee/chrome-tab-modifier',
 	},
 	{
-		title: 'Donate',
+		title: translate('options_resource_item_donate'),
 		icon: 'DonationIcon',
 		component: 'DonationPane',
 	},

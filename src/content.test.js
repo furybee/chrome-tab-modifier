@@ -1,8 +1,9 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { updateTitle, getTextBySelector, processTitle, processIcon, applyRule } from './content.js';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { applyRule, getTextBySelector, processIcon, processTitle, updateTitle } from './content.js';
 import { _getRuleFromUrl } from './common/storage.ts';
 
 import { chrome } from './__mocks__/chrome.js';
+
 global.chrome = chrome;
 
 vi.mock('./common/storage.ts');

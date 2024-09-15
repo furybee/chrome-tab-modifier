@@ -24,6 +24,9 @@ dist-ssr
 *.sln
 *.sw?
 
+.venv
+__pycache__
+
 tab-modifier.zip
 /deploy/*
 

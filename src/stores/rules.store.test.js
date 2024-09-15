@@ -1,10 +1,9 @@
-import { setActivePinia, createPinia } from 'pinia';
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { createPinia, setActivePinia } from 'pinia';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import {
+	_getDefaultTabModifierSettings,
 	_getStorageAsync,
 	_setStorage,
-	_clearStorage,
-	_getDefaultTabModifierSettings,
 } from '../common/storage.ts';
 import { useRulesStore } from './rules.store.ts';
 

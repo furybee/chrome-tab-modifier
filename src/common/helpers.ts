@@ -1,3 +1,7 @@
+import i18n from '../i18n';
+import { Messages } from './types.ts';
+import { globalLocale } from './storage.ts';
+
 export function _clone(obj: any) {
 	if (obj === null || typeof obj !== 'object') {
 		return obj;
@@ -49,6 +53,28 @@ export function _chromeGroupColor(color: string) {
 	return '#dadce0';
 }
 
+export const translate = (key: string, locale: string | undefined = undefined): string => {
+	if (!locale) {
+		locale = globalLocale ?? 'en';
+	}
+
+	const messages = i18n.global.getLocaleMessage(locale) as Messages;
+
+	const translation = messages[key]?.message ?? key;
+
+	if (translation === key) {
+		console.error(
+			`[intlify] Not found '${key}' key in '${i18n.global.locale.value}' locale messages.`
+		);
+
+		if (locale !== 'en') {
+			return translate(key, 'en');
+		}
+	}
+
+	return translation;
+};
+
 export function _isDefined(...args: any[]) {
 	return args.every((arg) => arg !== undefined);
 }
@@ -61,6 +87,16 @@ export function _getThemes() {
 		{ label: 'Light', value: 'light' },
 		{ label: 'Cupcake', value: 'cupcake' },
 		{ label: 'Valentine', value: 'valentine' },
+	];
+}
+
+export function _getLocales() {
+	return [
+		{ label: 'English', value: 'en' },
+		{ label: 'Français', value: 'fr' },
+		{ label: 'Español', value: 'es' },
+		{ label: 'Deutsch', value: 'de' },
+		{ label: 'Italiano', value: 'it' },
 	];
 }
 
