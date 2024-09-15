@@ -10,9 +10,10 @@
     "coverage": "npx vitest --run --coverage.enabled true",
     "dev": "rm -rf ./dist && vite",
     "tsc": "vue-tsc",
-    "build": "rm -rf ./dist && vite build",
+    "build": "rm -rf ./dist && vite build && yarn fix-csp",
     "preview": "vite preview",
-    "build-zip": "rm -rf ./dist && rm -f tab-modifier.zip && yarn build && cd ./dist && zip -r ../tab-modifier.zip *"
+    "fix-csp": "node fix-csp.js",
+    "build-zip": "rm -rf ./dist && rm -f tab-modifier.zip && yarn build && yarn fix-csp && cd ./dist && zip -r ../tab-modifier.zip *"
   },
   "dependencies": {
     "mitt": "^3.0.1",

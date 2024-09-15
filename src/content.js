@@ -1,12 +1,58 @@
-import { _getRuleFromUrl } from './common/storage.ts';
+function _getStorageAsync() {
+	return new Promise((resolve, reject) => {
+		chrome.storage.local.get(STORAGE_KEY, (items) => {
+			if (chrome.runtime.lastError) {
+				reject(new Error(chrome.runtime.lastError.message));
+			} else {
+				resolve(items[STORAGE_KEY]);
+			}
+		});
+	});
+}
+
+async function _getRuleFromUrl(url) {
+	const tabModifier = await _getStorageAsync();
+	if (!tabModifier) {
+		return;
+	}
+
+	const foundRule = tabModifier.rules.find((r) => {
+		const detectionType = r.detection ?? 'CONTAINS';
+		const urlFragment = r.url_fragment;
+
+		switch (detectionType) {
+			case 'CONTAINS':
+				return url.includes(urlFragment);
+			case 'STARTS':
+			case 'STARTS_WITH':
+				return url.startsWith(urlFragment);
+			case 'ENDS':
+			case 'ENDS_WITH':
+				return url.endsWith(urlFragment);
+			case 'REGEX':
+			case 'REGEXP':
+				return new RegExp(urlFragment).test(url);
+			case 'EXACT':
+				return url === urlFragment;
+			default:
+				return false;
+		}
+	});
+
+	if (!foundRule) {
+		return;
+	}
+
+	return foundRule;
+}
 
 const STORAGE_KEY = 'tab_modifier';
 
-export function updateTitle(title, tag, value) {
+function updateTitle(title, tag, value) {
 	return value ? title.replace(tag, decodeURI(value)) : title;
 }
 
-export function getTextBySelector(selector) {
+function getTextBySelector(selector) {
 	let el = null;
 
 	if (selector.includes('*')) {
@@ -52,7 +98,7 @@ export function getTextBySelector(selector) {
 	return value.trim();
 }
 
-export function processTitle(currentUrl, currentTitle, rule) {
+function processTitle(currentUrl, currentTitle, rule) {
 	let title = rule.tab.title;
 	const matches = title.match(/\{([^}]+)}/g);
 
@@ -109,7 +155,7 @@ export function processTitle(currentUrl, currentTitle, rule) {
 	return title;
 }
 
-export function processIcon(newIcon) {
+function processIcon(newIcon) {
 	const icons = document.querySelectorAll('head link[rel*="icon"]');
 
 	icons.forEach((icon) => {
@@ -135,7 +181,7 @@ export function processIcon(newIcon) {
 	return true;
 }
 
-export async function applyRule(ruleParam, updateTitle) {
+async function applyRule(ruleParam, updateTitle) {
 	const rule = ruleParam ?? (await _getRuleFromUrl(location.href));
 	updateTitle = updateTitle ?? true;
 
