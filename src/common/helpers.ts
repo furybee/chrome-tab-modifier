@@ -113,6 +113,11 @@ export function _getIcons() {
 			icon: assets + 'chrome/settings.png',
 		},
 		{
+			label: 'Transparent',
+			value: 'chrome/transparent.png',
+			icon: assets + 'chrome/transparent.png',
+		},
+		{
 			label: 'amber',
 			value: 'bullets/bullet-amber.png',
 			icon: assets + 'bullets/bullet-amber.png',

@@ -1,3 +1,9 @@
 @tailwind base;
 @tailwind components;
+
+.tooltip:before {
+    text-wrap: nowrap;
+    max-width: none !important;
+}
+
 @tailwind utilities;
