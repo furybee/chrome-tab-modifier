@@ -25,6 +25,7 @@ export type Rule = {
 	detection: string;
 	url_fragment: string;
 	tab: Tab;
+	is_enabled: boolean;
 };
 
 export type Group = {

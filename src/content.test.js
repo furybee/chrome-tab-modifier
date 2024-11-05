@@ -1,4 +1,4 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { updateTitle, getTextBySelector, processTitle, processIcon, applyRule } from './content.js';
 import { _getRuleFromUrl } from './common/storage.ts';
 
@@ -9,6 +9,7 @@ vi.mock('./common/storage.ts');
 
 describe('Content', () => {
 	beforeEach(() => {
+		document.title = 'Original Title';
 		document.body.innerHTML = '';
 		vi.clearAllMocks();
 		global.chrome = chrome;
@@ -252,16 +253,29 @@ describe('Content', () => {
 		});
 	});
 
+	describe('applyDisabledRule', () => {
+		it('should not apply disabled rule', async () => {
+			const rule = {
+				is_enabled: false,
+				tab: {
+					title: 'New Title 2',
+				},
+			};
+			document.title = 'Original Title';
+			await applyRule(rule);
+			expect(document.title).toBe('Original Title');
+		});
+	});
+
 	describe('applyRule', () => {
 		it('should apply title rule', async () => {
 			const rule = {
 				tab: {
-					title: 'New Title',
+					title: 'New Title 1',
 				},
 			};
-			_getRuleFromUrl.mockResolvedValue(rule);
 			await applyRule(rule);
-			expect(document.title).toBe('New Title');
+			expect(document.title).toBe('New Title 1');
 		});
 
 		it('should apply favicon rule', async () => {

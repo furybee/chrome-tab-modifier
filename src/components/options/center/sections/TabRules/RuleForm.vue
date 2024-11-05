@@ -1,6 +1,14 @@
 <template>
-	<h3 v-if="options.showTitle" class="font-bold text-lg flex justify-between mb-2">
-		<span v-if="isEditMode">Edit rule</span>
+	<h3 v-if="options.showTitle" class="font-bold text-lg flex justify-between mb-2 gap-4">
+		<div v-if="isEditMode" class="flex justify-between w-full items-center justify-center">
+			<span>Edit rule</span>
+
+			<input
+				v-model="currentRule.is_enabled"
+				type="checkbox"
+				class="toggle toggle-xs toggle-primary"
+			/>
+		</div>
 		<span v-else>Add a new rule</span>
 
 		<div class="flex gap-2 items-center">
