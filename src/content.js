@@ -182,14 +182,19 @@ export function processIcon(newIcon) {
 }
 
 export async function applyRule(ruleParam, updateTitle) {
-	const rule = ruleParam ?? (await _getRuleFromUrl(location.href));
+	console.log('Received ruleParam:', ruleParam);
+	const rule = ruleParam !== undefined ? ruleParam : await _getRuleFromUrl(location.href);
 	updateTitle = updateTitle ?? true;
 
 	if (!rule) {
 		return;
 	}
 
-	if (rule.is_enabled === undefined || !rule.is_enabled) {
+	if (rule.is_enabled === undefined) {
+		rule.is_enabled = true;
+	}
+
+	if (rule.is_enabled === false) {
 		return;
 	}
 
