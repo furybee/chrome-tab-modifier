@@ -143,11 +143,11 @@ Customize GMail title with Title matcher and URL matcher:
 
 Tab title will be: "youremail@gmail.com | mail.google.com"
 
-❌ Github final path as title for blobs:
+Github filename as title for blobs:
 
 * **Detection**: RegExp
 * **URL fragment**: github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)/blob/
-* **Title**: {.final-path}
+* **Title**: {#file-name-id-wide}
 
 And now, build your own... 💪
 
