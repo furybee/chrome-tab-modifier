@@ -264,6 +264,19 @@ describe('Content', () => {
 			expect(document.title).toBe('New Title');
 		});
 
+		it('should not apply disabled rule', async () => {
+			const rule = {
+				is_enabled: false,
+				tab: {
+					title: 'New Title',
+				},
+			};
+			document.title = 'Original Title';
+			_getRuleFromUrl.mockResolvedValue(rule);
+			await applyRule(rule);
+			expect(document.title).toBe('Original Title');
+		});
+
 		it('should apply favicon rule', async () => {
 			const rule = {
 				tab: {
