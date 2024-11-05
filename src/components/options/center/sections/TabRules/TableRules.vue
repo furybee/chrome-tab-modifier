@@ -3,6 +3,7 @@
 		<table class="table table-zebra">
 			<thead>
 				<tr>
+					<th scope="col"></th>
 					<th scope="col">Name</th>
 					<th scope="col">Group</th>
 					<th scope="col">Title</th>
@@ -16,6 +17,23 @@
 			<draggable v-model="rules" tag="tbody" item-key="id" @end="onDragEnd">
 				<template #item="{ element: rule }">
 					<tr class="group cursor-pointer hover:bg-base-100" @click="editRule(rule)">
+						<td>
+							<div class="tooltip tooltip-right" data-tip="Enable / Disable Rule">
+								<input
+									v-if="rule.is_enabled"
+									checked="checked"
+									type="checkbox"
+									class="toggle toggle-xs toggle-primary"
+									@click.prevent="(event) => toggleRule(event, rule)"
+								/>
+								<input
+									v-else
+									type="checkbox"
+									class="toggle toggle-xs toggle-success"
+									@click.prevent="(event) => toggleRule(event, rule)"
+								/>
+							</div>
+						</td>
 						<td scope="row">{{ rule.name }}</td>
 						<td>
 							<template v-if="!rule.tab.group_id">-</template>
@@ -127,6 +145,17 @@ const editRule = (rule: Rule) => {
 	emitter.emit(GLOBAL_EVENTS.OPEN_ADD_RULE_MODAL, {
 		rule,
 	} as RuleModalParams);
+};
+
+const toggleRule = async (event: MouseEvent, rule: Rule) => {
+	event.stopPropagation();
+
+	if (typeof rule.is_enabled === 'undefined') {
+		rule.is_enabled = true;
+	}
+
+	await rulesStore.toggleRule(rule.id);
+	rules.value = [...rulesStore.rules]; // Update the rules array after toggling
 };
 
 const duplicateRule = async (event: MouseEvent, ruleId: string) => {

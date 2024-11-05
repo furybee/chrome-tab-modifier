@@ -17,6 +17,7 @@ export function _getDefaultTabModifierSettings(): TabModifierSettings {
 export function _getDefaultRule(name: string, title: string, urlFragment: string): Rule {
 	return {
 		id: _generateRandomId(),
+		is_enabled: true,
 		name: name,
 		detection: 'CONTAINS',
 		url_fragment: urlFragment,

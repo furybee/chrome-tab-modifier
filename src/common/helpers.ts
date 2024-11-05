@@ -1,3 +1,5 @@
+import { Rule } from './types.ts';
+
 export function _clone(obj: any) {
 	if (obj === null || typeof obj !== 'object') {
 		return obj;
@@ -230,6 +232,14 @@ export function _getIcons() {
 	];
 }
 
-export function _generateRandomId() {
+export function _generateRandomId(): string {
 	return Math.random().toString(36).substring(2, 9);
+}
+
+export function _isRuleEnabled(rule: Rule): boolean {
+	if (rule.is_enabled === undefined) {
+		return true;
+	}
+
+	return rule.is_enabled;
 }
