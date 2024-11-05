@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import { Group, Rule, Settings, TabModifierSettings } from '../common/types.ts';
-import { _clone, _generateRandomId } from '../common/helpers.ts';
+import { _clone, _generateRandomId, _isRuleEnabled } from '../common/helpers.ts';
 import {
 	_clearStorage,
 	_getDefaultTabModifierSettings,
@@ -34,6 +34,17 @@ export const useRulesStore = defineStore('rules', {
 				}
 
 				uniqueIds.add(rule.id);
+
+				return rule;
+			});
+
+			return rules;
+		},
+		fixRuleIsEnabled(rules: Rule[]) {
+			rules = rules.map((rule) => {
+				if (rule.is_enabled === undefined) {
+					rule.is_enabled = true;
+				}
 
 				return rule;
 			});
@@ -106,6 +117,7 @@ export const useRulesStore = defineStore('rules', {
 					tabModifier.groups = tabModifier.groups ?? [];
 					tabModifier.rules = this.handleMissingRuleSettings(tabModifier.rules);
 					tabModifier.rules = this.fixDuplicateRuleIds(tabModifier.rules);
+					tabModifier.rules = this.fixRuleIsEnabled(tabModifier.rules);
 					tabModifier.groups = this.addMissingInvisibleChar(tabModifier.groups);
 
 					this.groups = tabModifier.groups;
@@ -129,6 +141,7 @@ export const useRulesStore = defineStore('rules', {
 				config.groups = config.groups ?? [];
 				config.rules = this.handleMissingRuleSettings(config.rules);
 				config.rules = this.fixDuplicateRuleIds(config.rules);
+				config.rules = this.fixRuleIsEnabled(config.rules);
 				config.groups = this.addMissingInvisibleChar(config.groups);
 
 				const defaultConfig = _getDefaultTabModifierSettings();
@@ -244,6 +257,15 @@ export const useRulesStore = defineStore('rules', {
 			const index = this.getRuleIndexById(ruleId);
 
 			this.rules.splice(index, 1);
+
+			await this.save();
+		},
+		async toggleRule(ruleId: string) {
+			const index = this.getRuleIndexById(ruleId);
+			const rule = this.rules[index];
+			const isEnabled = _isRuleEnabled(rule);
+
+			this.rules[index].is_enabled = !isEnabled;
 
 			await this.save();
 		},

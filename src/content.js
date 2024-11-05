@@ -189,6 +189,10 @@ export async function applyRule(ruleParam, updateTitle) {
 		return;
 	}
 
+	if (rule.is_enabled === undefined || !rule.is_enabled) {
+		return;
+	}
+
 	if (rule.tab.title && updateTitle) {
 		let originalTitleElement = document.querySelector('meta[name="original-tab-modifier-title"]');
 
