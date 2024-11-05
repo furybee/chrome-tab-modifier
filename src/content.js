@@ -48,11 +48,11 @@ async function _getRuleFromUrl(url) {
 
 const STORAGE_KEY = 'tab_modifier';
 
-function updateTitle(title, tag, value) {
+export function updateTitle(title, tag, value) {
 	return value ? title.replace(tag, decodeURI(value)) : title;
 }
 
-function getTextBySelector(selector) {
+export function getTextBySelector(selector) {
 	let el = null;
 
 	if (selector.includes('*')) {
@@ -98,7 +98,7 @@ function getTextBySelector(selector) {
 	return value.trim();
 }
 
-function processTitle(currentUrl, currentTitle, rule) {
+export function processTitle(currentUrl, currentTitle, rule) {
 	let title = rule.tab.title;
 	const matches = title.match(/\{([^}]+)}/g);
 
@@ -155,7 +155,7 @@ function processTitle(currentUrl, currentTitle, rule) {
 	return title;
 }
 
-function processIcon(newIcon) {
+export function processIcon(newIcon) {
 	const icons = document.querySelectorAll('head link[rel*="icon"]');
 
 	icons.forEach((icon) => {
@@ -181,7 +181,7 @@ function processIcon(newIcon) {
 	return true;
 }
 
-async function applyRule(ruleParam, updateTitle) {
+export async function applyRule(ruleParam, updateTitle) {
 	const rule = ruleParam ?? (await _getRuleFromUrl(location.href));
 	updateTitle = updateTitle ?? true;
 
