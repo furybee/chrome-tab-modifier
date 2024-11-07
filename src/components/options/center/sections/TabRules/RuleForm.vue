@@ -1,13 +1,7 @@
 <template>
 	<h3 v-if="options.showTitle" class="font-bold text-lg flex justify-between mb-2 gap-4">
-		<div v-if="isEditMode" class="flex justify-between w-full items-center justify-center">
+		<div v-if="isEditMode" class="flex w-full items-center">
 			<span>Edit rule</span>
-
-			<input
-				v-model="currentRule.is_enabled"
-				type="checkbox"
-				class="toggle toggle-xs toggle-primary"
-			/>
 		</div>
 		<span v-else>Add a new rule</span>
 
@@ -262,18 +256,45 @@
 		</details>
 	</div>
 
-	<div class="modal-action items-center">
-		<p v-if="showHelp" class="py-4 opacity-80">Remember refresh your tabs after saving</p>
-		<form v-if="options.showCancel" method="dialog">
-			<button class="btn btn-sm">Close <kbd v-if="showHelp" class="kbd kbd-xs">esc</kbd></button>
-		</form>
-		<button
-			:disabled="!isFirstPartFilled"
-			class="btn btn-sm btn-outline btn-primary ml-4 group"
-			@click="save"
-		>
-			Save
-		</button>
+	<div class="flex items-center w-full bg-base-300 px-3 py-2 rounded-2xl mt-8">
+		<div class="flex-1">
+			<div class="form-control">
+				<label class="flex items-center gap-2 cursor-pointer">
+					<input
+						v-model="currentRule.is_enabled"
+						type="checkbox"
+						class="toggle toggle-xs toggle-success"
+					/>
+					<span class="label-text text-sm text-nowrap">
+						<template v-if="currentRule.is_enabled">Enabled</template>
+						<template v-else>Disabled</template>
+					</span>
+				</label>
+				<div v-if="showHelp">
+					<div class="label">
+						<span class="text-xs opacity-80 label-text-alt">
+							If the rule is not enabled, it will not be applied.
+						</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="flex-1 flex justify-end items-center gap-4">
+			<p v-if="showHelp" class="py-4 opacity-80">Remember refresh your tabs after saving</p>
+
+			<form v-if="options.showCancel" method="dialog">
+				<button class="btn btn-sm text-nowrap whitespace-nowrap flex flex-nowrap">
+					Close <kbd v-if="showHelp" class="kbd kbd-xs">esc</kbd>
+				</button>
+			</form>
+			<button
+				:disabled="!isFirstPartFilled"
+				class="btn btn-sm btn-outline btn-primary group"
+				@click="save"
+			>
+				Save
+			</button>
+		</div>
 	</div>
 </template>
 <script lang="ts" setup>
