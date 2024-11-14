@@ -248,7 +248,9 @@ describe('Content', () => {
 			processIcon('new-icon.png');
 			const oldIcon = document.querySelector('link[href="old-icon.png"]');
 			const newIcon = document.querySelector('link[href*="new-icon.png"]');
-			expect(oldIcon).toBeFalsy();
+
+			expect(oldIcon).toBeTruthy();
+			expect(oldIcon.rel).toBe('old-icon');
 			expect(newIcon).toBeTruthy();
 		});
 	});

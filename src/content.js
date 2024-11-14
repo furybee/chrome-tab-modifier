@@ -162,10 +162,8 @@ export function processIcon(newIcon) {
 		// ⚠️ icon.remove() causes issues with some websites
 		// https://github.com/furybee/chrome-tab-modifier/issues/354
 		// icon.remove();
-		// Instead, remove all attributes
-		icon.getAttributeNames().forEach((attr) => {
-			icon.removeAttribute(attr);
-		});
+		// Instead, we'll just change the rel attribute
+		icon.setAttribute('rel', 'old-icon');
 	});
 
 	const iconUrl = /^(https?|data):/.test(newIcon)
