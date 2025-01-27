@@ -180,7 +180,6 @@ export function processIcon(newIcon) {
 }
 
 export async function applyRule(ruleParam, updateTitle) {
-	console.log('Received ruleParam:', ruleParam);
 	const rule = ruleParam !== undefined ? ruleParam : await _getRuleFromUrl(location.href);
 	updateTitle = updateTitle ?? true;
 
