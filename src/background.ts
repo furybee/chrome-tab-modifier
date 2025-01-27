@@ -232,7 +232,6 @@ async function applyGroupRuleToTab(
 	const tabGroupsQueryInfo = {
 		title: tmGroup.title,
 		color: tmGroup.color,
-		collapsed: tmGroup.collapsed,
 		windowId: tab.windowId,
 	};
 
