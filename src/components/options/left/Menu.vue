@@ -7,7 +7,7 @@
 			>
 				<component :is="icons[menuItem.icon]" class="menuItem-icon" />
 				{{ menuItem.title }}
-				<template v-if="menuItem.component === 'TabGroupsPane'">
+				<template v-if="menuItem.component === 'HelpPane'">
 					<NewFeature />
 				</template>
 				<template v-if="menuItem.link">
