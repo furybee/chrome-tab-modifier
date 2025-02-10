@@ -298,14 +298,14 @@ export async function applyRule(ruleParam, updateTitle) {
 	});
 }
 
-chrome.storage.local.get(STORAGE_KEY, async (items) => {
+chrome.storage.local.get(STORAGE_KEY, (items) => {
 	const tabModifier = items?.[STORAGE_KEY];
 
 	if (!tabModifier) {
 		return;
 	}
 
-	await applyRule();
+	applyRule().then(() => console.log('Tab Modifier rules applied'));
 });
 
 chrome.runtime.onMessage.addListener(async function (request) {

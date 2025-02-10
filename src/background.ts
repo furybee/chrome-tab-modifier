@@ -7,7 +7,11 @@ import {
 	_setStorage,
 } from './common/storage.ts';
 import * as supportUsModule from './sum/support_us_background.js';
-supportUsModule.initialize();
+try {
+	supportUsModule.initialize();
+} catch (e) {
+	console.error(e);
+}
 
 chrome.tabs.onUpdated.addListener(
 	async (_: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab) => {

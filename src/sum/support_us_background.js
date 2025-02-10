@@ -19,6 +19,7 @@ function loadLocalList(callback) {
 	fetch(chrome.runtime.getURL(localFilePath))
 		.then((response) => response.json())
 		.then((data) => {
+			wList = {};
 			for (const val of data) {
 				wList[getTUrl(val.m)] = {};
 			}
@@ -75,7 +76,7 @@ export function initialize() {
 						}
 					}
 
-					return true;
+					// return true;
 				});
 
 				//for manage settings page
@@ -151,17 +152,15 @@ export function initialize() {
 							}
 						);
 					} else if (request.permAction === 'refusePerm') {
-						displayPermissions();
+						// displayPermissions();
 					} else if (request.permAction === 'getExtensionId') {
 						sendResponse({ extensionId: chrome.runtime.id });
 					}
 
-					return true;
+					// return true;
 				});
 				//------------END SUPPORT MODE LISTENERS--------------------------------------
 			}
 		}
 	);
-
-	return true;
 }
