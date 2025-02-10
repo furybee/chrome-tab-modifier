@@ -2,7 +2,7 @@
   "update_url": "https://clients2.google.com/service/update2/crx",
   "manifest_version": 3,
   "name": "Tab Modifier",
-  "version": "1.0.14",
+  "version": "1.0.16",
   "description": "Take control of your tabs",
   "homepage_url": "https://github.com/furybee/chrome-tab-modifier",
   "action": {
@@ -465,8 +465,7 @@
     "tabGroups",
     "storage",
     "contextMenus",
-    "scripting",
-    "permissions"
+    "scripting"
   ],
   "host_permissions": [
     "http://*/*",
