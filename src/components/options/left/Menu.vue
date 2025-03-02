@@ -7,9 +7,6 @@
 			>
 				<component :is="icons[menuItem.icon]" class="menuItem-icon" />
 				{{ menuItem.title }}
-				<template v-if="menuItem.component === 'TabGroupsPane'">
-					<NewFeature />
-				</template>
 				<template v-if="menuItem.link">
 					<ExternalIcon class="!w-3 !h-3" />
 				</template>
@@ -27,7 +24,6 @@ import HelpIcon from '../../icons/HelpIcon.vue';
 import GithubIcon from '../../icons/GithubIcon.vue';
 import DonationIcon from '../../icons/DonationIcon.vue';
 import ChromeIcon from '../../icons/ChromeIcon.vue';
-import NewFeature from '../../global/NewFeature.vue';
 import ExternalIcon from '../../icons/ExternalIcon.vue';
 import { useMenuStore } from '../../../stores/menu.store.ts';
 

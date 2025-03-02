@@ -6,10 +6,7 @@
 
 				<div class="grid grid-cols-6">
 					<div class="col-span-5">
-						<h3 class="font-bold">
-							Theme -
-							<NewFeature />
-						</h3>
+						<h3 class="font-bold">Theme</h3>
 						<p>Change Tab Modifier theme</p>
 					</div>
 					<div class="col-span-1">
@@ -123,7 +120,6 @@
 import CustomSelect from '../../../global/CustomSelect.vue';
 import { inject, ref, watch } from 'vue';
 import { useRulesStore } from '../../../../stores/rules.store.ts';
-import NewFeature from '../../../global/NewFeature.vue';
 import { GLOBAL_EVENTS } from '../../../../common/types.ts';
 import { _getThemes } from '../../../../common/helpers.ts';
 

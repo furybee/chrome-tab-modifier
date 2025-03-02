@@ -71,7 +71,7 @@
 		<div class="flex flex-wrap md:flex-nowrap gap-2 mt-4">
 			<div v-if="!isGroupFormVisible" class="form-control w-full md:max-w-xs md:flex-0">
 				<div class="label">
-					<span class="label-text text-sm">Group <NewFeature /></span>
+					<span class="label-text text-sm">Group</span>
 				</div>
 
 				<CustomSelect v-model="currentRule.tab.group_id" :items="availableGroups" />
@@ -83,7 +83,7 @@
 			<div v-else class="bg-base-300 rounded-md w-full md:max-w-xs md:flex-0 px-2 pb-2">
 				<div class="flex justify-between items-center">
 					<div class="label">
-						<span class="label-text text-sm">Group <NewFeature /></span>
+						<span class="label-text text-sm">Group</span>
 					</div>
 					<CloseIcon class="cursor-pointer hover:text-error !h-4 !w-4" @click="hideGroupForm" />
 				</div>
@@ -301,7 +301,6 @@
 import { useRulesStore } from '../../../../../stores/rules.store.ts';
 import { computed, inject, onMounted, ref, watch } from 'vue';
 import CustomSelect, { SelectItem } from '../../../../global/CustomSelect.vue';
-import NewFeature from '../../../../global/NewFeature.vue';
 import {
 	_chromeGroupColor,
 	_clone,

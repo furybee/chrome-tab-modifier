@@ -20,10 +20,7 @@
 					<li>You can rename a tab.</li>
 					<li>You can change any tab (fav)icon.</li>
 					<li>You can pin a website without effort.</li>
-					<li>
-						You can group your tabs easily.
-						<NewFeature />
-					</li>
+					<li>You can group your tabs easily.</li>
 					<li>You can protect some websites from accidental closure with a confirm box.</li>
 					<li>You can avoid duplicate tabs by setting up the unique property.</li>
 					<li>You can mute the sound of any website before it plays it.</li>
@@ -153,9 +150,7 @@
 	</div>
 </template>
 
-<script lang="ts" setup>
-import NewFeature from '../../../global/NewFeature.vue';
-</script>
+<script lang="ts" setup></script>
 
 <style scoped>
 h3 {
