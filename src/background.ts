@@ -6,8 +6,6 @@ import {
 	_getStorageAsync,
 	_setStorage,
 } from './common/storage.ts';
-import * as supportUsModule from './sum/support_us_background.js';
-supportUsModule.initialize();
 
 chrome.tabs.onUpdated.addListener(
 	async (_: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab) => {
@@ -235,7 +233,7 @@ async function applyGroupRuleToTab(
 		title: tmGroup.title,
 		color: tmGroup.color,
 		windowId: tab.windowId,
-	} as chrome.tabGroups.QueryInfo;
+	};
 
 	chrome.tabGroups.query(tabGroupsQueryInfo, (groups: chrome.tabGroups.TabGroup[]) =>
 		handleTabGroups(groups, tab, tmGroup)
