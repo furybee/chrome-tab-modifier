@@ -89,13 +89,12 @@
 <script lang="ts" setup>
 import DuplicateIcon from '../../../../icons/DuplicateIcon.vue';
 import DeleteIcon from '../../../../icons/DeleteIcon.vue';
-import { inject, ref } from 'vue';
+import { computed, inject, ref, watch } from 'vue';
 import { GLOBAL_EVENTS, Group, Rule, RuleModalParams } from '../../../../../common/types.ts';
 import { useRulesStore } from '../../../../../stores/rules.store.ts';
 import RefreshButton from '../../../../global/RefreshButton.vue';
 import { _chromeGroupColor, _shortify } from '../../../../../common/helpers.ts';
 import ColorVisualizer from '../TabGroups/ColorVisualizer.vue';
-import { computed, watch } from 'vue';
 import draggable from 'vuedraggable';
 
 const props = defineProps<{

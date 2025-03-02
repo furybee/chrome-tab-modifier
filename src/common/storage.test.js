@@ -1,15 +1,16 @@
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import {
-	_getDefaultTabModifierSettings,
-	_getDefaultRule,
-	_getDefaultGroup,
-	_getStorageAsync,
 	_clearStorage,
-	_setStorage,
+	_getDefaultGroup,
+	_getDefaultRule,
+	_getDefaultTabModifierSettings,
 	_getRuleFromUrl,
+	_getStorageAsync,
+	_setStorage,
 	STORAGE_KEY,
 } from './storage';
 import { chrome } from '../__mocks__/chrome';
+
 global.chrome = chrome;
 
 beforeEach(() => {
