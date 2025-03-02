@@ -6,13 +6,29 @@
 
 				<div class="grid grid-cols-6">
 					<div class="col-span-5">
-						<h3 class="font-bold">Theme</h3>
+						<h3 class="font-bold">
+							Theme -
+							<NewFeature />
+						</h3>
 						<p>Change Tab Modifier theme</p>
 					</div>
 					<div class="col-span-1">
 						<CustomSelect v-model="currentTheme" :items="themes" :show-clear-btn="false" />
 					</div>
 				</div>
+
+				<!--				<div class="grid grid-cols-6 mt-4">-->
+				<!--					<div class="col-span-5">-->
+				<!--						<h3 class="font-bold">Notifications</h3>-->
+				<!--						<p>-->
+				<!--							Enable "New version" toast, a tab is opened on each new version with a link to the-->
+				<!--							changelog-->
+				<!--						</p>-->
+				<!--					</div>-->
+				<!--					<div class="col-span-1">-->
+				<!--						<input checked class="toggle toggle-primary" type="checkbox" />-->
+				<!--					</div>-->
+				<!--				</div>-->
 			</div>
 		</div>
 
@@ -107,6 +123,7 @@
 import CustomSelect from '../../../global/CustomSelect.vue';
 import { inject, ref, watch } from 'vue';
 import { useRulesStore } from '../../../../stores/rules.store.ts';
+import NewFeature from '../../../global/NewFeature.vue';
 import { GLOBAL_EVENTS } from '../../../../common/types.ts';
 import { _getThemes } from '../../../../common/helpers.ts';
 

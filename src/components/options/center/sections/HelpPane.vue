@@ -20,7 +20,10 @@
 					<li>You can rename a tab.</li>
 					<li>You can change any tab (fav)icon.</li>
 					<li>You can pin a website without effort.</li>
-					<li>You can group your tabs easily.</li>
+					<li>
+						You can group your tabs easily.
+						<NewFeature />
+					</li>
 					<li>You can protect some websites from accidental closure with a confirm box.</li>
 					<li>You can avoid duplicate tabs by setting up the unique property.</li>
 					<li>You can mute the sound of any website before it plays it.</li>
@@ -145,60 +148,6 @@
 					will be applied. You can reorder your rules anyway.
 				</p>
 				<p>Some interesting tab rules are listed here for inspiration purposes.</p>
-			</div>
-		</div>
-
-		<div class="card bg-base-200 mt-4">
-			<div class="card-body">
-				<h2 class="card-title">Support Mode <NewFeature /></h2>
-
-				<p>Our extension is 100% free, and we want to keep it that way!</p>
-				<p>
-					With our <strong>Support-Mode</strong> activated, you enable us to display our
-					<strong>very non-intrusive Ad Partners logo in your search results</strong>.
-				</p>
-				<p>
-					If you visit the website of one of our Ad Partner, you contribute to the developement of
-					our extension.
-				</p>
-				<p>The best part is that it is 100% free :)</p>
-
-				<h3 class="font-bold mt-2">How it works?</h3>
-				<p>
-					When you visit one of these Ad Partners, they will be highlighted with a small
-					Support-Mode logo in your search results.
-				</p>
-				<p>
-					This logo helps you easily identify the Ad partners, and decide if you prefer to shop at
-					their website, which will help us get some advertising revenues out of it.
-				</p>
-
-				<h3 class="font-bold mt-2">How are our Ad Partners selected?</h3>
-
-				<p>
-					We carefully choose partners who align with our values and contribute to meaningful
-					causes.
-				</p>
-				<p>
-					Our Ad Partners include businesses that actively
-					<strong>support environmental and social initiatives</strong>, such as planting trees,
-					removing plastic from the ocean, preserving bee populations, and promoting sustainability.
-				</p>
-				<p>
-					By shopping with them, you not only support our extension but also help fund impactful
-					projects that make a real difference in the world.
-				</p>
-
-				<h3 class="font-bold mt-2">Privacy</h3>
-				<p>
-					This new feature doesn’t store any information or data, ensuring
-					<strong>full compliance with GDPR regulations</strong>.
-				</p>
-				<p>
-					We understand that trust is earned, which is why transparency and respect for your private
-					data remain at the heart of all our decisions.
-				</p>
-				<p>You can rely on us to maintain these standards consistently!!</p>
 			</div>
 		</div>
 	</div>
