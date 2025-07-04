@@ -1,3 +1,5 @@
+import { ACTION } from './common/const';
+
 function _getStorageAsync() {
 	return new Promise((resolve, reject) => {
 		chrome.storage.local.get(STORAGE_KEY, (items) => {
@@ -229,11 +231,11 @@ export async function applyRule(ruleParam, updateTitle) {
 
 	// Pinning, muting handled through Chrome Runtime messages
 	if (rule.tab.pinned) {
-		await chrome.runtime.sendMessage({ action: 'setPinned' });
+		await chrome.runtime.sendMessage({ action: ACTION.SET_PINNED });
 	}
 
 	if (rule.tab.muted) {
-		await chrome.runtime.sendMessage({ action: 'setMuted' });
+		await chrome.runtime.sendMessage({ action: ACTION.SET_MUTED });
 	}
 
 	let iconChangedByMe = false;
@@ -281,19 +283,19 @@ export async function applyRule(ruleParam, updateTitle) {
 
 	if (rule.tab.protected) {
 		await chrome.runtime.sendMessage({
-			action: 'setProtected',
+			action: ACTION.SET_PROTECTED,
 		});
 	}
 
 	if (rule.tab.unique) {
 		await chrome.runtime.sendMessage({
-			action: 'setUnique',
+			action: ACTION.SET_UNIQUE,
 			url_fragment: rule.url_fragment,
 		});
 	}
 
 	await chrome.runtime.sendMessage({
-		action: 'setGroup',
+		action: ACTION.SET_GROUP,
 		rule: rule,
 	});
 }
@@ -309,21 +311,21 @@ chrome.storage.local.get(STORAGE_KEY, async (items) => {
 });
 
 chrome.runtime.onMessage.addListener(async function (request) {
-	if (request.action === 'openPrompt') {
+	if (request.action === ACTION.OPEN_PROMPT) {
 		const title = prompt(
 			'Enter the new title, a Tab rule will be automatically created for you based on current URL'
 		);
 
 		if (title) {
 			await chrome.runtime.sendMessage({
-				action: 'renameTab',
+				action: ACTION.RENAME_TAB,
 				title: title,
 			});
 		}
-	} else if (request.action === 'applyRule') {
+	} else if (request.action === ACTION.APPLY_RULE) {
 		// Don't update title because it will be updated by the MutationObserver
 		await applyRule(request.rule, false);
-	} else if (request.action === 'ungroupTab') {
+	} else if (request.action === ACTION.UNGROUP_TAB) {
 		await chrome.tabs.ungroup(request.tabId);
 	}
 });
