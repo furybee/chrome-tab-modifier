@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Tab Modifier",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "Take control of your tabs",
   "homepage_url": "https://github.com/furybee/chrome-tab-modifier",
   "action": {
@@ -52,5 +52,16 @@
   "host_permissions": [
     "http://*/*",
     "https://*/*"
-  ]
+  ],
+  "commands": {
+    "merge-windows": {
+      "suggested_key": {
+        "default": "Alt+Shift+M",
+        "linux": "Alt+Shift+M",
+        "mac": "Ctrl+Shift+M",
+        "windows": "Alt+Shift+M"
+      },
+      "description": "Merge windows"
+    }
+  }
 }
