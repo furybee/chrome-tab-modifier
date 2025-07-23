@@ -61,15 +61,6 @@ Tab Modifier is based on user *rules* and act on the tab URL that matches the fi
 Aware of that, there is no reason to include a feature that is not "rule-based". Prefer to install specific extensions or create your own.
 
 ## Examples
-Prevent duplicate tab groups across windows:
-
-* **Detection**: Contains
-* **URL fragment**: github.com
-* **Group**: "Work"
-* **Merge across windows**: ON
-
-If you open a tab that matches this rule in a new window, it will be moved into the existing "Work" group in another window, and the tab will be focused.
-
 You have infinite possibilities, here are some configurations:
 
 Pin all tabs:
@@ -158,6 +149,16 @@ Github filename as title for blobs:
 * **Detection**: RegExp
 * **URL fragment**: github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)/blob/
 * **Title**: {#file-name-id-wide}
+
+Prevent duplicate tab groups across windows:
+On Group settings page
+
+* **Title**: Work
+* **Color**: Blue
+* **Merge across windows**: ON
+
+If you open a tab that matches this group in a new window, it will be moved into the existing "Work" group in the existing window, and the tab will be focused.
+
 
 And now, build your own... 💪
 
