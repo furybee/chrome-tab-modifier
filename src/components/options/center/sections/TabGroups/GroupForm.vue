@@ -45,6 +45,20 @@
 					/>
 				</label>
 			</div>
+
+			<div class="form-control mt-4">
+				<label class="cursor-pointer label">
+					<span class="label-text text-sm">Merge across windows</span>
+					<input
+						v-model="currentGroup.merge"
+						class="toggle toggle-sm toggle-primary"
+						type="checkbox"
+					/>
+				</label>
+			</div>
+			<div v-if="showHelp" class="label">
+				<span class="text-xs label-text-alt opacity-80">Prevent creating duplicate groups in different windows</span>
+			</div>
 		</div>
 
 		<div class="modal-action items-center">
@@ -79,6 +93,7 @@ const defaultGroup: Partial<Group> = {
 	title: '',
 	color: 'grey',
 	collapsed: false,
+	merge: false,
 };
 
 const showHelp = ref(false);

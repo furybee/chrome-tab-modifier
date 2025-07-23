@@ -238,8 +238,8 @@ export async function applyRule(ruleParam, updateTitle) {
 
 	let iconChangedByMe = false;
 
-	// Favicon handling
-	if (rule.tab.icon && updateTitle) {
+	// Always enforce favicon if a custom icon is set
+	if (rule.tab.icon) {
 		processIcon(rule.tab.icon);
 
 		const iconObserver = new MutationObserver((mutations) => {

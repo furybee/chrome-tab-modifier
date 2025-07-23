@@ -33,6 +33,7 @@ export type Group = {
 	title: string;
 	color: string;
 	collapsed: boolean;
+	merge: boolean;
 };
 
 export type Settings = {

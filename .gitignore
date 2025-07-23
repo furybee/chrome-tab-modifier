@@ -32,3 +32,5 @@ dummy-*
 html/
 
 tsconfig.tsbuildinfo
+
+.history/

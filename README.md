@@ -12,6 +12,7 @@ Take control of your tabs.
 * Change tab icon
 * Pin tab
 * Group tabs
+* Prevent duplicate tab groups across windows (Merge across windows)
 * Prevent tab closing
 * Unique tab
 * Mute tab
@@ -35,7 +36,8 @@ Firefox and Safari are not available.
 ## Usage
 
 * Click on the Tab Modifier icon <img src="public/assets/icon_16.png" alt="icon"> to open Popup or Right-Click then Options.
-* Create your tab rules.
+* Create your tab rules and tab groups.
+* When creating or editing a group, enable **Merge across windows** to prevent duplicate groups with the same title and color in different windows. Tabs will be moved into the existing group, and the merged tab will be focused.
 * Try & enjoy!
 
 ## Why did you build this extension?
@@ -59,6 +61,14 @@ Tab Modifier is based on user *rules* and act on the tab URL that matches the fi
 Aware of that, there is no reason to include a feature that is not "rule-based". Prefer to install specific extensions or create your own.
 
 ## Examples
+Prevent duplicate tab groups across windows:
+
+* **Detection**: Contains
+* **URL fragment**: github.com
+* **Group**: "Work"
+* **Merge across windows**: ON
+
+If you open a tab that matches this rule in a new window, it will be moved into the existing "Work" group in another window, and the tab will be focused.
 
 You have infinite possibilities, here are some configurations:
 

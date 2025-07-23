@@ -40,6 +40,7 @@ export function _getDefaultGroup(title?: string): Group {
 		title: title ?? '',
 		color: 'grey',
 		collapsed: false,
+		merge: false,
 		id: _generateRandomId(),
 	};
 }
@@ -74,6 +75,19 @@ export async function _getRuleFromUrl(url: string): Promise<Rule | undefined> {
 	const tabModifier = await _getStorageAsync();
 	if (!tabModifier) {
 		return;
+	}
+
+	// Migrate existing groups to include the merge property if missing
+	let needsMigration = false;
+	tabModifier.groups.forEach((group) => {
+		if (group.merge === undefined) {
+			group.merge = false;
+			needsMigration = true;
+		}
+	});
+
+	if (needsMigration) {
+		await _setStorage(tabModifier);
 	}
 
 	const foundRule = tabModifier.rules.find((r) => {

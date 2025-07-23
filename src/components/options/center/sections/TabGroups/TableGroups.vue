@@ -6,6 +6,7 @@
 					<th>Title</th>
 					<th>Color</th>
 					<th>Collapsed</th>
+					<th>Merge</th>
 					<th />
 				</tr>
 			</thead>
@@ -21,6 +22,7 @@
 						<ColorVisualizer :color="_chromeGroupColor(group.color)" />
 					</td>
 					<td>{{ group.collapsed }}</td>
+					<td>{{ group.merge || false }}</td>
 					<td>
 						<div class="flex justify-end gap-8 invisible group-hover:visible overflow-hidden">
 							<button
