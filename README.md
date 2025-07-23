@@ -37,7 +37,7 @@ Firefox and Safari are not available.
 
 * Click on the Tab Modifier icon <img src="public/assets/icon_16.png" alt="icon"> to open Popup or Right-Click then Options.
 * Create your tab rules and tab groups.
-* When creating or editing a group, enable **Merge across windows** to prevent duplicate groups with the same title and color in different windows. Tabs will be moved into the existing group, and the merged tab will be focused.
+
 * Try & enjoy!
 
 ## Why did you build this extension?
