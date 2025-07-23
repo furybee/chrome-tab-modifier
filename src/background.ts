@@ -217,10 +217,17 @@ async function handleRenameTab(tab: chrome.tabs.Tab, title: string) {
 	await chrome.tabs.reload(tab.id);
 }
 
-chrome.contextMenus.create({
-	id: 'rename-tab',
-	title: 'Rename Tab',
-	contexts: ['all'],
+// Remove the menu if it exists, then create it (prevents duplicate id error)
+chrome.contextMenus.remove('rename-tab', () => {
+	// Suppress the error so it doesn't show in the console
+	if (chrome.runtime.lastError) {
+		// Do nothing, error is expected if menu doesn't exist
+	}
+	chrome.contextMenus.create({
+		id: 'rename-tab',
+		title: 'Rename Tab',
+		contexts: ['all'],
+	});
 });
 
 chrome.contextMenus.onClicked.addListener(async function (info, tab) {
