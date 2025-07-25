@@ -28,7 +28,7 @@ async function moveTabToGroup(
 		}
 		await new Promise<void>((resolve) => {
 			chrome.tabs.group({ groupId: group.id, tabIds: [tab.id!] }, async (groupId: number) => {
-				updateTabGroup(groupId, tmGroup);
+				await updateTabGroup(groupId, tmGroup);
 				try {
 					await chrome.tabs.update(tab.id!, { active: true });
 					await chrome.windows.update(group.windowId, { focused: true });
@@ -312,10 +312,12 @@ async function handleTabGroups(
 	}
 }
 
-let createAndSetupGroupMaxRetries = 600;
+let createAndSetupGroupMaxRetries = 5;
 async function createAndSetupGroup(tabIds: number[], tmGroup: Group) {
 	let retries = createAndSetupGroupMaxRetries;
-	while (retries > 0) {
+	const timeout = 2000;
+	const start = Date.now();
+	while (retries > 0 && Date.now() - start < timeout) {
 		try {
 			const groupId: number = await new Promise((resolve, reject) => {
 				chrome.tabs.group({ tabIds: tabIds }, (groupId: number) => {
@@ -326,7 +328,7 @@ async function createAndSetupGroup(tabIds: number[], tmGroup: Group) {
 					}
 				});
 			});
-			createAndSetupGroupMaxRetries = 600;
+			createAndSetupGroupMaxRetries = 5;
 			updateTabGroup(groupId, tmGroup);
 			return;
 		} catch (e) {
@@ -334,10 +336,10 @@ async function createAndSetupGroup(tabIds: number[], tmGroup: Group) {
 			await new Promise((res) => setTimeout(res, 100));
 		}
 	}
-	createAndSetupGroupMaxRetries = 600;
+	createAndSetupGroupMaxRetries = 5;
 }
 
-let updateTabGroupMaxRetries = 600;
+let updateTabGroupMaxRetries = 5;
 async function updateTabGroup(groupId: number, tmGroup: Group) {
 	if (!groupId) return;
 
@@ -348,7 +350,9 @@ async function updateTabGroup(groupId: number, tmGroup: Group) {
 	} as chrome.tabGroups.UpdateProperties;
 
 	let retries = updateTabGroupMaxRetries;
-	while (retries > 0) {
+	const timeout = 2000;
+	const start = Date.now();
+	while (retries > 0 && Date.now() - start < timeout) {
 		try {
 			await new Promise<void>((resolve, reject) => {
 				chrome.tabGroups.update(groupId, updateProperties, () => {
@@ -359,14 +363,14 @@ async function updateTabGroup(groupId: number, tmGroup: Group) {
 					}
 				});
 			});
-			updateTabGroupMaxRetries = 600;
+			updateTabGroupMaxRetries = 5;
 			return;
 		} catch (e) {
 			retries--;
 			await new Promise((res) => setTimeout(res, 100));
 		}
 	}
-	updateTabGroupMaxRetries = 600;
+	updateTabGroupMaxRetries = 5;
 }
 
 export { applyGroupRuleToTab };
