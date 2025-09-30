@@ -345,6 +345,7 @@ describe('Content', () => {
 			expect(global.chrome.runtime.sendMessage).toHaveBeenCalledWith({
 				action: 'setUnique',
 				url_fragment: 'unique-fragment',
+				rule: rule,
 			});
 		});
 

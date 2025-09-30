@@ -298,6 +298,7 @@ export async function applyRule(ruleParam, updateTitle) {
 		await chrome.runtime.sendMessage({
 			action: 'setUnique',
 			url_fragment: rule.url_fragment,
+			rule: rule,
 		});
 	}
 
