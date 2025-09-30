@@ -243,3 +243,31 @@ export function _isRuleEnabled(rule: Rule): boolean {
 
 	return rule.is_enabled;
 }
+
+export function _processUrlFragment(urlFragment: string, currentUrl: string, urlMatcher?: string | null): string {
+	if (!urlMatcher || !urlFragment.includes('$')) {
+		return urlFragment;
+	}
+
+	let processedFragment = urlFragment;
+
+	try {
+		const regex = new RegExp(urlMatcher, 'g');
+		let matches;
+		let i = 0;
+
+		while ((matches = regex.exec(currentUrl)) !== null) {
+			for (let j = 0; j < matches.length; j++) {
+				const placeholder = '$' + i;
+				if (processedFragment.includes(placeholder)) {
+					processedFragment = processedFragment.replace(new RegExp('\\' + placeholder, 'g'), matches[j] || '');
+				}
+				i++;
+			}
+		}
+	} catch (e) {
+		console.error('Tab Modifier: Error processing URL fragment:', e);
+	}
+
+	return processedFragment;
+}
