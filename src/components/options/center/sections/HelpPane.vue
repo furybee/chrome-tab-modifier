@@ -83,7 +83,7 @@
 				<ul class="list-disc ml-3">
 					<li>upload your icon somewhere like imgur.com and paste the direct link</li>
 					<li>
-						go to duri.me and drag & drop your icon, then click on "Copy as DataURI" and paste it.
+						go to <a href="https://ezgif.com/image-to-datauri" target="_blank" class="link">ezgif.com</a> and upload your icon, then copy the generated Data URI and paste it.
 						This is your icon transformed in the Data URI format
 					</li>
 				</ul>
