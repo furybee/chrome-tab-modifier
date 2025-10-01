@@ -38,5 +38,20 @@ module.exports = {
                 'vue/multi-word-component-names': 'off',
             },
         },
+        {
+            files: ['**/*.test.js', '**/*.test.ts', '**/__mocks__/**'],
+            env: {
+                node: true,
+                'vitest-globals/env': true,
+            },
+            globals: {
+                vi: true,
+                describe: true,
+                it: true,
+                expect: true,
+                beforeEach: true,
+                afterEach: true,
+            },
+        },
     ],
 };

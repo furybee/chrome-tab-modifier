@@ -118,43 +118,53 @@ export function processConditionalReplacements(title, captureValues) {
 	// Match patterns like ${1:option1|option2}, ${1|default}, or ${1^}
 	const conditionalPattern = /\$\{(\d+)(\^)?(?::([^}|]+(?:\|[^}|]+)*)|(\|[^}]+))?\}/g;
 
-	return title.replace(conditionalPattern, (match, captureNum, capitalize, options, defaultPart) => {
-		const captureIndex = parseInt(captureNum);
-		let captureValue = captureValues[captureIndex];
+	return title.replace(
+		conditionalPattern,
+		(match, captureNum, capitalize, options, defaultPart) => {
+			const captureIndex = parseInt(captureNum);
+			let captureValue = captureValues[captureIndex];
 
-		// Handle ${1:option1|option2} - match which option the capture contains
-		if (options) {
-			const optionList = options.split('|').map(o => o.trim());
-
-			if (captureValue) {
-				// Find which option matches the capture value
-				for (const option of optionList) {
-					if (captureValue.toLowerCase().includes(option.toLowerCase()) ||
-					    option.toLowerCase().includes(captureValue.toLowerCase())) {
-						return capitalize ? capitalizeFirst(option) : option;
-					}
-				}
+			// Ensure captureValue is a string (convert undefined to empty string)
+			if (captureValue === undefined || captureValue === null) {
+				captureValue = '';
 			}
 
-			// No match found or empty capture - try first option as default, or empty
-			const result = optionList[0] || '';
-			return capitalize ? capitalizeFirst(result) : result;
-		}
+			// Handle ${1:option1|option2} - match which option the capture contains
+			if (options) {
+				const optionList = options.split('|').map((o) => o.trim());
 
-		// Handle ${1|default} or ${1^|default} - use default if capture is empty
-		if (defaultPart) {
-			const defaultValue = defaultPart.substring(1).trim(); // Remove leading |
-			captureValue = captureValue || defaultValue;
-		}
+				if (captureValue) {
+					// Find which option matches the capture value
+					for (const option of optionList) {
+						if (
+							captureValue.toLowerCase().includes(option.toLowerCase()) ||
+							option.toLowerCase().includes(captureValue.toLowerCase())
+						) {
+							return capitalize ? capitalizeFirst(option) : option;
+						}
+					}
+				}
 
-		// Apply capitalization if requested
-		if (capitalize && captureValue) {
-			return capitalizeFirst(captureValue);
-		}
+				// No match found or empty capture - try first option as default, or empty
+				const result = optionList[0] || '';
+				return capitalize ? capitalizeFirst(result) : result;
+			}
 
-		// Simple ${1} - return the capture value or empty
-		return captureValue || '';
-	});
+			// Handle ${1|default} or ${1^|default} - use default if capture is empty
+			if (defaultPart) {
+				const defaultValue = defaultPart.substring(1).trim(); // Remove leading |
+				captureValue = captureValue || defaultValue;
+			}
+
+			// Apply capitalization if requested
+			if (capitalize && captureValue) {
+				return capitalizeFirst(captureValue);
+			}
+
+			// Simple ${1} - return the capture value or empty
+			return captureValue || '';
+		}
+	);
 }
 
 function capitalizeFirst(str) {
@@ -164,7 +174,8 @@ function capitalizeFirst(str) {
 
 export function processTitle(currentUrl, currentTitle, rule) {
 	let title = rule.tab.title;
-	const matches = title.match(/\{([^}]+)}/g);
+	// Match {selector} but NOT ${...} (conditional replacements)
+	const matches = title.match(/(?<!\$)\{([^}]+)}/g);
 
 	if (matches) {
 		let selector, text;
@@ -209,7 +220,8 @@ export function processTitle(currentUrl, currentTitle, rule) {
 			while ((matches = regex.exec(currentUrl)) !== null) {
 				// Store captures: matches[0] is full match, matches[1] is first group, etc.
 				for (let j = 0; j < matches.length; j++) {
-					urlCaptureValues[j] = matches[j] || '';
+					// Convert undefined to empty string, but keep other values as-is
+					urlCaptureValues[j] = matches[j] !== undefined ? matches[j] : '';
 				}
 			}
 		} catch (e) {
@@ -220,9 +232,12 @@ export function processTitle(currentUrl, currentTitle, rule) {
 	// Process conditional syntax like ${1:option1|option2} or ${1|default}
 	title = processConditionalReplacements(title, urlCaptureValues);
 
-	// Replace remaining simple placeholders ($0, $1, $2, etc.)
+	// Replace remaining simple placeholders ($0, $1, $2, etc.) that weren't part of conditional syntax
+	// Only replace if the placeholder exists as a simple $N (not inside ${})
 	for (const [index, value] of Object.entries(urlCaptureValues)) {
-		title = updateTitle(title, '$' + index, value);
+		// Use a regex that matches $N but NOT ${N...}
+		const simplePattern = new RegExp('\\$' + index + '(?![0-9]|\\^|\\{)', 'g');
+		title = title.replace(simplePattern, value || '');
 	}
 
 	return title;

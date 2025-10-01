@@ -21,9 +21,9 @@
     "noFallthroughCasesInSwitch": true,
 
     "composite": true,
-    "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": true
 
-    "types": ["chrome"]
+    // Note: types are auto-discovered from @types packages in node_modules
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "*.html", "*.json", "vite.config.ts"],
   "exclude": [
