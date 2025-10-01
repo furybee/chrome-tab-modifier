@@ -49,7 +49,15 @@ async function _getRuleFromUrl(url) {
 const STORAGE_KEY = 'tab_modifier';
 
 export function updateTitle(title, tag, value) {
-	return value ? title.replace(tag, decodeURI(value)) : title;
+	if (!value) return title;
+
+	// Decode URI if the value looks like it's URI-encoded
+	try {
+		const decoded = decodeURI(value);
+		return title.replace(tag, decoded);
+	} catch (e) {
+		return title.replace(tag, value);
+	}
 }
 
 export function getTextBySelector(selector) {
@@ -98,6 +106,62 @@ export function getTextBySelector(selector) {
 	return value.trim();
 }
 
+/**
+ * Process conditional replacements in title
+ * Supports syntax like:
+ * - ${1:option1|option2|option3} - Extracts and displays which option from the list matches $1
+ * - ${1|default} - Use $1 if not empty, otherwise use default value
+ * - ${1^} - Capitalize first letter of $1
+ * - ${1^|default} - Capitalize $1 or use default
+ */
+export function processConditionalReplacements(title, captureValues) {
+	// Match patterns like ${1:option1|option2}, ${1|default}, or ${1^}
+	const conditionalPattern = /\$\{(\d+)(\^)?(?::([^}|]+(?:\|[^}|]+)*)|(\|[^}]+))?\}/g;
+
+	return title.replace(conditionalPattern, (match, captureNum, capitalize, options, defaultPart) => {
+		const captureIndex = parseInt(captureNum);
+		let captureValue = captureValues[captureIndex];
+
+		// Handle ${1:option1|option2} - match which option the capture contains
+		if (options) {
+			const optionList = options.split('|').map(o => o.trim());
+
+			if (captureValue) {
+				// Find which option matches the capture value
+				for (const option of optionList) {
+					if (captureValue.toLowerCase().includes(option.toLowerCase()) ||
+					    option.toLowerCase().includes(captureValue.toLowerCase())) {
+						return capitalize ? capitalizeFirst(option) : option;
+					}
+				}
+			}
+
+			// No match found or empty capture - try first option as default, or empty
+			const result = optionList[0] || '';
+			return capitalize ? capitalizeFirst(result) : result;
+		}
+
+		// Handle ${1|default} or ${1^|default} - use default if capture is empty
+		if (defaultPart) {
+			const defaultValue = defaultPart.substring(1).trim(); // Remove leading |
+			captureValue = captureValue || defaultValue;
+		}
+
+		// Apply capitalization if requested
+		if (capitalize && captureValue) {
+			return capitalizeFirst(captureValue);
+		}
+
+		// Simple ${1} - return the capture value or empty
+		return captureValue || '';
+	});
+}
+
+function capitalizeFirst(str) {
+	if (!str) return '';
+	return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+}
+
 export function processTitle(currentUrl, currentTitle, rule) {
 	let title = rule.tab.title;
 	const matches = title.match(/\{([^}]+)}/g);
@@ -135,21 +199,30 @@ export function processTitle(currentUrl, currentTitle, rule) {
 		}
 	}
 
+	// Collect all URL matcher captures first
+	const urlCaptureValues = {};
 	if (rule.tab.url_matcher) {
 		try {
 			const regex = new RegExp(rule.tab.url_matcher, 'g');
 			let matches;
-			let i = 0;
 
 			while ((matches = regex.exec(currentUrl)) !== null) {
+				// Store captures: matches[0] is full match, matches[1] is first group, etc.
 				for (let j = 0; j < matches.length; j++) {
-					title = updateTitle(title, '$' + i, matches[j]);
-					i++;
+					urlCaptureValues[j] = matches[j] || '';
 				}
 			}
 		} catch (e) {
 			console.error(e);
 		}
+	}
+
+	// Process conditional syntax like ${1:option1|option2} or ${1|default}
+	title = processConditionalReplacements(title, urlCaptureValues);
+
+	// Replace remaining simple placeholders ($0, $1, $2, etc.)
+	for (const [index, value] of Object.entries(urlCaptureValues)) {
+		title = updateTitle(title, '$' + index, value);
 	}
 
 	return title;

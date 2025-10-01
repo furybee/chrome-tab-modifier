@@ -50,8 +50,8 @@ describe('Content', () => {
 		});
 
 		it('should get value with a wildcard', () => {
-			document.body.innerHTML = `<div 
-				class="devices-module-link--1j5_7Hi7 devices-module-large--1IiO3pLC devices-module-machineName--vVcUTm3t" 
+			document.body.innerHTML = `<div
+				class="devices-module-link--1j5_7Hi7 devices-module-large--1IiO3pLC devices-module-machineName--vVcUTm3t"
 				title="WKS-SCOTTB02">
 				WKS-SCOTTB02
 			</div>`;
@@ -62,8 +62,8 @@ describe('Content', () => {
 
 		it('should get value with a wildcard in container id', () => {
 			document.body.innerHTML = `<div id="container">
-				<div 
-					class="devices-module-link--1j5_7Hi7 devices-module-large--1IiO3pLC devices-module-machineName--vVcUTm3t" 
+				<div
+					class="devices-module-link--1j5_7Hi7 devices-module-large--1IiO3pLC devices-module-machineName--vVcUTm3t"
 					title="WKS-SCOTTB02">
 					WKS-SCOTTB02
 				</div>
@@ -75,8 +75,8 @@ describe('Content', () => {
 
 		it('should get value with a wildcard in container div', () => {
 			document.body.innerHTML = `<div>
-				<div 
-					class="devices-module-link--1j5_7Hi7 devices-module-large--1IiO3pLC devices-module-machineName--vVcUTm3t" 
+				<div
+					class="devices-module-link--1j5_7Hi7 devices-module-large--1IiO3pLC devices-module-machineName--vVcUTm3t"
 					title="WKS-SCOTTB02">
 					WKS-SCOTTB02
 				</div>
@@ -88,8 +88,8 @@ describe('Content', () => {
 
 		it('should not return value with a wildcard & wrong selector', () => {
 			document.body.innerHTML = `<p>
-				<span 
-					class="devices-module-link--1j5_7Hi7 devices-module-large--1IiO3pLC devices-module-machineName--vVcUTm3t" 
+				<span
+					class="devices-module-link--1j5_7Hi7 devices-module-large--1IiO3pLC devices-module-machineName--vVcUTm3t"
 					title="WKS-SCOTTB02">
 					WKS-SCOTTB02
 				</span>
