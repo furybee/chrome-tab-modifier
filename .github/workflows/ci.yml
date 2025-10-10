@@ -46,6 +46,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run Semgrep (security-audit)
+        id: semgrep
         uses: returntocorp/semgrep-action@v1
         with:
           config: p/security-audit
@@ -54,7 +55,7 @@ jobs:
       - name: Upload Semgrep SARIF to Code Scanning
         uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: semgrep.sarif
+          sarif_file: ${{ steps.semgrep.outputs.sarif }}
 
   gitleaks_scan:
     name: Gitleaks Secret Scan
