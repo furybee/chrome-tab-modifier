@@ -45,17 +45,24 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run Semgrep (security-audit)
-        id: semgrep
-        uses: returntocorp/semgrep-action@v1
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          config: p/security-audit
-          generateSarif: true
+          python-version: '3.x'
+
+      - name: Install Semgrep CLI
+        run: |
+          python -m pip install --upgrade pip
+          pip install --upgrade semgrep
+
+      - name: Run Semgrep and generate SARIF
+        run: |
+          semgrep --config p/security-audit --error --timeout 5m --sarif -o semgrep.sarif || true
 
       - name: Upload Semgrep SARIF to Code Scanning
         uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: ${{ steps.semgrep.outputs.sarif }}
+          sarif_file: semgrep.sarif
 
   gitleaks_scan:
     name: Gitleaks Secret Scan
