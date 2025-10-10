@@ -39,30 +39,34 @@ jobs:
         uses: davelosert/vitest-coverage-report-action@v2
 
   semgrep_scan:
-    name: Semgrep Security Scan
+    name: semgrep/ci
     runs-on: ubuntu-latest
+    container:
+      image: returntocorp/semgrep
+    # Skip any PR created by dependabot to avoid permission issues:
+    if: (github.actor != 'dependabot[bot]')
+    permissions:
+      security-events: write
+      actions: read
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Perform Semgrep Analysis (fails on findings)
+        run: semgrep scan -q --error --config auto --sarif -o semgrep-results.sarif .
+
+      - name: Save SARIF results as artifact
+        uses: actions/upload-artifact@v4
         with:
-          python-version: '3.x'
+          name: semgrep-scan-results
+          path: semgrep-results.sarif
 
-      - name: Install Semgrep CLI
-        run: |
-          python -m pip install --upgrade pip
-          pip install --upgrade semgrep
-
-      - name: Run Semgrep and generate SARIF
-        run: |
-          semgrep --config p/security-audit --error --timeout 5m --sarif -o semgrep.sarif || true
-
-      - name: Upload Semgrep SARIF to Code Scanning
+      - name: Upload SARIF result to the GitHub Security Dashboard
+        if: always() && hashFiles('semgrep-results.sarif') != ''
         uses: github/codeql-action/upload-sarif@v3
         with:
-          sarif_file: semgrep.sarif
+          sarif_file: semgrep-results.sarif
 
   gitleaks_scan:
     name: Gitleaks Secret Scan
@@ -96,3 +100,48 @@ jobs:
 
       - name: Audit dependencies (high severity and above)
         run: npx --yes audit-ci --package-manager yarn --severity high
+
+  codeql_sast:
+    name: CodeQL SAST
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript-typescript
+          queries: security-extended,security-and-quality
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v3
+
+      - name: Perform CodeQL Analysis (generate SARIF)
+        uses: github/codeql-action/analyze@v3
+        with:
+          output: codeql-results
+          upload: true
+          wait-for-results: true
+
+      - name: Upload CodeQL SARIF as artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: codeql-scan-results
+          path: codeql-results/*.sarif
+
+      - name: Fail if CodeQL alerts found
+        run: |
+          set -euo pipefail
+          files=(codeql-results/*.sarif)
+          if [ ${#files[@]} -eq 0 ]; then
+            echo "No SARIF files found in codeql-results; skipping fail check."
+            exit 0
+          fi
+          total=$(jq '[.runs[].results | length] | add // 0' ${files[@]})
+          echo "CodeQL alerts: $total"
+          if [ "$total" -gt 0 ]; then
+            echo "Failing due to CodeQL alerts."
+            exit 1
+          fi
