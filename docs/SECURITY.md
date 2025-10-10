@@ -27,6 +27,9 @@ Tab Modifier uses multiple security scanning tools in the CI/CD pipeline to ensu
 ### 4. Gitleaks Secret Scan
 - **Purpose**: Detects hardcoded secrets, API keys, and credentials
 - **Configuration**: `.github/workflows/ci.yml` - `gitleaks_scan` job
+- **Action**: Official `gitleaks/gitleaks-action@v2`
+- **Scope**: Full git history scan (`fetch-depth: 0`)
+- **Results**: Uploaded to GitHub Security Dashboard as SARIF
 - **Action on detection**: Pipeline fails if secrets are found
 
 ### 5. Dependency Vulnerability Audit

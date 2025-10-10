@@ -78,9 +78,29 @@ semgrep scan --config auto .
 brew install gitleaks  # macOS
 # or download from https://github.com/gitleaks/gitleaks/releases
 
-# Run scan
-gitleaks detect --source . --no-git
+# Run scan (detects secrets in current state)
+gitleaks detect --source . --verbose
+
+# Scan full git history (like CI does)
+gitleaks detect --source . --verbose --log-opts="--all"
+
+# Generate SARIF report (like CI)
+gitleaks detect --source . --report-path results.sarif --report-format sarif
+
+# Baseline: Create a baseline to ignore existing issues
+gitleaks detect --source . --baseline-path .gitleaks-baseline.json
 ```
+
+**Understanding output:**
+- Exit code 0: No leaks detected
+- Exit code 1: Leaks detected (pipeline will fail)
+
+**Common secret types detected:**
+- AWS keys, GCP keys, Azure keys
+- GitHub tokens, GitLab tokens
+- Database credentials
+- Private keys (RSA, SSH)
+- API keys and tokens
 
 ### Dependency Audit
 
