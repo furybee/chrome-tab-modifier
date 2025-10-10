@@ -1,5 +1,6 @@
 import { Group, Rule, TabModifierSettings } from './types.ts';
 import { _clone, _generateRandomId } from './helpers.ts';
+import { _safeRegexTestSync } from './regex-safety.ts';
 
 export const STORAGE_KEY = 'tab_modifier';
 
@@ -91,7 +92,9 @@ export async function _getRuleFromUrl(url: string): Promise<Rule | undefined> {
 				return url.endsWith(urlFragment);
 			case 'REGEX':
 			case 'REGEXP':
-				return new RegExp(urlFragment).test(url);
+				// nosemgrep: javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+				// Safe: Pattern is validated by _safeRegexTestSync() which checks for ReDoS patterns
+				return _safeRegexTestSync(urlFragment, url);
 			case 'EXACT':
 				return url === urlFragment;
 			default:
