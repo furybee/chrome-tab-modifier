@@ -61,7 +61,7 @@ export function getTextBySelector(selector) {
 		const toSafe = (s) =>
 			typeof CSS !== 'undefined' && CSS.escape
 				? CSS.escape(s)
-				: s.replace(/[\"]/g, '$&').replace(/]/g, ']');
+				: s.replace(/[\"]/g, '$&').replace(/]/g, '\\]');
 
 		const modifiedParts = parts.map((part) => {
 			if (!part.includes('*')) return part;
