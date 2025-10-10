@@ -158,8 +158,8 @@ describe('Content', () => {
 			const rule = {
 				tab: {
 					title: '@0 | $0',
-					title_matcher: '[a-z]*@gmail.com',
-					url_matcher: '[a-z]*.google.com',
+					title_matcher: '^[a-z]*@gmail\\.com$',
+					url_matcher: '^[a-z]+\\.google\\.com$',
 				},
 			};
 

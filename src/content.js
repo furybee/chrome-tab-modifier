@@ -58,15 +58,19 @@ export function getTextBySelector(selector) {
 	if (selector.includes('*')) {
 		const parts = selector.split(' ');
 
+		const toSafe = (s) =>
+			typeof CSS !== 'undefined' && CSS.escape
+				? CSS.escape(s)
+				: s.replace(/[\"]/g, '$&').replace(/]/g, ']');
+
 		const modifiedParts = parts.map((part) => {
-			if (part.includes('*')) {
-				if (part.startsWith('.')) {
-					return `[class*="${part.replace('.', '').replace('*', '')}"]`;
-				} else {
-					return `[${part.replace('*', '')}]`;
-				}
+			if (!part.includes('*')) return part;
+			if (part.startsWith('.')) {
+				const raw = part.replace(/\./g, '').replace(/\*/g, '');
+				return `[class*="${toSafe(raw)}"]`;
 			}
-			return part;
+			const rawAttr = part.replace(/\*/g, '');
+			return `[${toSafe(rawAttr)}]`;
 		});
 
 		const modifiedSelector = modifiedParts.join(' ');
