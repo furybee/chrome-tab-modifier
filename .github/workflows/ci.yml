@@ -158,3 +158,44 @@ jobs:
             echo "Failing due to CodeQL alerts."
             exit 1
           fi
+
+  clamav_malware_scan:
+    name: ClamAV Malware Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install ClamAV
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clamav clamav-daemon
+
+      - name: Update ClamAV database
+        run: |
+          sudo systemctl stop clamav-freshclam || true
+          sudo freshclam --verbose
+
+      - name: Scan repository with ClamAV
+        run: |
+          echo "Starting ClamAV scan of repository..."
+          clamscan -r -i --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=dist . > clamav-scan.log 2>&1 || true
+          cat clamav-scan.log
+
+      - name: Check for infections
+        run: |
+          if grep -q "Infected files: 0" clamav-scan.log; then
+            echo "✅ No malware detected!"
+            exit 0
+          else
+            echo "❌ Malware detected! Check the scan log."
+            grep "FOUND" clamav-scan.log || true
+            exit 1
+          fi
+
+      - name: Upload ClamAV scan log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: clamav-scan-log
+          path: clamav-scan.log

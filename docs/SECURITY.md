@@ -2,6 +2,39 @@
 
 This document describes security measures implemented in Tab Modifier.
 
+## CI/CD Security Scanning
+
+Tab Modifier uses multiple security scanning tools in the CI/CD pipeline to ensure code quality and security:
+
+### 1. ClamAV Malware Scan
+- **Purpose**: Detects viruses, trojans, and other malware in the codebase
+- **Frequency**: On every push to any branch
+- **Configuration**: `.github/workflows/ci.yml` - `clamav_malware_scan` job
+- **Coverage**: Scans all files except `node_modules`, `.git`, and `dist`
+- **Action on detection**: Pipeline fails if malware is detected
+
+### 2. Semgrep SAST (Static Application Security Testing)
+- **Purpose**: Detects security vulnerabilities and code quality issues
+- **Configuration**: `.github/workflows/ci.yml` - `semgrep_scan` job
+- **Results**: Uploaded to GitHub Security Dashboard as SARIF
+
+### 3. CodeQL SAST
+- **Purpose**: Advanced semantic code analysis for security vulnerabilities
+- **Configuration**: `.github/workflows/ci.yml` - `codeql_sast` job
+- **Queries**: `security-extended` and `security-and-quality`
+- **Results**: Uploaded to GitHub Security Dashboard
+
+### 4. Gitleaks Secret Scan
+- **Purpose**: Detects hardcoded secrets, API keys, and credentials
+- **Configuration**: `.github/workflows/ci.yml` - `gitleaks_scan` job
+- **Action on detection**: Pipeline fails if secrets are found
+
+### 5. Dependency Vulnerability Audit
+- **Purpose**: Checks for known vulnerabilities in npm/yarn dependencies
+- **Configuration**: `.github/workflows/ci.yml` - `dependency_audit` job
+- **Severity**: Fails on HIGH severity and above
+- **Tool**: `audit-ci` with yarn
+
 ## ReDoS (Regular Expression Denial of Service) Protection
 
 ### Background
