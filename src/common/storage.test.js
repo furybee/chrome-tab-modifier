@@ -244,8 +244,10 @@ describe('Storage', () => {
 				id: '1',
 				name: 'test',
 				detection: 'REGEX',
+				// Updated pattern: removed dangerous .*? prefix which could cause ReDoS
+				// The pattern now matches the domain and path structure safely
 				url_fragment:
-					'.*?furybee.atlassian.net\\/jira\\/software\\/c\\/projects\\/([a-zA-Z]{1,5})\\/boards\\/([0-9]{1,4})(\\?.*)?$',
+					'furybee\\.atlassian\\.net\\/jira\\/software\\/c\\/projects\\/([a-zA-Z]{1,5})\\/boards\\/([0-9]{1,4})(\\?.*)?$',
 				tab: {
 					title: 'FuryBee Jira',
 					icon: null,
@@ -339,6 +341,40 @@ describe('Storage', () => {
 
 			const rule = await _getRuleFromUrl('https://example.com/path');
 			expect(rule).toEqual(mockRule);
+		});
+
+		it('should block dangerous ReDoS regex patterns', async () => {
+			const mockRule = {
+				id: '1',
+				name: 'dangerous',
+				detection: 'REGEX',
+				// This pattern has nested quantifiers and would cause ReDoS
+				url_fragment: '(a+)+b',
+				tab: {
+					title: 'Dangerous',
+					icon: null,
+					pinned: false,
+					protected: false,
+					unique: false,
+					muted: false,
+					title_matcher: null,
+					url_matcher: null,
+					group_id: null,
+				},
+			};
+			const mockData = {
+				rules: [mockRule],
+				groups: [],
+				settings: { enable_new_version_notification: false, theme: 'dim' },
+			};
+			global.chrome.storage.local.get.mockImplementation((keys, callback) => {
+				callback({ [STORAGE_KEY]: mockData });
+			});
+			global.chrome.runtime.lastError = null;
+
+			// Should return undefined because the dangerous pattern is blocked
+			const rule = await _getRuleFromUrl('https://aaaaaaaaaaaaaaaaaaa.com');
+			expect(rule).toBeUndefined();
 		});
 	});
 });

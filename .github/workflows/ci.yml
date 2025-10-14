@@ -1,5 +1,9 @@
 name: CI
 
+permissions:
+  contents: read
+  security-events: write
+
 on:
   push:
     branches:
@@ -33,3 +37,94 @@ jobs:
         # Only works if you set `reportOnFailure: true` in your vite config as specified above
         if: always()
         uses: davelosert/vitest-coverage-report-action@v2
+
+  gitleaks_scan:
+    name: Gitleaks Secret Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for all branches and tags
+
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}  # Only needed for Gitleaks Enterprise
+
+      - name: Upload Gitleaks SARIF as artifact
+        if: always() && hashFiles('results.sarif') != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: gitleaks-scan-results
+          path: results.sarif
+
+      - name: Upload Gitleaks SARIF to Code Scanning
+        if: always() && hashFiles('results.sarif') != ''
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: results.sarif
+          category: gitleaks
+
+  dependency_audit:
+    name: Dependency Vulnerability Audit
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Audit dependencies (high severity and above)
+        run: npx --yes audit-ci --package-manager yarn --severity high
+
+  clamav_malware_scan:
+    name: ClamAV Malware Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install ClamAV
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clamav clamav-daemon
+
+      - name: Update ClamAV database
+        run: |
+          sudo systemctl stop clamav-freshclam || true
+          sudo freshclam --verbose
+
+      - name: Scan repository with ClamAV
+        run: |
+          echo "Starting ClamAV scan of repository..."
+          clamscan -r -i --exclude-dir=node_modules --exclude-dir=.git --exclude-dir=dist . > clamav-scan.log 2>&1 || true
+          cat clamav-scan.log
+
+      - name: Check for infections
+        run: |
+          if grep -q "Infected files: 0" clamav-scan.log; then
+            echo "✅ No malware detected!"
+            exit 0
+          else
+            echo "❌ Malware detected! Check the scan log."
+            grep "FOUND" clamav-scan.log || true
+            exit 1
+          fi
+
+      - name: Upload ClamAV scan log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: clamav-scan-log
+          path: clamav-scan.log

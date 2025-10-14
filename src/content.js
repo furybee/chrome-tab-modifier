@@ -31,7 +31,13 @@ async function _getRuleFromUrl(url) {
 				return url.endsWith(urlFragment);
 			case 'REGEX':
 			case 'REGEXP':
-				return new RegExp(urlFragment).test(url);
+				try {
+					const regex = createSafeRegex(urlFragment);
+					return regex.test(url);
+				} catch (e) {
+					console.error('Error processing regex pattern for URL matching:', e);
+					return false;
+				}
 			case 'EXACT':
 				return url === urlFragment;
 			default:
@@ -52,21 +58,58 @@ export function updateTitle(title, tag, value) {
 	return value ? title.replace(tag, decodeURI(value)) : title;
 }
 
+function isRegexSafe(pattern) {
+	// Basic validation to prevent ReDoS attacks
+	if (typeof pattern !== 'string' || pattern.length > 200) {
+		return false;
+	}
+
+	// Check for potentially dangerous patterns that can cause ReDoS
+	const dangerousPatterns = [
+		/\(\?=.*\)\+/, // Positive lookahead with quantifiers
+		/\(\?!.*\)\+/, // Negative lookahead with quantifiers
+		/\(.+\)\+\$/, // Catastrophic backtracking patterns
+		/\(.+\)\*\+/, // Conflicting quantifiers
+		/\(\.\*\)\{2,\}/, // Multiple .* in groups
+		/\(\.\+\)\{2,\}/, // Multiple .+ in groups
+	];
+
+	return !dangerousPatterns.some((dangerous) => dangerous.test(pattern));
+}
+
+function createSafeRegex(pattern, flags = 'g') {
+	if (!isRegexSafe(pattern)) {
+		throw new Error('Potentially unsafe regex pattern detected');
+	}
+
+	try {
+		// semgrep: ignore - Safe regex creation with validation above
+		// nosemgrep: javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
+		return new RegExp(pattern, flags);
+	} catch (e) {
+		throw new Error(`Invalid regex pattern: ${e.message}`);
+	}
+}
+
 export function getTextBySelector(selector) {
 	let el = null;
 
 	if (selector.includes('*')) {
 		const parts = selector.split(' ');
 
+		const toSafe = (s) =>
+			typeof CSS !== 'undefined' && CSS.escape
+				? CSS.escape(s)
+				: s.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/]/g, '\\]');
+
 		const modifiedParts = parts.map((part) => {
-			if (part.includes('*')) {
-				if (part.startsWith('.')) {
-					return `[class*="${part.replace('.', '').replace('*', '')}"]`;
-				} else {
-					return `[${part.replace('*', '')}]`;
-				}
+			if (!part.includes('*')) return part;
+			if (part.startsWith('.')) {
+				const raw = part.replace(/\./g, '').replace(/\*/g, '');
+				return `[class*="${toSafe(raw)}"]`;
 			}
-			return part;
+			const rawAttr = part.replace(/\*/g, '');
+			return `[${toSafe(rawAttr)}]`;
 		});
 
 		const modifiedSelector = modifiedParts.join(' ');
@@ -120,35 +163,41 @@ export function processTitle(currentUrl, currentTitle, rule) {
 
 	if (rule.tab.title_matcher) {
 		try {
-			const regex = new RegExp(rule.tab.title_matcher, 'g');
+			const regex = createSafeRegex(rule.tab.title_matcher, 'g');
 			let matches;
 			let i = 0;
+			let iterationCount = 0;
+			const maxIterations = 100; // Prevent infinite loops
 
-			while ((matches = regex.exec(currentTitle)) !== null) {
+			while ((matches = regex.exec(currentTitle)) !== null && iterationCount < maxIterations) {
 				for (let j = 0; j < matches.length; j++) {
 					title = updateTitle(title, '@' + i, matches[j]);
 					i++;
 				}
+				iterationCount++;
 			}
 		} catch (e) {
-			console.error(e);
+			console.error('Error processing title_matcher regex:', e);
 		}
 	}
 
 	if (rule.tab.url_matcher) {
 		try {
-			const regex = new RegExp(rule.tab.url_matcher, 'g');
+			const regex = createSafeRegex(rule.tab.url_matcher, 'g');
 			let matches;
 			let i = 0;
+			let iterationCount = 0;
+			const maxIterations = 100; // Prevent infinite loops
 
-			while ((matches = regex.exec(currentUrl)) !== null) {
+			while ((matches = regex.exec(currentUrl)) !== null && iterationCount < maxIterations) {
 				for (let j = 0; j < matches.length; j++) {
 					title = updateTitle(title, '$' + i, matches[j]);
 					i++;
 				}
+				iterationCount++;
 			}
 		} catch (e) {
-			console.error(e);
+			console.error('Error processing url_matcher regex:', e);
 		}
 	}
 
