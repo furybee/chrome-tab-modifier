@@ -22,9 +22,9 @@ export default {
 					'accent-content': '#0a0a0a', // Texte foncé
 					neutral: '#1f1f1f', // Gris très foncé
 					'neutral-content': '#e5e7eb', // Texte clair
-					'base-100': '#0a0a0a', // Fond presque noir
+					'base-100': '#161616', // Fond presque noir
 					'base-200': '#141414', // Fond très sombre
-					'base-300': '#1e1e1e', // Fond sombre
+					'base-300': '#121212', // Fond sombre
 					'base-content': '#e5e7eb', // Texte principal clair
 					info: '#3b82f6', // Bleu info
 					'info-content': '#ffffff', // Texte blanc sur bleu

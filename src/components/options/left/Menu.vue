@@ -2,7 +2,9 @@
 	<ul class="menu p-4 w-80 bg-base-300 text-base-content">
 		<li v-for="menuItem in props.menuItems" :key="menuItem.component">
 			<a
-				:class="{ 'active !text-primary': menuStore.currentMenuItem?.title === menuItem.title }"
+				:class="{
+					active: menuStore.currentMenuItem?.title === menuItem.title,
+				}"
 				@click.prevent="onMenuClicked(menuItem)"
 			>
 				<component :is="icons[menuItem.icon]" class="menuItem-icon" />
