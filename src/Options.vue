@@ -15,9 +15,9 @@
 								<CloseIcon />
 							</label>
 
-							<a class="btn btn-ghost text-xl">
+							<h1 class="text-xl font-semibold ml-4">
 								{{ currentContent.title }}
-							</a>
+							</h1>
 						</div>
 
 						<div class="navbar-end mr-2">
@@ -167,6 +167,10 @@ onMounted(async () => {
 	menuStore.setCurrentMenuItem(currentContent.value);
 
 	await rulesStore.init();
+
+	emitter.on(GLOBAL_EVENTS.NAVIGATE_TO_SETTINGS, () => {
+		onMenuClicked(sectionItems.find((item) => item.component === 'SettingsPane')!);
+	});
 });
 </script>
 

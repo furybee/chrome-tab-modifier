@@ -3,6 +3,7 @@
 		<table class="table table-zebra">
 			<thead>
 				<tr>
+					<th scope="col" class="w-8"></th>
 					<th scope="col"></th>
 					<th scope="col">Name</th>
 					<th scope="col">Group</th>
@@ -17,11 +18,16 @@
 			<draggable v-model="rules" tag="tbody" item-key="id" @end="onDragEnd">
 				<template #item="{ element: rule }">
 					<tr class="group cursor-pointer hover:bg-base-100" @click="editRule(rule)">
+						<td class="cursor-grab active:cursor-grabbing">
+							<div class="opacity-0 group-hover:opacity-50 transition-opacity">
+								<GripIcon class="!w-4 !h-4" />
+							</div>
+						</td>
 						<td>
 							<div class="tooltip tooltip-right" data-tip="Enable / Disable Rule">
 								<input
 									v-if="rule.is_enabled"
-									checked="checked"
+									:checked="true"
 									type="checkbox"
 									class="toggle toggle-xs toggle-primary"
 									@click.prevent="(event) => toggleRule(event, rule)"
@@ -89,6 +95,7 @@
 <script lang="ts" setup>
 import DuplicateIcon from '../../../../icons/DuplicateIcon.vue';
 import DeleteIcon from '../../../../icons/DeleteIcon.vue';
+import GripIcon from '../../../../icons/GripIcon.vue';
 import { computed, inject, ref, watch } from 'vue';
 import { GLOBAL_EVENTS, Group, Rule, RuleModalParams } from '../../../../../common/types.ts';
 import { useRulesStore } from '../../../../../stores/rules.store.ts';

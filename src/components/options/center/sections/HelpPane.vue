@@ -49,10 +49,10 @@
 
 				<h3 class="font-bold">URL fragment</h3>
 				<p>
-					This is the key of your rule. It will determine if your rule will be applied or not. You
-					want to catch GMail? You can set your rule with "Contains" detection and "mail.google.com"
-					URL fragment. Another solution could be to set "Starts with" detection and
-					"https://mail.google.com". Try any combination to achieve what you want.
+					This is the key of your rule. It will determine if your rule will be applied or not. For
+					example, to catch GitHub repositories, you can set your rule with "Contains" detection and
+					"github.com" URL fragment. Another solution could be to set "Starts with" detection and
+					"https://github.com". Try any combination to achieve what you want.
 				</p>
 				<p class="text-accent">
 					After defining the core of your rule you can select some actions listed below.
@@ -77,15 +77,13 @@
 				<p>You can select an icon provided by the extension.</p>
 				<p>
 					Otherwise, you can define an icon URL in the input like
-					"https://www.google.com/favicon.ico".
+					"https://example.com/favicon.ico".
 				</p>
-				<p>In case you want to define a local icon from your computer, you have 2 options:</p>
+				<p>For local icons from your computer, you have multiple options:</p>
 				<ul class="list-disc ml-3">
-					<li>upload your icon somewhere like imgur.com and paste the direct link</li>
-					<li>
-						go to <a href="https://ezgif.com/image-to-datauri" target="_blank" class="link">ezgif.com</a> and upload your icon, then copy the generated Data URI and paste it.
-						This is your icon transformed in the Data URI format
-					</li>
+					<li><strong>Paste directly</strong>: Copy an image (screenshot, file, etc.) and paste it directly into the "Custom Icon" field - it will be automatically converted to base64!</li>
+					<li>Upload your icon somewhere like imgur.com and paste the direct link</li>
+					<li>Use a service to convert your icon to Data URI format manually</li>
 				</ul>
 
 				<h3 class="font-bold">Group</h3>
@@ -109,8 +107,8 @@
 					the original tab after closing the duplicate one.
 				</p>
 				<p>
-					Scenario: create a rule based on GMail with unique action. Open GMail, open another GMail,
-					the last one will be closed.
+					Scenario: create a rule based on your email service with unique action. Open your email,
+					open another tab with the same email, the last one will be closed.
 				</p>
 
 				<h3 class="font-bold">Muted</h3>
@@ -124,7 +122,7 @@
 				<p>
 					An advanced usage, enter a regular expression to identify some title parts and use them
 					inside the title itself, this is useful to reorder words or exclude some parts of the
-					title, like [a-z]*@gmail.com and use @0 in the title input to inject the variable.
+					title, like [a-z]*@example.com and use @0 in the title input to inject the variable.
 				</p>
 
 				<h3 class="font-bold">URL matcher</h3>
