@@ -228,7 +228,8 @@
 					<div v-if="showHelp">
 						<div class="label">
 							<span class="text-xs opacity-80 label-text-alt">
-								Regular expression to search string fragments in title</span
+								Regex to capture text from page title. Use @0, @1, @2... in Tab Title to reference
+								captured groups.</span
 							>
 						</div>
 						<RegexVisualizer class="mt-2" tag="@" :regex="currentRule.tab.title_matcher" />
@@ -248,7 +249,8 @@
 					<div v-if="showHelp">
 						<div class="label">
 							<span class="text-xs opacity-80 label-text-alt">
-								Regular expression to search string fragments in URL</span
+								Regex to capture text from URL. Use $0, $1, $2... in Tab Title to reference captured
+								groups.</span
 							>
 						</div>
 						<RegexVisualizer class="mt-2" tag="$" :regex="currentRule.tab.url_matcher" />
