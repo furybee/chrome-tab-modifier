@@ -55,7 +55,11 @@ async function _getRuleFromUrl(url) {
 const STORAGE_KEY = 'tab_modifier';
 
 export function updateTitle(title, tag, value) {
-	return value ? title.replace(tag, decodeURI(value)) : title;
+	if (!value) return title;
+	// edge cases for unmatched capture groups
+	if (value.startsWith('$')) return title.replace(tag, decodeURI(''));
+	if (value.startsWith('@')) return title.replace(tag, decodeURI(''));
+	return title.replace(tag, decodeURI(value));
 }
 
 function isRegexSafe(pattern) {
@@ -171,7 +175,8 @@ export function processTitle(currentUrl, currentTitle, rule) {
 
 			while ((matches = regex.exec(currentTitle)) !== null && iterationCount < maxIterations) {
 				for (let j = 0; j < matches.length; j++) {
-					title = updateTitle(title, '@' + i, matches[j]);
+					let tag = '@' + i;
+					title = updateTitle(title, tag, matches[j] ?? tag);
 					i++;
 				}
 				iterationCount++;
@@ -191,7 +196,8 @@ export function processTitle(currentUrl, currentTitle, rule) {
 
 			while ((matches = regex.exec(currentUrl)) !== null && iterationCount < maxIterations) {
 				for (let j = 0; j < matches.length; j++) {
-					title = updateTitle(title, '$' + i, matches[j]);
+					let tag = '$' + i;
+					title = updateTitle(title, tag, matches[j] ?? tag);
 					i++;
 				}
 				iterationCount++;
@@ -200,6 +206,9 @@ export function processTitle(currentUrl, currentTitle, rule) {
 			console.error('Error processing url_matcher regex:', e);
 		}
 	}
+
+	// Remove unhandled capture groups
+	title = title.replace(/\s*[$@]\d+\s*/g, ' ').trim();
 
 	return title;
 }
@@ -338,6 +347,7 @@ export async function applyRule(ruleParam, updateTitle) {
 		await chrome.runtime.sendMessage({
 			action: 'setUnique',
 			url_fragment: rule.url_fragment,
+			rule: rule,
 		});
 	}
 

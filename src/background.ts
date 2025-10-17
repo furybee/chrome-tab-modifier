@@ -6,6 +6,7 @@ import {
 	_getStorageAsync,
 	_setStorage,
 } from './common/storage.ts';
+import { _processUrlFragment } from './common/helpers.ts';
 
 chrome.tabs.onUpdated.addListener(
 	async (_: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab) => {
@@ -41,7 +42,14 @@ function queryTabs(queryInfo = {}): Promise<chrome.tabs.Tab[]> {
 }
 
 async function handleSetUnique(message: any, currentTab: chrome.tabs.Tab) {
-	if (!currentTab.id) return;
+	if (!currentTab.id || !currentTab.url) return;
+
+	const rule = message.rule as Rule;
+	const processedUrlFragment = _processUrlFragment(
+		message.url_fragment,
+		currentTab.url,
+		rule?.tab?.url_matcher
+	);
 
 	const tabs = await queryTabs({});
 
@@ -49,7 +57,15 @@ async function handleSetUnique(message: any, currentTab: chrome.tabs.Tab) {
 		if (!tab.url) continue;
 		if (!tab.id) continue;
 
-		if (tab.url.includes(message.url_fragment) && tab.id !== currentTab.id) {
+		// Process the fragment for each tab to compare
+		const tabProcessedFragment = _processUrlFragment(
+			message.url_fragment,
+			tab.url,
+			rule?.tab?.url_matcher
+		);
+
+		// Compare processed fragments instead of raw URL
+		if (tabProcessedFragment === processedUrlFragment && tab.id !== currentTab.id) {
 			await chrome.scripting.executeScript({
 				target: { tabId: currentTab.id },
 				func: () => {
@@ -59,6 +75,7 @@ async function handleSetUnique(message: any, currentTab: chrome.tabs.Tab) {
 
 			await chrome.tabs.remove(currentTab.id);
 			await chrome.tabs.update(tab.id, { url: currentTab.url, highlighted: true });
+			return; // Exit after finding the first match
 		}
 	}
 }

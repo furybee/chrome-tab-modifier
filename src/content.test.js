@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { applyRule, getTextBySelector, processIcon, processTitle, updateTitle } from './content.js';
 import { _getRuleFromUrl } from './common/storage.ts';
+import { applyRule, getTextBySelector, processIcon, processTitle, updateTitle } from './content.js';
 
 import { chrome } from './__mocks__/chrome.js';
 
@@ -163,6 +163,19 @@ describe('Content', () => {
 					title: '@0 | $0',
 					title_matcher: '^[a-z]*@gmail\\.com$',
 					url_matcher: '^[a-z]+\\.google\\.com$',
+				},
+			};
+
+			const result = processTitle('mail.google.com', 'john@gmail.com', rule);
+			expect(result).toBe('john@gmail.com | mail.google.com');
+		});
+
+		it('should ignore empty capture groups using title matcher and URL matcher', () => {
+			const rule = {
+				tab: {
+					title: '@0 @1 | $0 $1',
+					title_matcher: '[a-z]*@gmail.com',
+					url_matcher: '[a-z]*.google.com',
 				},
 			};
 
@@ -335,6 +348,7 @@ describe('Content', () => {
 			expect(global.chrome.runtime.sendMessage).toHaveBeenCalledWith({
 				action: 'setUnique',
 				url_fragment: 'unique-fragment',
+				rule: rule,
 			});
 		});
 
