@@ -7,7 +7,7 @@
 				<div class="grid grid-cols-6">
 					<div class="col-span-5">
 						<h3 class="font-bold">Theme</h3>
-						<p>Change Tab Modifier theme</p>
+						<p>Change Tabee theme</p>
 					</div>
 					<div class="col-span-1">
 						<CustomSelect v-model="currentTheme" :items="themes" :show-clear-btn="false" />
@@ -248,7 +248,7 @@ const exportConfig = async () => {
 	const a = document.createElement('a');
 
 	a.href = url;
-	a.download = 'tab-modifier.config.json';
+	a.download = 'tabee.config.json';
 	document.body.appendChild(a);
 	a.click();
 

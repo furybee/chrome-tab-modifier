@@ -1,5 +1,5 @@
 {
-  "name": "tab-modifier",
+  "name": "tabee",
   "private": true,
   "version": "1.0.18",
   "license": "MIT",
@@ -13,7 +13,7 @@
     "tsc": "vue-tsc",
     "build": "rm -rf ./dist && vite build",
     "preview": "vite preview",
-    "build-zip": "rm -rf ./dist && rm -f tab-modifier.zip && yarn build && cd ./dist && zip -r ../tab-modifier.zip *"
+    "build-zip": "rm -rf ./dist && rm -f tabee.zip && yarn build && cd ./dist && zip -r ../tabee.zip *"
   },
   "dependencies": {
     "mitt": "^3.0.1",

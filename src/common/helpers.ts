@@ -266,7 +266,7 @@ export function _processUrlFragment(urlFragment: string, currentUrl: string, url
 			}
 		}
 	} catch (e) {
-		console.error('Tab Modifier: Error processing URL fragment:', e);
+		console.error('Tabee: Error processing URL fragment:', e);
 	}
 
 	return processedFragment;

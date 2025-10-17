@@ -47,7 +47,13 @@
 				<label aria-label="close sidebar" class="drawer-overlay" for="drawer-menu" />
 
 				<div class="h-full bg-base-300">
-					<h1 class="px-8 pt-4 text-xl font-bold">Tab Modifier</h1>
+					<div class="px-8 pt-4">
+						<h1 class="text-xl font-bold flex items-center gap-2">
+							<img src="/assets/icon_16.png" alt="Tabee icon" class="w-5 h-5" />
+							Tabee
+						</h1>
+						<p class="text-xs text-base-content/70 mt-1">The original Tab Modifier.</p>
+					</div>
 
 					<Menu :menu-items="sectionItems" title="Sections" @on-menu-clicked="onMenuClicked" />
 

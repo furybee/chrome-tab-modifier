@@ -1,11 +1,11 @@
 {
   "manifest_version": 3,
-  "name": "Tab Modifier",
+  "name": "Tabee",
   "version": "1.0.18",
-  "description": "Take control of your tabs",
+  "description": "The original Tab Modifier",
   "homepage_url": "https://github.com/furybee/chrome-tab-modifier",
   "action": {
-    "default_title": "Tab Modifier",
+    "default_title": "Tabee",
     "default_popup": "src/index.html",
     "default_icon": {
       "16": "assets/icon_16.png",

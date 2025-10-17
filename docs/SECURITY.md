@@ -1,10 +1,10 @@
 # Security
 
-This document describes security measures implemented in Tab Modifier.
+This document describes security measures implemented in Tabee.
 
 ## CI/CD Security Scanning
 
-Tab Modifier uses multiple security scanning tools in the CI/CD pipeline to ensure code quality and security:
+Tabee uses multiple security scanning tools in the CI/CD pipeline to ensure code quality and security:
 
 ### 1. ClamAV Malware Scan
 - **Purpose**: Detects viruses, trojans, and other malware in the codebase
@@ -13,18 +13,7 @@ Tab Modifier uses multiple security scanning tools in the CI/CD pipeline to ensu
 - **Coverage**: Scans all files except `node_modules`, `.git`, and `dist`
 - **Action on detection**: Pipeline fails if malware is detected
 
-### 2. Semgrep SAST (Static Application Security Testing)
-- **Purpose**: Detects security vulnerabilities and code quality issues
-- **Configuration**: `.github/workflows/ci.yml` - `semgrep_scan` job
-- **Results**: Uploaded to GitHub Security Dashboard as SARIF
-
-### 3. CodeQL SAST
-- **Purpose**: Advanced semantic code analysis for security vulnerabilities
-- **Configuration**: `.github/workflows/ci.yml` - `codeql_sast` job
-- **Queries**: `security-extended` and `security-and-quality`
-- **Results**: Uploaded to GitHub Security Dashboard
-
-### 4. Gitleaks Secret Scan
+### 2. Gitleaks Secret Scan
 - **Purpose**: Detects hardcoded secrets, API keys, and credentials
 - **Configuration**: `.github/workflows/ci.yml` - `gitleaks_scan` job
 - **Action**: Official `gitleaks/gitleaks-action@v2`
@@ -32,17 +21,23 @@ Tab Modifier uses multiple security scanning tools in the CI/CD pipeline to ensu
 - **Results**: Uploaded to GitHub Security Dashboard as SARIF
 - **Action on detection**: Pipeline fails if secrets are found
 
-### 5. Dependency Vulnerability Audit
+### 3. Dependency Vulnerability Audit
 - **Purpose**: Checks for known vulnerabilities in npm/yarn dependencies
 - **Configuration**: `.github/workflows/ci.yml` - `dependency_audit` job
 - **Severity**: Fails on HIGH severity and above
 - **Tool**: `audit-ci` with yarn
 
+### 4. Test Coverage
+- **Purpose**: Ensures code quality and tracks test coverage
+- **Configuration**: `.github/workflows/ci.yml` - `test` job
+- **Tool**: Vitest with coverage reporting
+- **Results**: Coverage reports generated on every push
+
 ## ReDoS (Regular Expression Denial of Service) Protection
 
 ### Background
 
-Tab Modifier allows users to create rules with regular expressions to match URLs. User-controlled regex patterns can potentially be exploited to cause ReDoS attacks, where malicious regex patterns with catastrophic backtracking can freeze the browser tab.
+Tabee allows users to create rules with regular expressions to match URLs. User-controlled regex patterns can potentially be exploited to cause ReDoS attacks, where malicious regex patterns with catastrophic backtracking can freeze the browser tab.
 
 ### Implementation
 
@@ -129,7 +124,7 @@ The `url_matcher` and `title_matcher` features allow users to extract parts of U
 
 ### Context: Not a Critical Security Issue
 
-In Tab Modifier, `url_matcher` and `title_matcher` are used to **extract content** for display in tab titles, not for security-critical validation like URL redirection or authentication. Therefore, missing anchors here represent a **usability concern** rather than a security vulnerability.
+In Tabee, `url_matcher` and `title_matcher` are used to **extract content** for display in tab titles, not for security-critical validation like URL redirection or authentication. Therefore, missing anchors here represent a **usability concern** rather than a security vulnerability.
 
 However, to prevent unexpected matches and follow security best practices, we recommend using anchored patterns.
 
