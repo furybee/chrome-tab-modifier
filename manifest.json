@@ -56,10 +56,10 @@
   "commands": {
     "merge-windows": {
       "suggested_key": {
-        "default": "Alt+Shift+M",
-        "linux": "Alt+Shift+M",
-        "mac": "Ctrl+Shift+M",
-        "windows": "Alt+Shift+M"
+        "default": "Alt+Shift+W",
+        "linux": "Alt+Shift+W",
+        "mac": "Command+Shift+W",
+        "windows": "Alt+Shift+W"
       },
       "description": "Merge windows"
     }

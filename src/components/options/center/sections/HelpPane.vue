@@ -24,8 +24,29 @@
 					<li>You can protect some websites from accidental closure with a confirm box.</li>
 					<li>You can avoid duplicate tabs by setting up the unique property.</li>
 					<li>You can mute the sound of any website before it plays it.</li>
+					<li>You can merge all browser windows into one with a keyboard shortcut or context menu.</li>
 					<li>And the icing on the cake... Combine all of them!</li>
 				</ul>
+			</div>
+		</div>
+
+		<div class="card bg-base-200 mt-4">
+			<div class="card-body">
+				<h2 class="card-title">Keyboard Shortcuts</h2>
+
+				<h3 class="font-bold">Merge All Windows</h3>
+				<p>
+					Quickly merge all browser windows into the currently focused window using the keyboard
+					shortcut:
+				</p>
+				<ul class="list-disc ml-3">
+					<li><strong>Windows/Linux:</strong> <kbd class="kbd kbd-sm">Alt</kbd> + <kbd class="kbd kbd-sm">Shift</kbd> + <kbd class="kbd kbd-sm">W</kbd></li>
+					<li><strong>Mac:</strong> <kbd class="kbd kbd-sm">⌘ Command</kbd> + <kbd class="kbd kbd-sm">Shift</kbd> + <kbd class="kbd kbd-sm">W</kbd></li>
+				</ul>
+				<p class="mt-2">
+					You can also access this feature by right-clicking anywhere and selecting "Merge All
+					Windows" from the context menu.
+				</p>
 			</div>
 		</div>
 
