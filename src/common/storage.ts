@@ -10,9 +10,11 @@ export function _getDefaultTabModifierSettings(): TabModifierSettings {
 		groups: [],
 		settings: {
 			enable_new_version_notification: false,
-			theme: 'dim',
+			theme: 'tabee',
 			lightweight_mode_enabled: false,
 			lightweight_mode_patterns: [],
+			auto_close_enabled: false,
+			auto_close_timeout: 30, // 30 minutes par défaut
 		},
 	};
 }

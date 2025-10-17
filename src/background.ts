@@ -113,6 +113,12 @@ chrome.tabs.onMoved.addListener(async (tabId) => {
 });
 
 chrome.runtime.onMessage.addListener(async (message, sender) => {
+	// Handle messages from SidePanel (no sender.tab)
+	if (message.action === 'restoreClosedTab') {
+		await restoreClosedTab(message.tabId);
+		return;
+	}
+
 	if (!sender.tab) return;
 
 	const tab = sender.tab as chrome.tabs.Tab;
@@ -206,13 +212,19 @@ async function handleRenameTab(tab: chrome.tabs.Tab, title: string) {
 
 chrome.contextMenus.create({
 	id: 'rename-tab',
-	title: 'Rename Tab',
+	title: '✏️ Rename Tab',
 	contexts: ['all'],
 });
 
 chrome.contextMenus.create({
 	id: 'merge-windows',
-	title: 'Merge All Windows',
+	title: '🪟 Merge All Windows',
+	contexts: ['all'],
+});
+
+chrome.contextMenus.create({
+	id: 'send-to-hive',
+	title: '🍯 Send to Tab Hive',
 	contexts: ['all'],
 });
 
@@ -222,6 +234,9 @@ chrome.contextMenus.onClicked.addListener(async function (info, tab) {
 		await chrome.tabs.sendMessage(tab.id, { action: 'openPrompt' });
 	} else if (info.menuItemId === 'merge-windows') {
 		await mergeAllWindows();
+	} else if (info.menuItemId === 'send-to-hive') {
+		if (!tab) return;
+		await sendTabToHive(tab);
 	}
 });
 
@@ -266,7 +281,7 @@ async function applyGroupRuleToTab(
 
 	const tabGroupsQueryInfo = {
 		title: tmGroup.title,
-		color: tmGroup.color,
+		color: tmGroup.color as chrome.tabGroups.ColorEnum,
 		windowId: tab.windowId,
 	};
 
@@ -348,12 +363,300 @@ async function updateTabGroup(groupId: number, tmGroup: Group) {
 	execute();
 }
 
-// Merge Windows Command Handler
+// Auto-Close Inactive Tabs System
+interface TabActivity {
+	tabId: number;
+	lastActiveTime: number;
+}
+
+const tabActivityMap = new Map<number, TabActivity>();
+const CLOSED_TABS_STORAGE_KEY = 'closed_tabs';
+const MAX_CLOSED_TABS = 100; // Maximum number of closed tabs to keep in history
+
+/**
+ * Initialize tab tracking for auto-close
+ */
+async function initAutoCloseTracking() {
+	const settings = await _getStorageAsync();
+	if (!settings?.settings.auto_close_enabled) {
+		return;
+	}
+
+	// Get all existing tabs and mark them as active
+	const tabs = await chrome.tabs.query({});
+	const now = Date.now();
+
+	for (const tab of tabs) {
+		if (tab.id) {
+			tabActivityMap.set(tab.id, {
+				tabId: tab.id,
+				lastActiveTime: now,
+			});
+		}
+	}
+
+	// Start the auto-close checker
+	startAutoCloseChecker();
+}
+
+/**
+ * Update tab activity when it becomes active
+ */
+chrome.tabs.onActivated.addListener((activeInfo) => {
+	const now = Date.now();
+	tabActivityMap.set(activeInfo.tabId, {
+		tabId: activeInfo.tabId,
+		lastActiveTime: now,
+	});
+});
+
+/**
+ * Update tab activity when it's updated (navigated, etc.)
+ */
+chrome.tabs.onUpdated.addListener((tabId, changeInfo) => {
+	if (changeInfo.status === 'loading' || changeInfo.url) {
+		const now = Date.now();
+		tabActivityMap.set(tabId, {
+			tabId: tabId,
+			lastActiveTime: now,
+		});
+	}
+});
+
+/**
+ * Track new tabs
+ */
+chrome.tabs.onCreated.addListener((tab) => {
+	if (tab.id) {
+		const now = Date.now();
+		tabActivityMap.set(tab.id, {
+			tabId: tab.id,
+			lastActiveTime: now,
+		});
+	}
+});
+
+/**
+ * Clean up closed tabs from tracking
+ */
+chrome.tabs.onRemoved.addListener((tabId) => {
+	tabActivityMap.delete(tabId);
+});
+
+/**
+ * Start periodic checker for inactive tabs
+ */
+let autoCloseInterval: number | null = null;
+
+function startAutoCloseChecker() {
+	// Clear existing interval if any
+	if (autoCloseInterval) {
+		clearInterval(autoCloseInterval);
+	}
+
+	// Check every minute
+	autoCloseInterval = setInterval(async () => {
+		await checkAndCloseInactiveTabs();
+	}, 60000); // 1 minute
+}
+
+/**
+ * Check and close inactive tabs based on settings
+ */
+async function checkAndCloseInactiveTabs() {
+	try {
+		const settings = await _getStorageAsync();
+		if (!settings?.settings.auto_close_enabled) {
+			// Stop checking if disabled
+			if (autoCloseInterval) {
+				clearInterval(autoCloseInterval);
+				autoCloseInterval = null;
+			}
+			return;
+		}
+
+		const timeoutMs = settings.settings.auto_close_timeout * 60 * 1000;
+		const now = Date.now();
+
+		// Get all tabs
+		const allTabs = await chrome.tabs.query({});
+
+		for (const tab of allTabs) {
+			if (!tab.id) continue;
+
+			// Skip pinned tabs
+			if (tab.pinned) continue;
+
+			// Skip active tab
+			if (tab.active) continue;
+
+			// Get activity info
+			const activity = tabActivityMap.get(tab.id);
+			if (!activity) {
+				// Tab not tracked yet, add it
+				tabActivityMap.set(tab.id, {
+					tabId: tab.id,
+					lastActiveTime: now,
+				});
+				continue;
+			}
+
+			// Check if tab is inactive for too long
+			const inactiveTime = now - activity.lastActiveTime;
+			if (inactiveTime >= timeoutMs) {
+				// Save tab info before closing
+				await saveClosedTab(tab);
+
+				// Close the tab
+				try {
+					await chrome.tabs.remove(tab.id);
+					console.log(
+						`[Tabee] Auto-closed inactive tab: ${tab.title} (inactive for ${Math.round(inactiveTime / 60000)} minutes)`
+					);
+				} catch (error) {
+					console.error(`[Tabee] Error closing tab ${tab.id}:`, error);
+				}
+			}
+		}
+	} catch (error) {
+		console.error('[Tabee] Error in auto-close checker:', error);
+	}
+}
+
+/**
+ * Save closed tab to history
+ */
+async function saveClosedTab(tab: chrome.tabs.Tab) {
+	if (!tab.url || !tab.id) return;
+
+	// Don't save chrome:// URLs
+	if (tab.url.startsWith('chrome://') || tab.url.startsWith('chrome-extension://')) {
+		return;
+	}
+
+	try {
+		const closedTab = {
+			id: crypto.randomUUID(),
+			title: tab.title || 'Untitled',
+			url: tab.url,
+			favIconUrl: tab.favIconUrl,
+			closedAt: Date.now(),
+		};
+
+		// Get existing closed tabs
+		const result = await chrome.storage.local.get(CLOSED_TABS_STORAGE_KEY);
+		let closedTabs = result[CLOSED_TABS_STORAGE_KEY] || [];
+
+		// Add new tab at the beginning
+		closedTabs.unshift(closedTab);
+
+		// Keep only the last MAX_CLOSED_TABS
+		if (closedTabs.length > MAX_CLOSED_TABS) {
+			closedTabs = closedTabs.slice(0, MAX_CLOSED_TABS);
+		}
+
+		// Save back to storage
+		await chrome.storage.local.set({
+			[CLOSED_TABS_STORAGE_KEY]: closedTabs,
+		});
+
+		console.log(`[Tabee] Saved closed tab to history: ${closedTab.title}`);
+	} catch (error) {
+		console.error('[Tabee] Error saving closed tab:', error);
+	}
+}
+
+/**
+ * Manually send a tab to the hive
+ */
+async function sendTabToHive(tab: chrome.tabs.Tab) {
+	if (!tab.id) return;
+
+	// Save tab to hive
+	await saveClosedTab(tab);
+
+	// Close the tab
+	try {
+		await chrome.tabs.remove(tab.id);
+		console.log(`[Tabee] Tab sent to hive: ${tab.title}`);
+	} catch (error) {
+		console.error('[Tabee] Error closing tab:', error);
+	}
+}
+
+/**
+ * Restore a closed tab
+ */
+export async function restoreClosedTab(closedTabId: string) {
+	try {
+		// Get closed tabs
+		const result = await chrome.storage.local.get(CLOSED_TABS_STORAGE_KEY);
+		const closedTabs = result[CLOSED_TABS_STORAGE_KEY] || [];
+
+		// Find the tab
+		const tabIndex = closedTabs.findIndex((t: any) => t.id === closedTabId);
+		if (tabIndex === -1) {
+			console.error('[Tabee] Closed tab not found:', closedTabId);
+			return;
+		}
+
+		const closedTab = closedTabs[tabIndex];
+
+		// Open the tab
+		await chrome.tabs.create({
+			url: closedTab.url,
+			active: true,
+		});
+
+		// Remove from closed tabs
+		closedTabs.splice(tabIndex, 1);
+		await chrome.storage.local.set({
+			[CLOSED_TABS_STORAGE_KEY]: closedTabs,
+		});
+
+		console.log(`[Tabee] Restored tab: ${closedTab.title}`);
+	} catch (error) {
+		console.error('[Tabee] Error restoring tab:', error);
+	}
+}
+
+// Initialize auto-close tracking when extension loads
+initAutoCloseTracking();
+
+// Handle clicks on the extension icon
+// Note: This only works if action.default_popup is NOT set in manifest
+chrome.action.onClicked.addListener(async () => {
+	// Open the options page to add a new rule
+	chrome.runtime.openOptionsPage();
+});
+
+// Command Handlers
 chrome.commands.onCommand.addListener(async (command) => {
 	if (command === 'merge-windows') {
 		await mergeAllWindows();
+	} else if (command === 'open-side-panel') {
+		await openSidePanel();
 	}
 });
+
+/**
+ * Open the side panel for the current window
+ */
+async function openSidePanel() {
+	try {
+		const windows = await chrome.windows.getAll();
+		if (windows.length === 0) return;
+
+		// Get the current window or the first one
+		const currentWindow = windows.find((w) => w.focused) || windows[0];
+		if (!currentWindow.id) return;
+
+		await chrome.sidePanel.open({ windowId: currentWindow.id });
+		console.log('[Tabee] Side panel opened');
+	} catch (error) {
+		console.error('[Tabee] Error opening side panel:', error);
+	}
+}
 
 /**
  * Merge all browser windows into the current window

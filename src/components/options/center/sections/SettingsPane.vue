@@ -41,14 +41,16 @@
 							sites where you don't need tab modifications.
 						</p>
 					</div>
-					<div class="col-span-1">
+					<div class="col-span-1 flex justify-end">
 						<input v-model="lightweightModeEnabled" class="toggle toggle-primary" type="checkbox" />
 					</div>
 				</div>
 
 				<div v-if="lightweightModeEnabled" class="mt-4">
 					<div class="mb-4">
-						<button class="btn btn-sm btn-primary" @click="showAddPatternModal">Add Pattern</button>
+						<button class="btn btn-xs btn-outline btn-primary" @click="showAddPatternModal">
+							Add Pattern
+						</button>
 					</div>
 
 					<div v-if="lightweightModePatterns.length > 0" class="overflow-x-auto">
@@ -93,7 +95,7 @@
 						</table>
 					</div>
 
-					<div v-else class="text-sm opacity-70">
+					<div v-else class="text-xs opacity-70">
 						No patterns added yet. Click "Add Pattern" to exclude domains or URLs.
 					</div>
 				</div>
@@ -102,7 +104,7 @@
 				<dialog ref="addPatternModal" class="modal">
 					<div class="modal-box">
 						<h3 class="font-bold text-lg">Add Lightweight Mode Pattern</h3>
-						<p class="text-sm opacity-70 mt-2">
+						<p class="text-xs opacity-70 mt-2">
 							Specify a domain or regex pattern to exclude from Tabee processing.
 						</p>
 
@@ -110,7 +112,7 @@
 							<label class="label">
 								<span class="label-text">Type</span>
 							</label>
-							<select v-model="newPattern.type" class="select select-bordered select-sm">
+							<select v-model="newPattern.type" class="select select-bordered select-xs">
 								<option value="domain">Domain (simple matching)</option>
 								<option value="regex">Regex (advanced)</option>
 							</select>
@@ -124,7 +126,7 @@
 								v-model="newPattern.pattern"
 								type="text"
 								placeholder="e.g., example.com or ^https://.*\\.example\\.com"
-								class="input input-bordered input-sm w-full"
+								class="input input-bordered input-xs w-full"
 							/>
 							<label class="label">
 								<span class="label-text-alt">
@@ -139,7 +141,7 @@
 							</form>
 							<button
 								:disabled="!newPattern.pattern"
-								class="btn btn-sm btn-primary"
+								class="btn btn-sm btn-outline btn-primary"
 								@click="addPattern"
 							>
 								Add Pattern
@@ -147,6 +149,46 @@
 						</div>
 					</div>
 				</dialog>
+			</div>
+		</div>
+
+		<div class="card bg-base-200 mt-4">
+			<div class="card-body">
+				<h2 class="card-title">🍯 Tab Hive</h2>
+
+				<div class="grid grid-cols-6">
+					<div class="col-span-5">
+						<h3 class="font-bold">Auto-Close Inactive Tabs</h3>
+						<p>
+							Automatically close tabs that have been inactive for a specified duration. Closed tabs
+							will be saved in the side panel for easy restoration.
+						</p>
+					</div>
+					<div class="col-span-1 flex justify-end">
+						<input v-model="autoCloseEnabled" class="toggle toggle-primary" type="checkbox" />
+					</div>
+				</div>
+
+				<div v-if="autoCloseEnabled" class="mt-4">
+					<div class="form-control w-full max-w-xs">
+						<label class="label">
+							<span class="label-text text-xs">Close inactive tabs after</span>
+						</label>
+						<div class="flex gap-2 items-center">
+							<input
+								v-model.number="autoCloseTimeout"
+								type="number"
+								min="1"
+								max="1440"
+								class="input input-bordered input-xs w-24"
+							/>
+							<span class="text-xs">minute(s)</span>
+						</div>
+						<label class="label">
+							<span class="label-text-alt">Minimum: 1 minute, Maximum: 24 hours (1440 min)</span>
+						</label>
+					</div>
+				</div>
 			</div>
 		</div>
 
@@ -160,7 +202,7 @@
 						<p>Restore your tab rules settings from an external JSON file.</p>
 					</div>
 					<div class="col-span-1">
-						<button class="btn btn-sm btn-outline w-full" @click="showImportModal">Import</button>
+						<button class="btn btn-xs btn-outline w-full" @click="showImportModal">Import</button>
 						<dialog ref="importModal" class="modal">
 							<div class="modal-box">
 								<h3 class="font-bold text-lg">Import</h3>
@@ -178,12 +220,12 @@
 
 								<div class="modal-action">
 									<form method="dialog">
-										<button class="btn btn-sm">Close</button>
+										<button class="btn btn-xs">Close</button>
 									</form>
 
 									<button
 										:disabled="!fileLoaded"
-										class="btn btn-sm btn-outline btn-accent ml-4 group"
+										class="btn btn-xs btn-outline btn-accent ml-4 group"
 										@click="importReplaceConfig"
 									>
 										Import & Replace
@@ -191,7 +233,7 @@
 
 									<button
 										:disabled="!fileLoaded"
-										class="btn btn-sm btn-outline btn-primary ml-4 group"
+										class="btn btn-xs btn-outline btn-primary ml-4 group"
 										@click="importMergeConfig"
 									>
 										Import & Merge
@@ -208,7 +250,7 @@
 						<p>Export your tab rules for backup purpose or for sharing with friend.</p>
 					</div>
 					<div class="col-span-1">
-						<button class="btn btn-sm btn-outline w-full" @click="exportConfig">Export</button>
+						<button class="btn btn-xs btn-outline w-full" @click="exportConfig">Export</button>
 					</div>
 				</div>
 			</div>
@@ -227,7 +269,7 @@
 						</p>
 					</div>
 					<div class="col-span-1">
-						<button class="btn btn-sm btn-error btn-outline w-full" @click="onDeleteAllRules">
+						<button class="btn btn-xs btn-error btn-outline w-full" @click="onDeleteAllRules">
 							Delete
 						</button>
 					</div>
@@ -264,6 +306,10 @@ const newPattern = ref({
 	pattern: '',
 });
 
+// Auto-Close
+const autoCloseEnabled = ref(rulesStore.settings.auto_close_enabled ?? false);
+const autoCloseTimeout = ref(rulesStore.settings.auto_close_timeout ?? 30);
+
 const themes = _getThemes();
 
 watch(currentTheme, (theme) => {
@@ -278,6 +324,24 @@ watch(lightweightModeEnabled, async (enabled) => {
 		type: 'success',
 		message: `Lightweight Mode ${enabled ? 'enabled' : 'disabled'}!`,
 	});
+});
+
+watch(autoCloseEnabled, async (enabled) => {
+	rulesStore.settings.auto_close_enabled = enabled;
+	await rulesStore.save();
+
+	emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
+		type: 'success',
+		message: `Auto-Close ${enabled ? 'enabled' : 'disabled'}!`,
+	});
+});
+
+watch(autoCloseTimeout, async (timeout) => {
+	if (timeout < 5) timeout = 5;
+	if (timeout > 1440) timeout = 1440;
+
+	rulesStore.settings.auto_close_timeout = timeout;
+	await rulesStore.save();
 });
 
 const onFileChanged = (event: any) => {

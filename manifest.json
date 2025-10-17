@@ -6,7 +6,6 @@
   "homepage_url": "https://github.com/furybee/chrome-tab-modifier",
   "action": {
     "default_title": "Tabee",
-    "default_popup": "src/index.html",
     "default_icon": {
       "16": "assets/icon_16.png",
       "32": "assets/icon_32.png",
@@ -25,6 +24,9 @@
     "type": "module"
   },
   "options_page": "src/options.html",
+  "side_panel": {
+    "default_path": "src/sidepanel.html"
+  },
   "web_accessible_resources": [{
     "resources": [
       "assets/*",
@@ -47,7 +49,8 @@
     "tabGroups",
     "storage",
     "contextMenus",
-    "scripting"
+    "scripting",
+    "sidePanel"
   ],
   "host_permissions": [
     "http://*/*",
@@ -62,6 +65,15 @@
         "windows": "Alt+Shift+W"
       },
       "description": "Merge windows"
+    },
+    "open-side-panel": {
+      "suggested_key": {
+        "default": "Alt+Shift+S",
+        "linux": "Alt+Shift+S",
+        "mac": "Command+Shift+S",
+        "windows": "Alt+Shift+S"
+      },
+      "description": "Open Tab Hive panel"
     }
   }
 }

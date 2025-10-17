@@ -42,11 +42,21 @@ export type LightweightModePattern = {
 	enabled: boolean;
 };
 
+export type ClosedTab = {
+	id: string;
+	title: string;
+	url: string;
+	favIconUrl?: string;
+	closedAt: number; // timestamp
+};
+
 export type Settings = {
 	enable_new_version_notification: boolean;
 	theme: string;
 	lightweight_mode_enabled: boolean;
 	lightweight_mode_patterns: LightweightModePattern[];
+	auto_close_enabled: boolean;
+	auto_close_timeout: number; // en minutes
 };
 
 export type TabModifierSettings = {

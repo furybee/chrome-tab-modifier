@@ -13,7 +13,9 @@
 				</p>
 				<div class="flex gap-3 justify-center">
 					<button class="btn btn-primary" @click="onGetStartedClicked">Create my first Rule</button>
-					<button class="btn btn-outline" @click="onLoadSamplesClicked">Start with Sample Rules</button>
+					<button class="btn btn-outline" @click="onLoadSamplesClicked">
+						Start with Sample Rules
+					</button>
 				</div>
 
 				<Disclaimer class="mt-8" :tips="rulesTips" />
@@ -177,17 +179,17 @@ const onLoadSamplesClicked = async () => {
 			id: _generateRandomId(),
 			name: 'Wikipedia Articles',
 			detection: 'REGEX',
-			url_fragment: 'wikipedia\\.org/wiki/(.+)',
+			url_fragment: 'wikipedia\\.org/wiki/',
 			is_enabled: true,
 			tab: {
-				title: '{title_1}',
+				title: '@1',
 				icon: 'https://en.wikipedia.org/static/favicon/wikipedia.ico',
 				muted: false,
 				pinned: false,
 				protected: false,
 				unique: false,
 				group_id: null,
-				title_matcher: '(.+)\\s+-\\s+Wikipedia',
+				title_matcher: '(.+)\\s+[—\\-]\\s+Wikip[ée]dia',
 				url_matcher: null,
 			},
 		},

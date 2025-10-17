@@ -109,6 +109,13 @@ export const useRulesStore = defineStore('rules', {
 			if (settings.lightweight_mode_patterns === undefined) {
 				settings.lightweight_mode_patterns = [];
 			}
+			// Add default values for auto-close if they don't exist
+			if (settings.auto_close_enabled === undefined) {
+				settings.auto_close_enabled = false;
+			}
+			if (settings.auto_close_timeout === undefined) {
+				settings.auto_close_timeout = 30;
+			}
 			return settings;
 		},
 		async init() {

@@ -24,6 +24,7 @@
 					<li>You can protect some websites from accidental closure with a confirm box.</li>
 					<li>You can avoid duplicate tabs by setting up the unique property.</li>
 					<li>You can mute the sound of any website before it plays it.</li>
+					<li>You can automatically close inactive tabs after a specified duration and restore them later.</li>
 					<li>You can merge all browser windows into one with a keyboard shortcut or context menu.</li>
 					<li>And the icing on the cake... Combine all of them!</li>
 				</ul>
@@ -46,6 +47,18 @@
 				<p class="mt-2">
 					You can also access this feature by right-clicking anywhere and selecting "Merge All
 					Windows" from the context menu.
+				</p>
+
+				<h3 class="font-bold mt-4">Open Closed Tabs Panel</h3>
+				<p>
+					Access the side panel showing your auto-closed tabs history using the keyboard shortcut:
+				</p>
+				<ul class="list-disc ml-3">
+					<li><strong>Windows/Linux:</strong> <kbd class="kbd kbd-sm">Alt</kbd> + <kbd class="kbd kbd-sm">Shift</kbd> + <kbd class="kbd kbd-sm">S</kbd></li>
+					<li><strong>Mac:</strong> <kbd class="kbd kbd-sm">⌘ Command</kbd> + <kbd class="kbd kbd-sm">Shift</kbd> + <kbd class="kbd kbd-sm">S</kbd></li>
+				</ul>
+				<p class="mt-2">
+					This panel displays tabs that were automatically closed due to inactivity and allows you to restore them with one click.
 				</p>
 			</div>
 		</div>
