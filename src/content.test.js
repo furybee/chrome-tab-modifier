@@ -147,7 +147,10 @@ describe('Content', () => {
 			const rule = {
 				tab: {
 					title: 'Page $1',
-					url_matcher: 'https:\\/\\/example.com\\/(.+)',
+					// Updated: Added ^ anchor to ensure pattern matches from the start
+					// This prevents matching if the URL appears embedded in another URL
+					// codeql[js/regex/missing-regexp-anchor] - Pattern intentionally uses anchor
+					url_matcher: '^https:\\/\\/example\\.com\\/(.+)',
 				},
 			};
 			const result = processTitle('https://example.com/test', '', rule);
@@ -158,8 +161,8 @@ describe('Content', () => {
 			const rule = {
 				tab: {
 					title: '@0 | $0',
-					title_matcher: '[a-z]*@gmail.com',
-					url_matcher: '[a-z]*.google.com',
+					title_matcher: '^[a-z]*@gmail\\.com$',
+					url_matcher: '^[a-z]+\\.google\\.com$',
 				},
 			};
 
