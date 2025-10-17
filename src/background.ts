@@ -5,12 +5,18 @@ import {
 	_getRuleFromUrl,
 	_getStorageAsync,
 	_setStorage,
+	_shouldSkipUrl,
 } from './common/storage.ts';
 import { _processUrlFragment } from './common/helpers.ts';
 
 chrome.tabs.onUpdated.addListener(
 	async (_: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab) => {
 		if (!changeInfo.url) return;
+
+		// Skip processing if lightweight mode excludes this URL
+		if (await _shouldSkipUrl(changeInfo.url)) {
+			return;
+		}
 
 		await applyRuleToTab(tab);
 	}
@@ -91,6 +97,11 @@ chrome.tabs.onMoved.addListener(async (tabId) => {
 	const tab = await chrome.tabs.get(tabId);
 	if (!tab) return;
 	if (!tab.url) return;
+
+	// Skip processing if lightweight mode excludes this URL
+	if (await _shouldSkipUrl(tab.url)) {
+		return;
+	}
 
 	const tabModifier = await _getStorageAsync();
 	if (!tabModifier) return;

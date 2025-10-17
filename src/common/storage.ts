@@ -11,6 +11,8 @@ export function _getDefaultTabModifierSettings(): TabModifierSettings {
 		settings: {
 			enable_new_version_notification: false,
 			theme: 'dim',
+			lightweight_mode_enabled: false,
+			lightweight_mode_patterns: [],
 		},
 	};
 }
@@ -153,4 +155,47 @@ export async function _migrateLocalToSync(): Promise<void> {
 			}
 		});
 	});
+}
+
+/**
+ * Check if a URL should be excluded from Tab Modifier processing
+ * based on lightweight mode patterns
+ */
+export async function _shouldSkipUrl(url: string): Promise<boolean> {
+	const tabModifier = await _getStorageAsync();
+	if (!tabModifier) {
+		return false;
+	}
+
+	const { settings } = tabModifier;
+
+	// If lightweight mode is not enabled or not configured, don't skip any URLs
+	if (!settings.lightweight_mode_enabled || !settings.lightweight_mode_patterns) {
+		return false;
+	}
+
+	// Check if URL matches any enabled pattern
+	for (const pattern of settings.lightweight_mode_patterns) {
+		if (!pattern.enabled) continue;
+
+		try {
+			if (pattern.type === 'domain') {
+				// Simple domain matching
+				if (url.includes(pattern.pattern)) {
+					return true;
+				}
+			} else if (pattern.type === 'regex') {
+				// Regex matching with safety check
+				const isMatch = _safeRegexTestSync(pattern.pattern, url);
+				if (isMatch) {
+					return true;
+				}
+			}
+		} catch (error) {
+			console.error('[Tabee] Error checking lightweight mode pattern:', error);
+			// Continue checking other patterns
+		}
+	}
+
+	return false;
 }

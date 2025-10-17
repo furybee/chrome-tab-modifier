@@ -35,9 +35,18 @@ export type Group = {
 	collapsed: boolean;
 };
 
+export type LightweightModePattern = {
+	id: string;
+	pattern: string;
+	type: 'domain' | 'regex';
+	enabled: boolean;
+};
+
 export type Settings = {
 	enable_new_version_notification: boolean;
 	theme: string;
+	lightweight_mode_enabled: boolean;
+	lightweight_mode_patterns: LightweightModePattern[];
 };
 
 export type TabModifierSettings = {

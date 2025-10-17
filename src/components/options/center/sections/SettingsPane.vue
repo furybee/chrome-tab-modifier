@@ -31,6 +31,127 @@
 
 		<div class="card bg-base-200 mt-4">
 			<div class="card-body">
+				<h2 class="card-title">Performance</h2>
+
+				<div class="grid grid-cols-6">
+					<div class="col-span-5">
+						<h3 class="font-bold">Lightweight Mode</h3>
+						<p>
+							Reduce memory usage by disabling Tabee on specific domains or URLs. This is useful for
+							sites where you don't need tab modifications.
+						</p>
+					</div>
+					<div class="col-span-1">
+						<input v-model="lightweightModeEnabled" class="toggle toggle-primary" type="checkbox" />
+					</div>
+				</div>
+
+				<div v-if="lightweightModeEnabled" class="mt-4">
+					<div class="mb-4">
+						<button class="btn btn-sm btn-primary" @click="showAddPatternModal">Add Pattern</button>
+					</div>
+
+					<div v-if="lightweightModePatterns.length > 0" class="overflow-x-auto">
+						<table class="table table-xs">
+							<thead>
+								<tr>
+									<th>Enabled</th>
+									<th>Type</th>
+									<th>Pattern</th>
+									<th>Actions</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr v-for="pattern in lightweightModePatterns" :key="pattern.id">
+									<td>
+										<input
+											v-model="pattern.enabled"
+											type="checkbox"
+											class="checkbox checkbox-xs checkbox-primary"
+											@change="saveLightweightSettings"
+										/>
+									</td>
+									<td>
+										<span
+											class="badge badge-xs"
+											:class="pattern.type === 'domain' ? 'badge-info' : 'badge-warning'"
+										>
+											{{ pattern.type }}
+										</span>
+									</td>
+									<td class="font-mono text-xs">{{ pattern.pattern }}</td>
+									<td>
+										<button
+											class="btn btn-xs btn-error btn-outline"
+											@click="deletePattern(pattern.id)"
+										>
+											Delete
+										</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div v-else class="text-sm opacity-70">
+						No patterns added yet. Click "Add Pattern" to exclude domains or URLs.
+					</div>
+				</div>
+
+				<!-- Add Pattern Modal -->
+				<dialog ref="addPatternModal" class="modal">
+					<div class="modal-box">
+						<h3 class="font-bold text-lg">Add Lightweight Mode Pattern</h3>
+						<p class="text-sm opacity-70 mt-2">
+							Specify a domain or regex pattern to exclude from Tabee processing.
+						</p>
+
+						<div class="form-control w-full mt-4">
+							<label class="label">
+								<span class="label-text">Type</span>
+							</label>
+							<select v-model="newPattern.type" class="select select-bordered select-sm">
+								<option value="domain">Domain (simple matching)</option>
+								<option value="regex">Regex (advanced)</option>
+							</select>
+						</div>
+
+						<div class="form-control w-full mt-4">
+							<label class="label">
+								<span class="label-text">Pattern</span>
+							</label>
+							<input
+								v-model="newPattern.pattern"
+								type="text"
+								placeholder="e.g., example.com or ^https://.*\\.example\\.com"
+								class="input input-bordered input-sm w-full"
+							/>
+							<label class="label">
+								<span class="label-text-alt">
+									{{ newPattern.type === 'domain' ? 'Domain name to match' : 'Regex pattern' }}
+								</span>
+							</label>
+						</div>
+
+						<div class="modal-action">
+							<form method="dialog">
+								<button class="btn btn-sm">Cancel</button>
+							</form>
+							<button
+								:disabled="!newPattern.pattern"
+								class="btn btn-sm btn-primary"
+								@click="addPattern"
+							>
+								Add Pattern
+							</button>
+						</div>
+					</div>
+				</dialog>
+			</div>
+		</div>
+
+		<div class="card bg-base-200 mt-4">
+			<div class="card-body">
 				<h2 class="card-title">Backup</h2>
 
 				<div class="grid grid-cols-6">
@@ -120,8 +241,8 @@
 import CustomSelect from '../../../global/CustomSelect.vue';
 import { inject, ref, watch } from 'vue';
 import { useRulesStore } from '../../../../stores/rules.store.ts';
-import { GLOBAL_EVENTS } from '../../../../common/types.ts';
-import { _getThemes } from '../../../../common/helpers.ts';
+import { GLOBAL_EVENTS, LightweightModePattern } from '../../../../common/types.ts';
+import { _getThemes, _generateRandomId } from '../../../../common/helpers.ts';
 
 const emitter: any = inject('emitter');
 
@@ -132,10 +253,31 @@ const importModal = ref(null);
 const fileInput = ref<HTMLInputElement | null>(null);
 const fileLoaded = ref(false);
 
+// Lightweight Mode
+const lightweightModeEnabled = ref(rulesStore.settings.lightweight_mode_enabled ?? false);
+const lightweightModePatterns = ref<LightweightModePattern[]>(
+	rulesStore.settings.lightweight_mode_patterns ?? []
+);
+const addPatternModal = ref<HTMLDialogElement | null>(null);
+const newPattern = ref({
+	type: 'domain' as 'domain' | 'regex',
+	pattern: '',
+});
+
 const themes = _getThemes();
 
 watch(currentTheme, (theme) => {
 	rulesStore.applyTheme(theme);
+});
+
+watch(lightweightModeEnabled, async (enabled) => {
+	rulesStore.settings.lightweight_mode_enabled = enabled;
+	await rulesStore.save();
+
+	emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
+		type: 'success',
+		message: `Lightweight Mode ${enabled ? 'enabled' : 'disabled'}!`,
+	});
 });
 
 const onFileChanged = (event: any) => {
@@ -258,6 +400,65 @@ const exportConfig = async () => {
 	emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
 		type: 'success',
 		message: 'Export successfully!',
+	});
+};
+
+// Lightweight Mode functions
+const showAddPatternModal = () => {
+	if (!addPatternModal.value) return;
+	addPatternModal.value.showModal();
+};
+
+const addPattern = async () => {
+	if (!newPattern.value.pattern) return;
+
+	const pattern: LightweightModePattern = {
+		id: _generateRandomId(),
+		pattern: newPattern.value.pattern,
+		type: newPattern.value.type,
+		enabled: true,
+	};
+
+	lightweightModePatterns.value.push(pattern);
+	rulesStore.settings.lightweight_mode_patterns = lightweightModePatterns.value;
+	await rulesStore.save();
+
+	emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
+		type: 'success',
+		message: 'Pattern added successfully!',
+	});
+
+	// Reset form
+	newPattern.value = {
+		type: 'domain',
+		pattern: '',
+	};
+
+	if (addPatternModal.value) {
+		addPatternModal.value.close();
+	}
+};
+
+const deletePattern = async (patternId: string) => {
+	if (!confirm('Are you sure you want to delete this pattern?')) return;
+
+	lightweightModePatterns.value = lightweightModePatterns.value.filter((p) => p.id !== patternId);
+	rulesStore.settings.lightweight_mode_patterns = lightweightModePatterns.value;
+	await rulesStore.save();
+
+	emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
+		type: 'success',
+		message: 'Pattern deleted successfully!',
+	});
+};
+
+const saveLightweightSettings = async () => {
+	rulesStore.settings.lightweight_mode_patterns = lightweightModePatterns.value;
+	await rulesStore.save();
+
+	emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
+		type: 'success',
+		message: 'Settings saved!',
 	});
 };
 </script>

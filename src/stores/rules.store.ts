@@ -101,6 +101,16 @@ export const useRulesStore = defineStore('rules', {
 
 			return groups;
 		},
+		fixMissingLightweightModeSettings(settings: Settings): Settings {
+			// Add default values for lightweight mode if they don't exist
+			if (settings.lightweight_mode_enabled === undefined) {
+				settings.lightweight_mode_enabled = false;
+			}
+			if (settings.lightweight_mode_patterns === undefined) {
+				settings.lightweight_mode_patterns = [];
+			}
+			return settings;
+		},
 		async init() {
 			try {
 				// Migrate data from local to sync storage if needed
@@ -123,6 +133,7 @@ export const useRulesStore = defineStore('rules', {
 					tabModifier.rules = this.fixDuplicateRuleIds(tabModifier.rules);
 					tabModifier.rules = this.fixRuleIsEnabled(tabModifier.rules);
 					tabModifier.groups = this.addMissingInvisibleChar(tabModifier.groups);
+					tabModifier.settings = this.fixMissingLightweightModeSettings(tabModifier.settings);
 
 					this.groups = tabModifier.groups;
 					this.rules = tabModifier.rules;
