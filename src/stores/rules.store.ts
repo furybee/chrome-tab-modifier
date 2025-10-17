@@ -6,6 +6,7 @@ import {
 	_getDefaultTabModifierSettings,
 	_getStorageAsync,
 	_setStorage,
+	_migrateLocalToSync,
 } from '../common/storage.ts';
 
 /**
@@ -102,6 +103,9 @@ export const useRulesStore = defineStore('rules', {
 		},
 		async init() {
 			try {
+				// Migrate data from local to sync storage if needed
+				await _migrateLocalToSync();
+
 				let tabModifier = await _getStorageAsync();
 
 				if (!tabModifier) {

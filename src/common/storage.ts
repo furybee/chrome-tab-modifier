@@ -47,7 +47,7 @@ export function _getDefaultGroup(title?: string): Group {
 
 export function _getStorageAsync(): Promise<TabModifierSettings | undefined> {
 	return new Promise((resolve, reject) => {
-		chrome.storage.local.get(STORAGE_KEY, (items) => {
+		chrome.storage.sync.get(STORAGE_KEY, (items) => {
 			if (chrome.runtime.lastError) {
 				reject(new Error(chrome.runtime.lastError.message));
 			} else {
@@ -58,11 +58,11 @@ export function _getStorageAsync(): Promise<TabModifierSettings | undefined> {
 }
 
 export async function _clearStorage(): Promise<void> {
-	await chrome.storage.local.remove(STORAGE_KEY);
+	await chrome.storage.sync.remove(STORAGE_KEY);
 }
 
 export async function _setStorage(tabModifier: TabModifierSettings): Promise<void> {
-	await chrome.storage.local.set({
+	await chrome.storage.sync.set({
 		tab_modifier: _clone({
 			rules: tabModifier.rules,
 			groups: tabModifier.groups,
@@ -107,4 +107,50 @@ export async function _getRuleFromUrl(url: string): Promise<Rule | undefined> {
 	}
 
 	return foundRule;
+}
+
+/**
+ * Migrates data from chrome.storage.local to chrome.storage.sync
+ * This function checks if data exists in local storage, and if so,
+ * copies it to sync storage and then removes it from local storage.
+ * This ensures a smooth transition without breaking existing installations.
+ */
+export async function _migrateLocalToSync(): Promise<void> {
+	return new Promise((resolve, reject) => {
+		// Check if data exists in local storage
+		chrome.storage.local.get(STORAGE_KEY, async (localItems) => {
+			if (chrome.runtime.lastError) {
+				reject(new Error(chrome.runtime.lastError.message));
+				return;
+			}
+
+			const localData = localItems[STORAGE_KEY];
+
+			// If no data in local storage, nothing to migrate
+			if (!localData) {
+				resolve();
+				return;
+			}
+
+			try {
+				// Check if sync storage already has data
+				const syncData = await _getStorageAsync();
+
+				// Only migrate if sync storage is empty
+				if (!syncData) {
+					console.log('[Tab Modifier] Migrating data from local to sync storage...');
+					await _setStorage(localData);
+					console.log('[Tab Modifier] Migration successful');
+				}
+
+				// Clean up local storage after successful migration
+				await chrome.storage.local.remove(STORAGE_KEY);
+				console.log('[Tab Modifier] Local storage cleaned up');
+
+				resolve();
+			} catch (error) {
+				reject(error);
+			}
+		});
+	});
 }

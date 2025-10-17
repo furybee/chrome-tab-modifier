@@ -53,7 +53,7 @@ describe('Storage', () => {
 			groups: [],
 			settings: { enable_new_version_notification: false, theme: 'dim' },
 		};
-		global.chrome.storage.local.get.mockImplementation((keys, callback) => {
+		global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
 			callback({ [STORAGE_KEY]: mockData });
 		});
 		const storageData = await _getStorageAsync();
@@ -63,7 +63,7 @@ describe('Storage', () => {
 	it('_clearStorage should remove storage data', async () => {
 		await _clearStorage();
 
-		expect(global.chrome.storage.local.remove).toHaveBeenCalledWith(STORAGE_KEY);
+		expect(global.chrome.storage.sync.remove).toHaveBeenCalledWith(STORAGE_KEY);
 	});
 
 	it('_setStorage should set storage data', async () => {
@@ -73,7 +73,7 @@ describe('Storage', () => {
 			settings: { enable_new_version_notification: false, theme: 'dim' },
 		};
 		await _setStorage(mockData);
-		expect(global.chrome.storage.local.set).toHaveBeenCalledWith({
+		expect(global.chrome.storage.sync.set).toHaveBeenCalledWith({
 			[STORAGE_KEY]: expect.objectContaining(mockData),
 		});
 	});
@@ -101,7 +101,7 @@ describe('Storage', () => {
 			groups: [],
 			settings: { enable_new_version_notification: false, theme: 'dim' },
 		};
-		global.chrome.storage.local.get.mockImplementation((keys, callback) => {
+		global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
 			callback({ tab_modifier: mockData });
 		});
 		global.chrome.runtime.lastError = null;
@@ -134,7 +134,7 @@ describe('Storage', () => {
 				groups: [],
 				settings: { enable_new_version_notification: false, theme: 'dim' },
 			};
-			global.chrome.storage.local.get.mockImplementation((keys, callback) => {
+			global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
 				callback({ [STORAGE_KEY]: mockData });
 			});
 			global.chrome.runtime.lastError = null;
@@ -166,7 +166,7 @@ describe('Storage', () => {
 				groups: [],
 				settings: { enable_new_version_notification: false, theme: 'dim' },
 			};
-			global.chrome.storage.local.get.mockImplementation((keys, callback) => {
+			global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
 				callback({ [STORAGE_KEY]: mockData });
 			});
 			global.chrome.runtime.lastError = null;
@@ -198,7 +198,7 @@ describe('Storage', () => {
 				groups: [],
 				settings: { enable_new_version_notification: false, theme: 'dim' },
 			};
-			global.chrome.storage.local.get.mockImplementation((keys, callback) => {
+			global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
 				callback({ [STORAGE_KEY]: mockData });
 			});
 			global.chrome.runtime.lastError = null;
@@ -230,7 +230,7 @@ describe('Storage', () => {
 				groups: [],
 				settings: { enable_new_version_notification: false, theme: 'dim' },
 			};
-			global.chrome.storage.local.get.mockImplementation((keys, callback) => {
+			global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
 				callback({ [STORAGE_KEY]: mockData });
 			});
 			global.chrome.runtime.lastError = null;
@@ -265,7 +265,7 @@ describe('Storage', () => {
 				groups: [],
 				settings: { enable_new_version_notification: false, theme: 'dim' },
 			};
-			global.chrome.storage.local.get.mockImplementation((keys, callback) => {
+			global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
 				callback({ [STORAGE_KEY]: mockData });
 			});
 			global.chrome.runtime.lastError = null;
@@ -300,7 +300,7 @@ describe('Storage', () => {
 				groups: [],
 				settings: { enable_new_version_notification: false, theme: 'dim' },
 			};
-			global.chrome.storage.local.get.mockImplementation((keys, callback) => {
+			global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
 				callback({ [STORAGE_KEY]: mockData });
 			});
 			global.chrome.runtime.lastError = null;
@@ -334,7 +334,7 @@ describe('Storage', () => {
 				groups: [],
 				settings: { enable_new_version_notification: false, theme: 'dim' },
 			};
-			global.chrome.storage.local.get.mockImplementation((keys, callback) => {
+			global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
 				callback({ [STORAGE_KEY]: mockData });
 			});
 			global.chrome.runtime.lastError = null;
@@ -367,7 +367,7 @@ describe('Storage', () => {
 				groups: [],
 				settings: { enable_new_version_notification: false, theme: 'dim' },
 			};
-			global.chrome.storage.local.get.mockImplementation((keys, callback) => {
+			global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
 				callback({ [STORAGE_KEY]: mockData });
 			});
 			global.chrome.runtime.lastError = null;

@@ -1,12 +1,14 @@
 import { beforeEach, describe, expect, it, vi } from 'vitest';
-import { _getRuleFromUrl } from './common/storage.ts';
-import { applyRule, getTextBySelector, processIcon, processTitle, updateTitle } from './content.js';
-
 import { chrome } from './__mocks__/chrome.js';
 
+// Set up global chrome object BEFORE importing content.js
 global.chrome = chrome;
 
+// Mock storage functions before importing
 vi.mock('./common/storage.ts');
+
+import { _getRuleFromUrl } from './common/storage.ts';
+import { applyRule, getTextBySelector, processIcon, processTitle, updateTitle } from './content.js';
 
 describe('Content', () => {
 	beforeEach(() => {
@@ -14,6 +16,8 @@ describe('Content', () => {
 		document.body.innerHTML = '';
 		vi.clearAllMocks();
 		global.chrome = chrome;
+		// Reset mock implementations
+		global.chrome.storage.sync.get = vi.fn((keys, callback) => callback({ tab_modifier: null }));
 	});
 
 	describe('updateTitle', () => {

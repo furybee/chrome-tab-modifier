@@ -1,6 +1,6 @@
 function _getStorageAsync() {
 	return new Promise((resolve, reject) => {
-		chrome.storage.local.get(STORAGE_KEY, (items) => {
+		chrome.storage.sync.get(STORAGE_KEY, (items) => {
 			if (chrome.runtime.lastError) {
 				reject(new Error(chrome.runtime.lastError.message));
 			} else {
@@ -357,7 +357,7 @@ export async function applyRule(ruleParam, updateTitle) {
 	});
 }
 
-chrome.storage.local.get(STORAGE_KEY, async (items) => {
+chrome.storage.sync.get(STORAGE_KEY, async (items) => {
 	const tabModifier = items?.[STORAGE_KEY];
 
 	if (!tabModifier) {
