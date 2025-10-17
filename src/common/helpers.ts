@@ -57,6 +57,7 @@ export function _isDefined(...args: any[]) {
 
 export function _getThemes() {
 	return [
+		{ label: 'Tabee 🐝', value: 'tabee' },
 		{ label: 'Dim', value: 'dim' },
 		{ label: 'Dark', value: 'dark' },
 		{ label: 'Halloween', value: 'halloween' },
