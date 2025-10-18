@@ -16,17 +16,24 @@
 			<div class="card-body">
 				<h2 class="card-title">✨ Features</h2>
 
-				<ul class="list-disc ml-3">
-					<li>You can rename a tab.</li>
-					<li>You can change any tab (fav)icon.</li>
-					<li>You can pin a website without effort.</li>
-					<li>You can group your tabs easily.</li>
-					<li>You can protect some websites from accidental closure with a confirm box.</li>
-					<li>You can avoid duplicate tabs by setting up the unique property.</li>
-					<li>You can mute the sound of any website before it plays it.</li>
-					<li>You can automatically close inactive tabs after a specified duration and restore them later.</li>
-					<li>You can merge all browser windows into one with a keyboard shortcut or context menu.</li>
-					<li>And the icing on the cake... Combine all of them!</li>
+				<ul class="list-disc ml-3 space-y-1">
+					<li><strong>Rename tabs</strong> - Customize tab titles with static text or dynamic patterns.</li>
+					<li><strong>Change favicons</strong> - Replace any tab icon with custom images, URLs, or paste directly from clipboard.</li>
+					<li><strong>Pin tabs</strong> - Automatically pin important websites to keep them always visible.</li>
+					<li><strong>Group tabs</strong> - Organize tabs into custom colored groups for better workspace management.</li>
+					<li><strong>Protect tabs</strong> - Prevent accidental closure with a confirmation dialog on protected websites.</li>
+					<li><strong>Unique tabs</strong> - Automatically close duplicate tabs to keep your browser clean.</li>
+					<li><strong>Mute tabs</strong> - Silence any website before it starts playing sound.</li>
+					<li><strong>Auto-close inactive tabs</strong> - Automatically close tabs after a specified duration and restore them from Tab Hive.</li>
+					<li><strong>Tab Hive</strong> - View and restore recently closed tabs with search functionality.</li>
+					<li><strong>Spot Search</strong> - Instantly search through all your open tabs and bookmarks with a spotlight-style interface (Alt+Shift+E).</li>
+					<li><strong>Merge windows</strong> - Combine all browser windows into one with a keyboard shortcut (Alt+Shift+W) or context menu.</li>
+					<li><strong>Lightweight Mode</strong> - Reduce memory usage by disabling Tabee on specific domains.</li>
+					<li><strong>RegEx support</strong> - Use advanced pattern matching with regular expressions for URL detection and title manipulation.</li>
+					<li><strong>Context menu</strong> - Right-click any page to quickly create or edit rules for that URL.</li>
+					<li><strong>Side Panel</strong> - Quick access to Tab Hive and rule creation from Chrome's side panel.</li>
+					<li><strong>Sync across devices</strong> - All your rules and settings sync automatically via Chrome Sync.</li>
+					<li>And the icing on the cake... <strong>Combine all of them!</strong></li>
 				</ul>
 			</div>
 		</div>
