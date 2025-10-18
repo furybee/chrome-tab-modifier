@@ -8,6 +8,8 @@
 					<TableRules :rules="rulesStore.rules" :groups="rulesStore.groups" />
 				</div>
 			</div>
+
+			<Disclaimer :tips="rulesTips" />
 		</div>
 
 		<dialog ref="addRuleModal" class="modal">
@@ -25,6 +27,7 @@ import { inject, onMounted, onUnmounted, ref } from 'vue';
 import TableRules from './TabRules/TableRules.vue';
 import { GLOBAL_EVENTS, RuleModalParams } from '../../../../common/types.ts';
 import RuleForm from './TabRules/RuleForm.vue';
+import Disclaimer from '../../../global/Disclaimer.vue';
 
 const rulesStore = useRulesStore();
 rulesStore.init();
@@ -37,6 +40,31 @@ const emitter: any = inject('emitter');
 const refreshRules = async () => {
 	await rulesStore.init();
 };
+
+const rulesTips = [
+	{
+		id: 1,
+		icon: '💡',
+		text: 'You can backup and import your rules in',
+		linkText: 'Settings',
+		action: 'navigate-settings',
+	},
+	{
+		id: 2,
+		icon: '🎯',
+		text: 'Rules are applied in order - drag to reorder them',
+	},
+	{
+		id: 3,
+		icon: '⚡',
+		text: 'Use RegEx detection for advanced URL matching',
+	},
+	{
+		id: 4,
+		icon: '🔍',
+		text: 'Right-click any page to quickly rename its tab',
+	},
+];
 
 onMounted(() => {
 	emitter.on(GLOBAL_EVENTS.OPEN_ADD_RULE_MODAL, openAddRuleModal);

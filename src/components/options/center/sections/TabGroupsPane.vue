@@ -8,6 +8,8 @@
 					<TableGroups :groups="rulesStore.groups" />
 				</div>
 			</div>
+
+			<Disclaimer :tips="groupsTips" />
 		</div>
 
 		<dialog ref="addGroupModal" class="modal">
@@ -25,6 +27,7 @@ import { inject, onMounted, onUnmounted, ref } from 'vue';
 import { GLOBAL_EVENTS, GroupModalParams } from '../../../../common/types.ts';
 import GroupForm from './TabGroups/GroupForm.vue';
 import TableGroups from './TabGroups/TableGroups.vue';
+import Disclaimer from '../../../global/Disclaimer.vue';
 
 const rulesStore = useRulesStore();
 rulesStore.init();
@@ -33,6 +36,31 @@ const addGroupModal = ref<HTMLDialogElement | null>(null);
 const isGroupFormModalOpened = ref(false);
 
 const emitter: any = inject('emitter');
+
+const groupsTips = [
+	{
+		id: 1,
+		icon: '💡',
+		text: 'You can backup and import your groups in',
+		linkText: 'Settings',
+		action: 'navigate-settings',
+	},
+	{
+		id: 2,
+		icon: '🎨',
+		text: 'Groups help visually organize tabs in your browser',
+	},
+	{
+		id: 3,
+		icon: '🔗',
+		text: 'Assign groups to rules to automatically organize matching tabs',
+	},
+	{
+		id: 4,
+		icon: '📌',
+		text: 'Pinned tabs cannot be grouped - unpin them first',
+	},
+];
 
 onMounted(() => {
 	emitter.on(GLOBAL_EVENTS.OPEN_ADD_GROUP_MODAL, openAddGroupModal);

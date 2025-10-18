@@ -2,7 +2,8 @@ import { DefineComponent } from 'vue';
 
 export type MenuItem = {
 	title: string;
-	icon: string;
+	emoji: string;
+	description?: string;
 	component?: string;
 	link?: string;
 };
@@ -35,9 +36,31 @@ export type Group = {
 	collapsed: boolean;
 };
 
+export type LightweightModePattern = {
+	id: string;
+	pattern: string;
+	type: 'domain' | 'regex';
+	enabled: boolean;
+};
+
+export type ClosedTab = {
+	id: string;
+	title: string;
+	url: string;
+	urlHash: string; // SHA-256 hash of URL for duplicate detection
+	favIconUrl?: string;
+	closedAt: number; // timestamp
+};
+
 export type Settings = {
 	enable_new_version_notification: boolean;
 	theme: string;
+	lightweight_mode_enabled: boolean;
+	lightweight_mode_patterns: LightweightModePattern[];
+	lightweight_mode_apply_to_rules: boolean;
+	lightweight_mode_apply_to_tab_hive: boolean;
+	auto_close_enabled: boolean;
+	auto_close_timeout: number; // en minutes
 };
 
 export type TabModifierSettings = {
@@ -53,6 +76,7 @@ export const GLOBAL_EVENTS = {
 	CLOSE_ADD_GROUP_MODAL: 'CLOSE_ADD_GROUP_MODAL',
 	GLOBAL_KEY_SAVE: 'GLOBAL_KEY_SAVE',
 	SHOW_TOAST: 'SHOW_TOAST',
+	NAVIGATE_TO_SETTINGS: 'NAVIGATE_TO_SETTINGS',
 };
 
 export type RuleModalParams = {

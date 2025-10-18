@@ -11,6 +11,9 @@ global.chrome = {
 		local: {
 			get: vi.fn((keys, callback) => callback({ tab_modifier: null })),
 		},
+		sync: {
+			get: vi.fn((keys, callback) => callback({ tab_modifier: null })),
+		},
 	},
 	tabs: {
 		ungroup: vi.fn(),

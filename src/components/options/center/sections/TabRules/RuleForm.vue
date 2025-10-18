@@ -122,20 +122,22 @@
 				<div class="flex items-center justify-between gap-2">
 					<img v-if="isCustomIcon" :src="currentRule.tab.icon" class="w-6 h-6" />
 					<input
+						ref="customIconInput"
 						v-model="currentRule.tab.icon"
 						class="input input-xs input-bordered w-full"
 						:class="{
 							'input-error':
 								!isCustomIcon && currentRule.tab.icon !== '' && currentRule.tab.icon !== null,
 						}"
-						placeholder="e.g. https://google.com/favicon.ico"
+						placeholder="e.g. Paste an image or an url"
 						required
 						type="text"
+						@paste="handleImagePaste"
 					/>
 				</div>
 				<div v-if="showHelp" class="label">
 					<span class="text-xs opacity-80 label-text-alt"
-						>You can set a custom URL or data URI for the new icon, no local path accepted</span
+						>You can set a custom URL, paste an image directly, or use a data URI</span
 					>
 				</div>
 			</div>
@@ -226,7 +228,8 @@
 					<div v-if="showHelp">
 						<div class="label">
 							<span class="text-xs opacity-80 label-text-alt">
-								Regular expression to search string fragments in title</span
+								Regex to capture text from page title. Use @0, @1, @2... in Tab Title to reference
+								captured groups.</span
 							>
 						</div>
 						<RegexVisualizer class="mt-2" tag="@" :regex="currentRule.tab.title_matcher" />
@@ -246,7 +249,8 @@
 					<div v-if="showHelp">
 						<div class="label">
 							<span class="text-xs opacity-80 label-text-alt">
-								Regular expression to search string fragments in URL</span
+								Regex to capture text from URL. Use $0, $1, $2... in Tab Title to reference captured
+								groups.</span
 							>
 						</div>
 						<RegexVisualizer class="mt-2" tag="$" :regex="currentRule.tab.url_matcher" />
@@ -445,6 +449,40 @@ const save = async () => {
 
 const isAdvancedOpenWhenMounted = ref(false);
 const currentRuleNameInput = ref<HTMLInputElement | null>(null);
+const customIconInput = ref<HTMLInputElement | null>(null);
+
+const handleImagePaste = async (event: ClipboardEvent) => {
+	const items = event.clipboardData?.items;
+	if (!items) return;
+
+	for (let i = 0; i < items.length; i++) {
+		const item = items[i];
+
+		// Check if the item is an image
+		if (item.type.indexOf('image') !== -1) {
+			event.preventDefault(); // Prevent default paste behavior
+
+			const file = item.getAsFile();
+			if (!file) continue;
+
+			// Convert image to base64
+			const reader = new FileReader();
+			reader.onload = (e) => {
+				const base64 = e.target?.result as string;
+				currentRule.value.tab.icon = base64;
+			};
+			reader.readAsDataURL(file);
+
+			// Show toast notification
+			emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
+				type: 'success',
+				message: 'Image pasted and converted to base64!',
+			});
+
+			break;
+		}
+	}
+};
 
 onMounted(() => {
 	isAdvancedOpenWhenMounted.value =

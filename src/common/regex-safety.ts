@@ -62,7 +62,7 @@ export function _isRegexPatternSafe(pattern: string): boolean {
 export function _safeRegexTestSync(pattern: string, input: string): boolean {
 	// First, validate the pattern for safety
 	if (!_isRegexPatternSafe(pattern)) {
-		console.warn(`[Tab Modifier] Unsafe regex pattern detected and blocked: ${pattern}`);
+		console.warn(`[Tabee] Unsafe regex pattern detected and blocked: ${pattern}`);
 		return false;
 	}
 
@@ -72,7 +72,7 @@ export function _safeRegexTestSync(pattern: string, input: string): boolean {
 		const regex = new RegExp(pattern);
 		return regex.test(input);
 	} catch (error) {
-		console.warn(`[Tab Modifier] Regex execution error: ${error}`);
+		console.warn(`[Tabee] Regex execution error: ${error}`);
 		return false;
 	}
 }

@@ -1,10 +1,12 @@
-# <img src="public/assets/icon_16.png" alt="icon"> Tab Modifier
+# <img src="public/assets/icon_16.png" alt="icon"> Tabee
 
-![GitHub Release](https://img.shields.io/github/v/release/furybee/chrome-tab-modifier?style=flat-square&labelColor=black&v) [![license](https://img.shields.io/badge/license-MIT-ff4081.svg?style=flat-square&labelColor=black)](./LICENSE) ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/furybee/chrome-tab-modifier/ci.yml?style=flat-square&label=CI&labelColor=black) [![.nvmrc](https://img.shields.io/badge/.nvmrc-20-00e676.svg?style=flat-square&labelColor=black)](./.nvmrc) 
+![GitHub Release](https://img.shields.io/github/v/release/furybee/chrome-tab-modifier?style=flat-square&labelColor=black&v) [![license](https://img.shields.io/badge/license-MIT-ff4081.svg?style=flat-square&labelColor=black)](./LICENSE) ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/furybee/chrome-tab-modifier/ci.yml?style=flat-square&label=CI&labelColor=black) [![.nvmrc](https://img.shields.io/badge/.nvmrc-20-00e676.svg?style=flat-square&labelColor=black)](./.nvmrc)
 [![yarn:required](https://img.shields.io/badge/yarn-required-aeea00.svg?style=flat-square&labelColor=black)](https://yarnpkg.com/en/)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-ffab00.svg?style=flat-square&labelColor=black)](https://conventionalcommits.org) ![pr welcome](https://img.shields.io/badge/PRs-welcome-09FF33.svg?style=flat-square&labelColor=black)
 
-Take control of your tabs.
+The original Tab Modifier.
+
+Take control of your tabs!
 
 ## Features
 
@@ -20,21 +22,21 @@ Quick rename can be done by right-clicking anywhere in the page and click on "Re
 
 ## Installation
 
-Tab Modifier is compatible with Chromium-based browsers.
+Tabee is compatible with Chromium-based browsers.
 
 | Browser        | Install Link                                                                                                | Web Store             |
 |----------------|-------------------------------------------------------------------------------------------------------------|-----------------------|
 | Google Chrome  | ⬇️ [Install](https://chromewebstore.google.com/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai)        | Chrome Web Store      |
 | Arc            | ⬇️ [Install](https://chromewebstore.google.com/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai)        | Chrome Web Store      |
 | Brave          | ⬇️ [Install](https://chromewebstore.google.com/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai)        | Chrome Web Store      |
-| Opera          | ⬇️ [Install](https://addons.opera.com/en/extensions/details/tab-modifier/)                                  | Opera Addons          | 
+| Opera          | ⬇️ [Install](https://addons.opera.com/en/extensions/details/tab-modifier/)                                  | Opera Addons          |
 | Microsoft Edge | ⬇️ [Install](https://microsoftedge.microsoft.com/addons/detail/tab-modifier/edfkealmjdmkfimdjmiapmnakepfilkp) | Microsoft Edge Addons |
 
 Firefox and Safari are not available.
 
 ## Usage
 
-* Click on the Tab Modifier icon <img src="public/assets/icon_16.png" alt="icon"> to open Popup or Right-Click then Options.
+* Click on the Tabee icon <img src="public/assets/icon_16.png" alt="icon"> to open Popup or Right-Click then Options.
 * Create your tab rules.
 * Try & enjoy!
 
@@ -44,7 +46,7 @@ I needed a quick UI element in Chrome to know the environment of the tab, as a W
 
 Not easy to find the appropriate tab when you have multiple tabs called "My awesome website".
 
-I created Tab Modifier to add prefixes to website titles with a specific match.
+I created Tabee (formerly Tab Modifier) to add prefixes to website titles with a specific match.
 
 * [DEV] My awesome website: `.local.domain.com`
 * [PREPROD] My awesome website: `.preprod.domain.com`
@@ -54,7 +56,7 @@ After that, I have added more features like "auto-pin", custom favicons and more
 
 ## Core system
 
-Tab Modifier is based on user *rules* and act on the tab URL that matches the first seen rule. When you open a tab (or refresh), the extension will check if the URL matches a rule and apply the actions.
+Tabee is based on user *rules* and act on the tab URL that matches the first seen rule. When you open a tab (or refresh), the extension will check if the URL matches a rule and apply the actions.
 
 Aware of that, there is no reason to include a feature that is not "rule-based". Prefer to install specific extensions or create your own.
 
@@ -62,92 +64,60 @@ Aware of that, there is no reason to include a feature that is not "rule-based".
 
 You have infinite possibilities, here are some configurations:
 
-Pin all tabs:
+**Distinguish development environments:**
 
 * **Detection**: Contains
-* **URL fragment**: http
+* **URL fragment**: localhost
+* **Title**: [LOCAL] {title}
+* **Icon**: select "bullets > bullet-green"
+
+**Add staging prefix:**
+
+* **Detection**: Contains
+* **URL fragment**: staging.yourapp.com
+* **Title**: [STAGING] {title}
+* **Icon**: select "bullets > bullet-amber"
+
+**Auto-pin documentation tabs:**
+
+* **Detection**: Contains
+* **URL fragment**: /docs/
 * **Pinned**: ON
 
-Say hello to all Google websites:
-
-* **Detection**: Contains
-* **URL fragment**: google.com
-* **Title**: Hello Google: {title}
-
-❌ Disguise GitHub as Google
-
-* **Detection**: Contains
-* **URL fragment**: github.com
-* **Title**: Google
-* **Icon**: https://www.google.com/favicon.ico
-
-This will not work due to Content Security Policy (CSP) restrictions:
-
-> Refused to load the image 'https://www.google.com/favicon.ico' because it violates the following Content Security Policy directive from GitHub".
-
-
-❌ Prevent accidental tab closure:
-
-* **Detection**: Contains
-* **URL fragment**: important-website.com
-* **Protected**: ON
-
-> This feature is only available if you interact with the page at least once due to Chrome's security restrictions. https://developer.mozilla.org/en-US/docs/Web/API/Window/beforeunload_event#usage_notes
- 
-Mute all Youtube videos by default:
+**Mute video streaming sites by default:**
 
 * **Detection**: Contains
 * **URL fragment**: youtube.com
 * **Mute**: ON
 
-Set blank icon on Pinterest:
-
-* **Detection**: Contains
-* **URL fragment**: pinterest.fr
-* **Icon**: select "Chrome > Default"
-
-Get only one GMail tab opened at once:
+**Keep only one email tab open:**
 
 * **Detection**: Starts with
 * **URL fragment**: https://mail.google.com
 * **Unique**: ON
 
-Pin all PNG images (useless):
-
-* **Detection**: Ends with
-* **URL fragment**: .png
-* **Pinned**: ON
-
-Customize title with HTML selector and Regexp:
+**Add project info to GitHub repository tabs:**
 
 * **Detection**: Contains
 * **URL fragment**: github.com
 * **Title**: {title} | $2 by $1
 * **URL matcher**: github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)
 
-Tab title will be: "FuryBee/chrome-tab-modifier: Take control of your tabs | chrome-tab-modifier by furybee"
+Tab title will be: "user/repo: Description | repo by user"
 
-❌ Match GitHub repositories:
-
-* **Detection**: RegExp
-* **URL fragment**: github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)
-* **Title**: I got you GitHub!
-
-Customize GMail title with Title matcher and URL matcher:
-
-* **Detection**: Contains
-* **URL fragment**: mail.google.com
-* **Title**: @0 | $0
-* **Title matcher**: [a-z]*@gmail.com
-* **URL matcher**: [a-z]*.google.com
-
-Tab title will be: "youremail@gmail.com | mail.google.com"
-
-Github filename as title for blobs:
+**Display filename for GitHub file views:**
 
 * **Detection**: RegExp
 * **URL fragment**: github[.]com/([A-Za-z0-9_-]+)/([A-Za-z0-9_-]+)/blob/
 * **Title**: {#file-name-id-wide}
+
+**Group all production tabs:**
+
+* **Detection**: Contains
+* **URL fragment**: app.yoursite.com
+* **Title**: [PROD] {title}
+* **Icon**: select "bullets > bullet-red"
+* **Group**: Production
 
 And now, build your own... 💪
 
@@ -217,6 +187,18 @@ If you like this extension and want to support its development, you can make a d
 - [Buy Me a Coffee](https://www.buymeacoffee.com/xyugxh7bk)
 - [Credit Card](https://donate.stripe.com/fZeg1Sgml971dbieUU)
 - [Paypal](https://www.paypal.com/donate/?hosted_button_id=T7KZA4MLT5XTU)
+
+## Security
+
+Tabee takes security seriously. Every code change goes through automated security checks in our CI/CD pipeline:
+
+- **ClamAV Malware Scan**: Detects viruses, trojans, and malware in the codebase
+- **Gitleaks Secret Scan**: Prevents hardcoded secrets, API keys, and credentials
+- **Dependency Audit**: Checks for known vulnerabilities in dependencies (HIGH severity and above)
+- **Test Coverage**: Ensures code quality with comprehensive test suite
+- **ReDoS Protection**: Built-in protection against Regular Expression Denial of Service attacks
+
+For detailed security documentation, see [docs/SECURITY.md](docs/SECURITY.md).
 
 ## License
 

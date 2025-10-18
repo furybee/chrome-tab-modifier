@@ -27,7 +27,13 @@ describe('Storage', () => {
 			groups: [],
 			settings: {
 				enable_new_version_notification: false,
-				theme: 'dim',
+				theme: 'tabee',
+				lightweight_mode_enabled: false,
+				lightweight_mode_patterns: [],
+				lightweight_mode_apply_to_rules: true,
+				lightweight_mode_apply_to_tab_hive: true,
+				auto_close_enabled: false,
+				auto_close_timeout: 30,
 			},
 		});
 	});
@@ -51,9 +57,9 @@ describe('Storage', () => {
 		const mockData = {
 			rules: [],
 			groups: [],
-			settings: { enable_new_version_notification: false, theme: 'dim' },
+			settings: { enable_new_version_notification: false, theme: 'dim', lightweight_mode_enabled: false, lightweight_mode_patterns: [], auto_close_enabled: false, auto_close_timeout: 30 },
 		};
-		global.chrome.storage.local.get.mockImplementation((keys, callback) => {
+		global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
 			callback({ [STORAGE_KEY]: mockData });
 		});
 		const storageData = await _getStorageAsync();
@@ -63,17 +69,17 @@ describe('Storage', () => {
 	it('_clearStorage should remove storage data', async () => {
 		await _clearStorage();
 
-		expect(global.chrome.storage.local.remove).toHaveBeenCalledWith(STORAGE_KEY);
+		expect(global.chrome.storage.sync.remove).toHaveBeenCalledWith(STORAGE_KEY);
 	});
 
 	it('_setStorage should set storage data', async () => {
 		const mockData = {
 			rules: [],
 			groups: [],
-			settings: { enable_new_version_notification: false, theme: 'dim' },
+			settings: { enable_new_version_notification: false, theme: 'dim', lightweight_mode_enabled: false, lightweight_mode_patterns: [], auto_close_enabled: false, auto_close_timeout: 30 },
 		};
 		await _setStorage(mockData);
-		expect(global.chrome.storage.local.set).toHaveBeenCalledWith({
+		expect(global.chrome.storage.sync.set).toHaveBeenCalledWith({
 			[STORAGE_KEY]: expect.objectContaining(mockData),
 		});
 	});
@@ -99,9 +105,9 @@ describe('Storage', () => {
 		const mockData = {
 			rules: [mockRule],
 			groups: [],
-			settings: { enable_new_version_notification: false, theme: 'dim' },
+			settings: { enable_new_version_notification: false, theme: 'dim', lightweight_mode_enabled: false, lightweight_mode_patterns: [], auto_close_enabled: false, auto_close_timeout: 30 },
 		};
-		global.chrome.storage.local.get.mockImplementation((keys, callback) => {
+		global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
 			callback({ tab_modifier: mockData });
 		});
 		global.chrome.runtime.lastError = null;
@@ -132,9 +138,9 @@ describe('Storage', () => {
 			const mockData = {
 				rules: [mockRule],
 				groups: [],
-				settings: { enable_new_version_notification: false, theme: 'dim' },
+				settings: { enable_new_version_notification: false, theme: 'dim', lightweight_mode_enabled: false, lightweight_mode_patterns: [], auto_close_enabled: false, auto_close_timeout: 30 },
 			};
-			global.chrome.storage.local.get.mockImplementation((keys, callback) => {
+			global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
 				callback({ [STORAGE_KEY]: mockData });
 			});
 			global.chrome.runtime.lastError = null;
@@ -164,9 +170,9 @@ describe('Storage', () => {
 			const mockData = {
 				rules: [mockRule],
 				groups: [],
-				settings: { enable_new_version_notification: false, theme: 'dim' },
+				settings: { enable_new_version_notification: false, theme: 'dim', lightweight_mode_enabled: false, lightweight_mode_patterns: [], auto_close_enabled: false, auto_close_timeout: 30 },
 			};
-			global.chrome.storage.local.get.mockImplementation((keys, callback) => {
+			global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
 				callback({ [STORAGE_KEY]: mockData });
 			});
 			global.chrome.runtime.lastError = null;
@@ -196,9 +202,9 @@ describe('Storage', () => {
 			const mockData = {
 				rules: [mockRule],
 				groups: [],
-				settings: { enable_new_version_notification: false, theme: 'dim' },
+				settings: { enable_new_version_notification: false, theme: 'dim', lightweight_mode_enabled: false, lightweight_mode_patterns: [], auto_close_enabled: false, auto_close_timeout: 30 },
 			};
-			global.chrome.storage.local.get.mockImplementation((keys, callback) => {
+			global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
 				callback({ [STORAGE_KEY]: mockData });
 			});
 			global.chrome.runtime.lastError = null;
@@ -228,9 +234,9 @@ describe('Storage', () => {
 			const mockData = {
 				rules: [mockRule],
 				groups: [],
-				settings: { enable_new_version_notification: false, theme: 'dim' },
+				settings: { enable_new_version_notification: false, theme: 'dim', lightweight_mode_enabled: false, lightweight_mode_patterns: [], auto_close_enabled: false, auto_close_timeout: 30 },
 			};
-			global.chrome.storage.local.get.mockImplementation((keys, callback) => {
+			global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
 				callback({ [STORAGE_KEY]: mockData });
 			});
 			global.chrome.runtime.lastError = null;
@@ -263,9 +269,9 @@ describe('Storage', () => {
 			const mockData = {
 				rules: [mockRule],
 				groups: [],
-				settings: { enable_new_version_notification: false, theme: 'dim' },
+				settings: { enable_new_version_notification: false, theme: 'dim', lightweight_mode_enabled: false, lightweight_mode_patterns: [], auto_close_enabled: false, auto_close_timeout: 30 },
 			};
-			global.chrome.storage.local.get.mockImplementation((keys, callback) => {
+			global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
 				callback({ [STORAGE_KEY]: mockData });
 			});
 			global.chrome.runtime.lastError = null;
@@ -298,9 +304,9 @@ describe('Storage', () => {
 			const mockData = {
 				rules: [mockRule],
 				groups: [],
-				settings: { enable_new_version_notification: false, theme: 'dim' },
+				settings: { enable_new_version_notification: false, theme: 'dim', lightweight_mode_enabled: false, lightweight_mode_patterns: [], auto_close_enabled: false, auto_close_timeout: 30 },
 			};
-			global.chrome.storage.local.get.mockImplementation((keys, callback) => {
+			global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
 				callback({ [STORAGE_KEY]: mockData });
 			});
 			global.chrome.runtime.lastError = null;
@@ -332,9 +338,9 @@ describe('Storage', () => {
 			const mockData = {
 				rules: [mockRule],
 				groups: [],
-				settings: { enable_new_version_notification: false, theme: 'dim' },
+				settings: { enable_new_version_notification: false, theme: 'dim', lightweight_mode_enabled: false, lightweight_mode_patterns: [], auto_close_enabled: false, auto_close_timeout: 30 },
 			};
-			global.chrome.storage.local.get.mockImplementation((keys, callback) => {
+			global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
 				callback({ [STORAGE_KEY]: mockData });
 			});
 			global.chrome.runtime.lastError = null;
@@ -365,9 +371,9 @@ describe('Storage', () => {
 			const mockData = {
 				rules: [mockRule],
 				groups: [],
-				settings: { enable_new_version_notification: false, theme: 'dim' },
+				settings: { enable_new_version_notification: false, theme: 'dim', lightweight_mode_enabled: false, lightweight_mode_patterns: [], auto_close_enabled: false, auto_close_timeout: 30 },
 			};
-			global.chrome.storage.local.get.mockImplementation((keys, callback) => {
+			global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
 				callback({ [STORAGE_KEY]: mockData });
 			});
 			global.chrome.runtime.lastError = null;
