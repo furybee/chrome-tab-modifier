@@ -377,14 +377,21 @@ const MAX_CLOSED_TABS = 100; // Maximum number of closed tabs to keep in history
  * Initialize tab tracking for auto-close
  */
 async function initAutoCloseTracking() {
+	console.log('[Tabee] 🍯 Initializing auto-close tracking...');
+
 	const settings = await _getStorageAsync();
 	if (!settings?.settings.auto_close_enabled) {
+		console.log('[Tabee] Auto-close is disabled, skipping initialization');
 		return;
 	}
+
+	console.log(`[Tabee] Auto-close enabled with timeout: ${settings.settings.auto_close_timeout} minutes`);
 
 	// Get all existing tabs and mark them as active
 	const tabs = await chrome.tabs.query({});
 	const now = Date.now();
+
+	console.log(`[Tabee] Tracking ${tabs.length} existing tabs`);
 
 	for (const tab of tabs) {
 		if (tab.id) {
@@ -449,8 +456,11 @@ chrome.tabs.onRemoved.addListener((tabId) => {
 let autoCloseInterval: number | null = null;
 
 function startAutoCloseChecker() {
+	console.log('[Tabee] 🍯 Starting auto-close checker (runs every 60 seconds)');
+
 	// Clear existing interval if any
 	if (autoCloseInterval) {
+		console.log('[Tabee] Clearing existing auto-close interval');
 		clearInterval(autoCloseInterval);
 	}
 
@@ -458,6 +468,8 @@ function startAutoCloseChecker() {
 	autoCloseInterval = setInterval(async () => {
 		await checkAndCloseInactiveTabs();
 	}, 60000); // 1 minute
+
+	console.log('[Tabee] Auto-close checker started successfully');
 }
 
 /**
@@ -465,8 +477,11 @@ function startAutoCloseChecker() {
  */
 async function checkAndCloseInactiveTabs() {
 	try {
+		console.log('[Tabee] 🍯 Running auto-close check...');
+
 		const settings = await _getStorageAsync();
 		if (!settings?.settings.auto_close_enabled) {
+			console.log('[Tabee] Auto-close disabled, stopping checker');
 			// Stop checking if disabled
 			if (autoCloseInterval) {
 				clearInterval(autoCloseInterval);
@@ -480,20 +495,33 @@ async function checkAndCloseInactiveTabs() {
 
 		// Get all tabs
 		const allTabs = await chrome.tabs.query({});
+		console.log(
+			`[Tabee] Checking ${allTabs.length} tabs (timeout: ${settings.settings.auto_close_timeout} minutes)`
+		);
+
+		let candidatesCount = 0;
+		let closedCount = 0;
 
 		for (const tab of allTabs) {
 			if (!tab.id) continue;
 
 			// Skip pinned tabs
-			if (tab.pinned) continue;
+			if (tab.pinned) {
+				console.log(`[Tabee] Skipping pinned tab: ${tab.title}`);
+				continue;
+			}
 
 			// Skip active tab
-			if (tab.active) continue;
+			if (tab.active) {
+				console.log(`[Tabee] Skipping active tab: ${tab.title}`);
+				continue;
+			}
 
 			// Get activity info
 			const activity = tabActivityMap.get(tab.id);
 			if (!activity) {
 				// Tab not tracked yet, add it
+				console.log(`[Tabee] New untracked tab found, adding to tracking: ${tab.title}`);
 				tabActivityMap.set(tab.id, {
 					tabId: tab.id,
 					lastActiveTime: now,
@@ -503,24 +531,51 @@ async function checkAndCloseInactiveTabs() {
 
 			// Check if tab is inactive for too long
 			const inactiveTime = now - activity.lastActiveTime;
+			const inactiveMinutes = Math.round(inactiveTime / 60000);
+
 			if (inactiveTime >= timeoutMs) {
+				candidatesCount++;
+				console.log(
+					`[Tabee] 🍯 Tab eligible for auto-close: "${tab.title}" (inactive for ${inactiveMinutes} minutes)`
+				);
+
 				// Save tab info before closing
 				await saveClosedTab(tab);
 
 				// Close the tab
 				try {
 					await chrome.tabs.remove(tab.id);
-					console.log(
-						`[Tabee] Auto-closed inactive tab: ${tab.title} (inactive for ${Math.round(inactiveTime / 60000)} minutes)`
-					);
+					closedCount++;
+					console.log(`[Tabee] ✅ Auto-closed inactive tab: ${tab.title} (inactive for ${inactiveMinutes} minutes)`);
 				} catch (error) {
-					console.error(`[Tabee] Error closing tab ${tab.id}:`, error);
+					console.error(`[Tabee] ❌ Error closing tab ${tab.id}:`, error);
 				}
+			} else {
+				const remainingMinutes = Math.round((timeoutMs - inactiveTime) / 60000);
+				console.log(
+					`[Tabee] Tab "${tab.title}" inactive for ${inactiveMinutes}min, will close in ${remainingMinutes}min`
+				);
 			}
 		}
+
+		console.log(
+			`[Tabee] 🍯 Auto-close check complete: ${closedCount} tabs closed out of ${candidatesCount} candidates`
+		);
 	} catch (error) {
-		console.error('[Tabee] Error in auto-close checker:', error);
+		console.error('[Tabee] ❌ Error in auto-close checker:', error);
 	}
+}
+
+/**
+ * Generate a simple hash for a URL to detect duplicates
+ */
+async function hashUrl(url: string): Promise<string> {
+	// Use the Web Crypto API to generate a SHA-256 hash
+	const encoder = new TextEncoder();
+	const data = encoder.encode(url);
+	const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+	const hashArray = Array.from(new Uint8Array(hashBuffer));
+	return hashArray.map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
 /**
@@ -535,20 +590,38 @@ async function saveClosedTab(tab: chrome.tabs.Tab) {
 	}
 
 	try {
-		const closedTab = {
-			id: crypto.randomUUID(),
-			title: tab.title || 'Untitled',
-			url: tab.url,
-			favIconUrl: tab.favIconUrl,
-			closedAt: Date.now(),
-		};
+		// Generate hash for the URL
+		const urlHash = await hashUrl(tab.url);
 
 		// Get existing closed tabs
 		const result = await chrome.storage.local.get(CLOSED_TABS_STORAGE_KEY);
 		let closedTabs = result[CLOSED_TABS_STORAGE_KEY] || [];
 
-		// Add new tab at the beginning
-		closedTabs.unshift(closedTab);
+		// Check if this URL already exists in the hive
+		const existingIndex = closedTabs.findIndex((t: any) => t.urlHash === urlHash);
+		if (existingIndex !== -1) {
+			console.log(`[Tabee] 🍯 Tab already in hive, updating timestamp: ${tab.title}`);
+			// Update the existing entry with new timestamp and move to beginning
+			const existingTab = closedTabs[existingIndex];
+			closedTabs.splice(existingIndex, 1);
+			closedTabs.unshift({
+				...existingTab,
+				title: tab.title || existingTab.title, // Update title if changed
+				favIconUrl: tab.favIconUrl || existingTab.favIconUrl, // Update favicon
+				closedAt: Date.now(), // Update timestamp
+			});
+		} else {
+			// Add new tab at the beginning
+			const closedTab = {
+				id: crypto.randomUUID(),
+				title: tab.title || 'Untitled',
+				url: tab.url,
+				urlHash: urlHash, // Store hash for duplicate detection
+				favIconUrl: tab.favIconUrl,
+				closedAt: Date.now(),
+			};
+			closedTabs.unshift(closedTab);
+		}
 
 		// Keep only the last MAX_CLOSED_TABS
 		if (closedTabs.length > MAX_CLOSED_TABS) {
@@ -560,7 +633,7 @@ async function saveClosedTab(tab: chrome.tabs.Tab) {
 			[CLOSED_TABS_STORAGE_KEY]: closedTabs,
 		});
 
-		console.log(`[Tabee] Saved closed tab to history: ${closedTab.title}`);
+		console.log(`[Tabee] Saved closed tab to history: ${tab.title}`);
 	} catch (error) {
 		console.error('[Tabee] Error saving closed tab:', error);
 	}
@@ -622,6 +695,48 @@ export async function restoreClosedTab(closedTabId: string) {
 
 // Initialize auto-close tracking when extension loads
 initAutoCloseTracking();
+
+// Listen for storage changes to react to settings updates
+chrome.storage.onChanged.addListener((changes, areaName) => {
+	if (areaName !== 'sync' && areaName !== 'local') return;
+
+	// Check if tab_modifier settings changed
+	if (changes.tab_modifier) {
+		const oldSettings = changes.tab_modifier.oldValue?.settings;
+		const newSettings = changes.tab_modifier.newValue?.settings;
+
+		// Check if auto-close settings changed
+		if (oldSettings && newSettings) {
+			const wasEnabled = oldSettings.auto_close_enabled;
+			const isEnabled = newSettings.auto_close_enabled;
+			const oldTimeout = oldSettings.auto_close_timeout;
+			const newTimeout = newSettings.auto_close_timeout;
+
+			// If auto-close was just enabled
+			if (!wasEnabled && isEnabled) {
+				console.log('[Tabee] 🍯 Auto-close enabled via settings, initializing tracking...');
+				initAutoCloseTracking();
+			}
+			// If auto-close was just disabled
+			else if (wasEnabled && !isEnabled) {
+				console.log('[Tabee] 🍯 Auto-close disabled via settings, stopping checker...');
+				if (autoCloseInterval) {
+					clearInterval(autoCloseInterval);
+					autoCloseInterval = null;
+				}
+				// Clear the tracking map
+				tabActivityMap.clear();
+			}
+			// If timeout changed while enabled
+			else if (isEnabled && oldTimeout !== newTimeout) {
+				console.log(
+					`[Tabee] 🍯 Auto-close timeout changed from ${oldTimeout} to ${newTimeout} minutes`
+				);
+				// No need to restart, the next check will use the new timeout
+			}
+		}
+	}
+});
 
 // Handle clicks on the extension icon
 // Note: This only works if action.default_popup is NOT set in manifest

@@ -42,7 +42,11 @@
 						</p>
 					</div>
 					<div class="col-span-1 flex justify-end">
-						<input v-model="lightweightModeEnabled" class="toggle toggle-primary" type="checkbox" />
+						<input
+							v-model="lightweightModeEnabled"
+							class="toggle toggle-xs toggle-primary"
+							type="checkbox"
+						/>
 					</div>
 				</div>
 
@@ -165,7 +169,11 @@
 						</p>
 					</div>
 					<div class="col-span-1 flex justify-end">
-						<input v-model="autoCloseEnabled" class="toggle toggle-primary" type="checkbox" />
+						<input
+							v-model="autoCloseEnabled"
+							class="toggle toggle-xs toggle-primary"
+							type="checkbox"
+						/>
 					</div>
 				</div>
 
@@ -337,7 +345,7 @@ watch(autoCloseEnabled, async (enabled) => {
 });
 
 watch(autoCloseTimeout, async (timeout) => {
-	if (timeout < 5) timeout = 5;
+	if (timeout < 1) timeout = 1;
 	if (timeout > 1440) timeout = 1440;
 
 	rulesStore.settings.auto_close_timeout = timeout;

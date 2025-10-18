@@ -46,6 +46,7 @@ export type ClosedTab = {
 	id: string;
 	title: string;
 	url: string;
+	urlHash: string; // SHA-256 hash of URL for duplicate detection
 	favIconUrl?: string;
 	closedAt: number; // timestamp
 };

@@ -2,7 +2,7 @@
 	<div class="container mx-auto max-w-5xl p-4">
 		<div class="card bg-base-200">
 			<div class="card-body">
-				<h2 class="card-title">Concept</h2>
+				<h2 class="card-title">💡 Concept</h2>
 				<p>
 					Take control of your browser tabs! With this extension you are able to change some
 					behaviors on any website. Define your rules and let the extension makes the job
@@ -14,7 +14,7 @@
 
 		<div class="card bg-base-200 mt-4">
 			<div class="card-body">
-				<h2 class="card-title">Features</h2>
+				<h2 class="card-title">✨ Features</h2>
 
 				<ul class="list-disc ml-3">
 					<li>You can rename a tab.</li>
@@ -33,7 +33,7 @@
 
 		<div class="card bg-base-200 mt-4">
 			<div class="card-body">
-				<h2 class="card-title">Keyboard Shortcuts</h2>
+				<h2 class="card-title">⌨️ Keyboard Shortcuts</h2>
 
 				<h3 class="font-bold">Merge All Windows</h3>
 				<p>
@@ -65,7 +65,7 @@
 
 		<div class="card bg-base-200 mt-4">
 			<div class="card-body">
-				<h2 class="card-title">Tab Rules</h2>
+				<h2 class="card-title">📋 Tab Rules</h2>
 
 				<p>You have to create a "tab rule". A tab rule has:</p>
 
@@ -169,7 +169,7 @@
 
 		<div class="card bg-base-200 mt-4">
 			<div class="card-body">
-				<h2 class="card-title">Additional notes</h2>
+				<h2 class="card-title">📝 Additional notes</h2>
 
 				<p>After creating or editing a rule, refresh the tab(s) to apply the changes.</p>
 				<p>

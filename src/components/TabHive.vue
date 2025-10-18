@@ -1,7 +1,36 @@
 <template>
 	<div>
-		<div v-if="closedTabs.length > 0" class="flex justify-end mb-2">
-			<button class="btn btn-xs btn-ghost" title="Clear all" @click="clearAllTabs">
+		<div v-if="closedTabs.length > 0" class="flex items-center gap-2 mb-2">
+			<div class="flex-1 relative">
+				<input
+					v-model="searchQuery"
+					type="text"
+					placeholder="🔍 Search tabs..."
+					class="input input-sm input-bordered w-full pr-8"
+				/>
+				<button
+					v-if="searchQuery"
+					class="btn btn-xs btn-ghost btn-circle absolute right-1 top-1/2 -translate-y-1/2"
+					title="Clear search"
+					@click="searchQuery = ''"
+				>
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						class="h-4 w-4"
+						fill="none"
+						viewBox="0 0 24 24"
+						stroke="currentColor"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M6 18L18 6M6 6l12 12"
+						/>
+					</svg>
+				</button>
+			</div>
+			<button class="btn btn-xs btn-ghost flex-shrink-0" title="Clear all" @click="clearAllTabs">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					class="h-5 w-5"
@@ -46,24 +75,68 @@
 			<p class="text-sm mt-2">Tabs closed automatically will appear here</p>
 		</div>
 
-		<div v-else class="space-y-2">
-			<div
-				v-for="tab in closedTabs"
-				:key="tab.id"
-				class="card bg-base-200 shadow-sm hover:shadow-md transition-shadow"
-			>
-				<div class="card-body p-3">
-					<div class="flex items-start gap-3">
-						<div class="avatar flex-shrink-0">
-							<div class="w-6 h-6 rounded">
-								<img
-									v-if="tab.favIconUrl"
-									:src="tab.favIconUrl"
-									:alt="tab.title"
-									class="w-full h-full object-contain"
-									@error="onImageError"
-								/>
-								<div v-else class="w-full h-full bg-base-300 flex items-center justify-center">
+		<div v-else class="space-y-4">
+			<div v-for="[domain, tabs] in groupedByDomain" :key="domain" class="space-y-2">
+				<div class="sticky top-0 bg-base-100 z-10 py-2">
+					<h3 class="font-semibold text-sm opacity-70 flex items-center gap-2">
+						<span class="badge badge-sm">{{ tabs.length }}</span>
+						{{ domain }}
+					</h3>
+				</div>
+
+				<div
+					v-for="tab in tabs"
+					:key="tab.id"
+					class="card bg-base-200 shadow-sm hover:shadow-md transition-shadow"
+				>
+					<div class="card-body p-3">
+						<div class="flex items-start gap-3">
+							<div class="avatar flex-shrink-0">
+								<div class="w-6 h-6 rounded">
+									<img
+										v-if="tab.favIconUrl"
+										:src="tab.favIconUrl"
+										:alt="tab.title"
+										class="w-full h-full object-contain"
+										@error="onImageError"
+									/>
+									<div v-else class="w-full h-full bg-base-300 flex items-center justify-center">
+										<svg
+											xmlns="http://www.w3.org/2000/svg"
+											class="h-4 w-4"
+											fill="none"
+											viewBox="0 0 24 24"
+											stroke="currentColor"
+										>
+											<path
+												stroke-linecap="round"
+												stroke-linejoin="round"
+												stroke-width="2"
+												d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"
+											/>
+										</svg>
+									</div>
+								</div>
+							</div>
+
+							<div class="flex-1 min-w-0">
+								<h3 class="font-semibold text-sm truncate" :title="tab.title">
+									{{ tab.title }}
+								</h3>
+								<p class="text-xs opacity-70 truncate" :title="tab.url">
+									{{ tab.url }}
+								</p>
+								<p class="text-xs opacity-50 mt-1">
+									{{ formatTime(tab.closedAt) }}
+								</p>
+							</div>
+
+							<div class="flex flex-col items-center justify-center gap-1 flex-shrink-0">
+								<button
+									class="btn btn-xs btn-ghost btn-square"
+									title="Remove from list"
+									@click="deleteTab(tab.id)"
+								>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
 										class="h-4 w-4"
@@ -75,66 +148,31 @@
 											stroke-linecap="round"
 											stroke-linejoin="round"
 											stroke-width="2"
-											d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"
+											d="M6 18L18 6M6 6l12 12"
 										/>
 									</svg>
-								</div>
+								</button>
+								<button
+									class="btn btn-xs btn-primary"
+									title="Restore tab"
+									@click="restoreTab(tab.id)"
+								>
+									<svg
+										xmlns="http://www.w3.org/2000/svg"
+										class="h-4 w-4"
+										fill="none"
+										viewBox="0 0 24 24"
+										stroke="currentColor"
+									>
+										<path
+											stroke-linecap="round"
+											stroke-linejoin="round"
+											stroke-width="2"
+											d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+										/>
+									</svg>
+								</button>
 							</div>
-						</div>
-
-						<div class="flex-1 min-w-0">
-							<h3 class="font-semibold text-sm truncate" :title="tab.title">
-								{{ tab.title }}
-							</h3>
-							<p class="text-xs opacity-70 truncate" :title="tab.url">
-								{{ tab.url }}
-							</p>
-							<p class="text-xs opacity-50 mt-1">
-								{{ formatTime(tab.closedAt) }}
-							</p>
-						</div>
-
-						<div class="flex flex-col items-center justify-center gap-1 flex-shrink-0">
-							<button
-								class="btn btn-xs btn-ghost btn-square"
-								title="Remove from list"
-								@click="deleteTab(tab.id)"
-							>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									class="h-4 w-4"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2"
-										d="M6 18L18 6M6 6l12 12"
-									/>
-								</svg>
-							</button>
-							<button
-								class="btn btn-xs btn-primary"
-								title="Restore tab"
-								@click="restoreTab(tab.id)"
-							>
-								<svg
-									xmlns="http://www.w3.org/2000/svg"
-									class="h-4 w-4"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke="currentColor"
-								>
-									<path
-										stroke-linecap="round"
-										stroke-linejoin="round"
-										stroke-width="2"
-										d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-									/>
-								</svg>
-							</button>
 						</div>
 					</div>
 				</div>
@@ -144,13 +182,54 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { ClosedTab } from '../common/types';
 
 const CLOSED_TABS_STORAGE_KEY = 'closed_tabs';
 
 const closedTabs = ref<ClosedTab[]>([]);
 const loading = ref(true);
+const searchQuery = ref('');
+
+// Filter tabs based on search query
+const filteredTabs = computed(() => {
+	if (!searchQuery.value.trim()) {
+		return closedTabs.value;
+	}
+
+	const query = searchQuery.value.toLowerCase();
+	return closedTabs.value.filter(
+		(tab) => tab.title.toLowerCase().includes(query) || tab.url.toLowerCase().includes(query)
+	);
+});
+
+// Group tabs by domain
+const groupedByDomain = computed(() => {
+	const groups = new Map<string, ClosedTab[]>();
+
+	for (const tab of filteredTabs.value) {
+		try {
+			const url = new URL(tab.url);
+			const domain = url.hostname || 'Unknown';
+
+			if (!groups.has(domain)) {
+				groups.set(domain, []);
+			}
+			groups.get(domain)!.push(tab);
+		} catch (e) {
+			// Invalid URL, put in "Unknown" group
+			if (!groups.has('Unknown')) {
+				groups.set('Unknown', []);
+			}
+			groups.get('Unknown')!.push(tab);
+		}
+	}
+
+	// Sort domains alphabetically
+	const sortedGroups = new Map([...groups.entries()].sort((a, b) => a[0].localeCompare(b[0])));
+
+	return sortedGroups;
+});
 
 async function loadClosedTabs() {
 	loading.value = true;
