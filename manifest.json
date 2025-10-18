@@ -65,15 +65,6 @@
         "windows": "Alt+Shift+W"
       },
       "description": "Merge windows"
-    },
-    "open-side-panel": {
-      "suggested_key": {
-        "default": "Alt+Shift+S",
-        "linux": "Alt+Shift+S",
-        "mac": "Command+Shift+S",
-        "windows": "Alt+Shift+S"
-      },
-      "description": "Open Tab Hive panel"
     }
   }
 }

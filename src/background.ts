@@ -749,29 +749,8 @@ chrome.action.onClicked.addListener(async () => {
 chrome.commands.onCommand.addListener(async (command) => {
 	if (command === 'merge-windows') {
 		await mergeAllWindows();
-	} else if (command === 'open-side-panel') {
-		await openSidePanel();
 	}
 });
-
-/**
- * Open the side panel for the current window
- */
-async function openSidePanel() {
-	try {
-		const windows = await chrome.windows.getAll();
-		if (windows.length === 0) return;
-
-		// Get the current window or the first one
-		const currentWindow = windows.find((w) => w.focused) || windows[0];
-		if (!currentWindow.id) return;
-
-		await chrome.sidePanel.open({ windowId: currentWindow.id });
-		console.log('[Tabee] Side panel opened');
-	} catch (error) {
-		console.error('[Tabee] Error opening side panel:', error);
-	}
-}
 
 /**
  * Merge all browser windows into the current window
