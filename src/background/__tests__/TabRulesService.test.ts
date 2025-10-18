@@ -43,7 +43,7 @@ vi.mock('../../common/storage', () => ({
 
 // Mock helpers module
 vi.mock('../../common/helpers', () => ({
-	_processUrlFragment: vi.fn((fragment, url) => url),
+	_processUrlFragment: vi.fn((_fragment, url) => url),
 }));
 
 import { _getRuleFromUrl, _shouldSkipUrl, _getDefaultRule, _setStorage } from '../../common/storage';
@@ -160,7 +160,16 @@ describe('TabRulesService', () => {
 				name: 'New Title (example.com)',
 				detection: 'CONTAINS',
 				url_fragment: 'https://example.com',
-				tab: { title: 'New Title' },
+				tab: {
+					title: 'New Title',
+					icon: null,
+					muted: false,
+					pinned: false,
+					protected: false,
+					unique: false,
+					title_matcher: null,
+					url_matcher: null,
+				},
 				is_enabled: true,
 			};
 

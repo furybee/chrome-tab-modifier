@@ -1,10 +1,20 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { processTitle } from '../../../../../content.js';
+import { TitleService } from '../../../../../content/TitleService';
+import { RegexService } from '../../../../../content/RegexService';
 
 describe('Sample Rules', () => {
+	let titleService;
+
 	beforeEach(() => {
 		document.body.innerHTML = '';
+		const regexService = new RegexService();
+		titleService = new TitleService(regexService);
 	});
+
+	// Helper function to match the old processTitle API
+	const processTitle = (url, title, rule) => {
+		return titleService.processTitle(url, title, rule);
+	};
 
 	describe('Gmail Rule', () => {
 		it('should preserve title for Gmail', () => {
