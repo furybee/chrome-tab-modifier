@@ -20,16 +20,25 @@ Take full control of your browser tabs with Tabee! Rename, organize, and customi
 - Enforce unique tabs (auto-close duplicates)
 - Mute noisy tabs
 
-🍯 Tab Hive - Auto-Close Inactive Tabs (NEW!)
+🍯 Tab Hive - Auto-Close Inactive Tabs
 - Automatically close tabs after period of inactivity
 - Save closed tabs for easy restoration
 - Search and restore from the side panel
 - Grouped by domain for better organization
 
-🌐 Side Panel Integration (NEW!)
+🌐 Side Panel Integration
 - Quick access to add rules
 - Browse and restore closed tabs
 - Real-time tab management
+
+🔍 Spot Search - Quick Tab & Bookmark Finder
+- Instant search across all open tabs and bookmarks with Alt+Shift+E (or Cmd+Shift+E on Mac)
+- Real-time filtering as you type - search by title, URL, or tab group name
+- Keyboard navigation - use arrow keys (↑↓) to navigate, Enter to select, Escape to close
+
+🪟 Windows Merger
+- Merge all browser windows into one with Alt+Shift+W (or Cmd+Shift+W on Mac)
+- Also accessible via right-click context menu
 
 ⚡ Performance Mode
 - Lightweight mode for specific domains
@@ -46,26 +55,12 @@ Take full control of your browser tabs with Tabee! Rename, organize, and customi
 - All rules stored locally on your device
 - ReDoS attack protection
 
-📖 Quick Start:
-1. Install the extension
-2. Right-click on any page → "Rename Tab" for quick setup
-3. Or configure advanced rules from the Options page
-4. Access Tab Hive from the side panel
-
 🔧 Advanced Features:
 - URL fragment matching (CONTAINS, STARTS, ENDS, REGEX, EXACT)
 - Title matcher with capture groups (@0, @1, @2...)
 - URL matcher with capture groups ($0, $1, $2...)
 - Dynamic title updates with page changes
 - Keyboard shortcuts for common actions
-
-🆕 What's New in v1.0.0:
-- Complete rewrite with modern architecture
-- New Tab Hive feature for managing inactive tabs
-- Side panel integration
-- Image paste support for icons
-- Enhanced performance and stability
-- 155+ automated tests for reliability
 
 🌍 Open Source:
 Contribute or report issues: https://github.com/furybee/chrome-tab-modifier
