@@ -31,15 +31,12 @@
 
 		<div class="card bg-base-200 mt-4">
 			<div class="card-body">
-				<h2 class="card-title">Performance</h2>
+				<h2 class="card-title">Performance & Tab Management</h2>
 
 				<div class="grid grid-cols-6">
 					<div class="col-span-5">
 						<h3 class="font-bold">Lightweight Mode</h3>
-						<p>
-							Reduce memory usage by disabling Tabee on specific domains or URLs. This is useful for
-							sites where you don't need tab modifications.
-						</p>
+						<p>Reduce memory usage by disabling Tabee on specific domains or URLs.</p>
 					</div>
 					<div class="col-span-1 flex justify-end">
 						<input
@@ -51,6 +48,25 @@
 				</div>
 
 				<div v-if="lightweightModeEnabled" class="mt-4">
+					<div class="grid grid-cols-2 gap-4 mb-4">
+						<label class="label cursor-pointer justify-start gap-2">
+							<input
+								v-model="lightweightModeApplyToRules"
+								type="checkbox"
+								class="checkbox checkbox-xs checkbox-primary"
+							/>
+							<span class="label-text text-xs">Apply to Rules</span>
+						</label>
+						<label class="label cursor-pointer justify-start gap-2">
+							<input
+								v-model="lightweightModeApplyToTabHive"
+								type="checkbox"
+								class="checkbox checkbox-xs checkbox-primary"
+							/>
+							<span class="label-text text-xs">Apply to Tab Hive</span>
+						</label>
+					</div>
+
 					<div class="mb-4">
 						<button class="btn btn-xs btn-outline btn-primary" @click="showAddPatternModal">
 							Add Pattern
@@ -153,19 +169,15 @@
 						</div>
 					</div>
 				</dialog>
-			</div>
-		</div>
 
-		<div class="card bg-base-200 mt-4">
-			<div class="card-body">
-				<h2 class="card-title">🍯 Tab Hive</h2>
+				<div class="divider my-6"></div>
 
 				<div class="grid grid-cols-6">
 					<div class="col-span-5">
-						<h3 class="font-bold">Auto-Close Inactive Tabs</h3>
+						<h3 class="font-bold">🍯 Tab Hive: Auto-Close Inactive Tabs</h3>
 						<p>
 							Automatically close tabs that have been inactive for a specified duration. Closed tabs
-							will be saved in the side panel for easy restoration.
+							will be saved in Tab Hive for easy restoration.
 						</p>
 					</div>
 					<div class="col-span-1 flex justify-end">
@@ -308,6 +320,12 @@ const lightweightModeEnabled = ref(rulesStore.settings.lightweight_mode_enabled 
 const lightweightModePatterns = ref<LightweightModePattern[]>(
 	rulesStore.settings.lightweight_mode_patterns ?? []
 );
+const lightweightModeApplyToRules = ref(
+	rulesStore.settings.lightweight_mode_apply_to_rules ?? true
+);
+const lightweightModeApplyToTabHive = ref(
+	rulesStore.settings.lightweight_mode_apply_to_tab_hive ?? true
+);
 const addPatternModal = ref<HTMLDialogElement | null>(null);
 const newPattern = ref({
 	type: 'domain' as 'domain' | 'regex',
@@ -332,6 +350,16 @@ watch(lightweightModeEnabled, async (enabled) => {
 		type: 'success',
 		message: `Lightweight Mode ${enabled ? 'enabled' : 'disabled'}!`,
 	});
+});
+
+watch(lightweightModeApplyToRules, async (enabled) => {
+	rulesStore.settings.lightweight_mode_apply_to_rules = enabled;
+	await rulesStore.save();
+});
+
+watch(lightweightModeApplyToTabHive, async (enabled) => {
+	rulesStore.settings.lightweight_mode_apply_to_tab_hive = enabled;
+	await rulesStore.save();
 });
 
 watch(autoCloseEnabled, async (enabled) => {

@@ -109,6 +109,12 @@ export const useRulesStore = defineStore('rules', {
 			if (settings.lightweight_mode_patterns === undefined) {
 				settings.lightweight_mode_patterns = [];
 			}
+			if (settings.lightweight_mode_apply_to_rules === undefined) {
+				settings.lightweight_mode_apply_to_rules = true;
+			}
+			if (settings.lightweight_mode_apply_to_tab_hive === undefined) {
+				settings.lightweight_mode_apply_to_tab_hive = true;
+			}
 			// Add default values for auto-close if they don't exist
 			if (settings.auto_close_enabled === undefined) {
 				settings.auto_close_enabled = false;

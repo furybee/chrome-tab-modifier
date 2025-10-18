@@ -1,7 +1,11 @@
 <template>
-	<div class="h-screen bg-base-100 flex flex-col">
+	<div class="h-screen bg-base-100 flex flex-col relative">
+		<div class="absolute inset-0 opacity-10 pointer-events-none">
+			<div class="pattern-background"></div>
+		</div>
+
 		<!-- Tabs -->
-		<div role="tablist" class="tabs tabs-bordered tabs-lg bg-base-200">
+		<div role="tablist" class="tabs tabs-bordered tabs-lg bg-base-200 relative z-10">
 			<a
 				role="tab"
 				class="tab text-sm"
@@ -20,7 +24,7 @@
 			</a>
 		</div>
 
-		<div class="flex-1 overflow-y-auto p-4">
+		<div class="flex-1 overflow-y-auto p-4 relative z-10">
 			<!-- Add Rule Tab -->
 			<div v-if="activeTab === 'add-rule'">
 				<RuleForm
@@ -137,4 +141,11 @@ onMounted(async () => {
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.pattern-background {
+	width: 100%;
+	height: 100%;
+	background-image: radial-gradient(circle, currentColor 1px, transparent 1px);
+	background-size: 32px 32px;
+}
+</style>

@@ -2,8 +2,11 @@
 	<div class="flex h-screen w-screen overflow-hidden">
 		<div class="drawer lg:drawer-open overflow-hidden">
 			<input id="drawer-menu" class="drawer-toggle" type="checkbox" />
-			<div class="drawer-content flex flex-col items-center justify-center overflow-auto">
-				<div class="h-screen w-full">
+			<div class="drawer-content flex flex-col items-center justify-center overflow-auto relative">
+				<div class="absolute inset-0 opacity-10 pointer-events-none">
+					<div class="pattern-background"></div>
+				</div>
+				<div class="h-screen w-full relative z-10">
 					<div class="navbar bg-base-200">
 						<div class="navbar-start">
 							<label
@@ -97,27 +100,27 @@ const panes: Components = {
 const sectionItems = [
 	{
 		title: 'Rules',
-		icon: 'TabRulesIcon',
+		emoji: '📋',
 		component: 'TabRulesPane',
 	},
 	{
 		title: 'Groups',
-		icon: 'TabGroupsIcon',
+		emoji: '🗂️',
 		component: 'TabGroupsPane',
 	},
 	{
-		title: '🍯 Tab Hive',
-		icon: 'TabHiveIcon',
+		title: 'Tab Hive',
+		emoji: '🍯',
 		component: 'TabHivePane',
 	},
 	{
 		title: 'Settings',
-		icon: 'SettingsIcon',
+		emoji: '⚙️',
 		component: 'SettingsPane',
 	},
 	{
 		title: 'Help',
-		icon: 'HelpIcon',
+		emoji: '❓',
 		component: 'HelpPane',
 	},
 ] as MenuItem[];
@@ -125,17 +128,17 @@ const sectionItems = [
 const resourceItems = [
 	{
 		title: 'Chrome Web Store',
-		icon: 'ChromeIcon',
+		emoji: '🌐',
 		link: 'https://chrome.google.com/webstore/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai',
 	},
 	{
 		title: 'GitHub',
-		icon: 'GithubIcon',
+		emoji: '💻',
 		link: 'https://github.com/furybee/chrome-tab-modifier',
 	},
 	{
 		title: 'Donate',
-		icon: 'DonationIcon',
+		emoji: '💝',
 		component: 'DonationPane',
 	},
 ] as MenuItem[];
@@ -181,4 +184,11 @@ onMounted(async () => {
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.pattern-background {
+	width: 100%;
+	height: 100%;
+	background-image: radial-gradient(circle, currentColor 1px, transparent 1px);
+	background-size: 32px 32px;
+}
+</style>

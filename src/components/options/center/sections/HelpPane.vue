@@ -35,6 +35,18 @@
 			<div class="card-body">
 				<h2 class="card-title">⌨️ Keyboard Shortcuts</h2>
 
+				<h3 class="font-bold">Spot Search</h3>
+				<p>
+					Quickly search through your open tabs and bookmarks with a spotlight-style interface:
+				</p>
+				<ul class="list-disc ml-3">
+					<li><strong>Windows/Linux:</strong> <kbd class="kbd kbd-sm">Alt</kbd> + <kbd class="kbd kbd-sm">Shift</kbd> + <kbd class="kbd kbd-sm">E</kbd></li>
+					<li><strong>Mac:</strong> <kbd class="kbd kbd-sm">⌘ Command</kbd> + <kbd class="kbd kbd-sm">Shift</kbd> + <kbd class="kbd kbd-sm">E</kbd></li>
+				</ul>
+				<p class="mt-2">
+					Type to filter tabs by title, URL, or tab group. Use arrow keys to navigate and press Enter to switch to a tab or open a bookmark.
+				</p>
+
 				<h3 class="font-bold">Merge All Windows</h3>
 				<p>
 					Quickly merge all browser windows into the currently focused window using the keyboard

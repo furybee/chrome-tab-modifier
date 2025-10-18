@@ -13,6 +13,8 @@ export function _getDefaultTabModifierSettings(): TabModifierSettings {
 			theme: 'tabee',
 			lightweight_mode_enabled: false,
 			lightweight_mode_patterns: [],
+			lightweight_mode_apply_to_rules: true,
+			lightweight_mode_apply_to_tab_hive: true,
 			auto_close_enabled: false,
 			auto_close_timeout: 30, // 30 minutes par défaut
 		},

@@ -2,7 +2,7 @@ import { DefineComponent } from 'vue';
 
 export type MenuItem = {
 	title: string;
-	icon: string;
+	emoji: string;
 	component?: string;
 	link?: string;
 };
@@ -56,6 +56,8 @@ export type Settings = {
 	theme: string;
 	lightweight_mode_enabled: boolean;
 	lightweight_mode_patterns: LightweightModePattern[];
+	lightweight_mode_apply_to_rules: boolean;
+	lightweight_mode_apply_to_tab_hive: boolean;
 	auto_close_enabled: boolean;
 	auto_close_timeout: number; // en minutes
 };

@@ -1,8 +1,5 @@
 <template>
 	<div class="hero min-h-screen bg-base-200 relative overflow-hidden">
-		<div class="absolute inset-0 opacity-10">
-			<div class="pattern-background"></div>
-		</div>
 		<div class="hero-content text-center relative z-10">
 			<div class="max-w-lg">
 				<h1 class="text-5xl font-bold">Hello there</h1>
@@ -254,11 +251,4 @@ const rulesTips = [
 ];
 </script>
 
-<style scoped>
-.pattern-background {
-	width: 100%;
-	height: 100%;
-	background-image: radial-gradient(circle, currentColor 1px, transparent 1px);
-	background-size: 32px 32px;
-}
-</style>
+<style scoped></style>
