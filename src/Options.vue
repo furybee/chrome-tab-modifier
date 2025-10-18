@@ -72,6 +72,7 @@ import { Components, GLOBAL_EVENTS, MenuItem } from './common/types.ts';
 import { computed, inject, onMounted, ref } from 'vue';
 import TabRulesPane from './components/options/center/sections/TabRulesPane.vue';
 import TabGroupsPane from './components/options/center/sections/TabGroupsPane.vue';
+import TabHivePane from './components/options/center/sections/TabHivePane.vue';
 import SettingsPane from './components/options/center/sections/SettingsPane.vue';
 import HelpPane from './components/options/center/sections/HelpPane.vue';
 import DonationPane from './components/options/center/resources/DonationPane.vue';
@@ -87,6 +88,7 @@ const emitter: any = inject('emitter');
 const panes: Components = {
 	TabRulesPane,
 	TabGroupsPane,
+	TabHivePane,
 	SettingsPane,
 	HelpPane,
 	DonationPane,
@@ -102,6 +104,11 @@ const sectionItems = [
 		title: 'Groups',
 		icon: 'TabGroupsIcon',
 		component: 'TabGroupsPane',
+	},
+	{
+		title: '🍯 Tab Hive',
+		icon: 'TabHiveIcon',
+		component: 'TabHivePane',
 	},
 	{
 		title: 'Settings',

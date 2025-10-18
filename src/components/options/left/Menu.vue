@@ -21,6 +21,7 @@
 import { Components, MenuItem } from '../../../common/types.ts';
 import TabRulesIcon from '../../icons/TabRulesIcon.vue';
 import TabGroupsIcon from '../../icons/TabGroupsIcon.vue';
+import TabHiveIcon from '../../icons/TabHiveIcon.vue';
 import SettingsIcon from '../../icons/SettingsIcon.vue';
 import HelpIcon from '../../icons/HelpIcon.vue';
 import GithubIcon from '../../icons/GithubIcon.vue';
@@ -32,6 +33,7 @@ import { useMenuStore } from '../../../stores/menu.store.ts';
 const icons: Components = {
 	TabRulesIcon,
 	TabGroupsIcon,
+	TabHiveIcon,
 	SettingsIcon,
 	HelpIcon,
 	GithubIcon,
