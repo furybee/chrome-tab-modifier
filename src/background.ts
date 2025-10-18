@@ -8,6 +8,7 @@ import { TabGroupsService } from './background/TabGroupsService';
 import { TabHiveService } from './background/TabHiveService';
 import { WindowService } from './background/WindowService';
 import { ContextMenuService } from './background/ContextMenuService';
+import { SpotSearchService } from './background/SpotSearchService';
 
 // Initialize services (Dependency Injection)
 const tabRulesService = new TabRulesService();
@@ -15,6 +16,7 @@ const tabGroupsService = new TabGroupsService();
 const tabHiveService = new TabHiveService();
 const windowService = new WindowService();
 const contextMenuService = new ContextMenuService();
+const spotSearchService = new SpotSearchService();
 
 // =============================================================================
 // TAB EVENT LISTENERS
@@ -99,6 +101,31 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
 	// Handle messages from SidePanel (no sender.tab)
 	if (message.action === 'restoreClosedTab') {
 		await tabHiveService.restoreClosedTab(message.tabId);
+		return;
+	}
+
+	// Handle spot search requests
+	if (message.action === 'spotSearch') {
+		const results = await spotSearchService.search(message.query);
+		if (sender.tab?.id) {
+			await chrome.tabs.sendMessage(sender.tab.id, {
+				action: 'spotSearchResults',
+				tabs: results.tabs,
+				bookmarks: results.bookmarks,
+			});
+		}
+		return;
+	}
+
+	// Handle spot search activate tab
+	if (message.action === 'spotSearchActivateTab') {
+		await spotSearchService.activateTab(message.tabId, message.windowId);
+		return;
+	}
+
+	// Handle spot search open bookmark
+	if (message.action === 'spotSearchOpenBookmark') {
+		await spotSearchService.openBookmark(message.url);
 		return;
 	}
 
@@ -236,9 +263,34 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
 // COMMAND HANDLERS
 // =============================================================================
 
-chrome.commands.onCommand.addListener(async (command) => {
+chrome.commands.onCommand.addListener(async (command, tab) => {
+	console.log('[Tabee] 🔍 Command received:', command);
+
 	if (command === 'merge-windows') {
 		await windowService.mergeAllWindows();
+	} else if (command === 'spot-search') {
+		console.log('[Tabee] 🔍 Spot search command triggered');
+		console.log('[Tabee] 🔍 Tab:', tab);
+
+		// Toggle spot search in the active tab
+		if (!tab?.id) {
+			console.log('[Tabee] ❌ No tab ID found');
+			return;
+		}
+
+		// Skip chrome:// and about: pages
+		if (tab.url && (tab.url.startsWith('chrome://') || tab.url.startsWith('about:'))) {
+			console.log('[Tabee] ❌ Cannot open spot search on chrome:// or about: pages');
+			return;
+		}
+
+		console.log('[Tabee] 🔍 Sending toggleSpotSearch message to tab', tab.id);
+		try {
+			await chrome.tabs.sendMessage(tab.id, { action: 'toggleSpotSearch' });
+			console.log('[Tabee] ✅ Message sent successfully');
+		} catch (error) {
+			console.error('[Tabee] ❌ Error toggling spot search:', error);
+		}
 	}
 });
 
@@ -264,6 +316,10 @@ chrome.action.onClicked.addListener(async (tab) => {
 
 // Initialize Tab Hive auto-close tracking when extension loads
 tabHiveService.initialize();
+
+// Log that background script is loaded
+console.log('[Tabee] 🐝 Background service worker loaded and ready');
+console.log('[Tabee] 🔍 Spot search command handler registered');
 
 // Export for use in other modules
 export { tabHiveService };

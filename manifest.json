@@ -50,7 +50,8 @@
     "storage",
     "contextMenus",
     "scripting",
-    "sidePanel"
+    "sidePanel",
+    "bookmarks"
   ],
   "host_permissions": [
     "http://*/*",
@@ -65,6 +66,15 @@
         "windows": "Alt+Shift+W"
       },
       "description": "Merge windows"
+    },
+    "spot-search": {
+      "suggested_key": {
+        "default": "Alt+Shift+E",
+        "linux": "Alt+Shift+E",
+        "mac": "Command+Shift+E",
+        "windows": "Alt+Shift+E"
+      },
+      "description": "Search tabs and bookmarks"
     }
   }
 }
