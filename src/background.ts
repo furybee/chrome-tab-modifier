@@ -247,11 +247,15 @@ chrome.commands.onCommand.addListener(async (command) => {
 // =============================================================================
 
 /**
- * Handle clicks on the extension icon
- * Note: This only works if action.default_popup is NOT set in manifest
+ * Handle clicks on the extension icon to open the side panel
+ * Note: Chrome doesn't allow programmatic closing of side panels
+ * Users need to click the X button in the side panel to close it
  */
-chrome.action.onClicked.addListener(async () => {
-	chrome.runtime.openOptionsPage();
+chrome.action.onClicked.addListener(async (tab) => {
+	if (!tab.windowId) return;
+
+	// Open the side panel for the current window
+	await chrome.sidePanel.open({ windowId: tab.windowId });
 });
 
 // =============================================================================
