@@ -3,6 +3,7 @@ import { DefineComponent } from 'vue';
 export type MenuItem = {
 	title: string;
 	emoji: string;
+	description?: string;
 	component?: string;
 	link?: string;
 };

@@ -8,19 +8,26 @@
 				</div>
 				<div class="h-screen w-full relative z-10">
 					<div class="navbar bg-base-200">
-						<div class="navbar-start">
-							<label
-								class="btn btn-circle swap swap-rotate drawer-button lg:hidden"
-								for="drawer-menu"
-							>
-								<input type="checkbox" />
-								<BurgerIcon />
-								<CloseIcon />
-							</label>
+						<div class="navbar-start flex-col items-start gap-0">
+							<div class="flex items-center w-full">
+								<label
+									class="btn btn-circle swap swap-rotate drawer-button lg:hidden"
+									for="drawer-menu"
+								>
+									<input type="checkbox" />
+									<BurgerIcon />
+									<CloseIcon />
+								</label>
 
-							<h1 class="text-xl font-semibold ml-4">
-								{{ currentContent.title }}
-							</h1>
+								<div class="ml-4">
+									<h1 class="text-lg font-semibold">
+										{{ currentContent.title }}
+									</h1>
+									<p v-if="currentContent.description" class="text-xs text-base-content/60">
+										{{ currentContent.description }}
+									</p>
+								</div>
+							</div>
 						</div>
 
 						<div class="navbar-end mr-2">
@@ -101,26 +108,31 @@ const sectionItems = [
 	{
 		title: 'Rules',
 		emoji: '📋',
+		description: 'Customize tabs based on URL patterns',
 		component: 'TabRulesPane',
 	},
 	{
 		title: 'Groups',
 		emoji: '🗂️',
+		description: 'Organize your tabs with custom groups',
 		component: 'TabGroupsPane',
 	},
 	{
 		title: 'Tab Hive',
 		emoji: '🍯',
+		description: 'Manage closed tabs and auto-close settings',
 		component: 'TabHivePane',
 	},
 	{
 		title: 'Settings',
 		emoji: '⚙️',
+		description: 'Configure performance and preferences',
 		component: 'SettingsPane',
 	},
 	{
 		title: 'Help',
 		emoji: '❓',
+		description: 'Learn how to use Tabee features',
 		component: 'HelpPane',
 	},
 ] as MenuItem[];
