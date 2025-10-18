@@ -22,9 +22,15 @@ export class TitleService {
 	updateTitle(title: string, tag: string, value: string): string {
 		if (!value) return title;
 		// edge cases for unmatched capture groups
-		if (value.startsWith('$')) return title.replace(tag, decodeURI(''));
-		if (value.startsWith('@')) return title.replace(tag, decodeURI(''));
-		return title.replace(tag, decodeURI(value));
+		if (value.startsWith('$')) return title.replace(tag, '');
+		if (value.startsWith('@')) return title.replace(tag, '');
+
+		// Try to decode URI, but if it fails (e.g., contains unencoded %), use the value as-is
+		try {
+			return title.replace(tag, decodeURI(value));
+		} catch (e) {
+			return title.replace(tag, value);
+		}
 	}
 
 	/**

@@ -296,5 +296,41 @@ describe('TitleService', () => {
 
 			consoleSpy.mockRestore();
 		});
+
+		it('should transform complex pipe-separated title with regex capture groups', () => {
+			// Test case: Transform "Work Item | OrgName - CSS - 45% Savings Share | Customer Name | Category | App Console"
+			// To: "WI | Customer Name | OrgName - CSS - 45% Savings Share"
+			const rule: Rule = {
+				id: 'test',
+				name: 'Test',
+				detection: 'CONTAINS',
+				url_fragment: 'example.com',
+				tab: {
+					// @0 = full match
+					// @1 = first segment (Work Item)
+					// @2 = second segment (OrgName...)
+					// @3 = third segment (Customer Name)
+					// @4 = fourth segment (Category)
+					// @5 = fifth segment (App Console)
+					title: 'WI | @3| @2',
+					icon: null,
+					muted: false,
+					pinned: false,
+					protected: false,
+					unique: false,
+					// Regex to capture segments separated by " | "
+					// Each ([^|]+) captures text that is not a pipe character (will include surrounding whitespace)
+					title_matcher: '([^|]+)\\s*\\|\\s*([^|]+)\\s*\\|\\s*([^|]+)\\s*\\|\\s*([^|]+)\\s*\\|\\s*([^|]+)',
+					url_matcher: null,
+				},
+				is_enabled: true,
+			};
+
+			const originalTitle = 'Work Item | OrgName - CSS - 45% Savings Share | Customer Name | Category | App Console';
+			const result = service.processTitle('https://example.com', originalTitle, rule);
+
+			// The regex captures groups with surrounding whitespace, but they are trimmed during replacement
+			expect(result).toBe('WI | Customer Name | OrgName - CSS - 45% Savings Share');
+		});
 	});
 });
