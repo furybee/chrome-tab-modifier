@@ -31,7 +31,7 @@
 
 		<div class="card bg-base-200 mt-4">
 			<div class="card-body">
-				<h2 class="card-title">Performance & Tab Management</h2>
+				<h2 class="card-title">Tab Management</h2>
 
 				<div class="grid grid-cols-6">
 					<div class="col-span-5">
