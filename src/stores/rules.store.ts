@@ -7,6 +7,7 @@ import {
 	_getStorageAsync,
 	_setStorage,
 	_migrateLocalToSync,
+	_migrateToCompressed,
 } from '../common/storage.ts';
 
 /**
@@ -128,6 +129,9 @@ export const useRulesStore = defineStore('rules', {
 			try {
 				// Migrate data from local to sync storage if needed
 				await _migrateLocalToSync();
+
+				// Migrate uncompressed data to compressed format
+				await _migrateToCompressed();
 
 				let tabModifier = await _getStorageAsync();
 

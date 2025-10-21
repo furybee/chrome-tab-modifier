@@ -1,8 +1,10 @@
 import { Group, Rule, TabModifierSettings } from './types.ts';
 import { _clone, _generateRandomId } from './helpers.ts';
 import { _safeRegexTestSync } from './regex-safety.ts';
+import { compressToUTF16, decompressFromUTF16 } from 'lz-string';
 
 export const STORAGE_KEY = 'tab_modifier';
+export const STORAGE_KEY_COMPRESSED = 'tab_modifier_compressed';
 
 export function _getDefaultTabModifierSettings(): TabModifierSettings {
 	return {
@@ -51,12 +53,46 @@ export function _getDefaultGroup(title?: string): Group {
 	};
 }
 
+/**
+ * Decompress data from storage
+ */
+function _decompressData(compressed: string): TabModifierSettings | null {
+	try {
+		const decompressed = decompressFromUTF16(compressed);
+		if (!decompressed) {
+			return null;
+		}
+		return JSON.parse(decompressed);
+	} catch (error) {
+		console.error('[Tabee] Failed to decompress data:', error);
+		return null;
+	}
+}
+
+/**
+ * Compress data for storage
+ */
+function _compressData(data: TabModifierSettings): string {
+	const json = JSON.stringify(data);
+	return compressToUTF16(json);
+}
+
 export function _getStorageAsync(): Promise<TabModifierSettings | undefined> {
 	return new Promise((resolve, reject) => {
-		chrome.storage.sync.get(STORAGE_KEY, (items) => {
+		chrome.storage.sync.get([STORAGE_KEY, STORAGE_KEY_COMPRESSED], (items) => {
 			if (chrome.runtime.lastError) {
 				reject(new Error(chrome.runtime.lastError.message));
 			} else {
+				// Priority: compressed data first, then uncompressed
+				if (items[STORAGE_KEY_COMPRESSED]) {
+					const decompressed = _decompressData(items[STORAGE_KEY_COMPRESSED]);
+					if (decompressed) {
+						resolve(decompressed);
+						return;
+					}
+				}
+
+				// Fallback to uncompressed data (backward compatibility)
 				resolve(items[STORAGE_KEY]);
 			}
 		});
@@ -64,17 +100,39 @@ export function _getStorageAsync(): Promise<TabModifierSettings | undefined> {
 }
 
 export async function _clearStorage(): Promise<void> {
-	await chrome.storage.sync.remove(STORAGE_KEY);
+	await chrome.storage.sync.remove([STORAGE_KEY, STORAGE_KEY_COMPRESSED]);
 }
 
 export async function _setStorage(tabModifier: TabModifierSettings): Promise<void> {
-	await chrome.storage.sync.set({
-		tab_modifier: _clone({
-			rules: tabModifier.rules,
-			groups: tabModifier.groups,
-			settings: tabModifier.settings,
-		}),
+	const data = _clone({
+		rules: tabModifier.rules,
+		groups: tabModifier.groups,
+		settings: tabModifier.settings,
 	});
+
+	try {
+		// Compress the data
+		const compressed = _compressData(data);
+
+		// Save compressed data and remove old uncompressed key
+		await chrome.storage.sync.set({
+			[STORAGE_KEY_COMPRESSED]: compressed,
+		});
+
+		// Clean up old uncompressed data if it exists
+		await chrome.storage.sync.remove(STORAGE_KEY);
+
+		// Log compression stats for debugging
+		const originalSize = JSON.stringify(data).length;
+		const compressedSize = compressed.length;
+		const ratio = ((1 - compressedSize / originalSize) * 100).toFixed(1);
+		console.log(
+			`[Tabee] Storage compressed: ${originalSize} → ${compressedSize} bytes (${ratio}% reduction)`
+		);
+	} catch (error) {
+		console.error('[Tabee] Failed to save compressed data:', error);
+		throw error;
+	}
 }
 
 export async function _getRuleFromUrl(url: string): Promise<Rule | undefined> {
@@ -116,6 +174,42 @@ export async function _getRuleFromUrl(url: string): Promise<Rule | undefined> {
 }
 
 /**
+ * Migrates uncompressed data to compressed format
+ * This ensures existing users' data gets compressed automatically
+ */
+export async function _migrateToCompressed(): Promise<void> {
+	return new Promise((resolve, reject) => {
+		chrome.storage.sync.get([STORAGE_KEY, STORAGE_KEY_COMPRESSED], async (items) => {
+			if (chrome.runtime.lastError) {
+				reject(new Error(chrome.runtime.lastError.message));
+				return;
+			}
+
+			try {
+				// If we already have compressed data, nothing to migrate
+				if (items[STORAGE_KEY_COMPRESSED]) {
+					resolve();
+					return;
+				}
+
+				// If we have uncompressed data, migrate it
+				const uncompressedData = items[STORAGE_KEY];
+				if (uncompressedData) {
+					console.log('[Tabee] Migrating to compressed storage format...');
+					await _setStorage(uncompressedData);
+					console.log('[Tabee] Compression migration successful');
+				}
+
+				resolve();
+			} catch (error) {
+				console.error('[Tabee] Failed to migrate to compressed format:', error);
+				reject(error);
+			}
+		});
+	});
+}
+
+/**
  * Migrates data from chrome.storage.local to chrome.storage.sync
  * This function checks if data exists in local storage, and if so,
  * copies it to sync storage and then removes it from local storage.
@@ -144,14 +238,14 @@ export async function _migrateLocalToSync(): Promise<void> {
 
 				// Only migrate if sync storage is empty
 				if (!syncData) {
-					console.log('[Tab Modifier] Migrating data from local to sync storage...');
+					console.log('[Tabee] Migrating data from local to sync storage...');
 					await _setStorage(localData);
-					console.log('[Tab Modifier] Migration successful');
+					console.log('[Tabee] Migration successful');
 				}
 
 				// Clean up local storage after successful migration
 				await chrome.storage.local.remove(STORAGE_KEY);
-				console.log('[Tab Modifier] Local storage cleaned up');
+				console.log('[Tabee] Local storage cleaned up');
 
 				resolve();
 			} catch (error) {

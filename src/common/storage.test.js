@@ -7,9 +7,12 @@ import {
 	_getRuleFromUrl,
 	_getStorageAsync,
 	_setStorage,
+	_migrateToCompressed,
 	STORAGE_KEY,
+	STORAGE_KEY_COMPRESSED,
 } from './storage';
 import { chrome } from '../__mocks__/chrome';
+import { compressToUTF16, decompressFromUTF16 } from 'lz-string';
 
 global.chrome = chrome;
 
@@ -69,19 +72,47 @@ describe('Storage', () => {
 	it('_clearStorage should remove storage data', async () => {
 		await _clearStorage();
 
-		expect(global.chrome.storage.sync.remove).toHaveBeenCalledWith(STORAGE_KEY);
+		expect(global.chrome.storage.sync.remove).toHaveBeenCalledWith([
+			STORAGE_KEY,
+			STORAGE_KEY_COMPRESSED,
+		]);
 	});
 
-	it('_setStorage should set storage data', async () => {
+	it('_setStorage should set compressed storage data', async () => {
 		const mockData = {
 			rules: [],
 			groups: [],
-			settings: { enable_new_version_notification: false, theme: 'dim', lightweight_mode_enabled: false, lightweight_mode_patterns: [], auto_close_enabled: false, auto_close_timeout: 30 },
+			settings: {
+				enable_new_version_notification: false,
+				theme: 'dim',
+				lightweight_mode_enabled: false,
+				lightweight_mode_patterns: [],
+				auto_close_enabled: false,
+				auto_close_timeout: 30,
+			},
 		};
+
+		// Mock console.log to suppress compression stats output during tests
+		const consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+
 		await _setStorage(mockData);
-		expect(global.chrome.storage.sync.set).toHaveBeenCalledWith({
-			[STORAGE_KEY]: expect.objectContaining(mockData),
-		});
+
+		// Should have called set with compressed data
+		expect(global.chrome.storage.sync.set).toHaveBeenCalled();
+
+		// Verify the data was compressed
+		const setCallArgs = global.chrome.storage.sync.set.mock.calls[0][0];
+		expect(setCallArgs).toHaveProperty(STORAGE_KEY_COMPRESSED);
+		expect(typeof setCallArgs[STORAGE_KEY_COMPRESSED]).toBe('string');
+
+		// Verify we can decompress it back to original data
+		const decompressed = JSON.parse(decompressFromUTF16(setCallArgs[STORAGE_KEY_COMPRESSED]));
+		expect(decompressed).toEqual(mockData);
+
+		// Should also try to remove old uncompressed key
+		expect(global.chrome.storage.sync.remove).toHaveBeenCalledWith(STORAGE_KEY);
+
+		consoleLogSpy.mockRestore();
 	});
 
 	it('_getRuleFromUrl should return rule based on url detection', async () => {
@@ -381,6 +412,195 @@ describe('Storage', () => {
 			// Should return undefined because the dangerous pattern is blocked
 			const rule = await _getRuleFromUrl('https://aaaaaaaaaaaaaaaaaaa.com');
 			expect(rule).toBeUndefined();
+		});
+	});
+
+	describe('Compression features', () => {
+		it('_getStorageAsync should read compressed data', async () => {
+			const mockData = {
+				rules: [
+					{
+						id: '1',
+						name: 'test',
+						detection: 'CONTAINS',
+						url_fragment: 'example.com',
+						tab: {
+							title: 'Example',
+							icon: null,
+							pinned: false,
+							protected: false,
+							unique: false,
+							muted: false,
+							title_matcher: null,
+							url_matcher: null,
+							group_id: null,
+						},
+					},
+				],
+				groups: [],
+				settings: {
+					enable_new_version_notification: false,
+					theme: 'dim',
+					lightweight_mode_enabled: false,
+					lightweight_mode_patterns: [],
+					auto_close_enabled: false,
+					auto_close_timeout: 30,
+				},
+			};
+
+			// Compress the data
+			const compressed = compressToUTF16(JSON.stringify(mockData));
+
+			global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
+				callback({ [STORAGE_KEY_COMPRESSED]: compressed });
+			});
+
+			const storageData = await _getStorageAsync();
+			expect(storageData).toEqual(mockData);
+		});
+
+		it('_getStorageAsync should fallback to uncompressed data if compressed is not available', async () => {
+			const mockData = {
+				rules: [],
+				groups: [],
+				settings: {
+					enable_new_version_notification: false,
+					theme: 'dim',
+					lightweight_mode_enabled: false,
+					lightweight_mode_patterns: [],
+					auto_close_enabled: false,
+					auto_close_timeout: 30,
+				},
+			};
+
+			global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
+				callback({ [STORAGE_KEY]: mockData });
+			});
+
+			const storageData = await _getStorageAsync();
+			expect(storageData).toEqual(mockData);
+		});
+
+		it('_migrateToCompressed should migrate uncompressed data to compressed format', async () => {
+			const mockData = {
+				rules: [
+					{
+						id: '1',
+						name: 'test',
+						detection: 'CONTAINS',
+						url_fragment: 'example.com',
+						tab: {
+							title: 'Example',
+							icon: null,
+							pinned: false,
+							protected: false,
+							unique: false,
+							muted: false,
+							title_matcher: null,
+							url_matcher: null,
+							group_id: null,
+						},
+					},
+				],
+				groups: [],
+				settings: {
+					enable_new_version_notification: false,
+					theme: 'dim',
+					lightweight_mode_enabled: false,
+					lightweight_mode_patterns: [],
+					auto_close_enabled: false,
+					auto_close_timeout: 30,
+				},
+			};
+
+			// Mock console.log to suppress output during tests
+			const consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+
+			// Mock that we have uncompressed data
+			global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
+				callback({ [STORAGE_KEY]: mockData });
+			});
+
+			await _migrateToCompressed();
+
+			// Should have called set to save compressed version
+			expect(global.chrome.storage.sync.set).toHaveBeenCalled();
+			const setCallArgs = global.chrome.storage.sync.set.mock.calls[0][0];
+			expect(setCallArgs).toHaveProperty(STORAGE_KEY_COMPRESSED);
+
+			consoleLogSpy.mockRestore();
+		});
+
+		it('_migrateToCompressed should do nothing if already compressed', async () => {
+			const mockData = {
+				rules: [],
+				groups: [],
+				settings: {
+					enable_new_version_notification: false,
+					theme: 'dim',
+					lightweight_mode_enabled: false,
+					lightweight_mode_patterns: [],
+					auto_close_enabled: false,
+					auto_close_timeout: 30,
+				},
+			};
+
+			const compressed = compressToUTF16(JSON.stringify(mockData));
+
+			// Mock that we already have compressed data
+			global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
+				callback({ [STORAGE_KEY_COMPRESSED]: compressed });
+			});
+
+			await _migrateToCompressed();
+
+			// Should not have called set since data is already compressed
+			expect(global.chrome.storage.sync.set).not.toHaveBeenCalled();
+		});
+
+		it('compression should significantly reduce data size', async () => {
+			// Create a realistic dataset with multiple rules
+			const mockData = {
+				rules: Array.from({ length: 20 }, (_, i) => ({
+					id: `rule-${i}`,
+					name: `Test Rule ${i}`,
+					detection: 'CONTAINS',
+					url_fragment: `example-${i}.com`,
+					is_enabled: true,
+					tab: {
+						title: `Example Title ${i}`,
+						icon: null,
+						pinned: false,
+						protected: false,
+						unique: false,
+						muted: false,
+						title_matcher: null,
+						url_matcher: null,
+						group_id: null,
+					},
+				})),
+				groups: [],
+				settings: {
+					enable_new_version_notification: false,
+					theme: 'dim',
+					lightweight_mode_enabled: false,
+					lightweight_mode_patterns: [],
+					auto_close_enabled: false,
+					auto_close_timeout: 30,
+				},
+			};
+
+			const jsonString = JSON.stringify(mockData);
+			const compressed = compressToUTF16(jsonString);
+
+			const originalSize = jsonString.length;
+			const compressedSize = compressed.length;
+			const compressionRatio = compressedSize / originalSize;
+
+			// Verify that compression actually reduces size
+			expect(compressedSize).toBeLessThan(originalSize);
+			// Expect at least 30% compression for this kind of JSON data
+			expect(compressionRatio).toBeLessThan(0.7);
 		});
 	});
 });
