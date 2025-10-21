@@ -90,6 +90,7 @@ export function _getStorageAsync(): Promise<TabModifierSettings | undefined> {
 						resolve(decompressed);
 						return;
 					}
+					console.warn('[Tabee] Failed to decompress data, falling back to uncompressed');
 				}
 
 				// Fallback to uncompressed data (backward compatibility)

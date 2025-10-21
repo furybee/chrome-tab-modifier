@@ -11,11 +11,11 @@ const mockChrome = {
 		},
 	},
 	runtime: {
-		lastError: null,
+		lastError: null as { message: string } | null,
 	},
 };
 
-// @ts-ignore
+// @ts-expect-error - Mocking global chrome API for tests
 global.chrome = mockChrome;
 
 describe('StorageService', () => {
@@ -40,7 +40,7 @@ describe('StorageService', () => {
 
 			expect(result).toEqual(mockData);
 			expect(mockChrome.storage.sync.get).toHaveBeenCalledWith(
-				'tab_modifier',
+				['tab_modifier', 'tab_modifier_compressed'],
 				expect.any(Function)
 			);
 		});

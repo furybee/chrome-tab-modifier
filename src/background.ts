@@ -27,14 +27,24 @@ const spotSearchService = new SpotSearchService();
  */
 chrome.tabs.onUpdated.addListener(
 	async (_: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab) => {
-		if (!changeInfo.url) return;
+		// Process on URL change OR when tab completes loading
+		const shouldProcess = changeInfo.url || (changeInfo.status === 'complete' && tab.url);
 
-		// Skip processing if lightweight mode excludes this URL
-		if (!(await tabRulesService.shouldProcessUrl(changeInfo.url))) {
+		if (!shouldProcess) {
 			return;
 		}
 
-		const rule = await _getRuleFromUrl(tab.url!);
+		const urlToProcess = changeInfo.url || tab.url;
+		if (!urlToProcess) {
+			return;
+		}
+
+		// Skip processing if lightweight mode excludes this URL
+		if (!(await tabRulesService.shouldProcessUrl(urlToProcess))) {
+			return;
+		}
+
+		const rule = await _getRuleFromUrl(urlToProcess);
 		await tabGroupsService.ungroupTab(rule, tab);
 		await tabRulesService.applyRuleToTab(tab);
 	}

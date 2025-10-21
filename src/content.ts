@@ -43,7 +43,7 @@ try {
 			await ruleApplicationService.applyRule(rule);
 		}
 	} catch (error) {
-		console.error('[Tab Modifier] Error applying initial rule:', error);
+		console.error('[Tabee Content] Error applying initial rule:', error);
 	}
 })();
 
@@ -52,7 +52,6 @@ try {
 // ============================================================
 
 chrome.runtime.onMessage.addListener(async function (request) {
-	console.log('[Tabee Content] 📨 Message received:', request.action);
 
 	if (request.action === 'openPrompt') {
 		const title = prompt(

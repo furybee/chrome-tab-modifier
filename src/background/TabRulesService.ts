@@ -23,7 +23,13 @@ export class TabRulesService {
 		const rule = await _getRuleFromUrl(tab.url);
 
 		if (rule) {
-			await chrome.tabs.sendMessage(tab.id, { action: 'applyRule', rule: rule });
+			try {
+				await chrome.tabs.sendMessage(tab.id, { action: 'applyRule', rule: rule });
+			} catch (error) {
+				// Content script not loaded (likely a tab that was open before extension reload)
+				// The content script will apply rules automatically when the tab loads
+				console.log(`[TabRulesService] Content script not ready for tab ${tab.id}, rule will be applied on next load`);
+			}
 		}
 
 		return !!rule;
