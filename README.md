@@ -26,11 +26,11 @@ Tabee is compatible with Chromium-based browsers.
 
 | Browser        | Install Link                                                                                                | Web Store             |
 |----------------|-------------------------------------------------------------------------------------------------------------|-----------------------|
-| Google Chrome  | ⬇️ [Install](https://chromewebstore.google.com/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai)        | Chrome Web Store      |
-| Arc            | ⬇️ [Install](https://chromewebstore.google.com/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai)        | Chrome Web Store      |
-| Brave          | ⬇️ [Install](https://chromewebstore.google.com/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai)        | Chrome Web Store      |
-| Opera          | ⬇️ [Install](https://addons.opera.com/en/extensions/details/tab-modifier/)                                  | Opera Addons          |
-| Microsoft Edge | ⬇️ [Install](https://microsoftedge.microsoft.com/addons/detail/tab-modifier/edfkealmjdmkfimdjmiapmnakepfilkp) | Microsoft Edge Addons |
+| Google Chrome  | ⬇️ [Install](https://chromewebstore.google.com/detail/tabee-tab-modifier/penegkenfmliefdbmnfkidlgjfjcidia)        | Chrome Web Store      |
+| Arc            | ⬇️ [Install](https://chromewebstore.google.com/detail/tabee-tab-modifier/penegkenfmliefdbmnfkidlgjfjcidia)        | Chrome Web Store      |
+| Brave          | ⬇️ [Install](https://chromewebstore.google.com/detail/tabee-tab-modifier/penegkenfmliefdbmnfkidlgjfjcidia)        | Chrome Web Store      |
+| Opera          | ⬇️ Available Soon                                  | Opera Addons          |
+| Microsoft Edge | ⬇️ Available Soon | Microsoft Edge Addons |
 
 Firefox and Safari are not available.
 
