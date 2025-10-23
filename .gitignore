@@ -25,6 +25,7 @@ dist-ssr
 *.sw?
 
 tab-modifier.zip
+tabee.zip
 /deploy/*
 
 coverage/

@@ -1,8 +1,10 @@
 import { Group, Rule, TabModifierSettings } from './types.ts';
 import { _clone, _generateRandomId } from './helpers.ts';
 import { _safeRegexTestSync } from './regex-safety.ts';
+import { compressToUTF16, decompressFromUTF16 } from 'lz-string';
 
 export const STORAGE_KEY = 'tab_modifier';
+export const STORAGE_KEY_COMPRESSED = 'tab_modifier_compressed';
 
 export function _getDefaultTabModifierSettings(): TabModifierSettings {
 	return {
@@ -10,7 +12,13 @@ export function _getDefaultTabModifierSettings(): TabModifierSettings {
 		groups: [],
 		settings: {
 			enable_new_version_notification: false,
-			theme: 'dim',
+			theme: 'tabee',
+			lightweight_mode_enabled: false,
+			lightweight_mode_patterns: [],
+			lightweight_mode_apply_to_rules: true,
+			lightweight_mode_apply_to_tab_hive: true,
+			auto_close_enabled: false,
+			auto_close_timeout: 30, // 30 minutes par défaut
 		},
 	};
 }
@@ -45,12 +53,47 @@ export function _getDefaultGroup(title?: string): Group {
 	};
 }
 
+/**
+ * Decompress data from storage
+ */
+function _decompressData(compressed: string): TabModifierSettings | null {
+	try {
+		const decompressed = decompressFromUTF16(compressed);
+		if (!decompressed) {
+			return null;
+		}
+		return JSON.parse(decompressed);
+	} catch (error) {
+		console.error('[Tabee] Failed to decompress data:', error);
+		return null;
+	}
+}
+
+/**
+ * Compress data for storage
+ */
+function _compressData(data: TabModifierSettings): string {
+	const json = JSON.stringify(data);
+	return compressToUTF16(json);
+}
+
 export function _getStorageAsync(): Promise<TabModifierSettings | undefined> {
 	return new Promise((resolve, reject) => {
-		chrome.storage.local.get(STORAGE_KEY, (items) => {
+		chrome.storage.sync.get([STORAGE_KEY, STORAGE_KEY_COMPRESSED], (items) => {
 			if (chrome.runtime.lastError) {
 				reject(new Error(chrome.runtime.lastError.message));
 			} else {
+				// Priority: compressed data first, then uncompressed
+				if (items[STORAGE_KEY_COMPRESSED]) {
+					const decompressed = _decompressData(items[STORAGE_KEY_COMPRESSED]);
+					if (decompressed) {
+						resolve(decompressed);
+						return;
+					}
+					console.warn('[Tabee] Failed to decompress data, falling back to uncompressed');
+				}
+
+				// Fallback to uncompressed data (backward compatibility)
 				resolve(items[STORAGE_KEY]);
 			}
 		});
@@ -58,17 +101,39 @@ export function _getStorageAsync(): Promise<TabModifierSettings | undefined> {
 }
 
 export async function _clearStorage(): Promise<void> {
-	await chrome.storage.local.remove(STORAGE_KEY);
+	await chrome.storage.sync.remove([STORAGE_KEY, STORAGE_KEY_COMPRESSED]);
 }
 
 export async function _setStorage(tabModifier: TabModifierSettings): Promise<void> {
-	await chrome.storage.local.set({
-		tab_modifier: _clone({
-			rules: tabModifier.rules,
-			groups: tabModifier.groups,
-			settings: tabModifier.settings,
-		}),
+	const data = _clone({
+		rules: tabModifier.rules,
+		groups: tabModifier.groups,
+		settings: tabModifier.settings,
 	});
+
+	try {
+		// Compress the data
+		const compressed = _compressData(data);
+
+		// Save compressed data and remove old uncompressed key
+		await chrome.storage.sync.set({
+			[STORAGE_KEY_COMPRESSED]: compressed,
+		});
+
+		// Clean up old uncompressed data if it exists
+		await chrome.storage.sync.remove(STORAGE_KEY);
+
+		// Log compression stats for debugging
+		const originalSize = JSON.stringify(data).length;
+		const compressedSize = compressed.length;
+		const ratio = ((1 - compressedSize / originalSize) * 100).toFixed(1);
+		console.log(
+			`[Tabee] Storage compressed: ${originalSize} → ${compressedSize} bytes (${ratio}% reduction)`
+		);
+	} catch (error) {
+		console.error('[Tabee] Failed to save compressed data:', error);
+		throw error;
+	}
 }
 
 export async function _getRuleFromUrl(url: string): Promise<Rule | undefined> {
@@ -107,4 +172,129 @@ export async function _getRuleFromUrl(url: string): Promise<Rule | undefined> {
 	}
 
 	return foundRule;
+}
+
+/**
+ * Migrates uncompressed data to compressed format
+ * This ensures existing users' data gets compressed automatically
+ */
+export async function _migrateToCompressed(): Promise<void> {
+	return new Promise((resolve, reject) => {
+		chrome.storage.sync.get([STORAGE_KEY, STORAGE_KEY_COMPRESSED], async (items) => {
+			if (chrome.runtime.lastError) {
+				reject(new Error(chrome.runtime.lastError.message));
+				return;
+			}
+
+			try {
+				// If we already have compressed data, nothing to migrate
+				if (items[STORAGE_KEY_COMPRESSED]) {
+					resolve();
+					return;
+				}
+
+				// If we have uncompressed data, migrate it
+				const uncompressedData = items[STORAGE_KEY];
+				if (uncompressedData) {
+					console.log('[Tabee] Migrating to compressed storage format...');
+					await _setStorage(uncompressedData);
+					console.log('[Tabee] Compression migration successful');
+				}
+
+				resolve();
+			} catch (error) {
+				console.error('[Tabee] Failed to migrate to compressed format:', error);
+				reject(error);
+			}
+		});
+	});
+}
+
+/**
+ * Migrates data from chrome.storage.local to chrome.storage.sync
+ * This function checks if data exists in local storage, and if so,
+ * copies it to sync storage and then removes it from local storage.
+ * This ensures a smooth transition without breaking existing installations.
+ */
+export async function _migrateLocalToSync(): Promise<void> {
+	return new Promise((resolve, reject) => {
+		// Check if data exists in local storage
+		chrome.storage.local.get(STORAGE_KEY, async (localItems) => {
+			if (chrome.runtime.lastError) {
+				reject(new Error(chrome.runtime.lastError.message));
+				return;
+			}
+
+			const localData = localItems[STORAGE_KEY];
+
+			// If no data in local storage, nothing to migrate
+			if (!localData) {
+				resolve();
+				return;
+			}
+
+			try {
+				// Check if sync storage already has data
+				const syncData = await _getStorageAsync();
+
+				// Only migrate if sync storage is empty
+				if (!syncData) {
+					console.log('[Tabee] Migrating data from local to sync storage...');
+					await _setStorage(localData);
+					console.log('[Tabee] Migration successful');
+				}
+
+				// Clean up local storage after successful migration
+				await chrome.storage.local.remove(STORAGE_KEY);
+				console.log('[Tabee] Local storage cleaned up');
+
+				resolve();
+			} catch (error) {
+				reject(error);
+			}
+		});
+	});
+}
+
+/**
+ * Check if a URL should be excluded from Tab Modifier processing
+ * based on lightweight mode patterns
+ */
+export async function _shouldSkipUrl(url: string): Promise<boolean> {
+	const tabModifier = await _getStorageAsync();
+	if (!tabModifier) {
+		return false;
+	}
+
+	const { settings } = tabModifier;
+
+	// If lightweight mode is not enabled or not configured, don't skip any URLs
+	if (!settings.lightweight_mode_enabled || !settings.lightweight_mode_patterns) {
+		return false;
+	}
+
+	// Check if URL matches any enabled pattern
+	for (const pattern of settings.lightweight_mode_patterns) {
+		if (!pattern.enabled) continue;
+
+		try {
+			if (pattern.type === 'domain') {
+				// Simple domain matching
+				if (url.includes(pattern.pattern)) {
+					return true;
+				}
+			} else if (pattern.type === 'regex') {
+				// Regex matching with safety check
+				const isMatch = _safeRegexTestSync(pattern.pattern, url);
+				if (isMatch) {
+					return true;
+				}
+			}
+		} catch (error) {
+			console.error('[Tabee] Error checking lightweight mode pattern:', error);
+			// Continue checking other patterns
+		}
+	}
+
+	return false;
 }

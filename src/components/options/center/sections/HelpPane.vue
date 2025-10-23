@@ -2,7 +2,7 @@
 	<div class="container mx-auto max-w-5xl p-4">
 		<div class="card bg-base-200">
 			<div class="card-body">
-				<h2 class="card-title">Concept</h2>
+				<h2 class="card-title">💡 Concept</h2>
 				<p>
 					Take control of your browser tabs! With this extension you are able to change some
 					behaviors on any website. Define your rules and let the extension makes the job
@@ -14,24 +14,65 @@
 
 		<div class="card bg-base-200 mt-4">
 			<div class="card-body">
-				<h2 class="card-title">Features</h2>
+				<h2 class="card-title">✨ Features</h2>
 
-				<ul class="list-disc ml-3">
-					<li>You can rename a tab.</li>
-					<li>You can change any tab (fav)icon.</li>
-					<li>You can pin a website without effort.</li>
-					<li>You can group your tabs easily.</li>
-					<li>You can protect some websites from accidental closure with a confirm box.</li>
-					<li>You can avoid duplicate tabs by setting up the unique property.</li>
-					<li>You can mute the sound of any website before it plays it.</li>
-					<li>And the icing on the cake... Combine all of them!</li>
+				<ul class="list-disc ml-3 space-y-1">
+					<li><strong>Rename tabs</strong> - Customize tab titles with static text or dynamic patterns.</li>
+					<li><strong>Change favicons</strong> - Replace any tab icon with custom images, URLs, or paste directly from clipboard.</li>
+					<li><strong>Pin tabs</strong> - Automatically pin important websites to keep them always visible.</li>
+					<li><strong>Group tabs</strong> - Organize tabs into custom colored groups for better workspace management.</li>
+					<li><strong>Protect tabs</strong> - Prevent accidental closure with a confirmation dialog on protected websites.</li>
+					<li><strong>Unique tabs</strong> - Automatically close duplicate tabs to keep your browser clean.</li>
+					<li><strong>Mute tabs</strong> - Silence any website before it starts playing sound.</li>
+					<li><strong>Auto-close inactive tabs</strong> - Automatically close tabs after a specified duration and restore them from Tab Hive.</li>
+					<li><strong>Tab Hive</strong> - View and restore recently closed tabs with search functionality.</li>
+					<li><strong>Spot Search</strong> - Instantly search through all your open tabs and bookmarks with a spotlight-style interface (Alt+Shift+E).</li>
+					<li><strong>Merge windows</strong> - Combine all browser windows into one with a keyboard shortcut (Alt+Shift+W) or context menu.</li>
+					<li><strong>Lightweight Mode</strong> - Reduce memory usage by disabling Tabee on specific domains.</li>
+					<li><strong>RegEx support</strong> - Use advanced pattern matching with regular expressions for URL detection and title manipulation.</li>
+					<li><strong>Context menu</strong> - Right-click any page to quickly create or edit rules for that URL.</li>
+					<li><strong>Side Panel</strong> - Quick access to Tab Hive and rule creation from Chrome's side panel.</li>
+					<li><strong>Sync across devices</strong> - All your rules and settings sync automatically via Chrome Sync.</li>
+					<li>And the icing on the cake... <strong>Combine all of them!</strong></li>
 				</ul>
 			</div>
 		</div>
 
 		<div class="card bg-base-200 mt-4">
 			<div class="card-body">
-				<h2 class="card-title">Tab Rules</h2>
+				<h2 class="card-title">⌨️ Keyboard Shortcuts</h2>
+
+				<h3 class="font-bold">Spot Search</h3>
+				<p>
+					Quickly search through your open tabs and bookmarks with a spotlight-style interface:
+				</p>
+				<ul class="list-disc ml-3">
+					<li><strong>Windows/Linux:</strong> <kbd class="kbd kbd-sm">Alt</kbd> + <kbd class="kbd kbd-sm">Shift</kbd> + <kbd class="kbd kbd-sm">E</kbd></li>
+					<li><strong>Mac:</strong> <kbd class="kbd kbd-sm">⌘ Command</kbd> + <kbd class="kbd kbd-sm">Shift</kbd> + <kbd class="kbd kbd-sm">E</kbd></li>
+				</ul>
+				<p class="mt-2">
+					Type to filter tabs by title, URL, or tab group. Use arrow keys to navigate and press Enter to switch to a tab or open a bookmark.
+				</p>
+
+				<h3 class="font-bold">Merge All Windows</h3>
+				<p>
+					Quickly merge all browser windows into the currently focused window using the keyboard
+					shortcut:
+				</p>
+				<ul class="list-disc ml-3">
+					<li><strong>Windows/Linux:</strong> <kbd class="kbd kbd-sm">Alt</kbd> + <kbd class="kbd kbd-sm">Shift</kbd> + <kbd class="kbd kbd-sm">W</kbd></li>
+					<li><strong>Mac:</strong> <kbd class="kbd kbd-sm">⌘ Command</kbd> + <kbd class="kbd kbd-sm">Shift</kbd> + <kbd class="kbd kbd-sm">W</kbd></li>
+				</ul>
+				<p class="mt-2">
+					You can also access this feature by right-clicking anywhere and selecting "Merge All
+					Windows" from the context menu.
+				</p>
+			</div>
+		</div>
+
+		<div class="card bg-base-200 mt-4">
+			<div class="card-body">
+				<h2 class="card-title">📋 Tab Rules</h2>
 
 				<p>You have to create a "tab rule". A tab rule has:</p>
 
@@ -49,10 +90,10 @@
 
 				<h3 class="font-bold">URL fragment</h3>
 				<p>
-					This is the key of your rule. It will determine if your rule will be applied or not. You
-					want to catch GMail? You can set your rule with "Contains" detection and "mail.google.com"
-					URL fragment. Another solution could be to set "Starts with" detection and
-					"https://mail.google.com". Try any combination to achieve what you want.
+					This is the key of your rule. It will determine if your rule will be applied or not. For
+					example, to catch GitHub repositories, you can set your rule with "Contains" detection and
+					"github.com" URL fragment. Another solution could be to set "Starts with" detection and
+					"https://github.com". Try any combination to achieve what you want.
 				</p>
 				<p class="text-accent">
 					After defining the core of your rule you can select some actions listed below.
@@ -77,15 +118,13 @@
 				<p>You can select an icon provided by the extension.</p>
 				<p>
 					Otherwise, you can define an icon URL in the input like
-					"https://www.google.com/favicon.ico".
+					"https://example.com/favicon.ico".
 				</p>
-				<p>In case you want to define a local icon from your computer, you have 2 options:</p>
+				<p>For local icons from your computer, you have multiple options:</p>
 				<ul class="list-disc ml-3">
-					<li>upload your icon somewhere like imgur.com and paste the direct link</li>
-					<li>
-						go to <a href="https://ezgif.com/image-to-datauri" target="_blank" class="link">ezgif.com</a> and upload your icon, then copy the generated Data URI and paste it.
-						This is your icon transformed in the Data URI format
-					</li>
+					<li><strong>Paste directly</strong>: Copy an image (screenshot, file, etc.) and paste it directly into the "Custom Icon" field - it will be automatically converted to base64!</li>
+					<li>Upload your icon somewhere like imgur.com and paste the direct link</li>
+					<li>Use a service to convert your icon to Data URI format manually</li>
 				</ul>
 
 				<h3 class="font-bold">Group</h3>
@@ -109,8 +148,8 @@
 					the original tab after closing the duplicate one.
 				</p>
 				<p>
-					Scenario: create a rule based on GMail with unique action. Open GMail, open another GMail,
-					the last one will be closed.
+					Scenario: create a rule based on your email service with unique action. Open your email,
+					open another tab with the same email, the last one will be closed.
 				</p>
 
 				<h3 class="font-bold">Muted</h3>
@@ -124,7 +163,7 @@
 				<p>
 					An advanced usage, enter a regular expression to identify some title parts and use them
 					inside the title itself, this is useful to reorder words or exclude some parts of the
-					title, like [a-z]*@gmail.com and use @0 in the title input to inject the variable.
+					title, like [a-z]*@example.com and use @0 in the title input to inject the variable.
 				</p>
 
 				<h3 class="font-bold">URL matcher</h3>
@@ -137,7 +176,7 @@
 
 		<div class="card bg-base-200 mt-4">
 			<div class="card-body">
-				<h2 class="card-title">Additional notes</h2>
+				<h2 class="card-title">📝 Additional notes</h2>
 
 				<p>After creating or editing a rule, refresh the tab(s) to apply the changes.</p>
 				<p>

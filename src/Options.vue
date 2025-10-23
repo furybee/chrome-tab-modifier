@@ -2,22 +2,32 @@
 	<div class="flex h-screen w-screen overflow-hidden">
 		<div class="drawer lg:drawer-open overflow-hidden">
 			<input id="drawer-menu" class="drawer-toggle" type="checkbox" />
-			<div class="drawer-content flex flex-col items-center justify-center overflow-auto">
-				<div class="h-screen w-full">
+			<div class="drawer-content flex flex-col items-center justify-center overflow-auto relative">
+				<div class="absolute inset-0 opacity-10 pointer-events-none">
+					<div class="pattern-background"></div>
+				</div>
+				<div class="h-screen w-full relative z-10">
 					<div class="navbar bg-base-200">
-						<div class="navbar-start">
-							<label
-								class="btn btn-circle swap swap-rotate drawer-button lg:hidden"
-								for="drawer-menu"
-							>
-								<input type="checkbox" />
-								<BurgerIcon />
-								<CloseIcon />
-							</label>
+						<div class="navbar-start flex-col items-start gap-0">
+							<div class="flex items-center w-full">
+								<label
+									class="btn btn-circle swap swap-rotate drawer-button lg:hidden"
+									for="drawer-menu"
+								>
+									<input type="checkbox" />
+									<BurgerIcon />
+									<CloseIcon />
+								</label>
 
-							<a class="btn btn-ghost text-xl">
-								{{ currentContent.title }}
-							</a>
+								<div class="ml-4">
+									<h1 class="text-lg font-semibold">
+										{{ currentContent.title }}
+									</h1>
+									<p v-if="currentContent.description" class="text-xs text-base-content/60">
+										{{ currentContent.description }}
+									</p>
+								</div>
+							</div>
 						</div>
 
 						<div class="navbar-end mr-2">
@@ -47,7 +57,13 @@
 				<label aria-label="close sidebar" class="drawer-overlay" for="drawer-menu" />
 
 				<div class="h-full bg-base-300">
-					<h1 class="px-8 pt-4 text-xl font-bold">Tab Modifier</h1>
+					<div class="px-8 pt-4">
+						<h1 class="text-xl font-bold flex items-center gap-2">
+							<img src="/assets/icon_32.png" alt="Tabee icon" class="w-5 h-5" />
+							Tabee
+						</h1>
+						<p class="text-xs text-base-content/70 mt-1">The original Tab Modifier.</p>
+					</div>
 
 					<Menu :menu-items="sectionItems" title="Sections" @on-menu-clicked="onMenuClicked" />
 
@@ -66,6 +82,7 @@ import { Components, GLOBAL_EVENTS, MenuItem } from './common/types.ts';
 import { computed, inject, onMounted, ref } from 'vue';
 import TabRulesPane from './components/options/center/sections/TabRulesPane.vue';
 import TabGroupsPane from './components/options/center/sections/TabGroupsPane.vue';
+import TabHivePane from './components/options/center/sections/TabHivePane.vue';
 import SettingsPane from './components/options/center/sections/SettingsPane.vue';
 import HelpPane from './components/options/center/sections/HelpPane.vue';
 import DonationPane from './components/options/center/resources/DonationPane.vue';
@@ -81,6 +98,7 @@ const emitter: any = inject('emitter');
 const panes: Components = {
 	TabRulesPane,
 	TabGroupsPane,
+	TabHivePane,
 	SettingsPane,
 	HelpPane,
 	DonationPane,
@@ -89,22 +107,32 @@ const panes: Components = {
 const sectionItems = [
 	{
 		title: 'Rules',
-		icon: 'TabRulesIcon',
+		emoji: '📋',
+		description: 'Customize tabs based on URL patterns',
 		component: 'TabRulesPane',
 	},
 	{
 		title: 'Groups',
-		icon: 'TabGroupsIcon',
+		emoji: '🗂️',
+		description: 'Organize your tabs with custom groups',
 		component: 'TabGroupsPane',
 	},
 	{
+		title: 'Tab Hive',
+		emoji: '🍯',
+		description: 'Manage closed tabs and auto-close settings',
+		component: 'TabHivePane',
+	},
+	{
 		title: 'Settings',
-		icon: 'SettingsIcon',
+		emoji: '⚙️',
+		description: 'Configure performance and preferences',
 		component: 'SettingsPane',
 	},
 	{
 		title: 'Help',
-		icon: 'HelpIcon',
+		emoji: '❓',
+		description: 'Learn how to use Tabee features',
 		component: 'HelpPane',
 	},
 ] as MenuItem[];
@@ -112,17 +140,17 @@ const sectionItems = [
 const resourceItems = [
 	{
 		title: 'Chrome Web Store',
-		icon: 'ChromeIcon',
+		emoji: '🌐',
 		link: 'https://chrome.google.com/webstore/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai',
 	},
 	{
 		title: 'GitHub',
-		icon: 'GithubIcon',
+		emoji: '💻',
 		link: 'https://github.com/furybee/chrome-tab-modifier',
 	},
 	{
 		title: 'Donate',
-		icon: 'DonationIcon',
+		emoji: '💝',
 		component: 'DonationPane',
 	},
 ] as MenuItem[];
@@ -161,7 +189,18 @@ onMounted(async () => {
 	menuStore.setCurrentMenuItem(currentContent.value);
 
 	await rulesStore.init();
+
+	emitter.on(GLOBAL_EVENTS.NAVIGATE_TO_SETTINGS, () => {
+		onMenuClicked(sectionItems.find((item) => item.component === 'SettingsPane')!);
+	});
 });
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped>
+.pattern-background {
+	width: 100%;
+	height: 100%;
+	background-image: radial-gradient(circle, currentColor 1px, transparent 1px);
+	background-size: 32px 32px;
+}
+</style>

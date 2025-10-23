@@ -6,6 +6,8 @@ import {
 	_getDefaultTabModifierSettings,
 	_getStorageAsync,
 	_setStorage,
+	_migrateLocalToSync,
+	_migrateToCompressed,
 } from '../common/storage.ts';
 
 /**
@@ -100,8 +102,37 @@ export const useRulesStore = defineStore('rules', {
 
 			return groups;
 		},
+		fixMissingLightweightModeSettings(settings: Settings): Settings {
+			// Add default values for lightweight mode if they don't exist
+			if (settings.lightweight_mode_enabled === undefined) {
+				settings.lightweight_mode_enabled = false;
+			}
+			if (settings.lightweight_mode_patterns === undefined) {
+				settings.lightweight_mode_patterns = [];
+			}
+			if (settings.lightweight_mode_apply_to_rules === undefined) {
+				settings.lightweight_mode_apply_to_rules = true;
+			}
+			if (settings.lightweight_mode_apply_to_tab_hive === undefined) {
+				settings.lightweight_mode_apply_to_tab_hive = true;
+			}
+			// Add default values for auto-close if they don't exist
+			if (settings.auto_close_enabled === undefined) {
+				settings.auto_close_enabled = false;
+			}
+			if (settings.auto_close_timeout === undefined) {
+				settings.auto_close_timeout = 30;
+			}
+			return settings;
+		},
 		async init() {
 			try {
+				// Migrate data from local to sync storage if needed
+				await _migrateLocalToSync();
+
+				// Migrate uncompressed data to compressed format
+				await _migrateToCompressed();
+
 				let tabModifier = await _getStorageAsync();
 
 				if (!tabModifier) {
@@ -119,6 +150,7 @@ export const useRulesStore = defineStore('rules', {
 					tabModifier.rules = this.fixDuplicateRuleIds(tabModifier.rules);
 					tabModifier.rules = this.fixRuleIsEnabled(tabModifier.rules);
 					tabModifier.groups = this.addMissingInvisibleChar(tabModifier.groups);
+					tabModifier.settings = this.fixMissingLightweightModeSettings(tabModifier.settings);
 
 					this.groups = tabModifier.groups;
 					this.rules = tabModifier.rules;
