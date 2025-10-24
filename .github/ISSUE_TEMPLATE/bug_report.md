@@ -25,7 +25,7 @@ If applicable, add screenshots to help explain your problem.
 
 **Extension version:** `X.Y.Z`
 
-_Can be found here: chrome://extensions/?id=hcbgadmbdkiilgpifjgcakjehmafcjai_
+_Can be found here: chrome://extensions/?id=penegkenfmliefdbmnfkidlgjfjcidia
 
 **Additional context**
 Add any other context about the problem here.
