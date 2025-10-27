@@ -144,7 +144,7 @@ Pages that start with `chrome://` URL are protected. No content script can be in
 
 Related issue: [#13](https://github.com/furybee/chrome-tab-modifier/issues/13)
 
-By default, extensions don't have access to local files. You have to opt-in "Allow access to file URLs" from `chrome://extensions/?id=hcbgadmbdkiilgpifjgcakjehmafcjai`.
+By default, extensions don't have access to local files. You have to opt-in "Allow access to file URLs" from `chrome://extensions/?id=penegkenfmliefdbmnfkidlgjfjcidia`.
 
 ### Protected action is not triggered
 
