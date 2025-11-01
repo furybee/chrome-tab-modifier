@@ -23,7 +23,7 @@
     "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
-    "@crxjs/vite-plugin": "^2.0.0-beta.26",
+    "@crxjs/vite-plugin": "^2.2.1",
     "@types/chrome": "^0.0.268",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
