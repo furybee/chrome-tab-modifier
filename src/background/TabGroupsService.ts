@@ -77,7 +77,9 @@ export class TabGroupsService {
 
 		if (groups.length === 0) {
 			await this.createAndSetupGroup([tab.id], tmGroup);
-		} else if (groups.length === 1) {
+		} else {
+			// If one or more groups exist, use the first one
+			// This prevents duplicate groups from accumulating
 			const group = groups[0];
 
 			const execute = () => {
