@@ -5,6 +5,14 @@ import { compressToUTF16, decompressFromUTF16 } from 'lz-string';
 
 export const STORAGE_KEY = 'tab_modifier';
 export const STORAGE_KEY_COMPRESSED = 'tab_modifier_compressed';
+export const STORAGE_KEY_METADATA = 'tab_modifier_metadata';
+export const STORAGE_KEY_CHUNK_PREFIX = 'tab_modifier_chunk_';
+
+// Chrome storage.sync limits
+export const QUOTA_BYTES_PER_ITEM = 8192; // 8KB per item
+export const MAX_ITEMS = 512;
+// Use 7KB per chunk to leave safety margin for JSON overhead and metadata
+export const CHUNK_SIZE = 7000;
 
 export function _getDefaultTabModifierSettings(): TabModifierSettings {
 	return {
@@ -77,12 +85,104 @@ function _compressData(data: TabModifierSettings): string {
 	return compressToUTF16(json);
 }
 
-export function _getStorageAsync(): Promise<TabModifierSettings | undefined> {
+/**
+ * Split compressed data into chunks that fit within Chrome storage limits
+ */
+function _createChunks(compressedData: string): string[] {
+	const chunks: string[] = [];
+	let offset = 0;
+
+	while (offset < compressedData.length) {
+		chunks.push(compressedData.substring(offset, offset + CHUNK_SIZE));
+		offset += CHUNK_SIZE;
+	}
+
+	return chunks;
+}
+
+/**
+ * Reassemble chunks into original compressed data
+ */
+function _reassembleChunks(chunks: string[]): string {
+	return chunks.join('');
+}
+
+/**
+ * Helper to get all storage keys (Promise wrapper)
+ */
+function _getAllStorageKeys(): Promise<Record<string, any>> {
 	return new Promise((resolve, reject) => {
-		chrome.storage.sync.get([STORAGE_KEY, STORAGE_KEY_COMPRESSED], (items) => {
+		chrome.storage.sync.get(null, (items) => {
 			if (chrome.runtime.lastError) {
 				reject(new Error(chrome.runtime.lastError.message));
 			} else {
+				resolve(items || {});
+			}
+		});
+	});
+}
+
+export function _getStorageAsync(): Promise<TabModifierSettings | undefined> {
+	return new Promise((resolve, reject) => {
+		// First, check for chunked data (new format)
+		chrome.storage.sync.get([STORAGE_KEY_METADATA], async (metadataItems) => {
+			if (chrome.runtime.lastError) {
+				reject(new Error(chrome.runtime.lastError.message));
+				return;
+			}
+
+			const metadata = metadataItems[STORAGE_KEY_METADATA];
+
+			// New chunked format
+			if (metadata && metadata.chunkCount > 0) {
+				try {
+					const chunkKeys = Array.from(
+						{ length: metadata.chunkCount },
+						(_, i) => `${STORAGE_KEY_CHUNK_PREFIX}${i}`
+					);
+
+					chrome.storage.sync.get(chunkKeys, (chunkItems) => {
+						if (chrome.runtime.lastError) {
+							reject(new Error(chrome.runtime.lastError.message));
+							return;
+						}
+
+						// Reassemble chunks in order
+						const chunks: string[] = [];
+						for (let i = 0; i < metadata.chunkCount; i++) {
+							const chunk = chunkItems[`${STORAGE_KEY_CHUNK_PREFIX}${i}`];
+							if (!chunk) {
+								console.error(`[Tabee] Missing chunk ${i}`);
+								reject(new Error(`Missing chunk ${i}`));
+								return;
+							}
+							chunks.push(chunk);
+						}
+
+						const compressed = _reassembleChunks(chunks);
+						const decompressed = _decompressData(compressed);
+
+						if (decompressed) {
+							console.log(`[Tabee] Loaded data from ${metadata.chunkCount} chunks`);
+							resolve(decompressed);
+						} else {
+							reject(new Error('Failed to decompress chunked data'));
+						}
+					});
+				} catch (error) {
+					console.error('[Tabee] Error reading chunked data:', error);
+					reject(error);
+				}
+				return;
+			}
+
+			// Legacy format: try compressed single item, then uncompressed
+			chrome.storage.sync.get([STORAGE_KEY, STORAGE_KEY_COMPRESSED], (items) => {
+				if (chrome.runtime.lastError) {
+					reject(new Error(chrome.runtime.lastError.message));
+					return;
+				}
+
 				// Priority: compressed data first, then uncompressed
 				if (items[STORAGE_KEY_COMPRESSED]) {
 					const decompressed = _decompressData(items[STORAGE_KEY_COMPRESSED]);
@@ -95,13 +195,26 @@ export function _getStorageAsync(): Promise<TabModifierSettings | undefined> {
 
 				// Fallback to uncompressed data (backward compatibility)
 				resolve(items[STORAGE_KEY]);
-			}
+			});
 		});
 	});
 }
 
 export async function _clearStorage(): Promise<void> {
-	await chrome.storage.sync.remove([STORAGE_KEY, STORAGE_KEY_COMPRESSED]);
+	// Get all storage keys
+	const allItems = await _getAllStorageKeys();
+	const keysToRemove = Object.keys(allItems).filter(
+		(key) =>
+			key === STORAGE_KEY ||
+			key === STORAGE_KEY_COMPRESSED ||
+			key === STORAGE_KEY_METADATA ||
+			key.startsWith(STORAGE_KEY_CHUNK_PREFIX)
+	);
+
+	if (keysToRemove.length > 0) {
+		await chrome.storage.sync.remove(keysToRemove);
+		console.log(`[Tabee] Cleared ${keysToRemove.length} storage keys`);
+	}
 }
 
 export async function _setStorage(tabModifier: TabModifierSettings): Promise<void> {
@@ -114,24 +227,72 @@ export async function _setStorage(tabModifier: TabModifierSettings): Promise<voi
 	try {
 		// Compress the data
 		const compressed = _compressData(data);
-
-		// Save compressed data and remove old uncompressed key
-		await chrome.storage.sync.set({
-			[STORAGE_KEY_COMPRESSED]: compressed,
-		});
-
-		// Clean up old uncompressed data if it exists
-		await chrome.storage.sync.remove(STORAGE_KEY);
-
-		// Log compression stats for debugging
 		const originalSize = JSON.stringify(data).length;
 		const compressedSize = compressed.length;
-		const ratio = ((1 - compressedSize / originalSize) * 100).toFixed(1);
-		console.log(
-			`[Tabee] Storage compressed: ${originalSize} → ${compressedSize} bytes (${ratio}% reduction)`
-		);
+
+		// Determine if we need chunking (leave 1KB margin for safety)
+		const needsChunking = compressedSize > QUOTA_BYTES_PER_ITEM - 1000;
+
+		if (needsChunking) {
+			// Split into chunks
+			const chunks = _createChunks(compressed);
+
+			// Check if we exceed the item limit
+			if (chunks.length + 1 > MAX_ITEMS) {
+				throw new Error(
+					`Data too large: requires ${chunks.length} chunks but limit is ${MAX_ITEMS}`
+				);
+			}
+
+			// Prepare chunk data
+			const chunkData: Record<string, string> = {};
+			chunks.forEach((chunk, index) => {
+				chunkData[`${STORAGE_KEY_CHUNK_PREFIX}${index}`] = chunk;
+			});
+
+			// Save metadata
+			chunkData[STORAGE_KEY_METADATA] = JSON.stringify({
+				version: 2,
+				chunkCount: chunks.length,
+				originalSize,
+				compressedSize,
+			});
+
+			// Save all chunks atomically
+			await chrome.storage.sync.set(chunkData);
+
+			// Clean up old single-item storage
+			await chrome.storage.sync.remove([STORAGE_KEY, STORAGE_KEY_COMPRESSED]);
+
+			const ratio = ((1 - compressedSize / originalSize) * 100).toFixed(1);
+			console.log(
+				`[Tabee] Storage chunked: ${originalSize} → ${compressedSize} bytes (${ratio}% reduction) in ${chunks.length} chunks`
+			);
+		} else {
+			// Data fits in single item, use old format for compatibility
+			await chrome.storage.sync.set({
+				[STORAGE_KEY_COMPRESSED]: compressed,
+			});
+
+			// Clean up old formats
+			await chrome.storage.sync.remove([STORAGE_KEY, STORAGE_KEY_METADATA]);
+
+			// Also clean up any old chunks
+			const allItems = await _getAllStorageKeys();
+			const oldChunks = Object.keys(allItems).filter((key) =>
+				key.startsWith(STORAGE_KEY_CHUNK_PREFIX)
+			);
+			if (oldChunks.length > 0) {
+				await chrome.storage.sync.remove(oldChunks);
+			}
+
+			const ratio = ((1 - compressedSize / originalSize) * 100).toFixed(1);
+			console.log(
+				`[Tabee] Storage compressed: ${originalSize} → ${compressedSize} bytes (${ratio}% reduction)`
+			);
+		}
 	} catch (error) {
-		console.error('[Tabee] Failed to save compressed data:', error);
+		console.error('[Tabee] Failed to save data:', error);
 		throw error;
 	}
 }
@@ -175,38 +336,64 @@ export async function _getRuleFromUrl(url: string): Promise<Rule | undefined> {
 }
 
 /**
- * Migrates uncompressed data to compressed format
- * This ensures existing users' data gets compressed automatically
+ * Migrates data to the most appropriate storage format
+ * This handles migration from:
+ * 1. Uncompressed -> Compressed (old migration)
+ * 2. Compressed single item -> Chunked format (if data is too large)
+ *
+ * The function automatically determines if chunking is needed based on data size
  */
 export async function _migrateToCompressed(): Promise<void> {
 	return new Promise((resolve, reject) => {
-		chrome.storage.sync.get([STORAGE_KEY, STORAGE_KEY_COMPRESSED], async (items) => {
-			if (chrome.runtime.lastError) {
-				reject(new Error(chrome.runtime.lastError.message));
-				return;
-			}
-
-			try {
-				// If we already have compressed data, nothing to migrate
-				if (items[STORAGE_KEY_COMPRESSED]) {
-					resolve();
+		chrome.storage.sync.get(
+			[STORAGE_KEY, STORAGE_KEY_COMPRESSED, STORAGE_KEY_METADATA],
+			async (items) => {
+				if (chrome.runtime.lastError) {
+					reject(new Error(chrome.runtime.lastError.message));
 					return;
 				}
 
-				// If we have uncompressed data, migrate it
-				const uncompressedData = items[STORAGE_KEY];
-				if (uncompressedData) {
-					console.log('[Tabee] Migrating to compressed storage format...');
-					await _setStorage(uncompressedData);
-					console.log('[Tabee] Compression migration successful');
-				}
+				try {
+					// If we already have chunked data, nothing to migrate
+					if (items[STORAGE_KEY_METADATA]) {
+						console.log('[Tabee] Already using chunked storage format');
+						resolve();
+						return;
+					}
 
-				resolve();
-			} catch (error) {
-				console.error('[Tabee] Failed to migrate to compressed format:', error);
-				reject(error);
+					// If we have compressed data, check if it needs chunking
+					if (items[STORAGE_KEY_COMPRESSED]) {
+						const compressedSize = items[STORAGE_KEY_COMPRESSED].length;
+
+						// If compressed data is close to the limit, migrate to chunked format
+						if (compressedSize > QUOTA_BYTES_PER_ITEM - 1000) {
+							console.log('[Tabee] Migrating to chunked storage format (data too large)...');
+							const decompressed = _decompressData(items[STORAGE_KEY_COMPRESSED]);
+							if (decompressed) {
+								await _setStorage(decompressed);
+								console.log('[Tabee] Migration to chunked format successful');
+							}
+						}
+						resolve();
+						return;
+					}
+
+					// If we have uncompressed data, migrate it (this will auto-chunk if needed)
+					const uncompressedData = items[STORAGE_KEY];
+					if (uncompressedData) {
+						console.log('[Tabee] Migrating to compressed storage format...');
+						await _setStorage(uncompressedData);
+						console.log('[Tabee] Compression migration successful');
+					}
+
+					resolve();
+				} catch (error) {
+					console.error('[Tabee] Failed to migrate storage format:', error);
+					// Don't reject - allow the app to continue with existing data
+					resolve();
+				}
 			}
-		});
+		);
 	});
 }
 

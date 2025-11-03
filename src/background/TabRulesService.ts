@@ -62,16 +62,22 @@ export class TabRulesService {
 
 			// Compare processed fragments instead of raw URL
 			if (tabProcessedFragment === processedUrlFragment && tab.id !== currentTab.id) {
-				await chrome.scripting.executeScript({
-					target: { tabId: currentTab.id },
-					func: () => {
-						window.onbeforeunload = null;
-					},
-				});
+				// Remove beforeunload handler from the duplicate tab before closing it
+				try {
+					await chrome.scripting.executeScript({
+						target: { tabId: tab.id },
+						func: () => {
+							window.onbeforeunload = null;
+						},
+					});
+				} catch (error) {
+					// Ignore errors if we can't execute script (e.g., chrome:// pages)
+					console.log(`[TabRulesService] Could not remove beforeunload from tab ${tab.id}:`, error);
+				}
 
-				await chrome.tabs.remove(currentTab.id);
-				await chrome.tabs.update(tab.id, { url: currentTab.url, highlighted: true });
-				return; // Exit after finding the first match
+				// Close the duplicate tab (keep the current tab)
+				await chrome.tabs.remove(tab.id);
+				return; // Exit after closing the first duplicate
 			}
 		}
 	}

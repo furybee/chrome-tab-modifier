@@ -13,6 +13,9 @@ const mockChrome = {
 	scripting: {
 		executeScript: vi.fn(),
 	},
+	runtime: {
+		lastError: undefined,
+	},
 };
 
 // @ts-ignore
@@ -126,6 +129,184 @@ describe('TabRulesService', () => {
 			await service.handleSetUnique(message, tab);
 
 			expect(mockChrome.tabs.query).not.toHaveBeenCalled();
+		});
+
+		it('should close duplicate tab and keep current tab', async () => {
+			const currentTab = {
+				id: 1,
+				url: 'https://example.com/page',
+			} as chrome.tabs.Tab;
+
+			const duplicateTab = {
+				id: 2,
+				url: 'https://example.com/page',
+			} as chrome.tabs.Tab;
+
+			const otherTab = {
+				id: 3,
+				url: 'https://different.com',
+			} as chrome.tabs.Tab;
+
+			const message = {
+				url_fragment: 'example.com',
+				rule: {
+					tab: { url_matcher: null },
+				},
+			};
+
+			// Mock chrome.tabs.query to call the callback
+			mockChrome.tabs.query.mockImplementation((_queryInfo: any, callback: any) => {
+				callback([currentTab, duplicateTab, otherTab]);
+			});
+			mockChrome.scripting.executeScript.mockResolvedValue([]);
+			mockChrome.tabs.remove.mockResolvedValue(undefined);
+
+			await service.handleSetUnique(message, currentTab);
+
+			// Should execute script on duplicate tab to remove beforeunload
+			expect(mockChrome.scripting.executeScript).toHaveBeenCalledWith({
+				target: { tabId: 2 },
+				func: expect.any(Function),
+			});
+
+			// Should close the duplicate tab (not the current tab)
+			expect(mockChrome.tabs.remove).toHaveBeenCalledWith(2);
+			expect(mockChrome.tabs.remove).not.toHaveBeenCalledWith(1);
+
+			// Should not update any tabs
+			expect(mockChrome.tabs.update).not.toHaveBeenCalled();
+		});
+
+		it('should handle multiple duplicate tabs by closing only the first one', async () => {
+			const currentTab = {
+				id: 1,
+				url: 'https://example.com/page',
+			} as chrome.tabs.Tab;
+
+			const duplicate1 = {
+				id: 2,
+				url: 'https://example.com/page',
+			} as chrome.tabs.Tab;
+
+			const duplicate2 = {
+				id: 3,
+				url: 'https://example.com/page',
+			} as chrome.tabs.Tab;
+
+			const message = {
+				url_fragment: 'example.com',
+				rule: {
+					tab: { url_matcher: null },
+				},
+			};
+
+			mockChrome.tabs.query.mockImplementation((_queryInfo: any, callback: any) => {
+				callback([currentTab, duplicate1, duplicate2]);
+			});
+			mockChrome.scripting.executeScript.mockResolvedValue([]);
+			mockChrome.tabs.remove.mockResolvedValue(undefined);
+
+			await service.handleSetUnique(message, currentTab);
+
+			// Should only close the first duplicate found
+			expect(mockChrome.tabs.remove).toHaveBeenCalledTimes(1);
+			expect(mockChrome.tabs.remove).toHaveBeenCalledWith(2);
+		});
+
+		it('should not close any tabs if no duplicates exist', async () => {
+			const currentTab = {
+				id: 1,
+				url: 'https://example.com/page',
+			} as chrome.tabs.Tab;
+
+			const otherTab = {
+				id: 2,
+				url: 'https://different.com',
+			} as chrome.tabs.Tab;
+
+			const message = {
+				url_fragment: 'example.com',
+				rule: {
+					tab: { url_matcher: null },
+				},
+			};
+
+			mockChrome.tabs.query.mockImplementation((_queryInfo: any, callback: any) => {
+				callback([currentTab, otherTab]);
+			});
+
+			await service.handleSetUnique(message, currentTab);
+
+			// Should not close any tabs
+			expect(mockChrome.tabs.remove).not.toHaveBeenCalled();
+			expect(mockChrome.scripting.executeScript).not.toHaveBeenCalled();
+		});
+
+		it('should handle errors when removing beforeunload handler', async () => {
+			const currentTab = {
+				id: 1,
+				url: 'https://example.com/page',
+			} as chrome.tabs.Tab;
+
+			const duplicateTab = {
+				id: 2,
+				url: 'https://example.com/page',
+			} as chrome.tabs.Tab;
+
+			const message = {
+				url_fragment: 'example.com',
+				rule: {
+					tab: { url_matcher: null },
+				},
+			};
+
+			mockChrome.tabs.query.mockImplementation((_queryInfo: any, callback: any) => {
+				callback([currentTab, duplicateTab]);
+			});
+			mockChrome.scripting.executeScript.mockRejectedValue(new Error('Cannot execute script'));
+			mockChrome.tabs.remove.mockResolvedValue(undefined);
+
+			// Mock console.log to avoid test output pollution
+			const consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+
+			await service.handleSetUnique(message, currentTab);
+
+			// Should still close the tab even if script execution fails
+			expect(mockChrome.tabs.remove).toHaveBeenCalledWith(2);
+			expect(consoleLogSpy).toHaveBeenCalled();
+
+			consoleLogSpy.mockRestore();
+		});
+
+		it('should skip tabs without URL or ID', async () => {
+			const currentTab = {
+				id: 1,
+				url: 'https://example.com/page',
+			} as chrome.tabs.Tab;
+
+			const tabWithoutUrl = {
+				id: 2,
+			} as chrome.tabs.Tab;
+
+			const tabWithoutId = {
+				url: 'https://example.com/page',
+			} as chrome.tabs.Tab;
+
+			const message = {
+				url_fragment: 'example.com',
+				rule: {
+					tab: { url_matcher: null },
+				},
+			};
+
+			mockChrome.tabs.query.mockImplementation((_queryInfo: any, callback: any) => {
+				callback([currentTab, tabWithoutUrl, tabWithoutId]);
+			});
+
+			await service.handleSetUnique(message, currentTab);
+
+			// Should not close any tabs since duplicates don't have ID or URL
+			expect(mockChrome.tabs.remove).not.toHaveBeenCalled();
 		});
 	});
 
