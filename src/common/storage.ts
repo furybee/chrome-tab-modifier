@@ -304,6 +304,11 @@ export async function _getRuleFromUrl(url: string): Promise<Rule | undefined> {
 	}
 
 	const foundRule = tabModifier.rules.find((r) => {
+		// Skip disabled rules
+		if (r.is_enabled === false) {
+			return false;
+		}
+
 		const detectionType = r.detection ?? 'CONTAINS';
 		const urlFragment = r.url_fragment;
 

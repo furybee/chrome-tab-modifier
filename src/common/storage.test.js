@@ -427,6 +427,124 @@ describe('Storage', () => {
 			const rule = await _getRuleFromUrl('https://aaaaaaaaaaaaaaaaaaa.com');
 			expect(rule).toBeUndefined();
 		});
+
+		it('should skip disabled rules and return the next matching enabled rule', async () => {
+			const disabledRule = {
+				id: '1',
+				name: 'disabled',
+				is_enabled: false,
+				detection: 'CONTAINS',
+				url_fragment: 'example.com',
+				tab: {
+					title: 'Disabled',
+					icon: null,
+					pinned: false,
+					protected: false,
+					unique: false,
+					muted: false,
+					title_matcher: null,
+					url_matcher: null,
+					group_id: null,
+				},
+			};
+			const enabledRule = {
+				id: '2',
+				name: 'enabled',
+				is_enabled: true,
+				detection: 'CONTAINS',
+				url_fragment: 'example.com',
+				tab: {
+					title: 'Enabled',
+					icon: null,
+					pinned: false,
+					protected: false,
+					unique: false,
+					muted: false,
+					title_matcher: null,
+					url_matcher: null,
+					group_id: null,
+				},
+			};
+			const mockData = {
+				rules: [disabledRule, enabledRule],
+				groups: [],
+				settings: { enable_new_version_notification: false, theme: 'dim', lightweight_mode_enabled: false, lightweight_mode_patterns: [], auto_close_enabled: false, auto_close_timeout: 30 },
+			};
+			global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
+				callback({ [STORAGE_KEY]: mockData });
+			});
+			global.chrome.runtime.lastError = null;
+
+			const rule = await _getRuleFromUrl('https://example.com/path');
+			expect(rule).toEqual(enabledRule);
+			expect(rule.name).toBe('enabled');
+		});
+
+		it('should return undefined if only matching rules are disabled', async () => {
+			const disabledRule = {
+				id: '1',
+				name: 'disabled',
+				is_enabled: false,
+				detection: 'CONTAINS',
+				url_fragment: 'example.com',
+				tab: {
+					title: 'Disabled',
+					icon: null,
+					pinned: false,
+					protected: false,
+					unique: false,
+					muted: false,
+					title_matcher: null,
+					url_matcher: null,
+					group_id: null,
+				},
+			};
+			const mockData = {
+				rules: [disabledRule],
+				groups: [],
+				settings: { enable_new_version_notification: false, theme: 'dim', lightweight_mode_enabled: false, lightweight_mode_patterns: [], auto_close_enabled: false, auto_close_timeout: 30 },
+			};
+			global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
+				callback({ [STORAGE_KEY]: mockData });
+			});
+			global.chrome.runtime.lastError = null;
+
+			const rule = await _getRuleFromUrl('https://example.com/path');
+			expect(rule).toBeUndefined();
+		});
+
+		it('should match enabled rules even when is_enabled is undefined (default behavior)', async () => {
+			const ruleWithoutIsEnabled = {
+				id: '1',
+				name: 'no is_enabled property',
+				// is_enabled is undefined (not set)
+				detection: 'CONTAINS',
+				url_fragment: 'example.com',
+				tab: {
+					title: 'Test',
+					icon: null,
+					pinned: false,
+					protected: false,
+					unique: false,
+					muted: false,
+					title_matcher: null,
+					url_matcher: null,
+					group_id: null,
+				},
+			};
+			const mockData = {
+				rules: [ruleWithoutIsEnabled],
+				groups: [],
+				settings: { enable_new_version_notification: false, theme: 'dim', lightweight_mode_enabled: false, lightweight_mode_patterns: [], auto_close_enabled: false, auto_close_timeout: 30 },
+			};
+			global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
+				callback({ [STORAGE_KEY]: mockData });
+			});
+			global.chrome.runtime.lastError = null;
+
+			const rule = await _getRuleFromUrl('https://example.com/path');
+			expect(rule).toEqual(ruleWithoutIsEnabled);
+		});
 	});
 
 	describe('Compression features', () => {
