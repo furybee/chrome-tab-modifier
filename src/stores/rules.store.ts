@@ -6,8 +6,6 @@ import {
 	_getDefaultTabModifierSettings,
 	_getStorageAsync,
 	_setStorage,
-	_migrateLocalToSync,
-	_migrateToCompressed,
 } from '../common/storage.ts';
 
 /**
@@ -127,12 +125,7 @@ export const useRulesStore = defineStore('rules', {
 		},
 		async init() {
 			try {
-				// Migrate data from local to sync storage if needed
-				await _migrateLocalToSync();
-
-				// Migrate uncompressed data to compressed format
-				await _migrateToCompressed();
-
+				// Load data - migration from sync to local happens automatically in _getStorageAsync
 				let tabModifier = await _getStorageAsync();
 
 				if (!tabModifier) {
@@ -192,6 +185,7 @@ export const useRulesStore = defineStore('rules', {
 				return mergedConfig;
 			} catch (error) {
 				console.error('Failed to set config:', error);
+				throw error; // Re-throw to allow caller to handle the error
 			}
 		},
 		async mergeConfig(config: TabModifierSettings) {
@@ -216,7 +210,8 @@ export const useRulesStore = defineStore('rules', {
 
 				await this.init();
 			} catch (error) {
-				console.error('Failed to set config:', error);
+				console.error('Failed to merge config:', error);
+				throw error; // Re-throw to allow caller to handle the error
 			}
 		},
 		async getConfig(): Promise<TabModifierSettings | undefined> {

@@ -417,23 +417,43 @@ const importMergeConfig = async () => {
 	const reader = new FileReader();
 
 	reader.onload = async (event: any) => {
-		const config = JSON.parse(event.target.result);
+		try {
+			const config = JSON.parse(event.target.result);
 
-		await rulesStore.mergeConfig(config);
+			await rulesStore.mergeConfig(config);
 
-		emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
-			type: 'success',
-			message: 'Import successfully!',
-		});
+			emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
+				type: 'success',
+				message: 'Import successfully!',
+			});
 
-		if (fileInput.value) {
-			fileInput.value.value = '';
+			if (fileInput.value) {
+				fileInput.value.value = '';
+			}
+
+			if (!importModal.value) return;
+
+			const modal = importModal.value as HTMLDialogElement;
+			modal.close();
+		} catch (error: any) {
+			console.error('Failed to import:', error);
+
+			// Extract meaningful error message
+			let errorMessage = 'Failed to import configuration.';
+			if (error.message?.includes('quota')) {
+				errorMessage =
+					'Failed to save data: Storage quota exceeded. This is unexpected - please contact support with your configuration file size.';
+			} else if (error instanceof SyntaxError) {
+				errorMessage = 'Failed to import: Invalid JSON file format.';
+			} else if (error.message) {
+				errorMessage = `Failed to import: ${error.message}`;
+			}
+
+			emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
+				type: 'error',
+				message: errorMessage,
+			});
 		}
-
-		if (!importModal.value) return;
-
-		const modal = importModal.value as HTMLDialogElement;
-		modal.close();
 	};
 
 	reader.readAsText(file);
@@ -451,23 +471,43 @@ const importReplaceConfig = async () => {
 	const reader = new FileReader();
 
 	reader.onload = async (event: any) => {
-		const config = JSON.parse(event.target.result);
+		try {
+			const config = JSON.parse(event.target.result);
 
-		await rulesStore.setConfig(config);
+			await rulesStore.setConfig(config);
 
-		emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
-			type: 'success',
-			message: 'Import successfully!',
-		});
+			emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
+				type: 'success',
+				message: 'Import successfully!',
+			});
 
-		if (fileInput.value) {
-			fileInput.value.value = '';
+			if (fileInput.value) {
+				fileInput.value.value = '';
+			}
+
+			if (!importModal.value) return;
+
+			const modal = importModal.value as HTMLDialogElement;
+			modal.close();
+		} catch (error: any) {
+			console.error('Failed to import:', error);
+
+			// Extract meaningful error message
+			let errorMessage = 'Failed to import configuration.';
+			if (error.message?.includes('quota')) {
+				errorMessage =
+					'Failed to save data: Storage quota exceeded. This is unexpected - please contact support with your configuration file size.';
+			} else if (error instanceof SyntaxError) {
+				errorMessage = 'Failed to import: Invalid JSON file format.';
+			} else if (error.message) {
+				errorMessage = `Failed to import: ${error.message}`;
+			}
+
+			emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
+				type: 'error',
+				message: errorMessage,
+			});
 		}
-
-		if (!importModal.value) return;
-
-		const modal = importModal.value as HTMLDialogElement;
-		modal.close();
 	};
 
 	reader.readAsText(file);
