@@ -294,13 +294,13 @@ describe('TabRulesService - GitHub Unique Issue Test', () => {
 			// But now let's see what happens with uniqueness
 			const processed1 = _processUrlFragment(
 				message.url_fragment,
-				currentTab.url,
+				currentTab.url!,
 				message.rule.tab.url_matcher
 			);
 
 			const processed2 = _processUrlFragment(
 				message.url_fragment,
-				duplicateTab.url,
+				duplicateTab.url!,
 				message.rule.tab.url_matcher
 			);
 

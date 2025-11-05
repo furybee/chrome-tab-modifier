@@ -13,9 +13,9 @@ describe('UrlChangeDetector', () => {
 
 		// Mock location.href
 		delete (window as any).location;
-		window.location = {
+		(window as any).location = {
 			href: 'https://example.com/page1',
-		} as Location;
+		};
 
 		// Mock history API
 		window.history = {
@@ -28,7 +28,7 @@ describe('UrlChangeDetector', () => {
 
 	afterEach(() => {
 		// Restore original objects
-		window.location = originalLocation;
+		(window as any).location = originalLocation;
 		window.history = originalHistory;
 		vi.clearAllTimers();
 	});

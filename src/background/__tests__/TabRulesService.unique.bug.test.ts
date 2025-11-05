@@ -89,20 +89,20 @@ describe('TabRulesService - CRITICAL BUG: Unique closes unrelated tabs', () => {
 
 			const githubProcessed = _processUrlFragment(
 				message.url_fragment,
-				githubTab.url,
+				githubTab.url!,
 				message.rule.tab.url_matcher
 			);
 			console.log('GitHub tab processed:', githubProcessed);
 
 			const gmailProcessed = _processUrlFragment(
 				message.url_fragment,
-				gmailTab.url,
+				gmailTab.url!,
 				message.rule.tab.url_matcher
 			);
 			console.log('Gmail tab processed:', gmailProcessed);
 
 			console.log('Are they equal?', githubProcessed === gmailProcessed);
-			console.log('But Gmail URL matches pattern?', new RegExp(message.rule.tab.url_matcher).test(gmailTab.url));
+			console.log('But Gmail URL matches pattern?', new RegExp(message.rule.tab.url_matcher!).test(gmailTab.url!));
 
 			// Call handleSetUnique
 			await service.handleSetUnique(message, githubTab);

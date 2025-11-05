@@ -62,7 +62,7 @@ applyRulesForUrl(location.href);
 
 // Setup URL change detector for Single Page Applications
 const urlChangeDetector = new UrlChangeDetector();
-urlChangeDetector.onChange(async (newUrl, oldUrl) => {
+urlChangeDetector.onChange(async (newUrl, _oldUrl) => {
 	console.log('[Tabee Content] 🔄 SPA navigation detected, re-applying rules');
 	await applyRulesForUrl(newUrl);
 });
