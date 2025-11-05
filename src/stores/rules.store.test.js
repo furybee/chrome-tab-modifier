@@ -81,4 +81,75 @@ describe('Rules Store', () => {
 		expect(store.rules).not.toContain(ruleToDelete);
 		expect(_setStorage).toHaveBeenCalled();
 	});
+
+	it('should maintain unique IDs and add name suffix when duplicating rules multiple times', async () => {
+		const store = useRulesStore();
+		_getStorageAsync.mockImplementation(() =>
+			Promise.resolve({ groups: [], rules: [], settings: { theme: 'dim' } })
+		);
+
+		// Create initial rule
+		const originalRule = {
+			id: 'original-id',
+			name: 'Original Rule',
+			detection: 'CONTAINS',
+			url_fragment: 'example.com',
+			tab: {
+				title: 'Original Title',
+				icon: null,
+				muted: false,
+				pinned: false,
+				protected: false,
+				unique: false,
+				group_id: null,
+				title_matcher: null,
+				url_matcher: null,
+			},
+			is_enabled: true,
+		};
+		store.rules = [originalRule];
+
+		// Duplicate the rule twice
+		const duplicatedRule1 = await store.duplicateRule('original-id');
+		const duplicatedRule2 = await store.duplicateRule(duplicatedRule1.id);
+
+		// Verify we have 3 rules with unique IDs
+		expect(store.rules.length).toBe(3);
+		expect(store.rules[0].id).toBe('original-id');
+		expect(store.rules[1].id).toBe(duplicatedRule1.id);
+		expect(store.rules[2].id).toBe(duplicatedRule2.id);
+
+		// Verify all IDs are unique
+		const ids = store.rules.map((r) => r.id);
+		const uniqueIds = new Set(ids);
+		expect(uniqueIds.size).toBe(3);
+
+		// Verify that names have copy suffixes to distinguish them
+		expect(store.rules[0].name).toBe('Original Rule');
+		expect(store.rules[1].name).toBe('Original Rule (Copy)');
+		expect(store.rules[2].name).toBe('Original Rule (Copy 2)');
+
+		// Update the first duplicated rule's title (not name)
+		const updatedDuplicate1 = { ...duplicatedRule1, tab: { ...duplicatedRule1.tab, title: 'Updated Title 1' } };
+		await store.updateRule(updatedDuplicate1);
+
+		// Update the second duplicated rule's title (not name)
+		const updatedDuplicate2 = { ...duplicatedRule2, tab: { ...duplicatedRule2.tab, title: 'Updated Title 2' } };
+		await store.updateRule(updatedDuplicate2);
+
+		// Verify that each rule was updated correctly (checking tab.title)
+		expect(store.rules[0].tab.title).toBe('Original Title');
+		expect(store.rules[1].tab.title).toBe('Updated Title 1');
+		expect(store.rules[2].tab.title).toBe('Updated Title 2');
+
+		// Verify the IDs haven't changed
+		expect(store.rules[0].id).toBe('original-id');
+		expect(store.rules[1].id).toBe(duplicatedRule1.id);
+		expect(store.rules[2].id).toBe(duplicatedRule2.id);
+
+		// Verify the names haven't changed
+		expect(store.rules[0].name).toBe('Original Rule');
+		expect(store.rules[1].name).toBe('Original Rule (Copy)');
+		expect(store.rules[2].name).toBe('Original Rule (Copy 2)');
+	});
 });

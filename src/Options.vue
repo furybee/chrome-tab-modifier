@@ -141,7 +141,7 @@ const resourceItems = [
 	{
 		title: 'Chrome Web Store',
 		emoji: '🌐',
-		link: 'https://chrome.google.com/webstore/detail/tab-modifier/hcbgadmbdkiilgpifjgcakjehmafcjai',
+		link: 'https://chrome.google.com/webstore/detail/tab-modifier/penegkenfmliefdbmnfkidlgjfjcidia',
 	},
 	{
 		title: 'GitHub',

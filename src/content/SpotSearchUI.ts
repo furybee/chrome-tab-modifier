@@ -38,9 +38,14 @@ export class SpotSearchUI {
 			throw new Error('Failed to create spot search components');
 		}
 
-		this.container.appendChild(this.searchInput);
-		this.container.appendChild(this.resultsContainer);
-		document.body.appendChild(this.container);
+		// Assign to local constants for proper type narrowing
+		const container: HTMLDivElement = this.container;
+		const searchInput: HTMLInputElement = this.searchInput;
+		const resultsContainer: HTMLDivElement = this.resultsContainer;
+
+		container.appendChild(searchInput);
+		container.appendChild(resultsContainer);
+		document.body.appendChild(container);
 
 		this.injectStyles();
 		console.log('[SpotSearchUI] ✅ Components created and injected');

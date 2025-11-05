@@ -313,6 +313,18 @@ export const useRulesStore = defineStore('rules', {
 
 			rule.id = _generateRandomId();
 
+			// Add a suffix to the rule name to distinguish it from the original
+			// If the name already ends with " (Copy N)", increment N
+			// Otherwise, add " (Copy)"
+			const copyMatch = rule.name.match(/^(.*?)\s*\(Copy(?:\s+(\d+))?\)$/);
+			if (copyMatch) {
+				const baseName = copyMatch[1];
+				const copyNumber = copyMatch[2] ? parseInt(copyMatch[2], 10) : 1;
+				rule.name = `${baseName} (Copy ${copyNumber + 1})`;
+			} else {
+				rule.name = `${rule.name} (Copy)`;
+			}
+
 			this.rules.splice(index + 1, 0, rule);
 
 			await this.save();

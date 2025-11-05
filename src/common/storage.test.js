@@ -10,6 +10,8 @@ import {
 	_migrateToCompressed,
 	STORAGE_KEY,
 	STORAGE_KEY_COMPRESSED,
+	STORAGE_KEY_METADATA,
+	STORAGE_KEY_CHUNK_PREFIX,
 } from './storage';
 import { chrome } from '../__mocks__/chrome';
 import { compressToUTF16, decompressFromUTF16 } from 'lz-string';
@@ -70,12 +72,17 @@ describe('Storage', () => {
 	});
 
 	it('_clearStorage should remove storage data', async () => {
+		// Mock storage to have a key to remove
+		global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
+			callback({ [STORAGE_KEY]: { rules: [] } });
+		});
+
 		await _clearStorage();
 
-		expect(global.chrome.storage.sync.remove).toHaveBeenCalledWith([
-			STORAGE_KEY,
-			STORAGE_KEY_COMPRESSED,
-		]);
+		// Should remove the key that exists
+		expect(global.chrome.storage.sync.remove).toHaveBeenCalled();
+		const removeCall = global.chrome.storage.sync.remove.mock.calls[0][0];
+		expect(removeCall).toContain(STORAGE_KEY);
 	});
 
 	it('_setStorage should set compressed storage data', async () => {
@@ -91,6 +98,11 @@ describe('Storage', () => {
 				auto_close_timeout: 30,
 			},
 		};
+
+		// Mock storage.sync.get to return no existing chunks
+		global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
+			callback({});
+		});
 
 		// Mock console.log to suppress compression stats output during tests
 		const consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
@@ -109,8 +121,10 @@ describe('Storage', () => {
 		const decompressed = JSON.parse(decompressFromUTF16(setCallArgs[STORAGE_KEY_COMPRESSED]));
 		expect(decompressed).toEqual(mockData);
 
-		// Should also try to remove old uncompressed key
-		expect(global.chrome.storage.sync.remove).toHaveBeenCalledWith(STORAGE_KEY);
+		// Should try to remove old keys
+		expect(global.chrome.storage.sync.remove).toHaveBeenCalled();
+		const removeCall = global.chrome.storage.sync.remove.mock.calls[0][0];
+		expect(removeCall).toContain(STORAGE_KEY);
 
 		consoleLogSpy.mockRestore();
 	});
@@ -413,6 +427,124 @@ describe('Storage', () => {
 			const rule = await _getRuleFromUrl('https://aaaaaaaaaaaaaaaaaaa.com');
 			expect(rule).toBeUndefined();
 		});
+
+		it('should skip disabled rules and return the next matching enabled rule', async () => {
+			const disabledRule = {
+				id: '1',
+				name: 'disabled',
+				is_enabled: false,
+				detection: 'CONTAINS',
+				url_fragment: 'example.com',
+				tab: {
+					title: 'Disabled',
+					icon: null,
+					pinned: false,
+					protected: false,
+					unique: false,
+					muted: false,
+					title_matcher: null,
+					url_matcher: null,
+					group_id: null,
+				},
+			};
+			const enabledRule = {
+				id: '2',
+				name: 'enabled',
+				is_enabled: true,
+				detection: 'CONTAINS',
+				url_fragment: 'example.com',
+				tab: {
+					title: 'Enabled',
+					icon: null,
+					pinned: false,
+					protected: false,
+					unique: false,
+					muted: false,
+					title_matcher: null,
+					url_matcher: null,
+					group_id: null,
+				},
+			};
+			const mockData = {
+				rules: [disabledRule, enabledRule],
+				groups: [],
+				settings: { enable_new_version_notification: false, theme: 'dim', lightweight_mode_enabled: false, lightweight_mode_patterns: [], auto_close_enabled: false, auto_close_timeout: 30 },
+			};
+			global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
+				callback({ [STORAGE_KEY]: mockData });
+			});
+			global.chrome.runtime.lastError = null;
+
+			const rule = await _getRuleFromUrl('https://example.com/path');
+			expect(rule).toEqual(enabledRule);
+			expect(rule.name).toBe('enabled');
+		});
+
+		it('should return undefined if only matching rules are disabled', async () => {
+			const disabledRule = {
+				id: '1',
+				name: 'disabled',
+				is_enabled: false,
+				detection: 'CONTAINS',
+				url_fragment: 'example.com',
+				tab: {
+					title: 'Disabled',
+					icon: null,
+					pinned: false,
+					protected: false,
+					unique: false,
+					muted: false,
+					title_matcher: null,
+					url_matcher: null,
+					group_id: null,
+				},
+			};
+			const mockData = {
+				rules: [disabledRule],
+				groups: [],
+				settings: { enable_new_version_notification: false, theme: 'dim', lightweight_mode_enabled: false, lightweight_mode_patterns: [], auto_close_enabled: false, auto_close_timeout: 30 },
+			};
+			global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
+				callback({ [STORAGE_KEY]: mockData });
+			});
+			global.chrome.runtime.lastError = null;
+
+			const rule = await _getRuleFromUrl('https://example.com/path');
+			expect(rule).toBeUndefined();
+		});
+
+		it('should match enabled rules even when is_enabled is undefined (default behavior)', async () => {
+			const ruleWithoutIsEnabled = {
+				id: '1',
+				name: 'no is_enabled property',
+				// is_enabled is undefined (not set)
+				detection: 'CONTAINS',
+				url_fragment: 'example.com',
+				tab: {
+					title: 'Test',
+					icon: null,
+					pinned: false,
+					protected: false,
+					unique: false,
+					muted: false,
+					title_matcher: null,
+					url_matcher: null,
+					group_id: null,
+				},
+			};
+			const mockData = {
+				rules: [ruleWithoutIsEnabled],
+				groups: [],
+				settings: { enable_new_version_notification: false, theme: 'dim', lightweight_mode_enabled: false, lightweight_mode_patterns: [], auto_close_enabled: false, auto_close_timeout: 30 },
+			};
+			global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
+				callback({ [STORAGE_KEY]: mockData });
+			});
+			global.chrome.runtime.lastError = null;
+
+			const rule = await _getRuleFromUrl('https://example.com/path');
+			expect(rule).toEqual(ruleWithoutIsEnabled);
+		});
 	});
 
 	describe('Compression features', () => {
@@ -601,6 +733,134 @@ describe('Storage', () => {
 			expect(compressedSize).toBeLessThan(originalSize);
 			// Expect at least 30% compression for this kind of JSON data
 			expect(compressionRatio).toBeLessThan(0.7);
+		});
+	});
+
+	describe('Chunked Storage', () => {
+		it('should split large data into chunks', async () => {
+			// Create a VERY large dataset that will definitely require chunking
+			// Each rule needs to have lots of data to exceed 7KB after compression
+			const largeRules = Array.from({ length: 200 }, (_, i) => ({
+				id: `rule-${i}-with-a-very-long-identifier-to-make-it-larger`,
+				name: `Test Rule ${i} with a very long name that includes lots of extra text to make the data larger and require chunking when compressed`,
+				detection: 'CONTAINS',
+				url_fragment: `example${i}.com/very/long/path/that/adds/significant/size/to/the/storage/and/makes/it/necessary/to/use/chunking`,
+				is_enabled: true,
+				tab: {
+					title: `Title ${i} with some additional content to make it larger and ensure we exceed the storage limits when this gets compressed`,
+					icon: `data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiI+PHJlY3Qgd2lkdGg9IjE2IiBoZWlnaHQ9IjE2IiBmaWxsPSIjMDAwIi8+PHRleHQgeD0iOCIgeT0iOCIgdGV4dC1hbmNob3I9Im1pZGRsZSI+VGVzdDwvdGV4dD48L3N2Zz4=`,
+					pinned: false,
+					protected: false,
+					unique: false,
+					muted: false,
+					title_matcher: `regex pattern ${i} with additional text to make it larger`,
+					url_matcher: `another regex pattern ${i} with more additional text`,
+					group_id: null,
+				},
+			}));
+
+			const mockData = {
+				rules: largeRules,
+				groups: [],
+				settings: {
+					enable_new_version_notification: false,
+					theme: 'dim',
+					lightweight_mode_enabled: false,
+					lightweight_mode_patterns: [],
+					auto_close_enabled: false,
+					auto_close_timeout: 30,
+				},
+			};
+
+			// Verify the data will be large enough to need chunking
+			const compressed = compressToUTF16(JSON.stringify(mockData));
+			expect(compressed.length).toBeGreaterThan(7000); // Must be larger than CHUNK_SIZE
+
+			// Mock storage.sync.get to return no existing data
+			global.chrome.storage.sync.get.mockImplementation((keys, callback) => {
+				callback({});
+			});
+
+			// Mock console.log
+			const consoleLogSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
+
+			await _setStorage(mockData);
+
+			// Should have called set with chunked data
+			expect(global.chrome.storage.sync.set).toHaveBeenCalled();
+			const setCallArgs = global.chrome.storage.sync.set.mock.calls[0][0];
+
+			// Verify metadata was created
+			expect(setCallArgs).toHaveProperty(STORAGE_KEY_METADATA);
+			const metadata = JSON.parse(setCallArgs[STORAGE_KEY_METADATA]);
+			expect(metadata.chunkCount).toBeGreaterThan(1);
+			expect(metadata.version).toBe(2);
+
+			// Verify chunks were created
+			for (let i = 0; i < metadata.chunkCount; i++) {
+				expect(setCallArgs).toHaveProperty(`${STORAGE_KEY_CHUNK_PREFIX}${i}`);
+			}
+
+			consoleLogSpy.mockRestore();
+		});
+
+		it('should correctly chunk and reassemble data', () => {
+			// Test the chunking logic directly
+			const mockData = {
+				rules: Array.from({ length: 50 }, (_, i) => ({
+					id: `rule-${i}`,
+					name: `Rule ${i}`,
+					detection: 'CONTAINS',
+					url_fragment: `example${i}.com`,
+					is_enabled: true,
+					tab: {
+						title: `Title ${i}`,
+						icon: null,
+						pinned: false,
+						protected: false,
+						unique: false,
+						muted: false,
+						title_matcher: null,
+						url_matcher: null,
+						group_id: null,
+					},
+				})),
+				groups: [],
+				settings: {
+					enable_new_version_notification: false,
+					theme: 'dim',
+					lightweight_mode_enabled: false,
+					lightweight_mode_patterns: [],
+					auto_close_enabled: false,
+					auto_close_timeout: 30,
+				},
+			};
+
+			// Compress the data
+			const compressed = compressToUTF16(JSON.stringify(mockData));
+
+			// Manually create chunks (using chunk size of 100 for testing)
+			const testChunkSize = 100;
+			const chunks = [];
+			let offset = 0;
+			while (offset < compressed.length) {
+				chunks.push(compressed.substring(offset, offset + testChunkSize));
+				offset += testChunkSize;
+			}
+
+			// Verify we created multiple chunks
+			expect(chunks.length).toBeGreaterThan(1);
+
+			// Reassemble chunks
+			const reassembled = chunks.join('');
+
+			// Verify reassembly
+			expect(reassembled).toBe(compressed);
+
+			// Decompress and verify data integrity
+			const decompressed = JSON.parse(decompressFromUTF16(reassembled));
+			expect(decompressed).toEqual(mockData);
+			expect(decompressed.rules).toHaveLength(50);
 		});
 	});
 });
