@@ -162,7 +162,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: tabee-extension-v${{ steps.version.outputs.version }}
-          path: dist/tabee-*.zip
+          path: tabee.zip
           retention-days: 30
 
       - name: Find PR number
@@ -181,13 +181,11 @@ jobs:
             const fs = require('fs');
             const path = require('path');
 
-            // Find the zip file
-            const distDir = './dist';
-            const files = fs.readdirSync(distDir);
-            const zipFile = files.find(f => f.startsWith('tabee-') && f.endsWith('.zip'));
+            // The zip file is at the root
+            const zipFile = 'tabee.zip';
 
-            if (!zipFile) {
-              console.log('No zip file found');
+            if (!fs.existsSync(zipFile)) {
+              console.log('No zip file found at:', zipFile);
               return;
             }
 
