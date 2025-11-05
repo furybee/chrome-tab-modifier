@@ -131,6 +131,11 @@ export function _getIcons() {
 			icon: assets + 'bullets/bullet-amber-alt.png',
 		},
 		{
+			label: 'amber-star',
+			value: 'bullets/bullet-star-amber.png',
+			icon: assets + 'bullets/bullet-star-amber.png',
+		},
+		{
 			label: 'blue',
 			value: 'bullets/bullet-blue.png',
 			icon: assets + 'bullets/bullet-blue.png',
@@ -139,6 +144,11 @@ export function _getIcons() {
 			label: 'blue-alt',
 			value: 'bullets/bullet-blue-alt.png',
 			icon: assets + 'bullets/bullet-blue-alt.png',
+		},
+		{
+			label: 'blue-star',
+			value: 'bullets/bullet-star-blue.png',
+			icon: assets + 'bullets/bullet-star-blue.png',
 		},
 		{
 			label: 'blue-grey',
@@ -151,6 +161,11 @@ export function _getIcons() {
 			icon: assets + 'bullets/bullet-blue-grey-alt.png',
 		},
 		{
+			label: 'blue-grey-star',
+			value: 'bullets/bullet-star-blue-grey.png',
+			icon: assets + 'bullets/bullet-star-blue-grey.png',
+		},
+		{
 			label: 'cyan',
 			value: 'bullets/bullet-cyan.png',
 			icon: assets + 'bullets/bullet-cyan.png',
@@ -159,6 +174,11 @@ export function _getIcons() {
 			label: 'cyan-alt',
 			value: 'bullets/bullet-cyan-alt.png',
 			icon: assets + 'bullets/bullet-cyan-alt.png',
+		},
+		{
+			label: 'cyan-star',
+			value: 'bullets/bullet-star-cyan.png',
+			icon: assets + 'bullets/bullet-star-cyan.png',
 		},
 		{
 			label: 'deep-orange',
@@ -171,6 +191,11 @@ export function _getIcons() {
 			icon: assets + 'bullets/bullet-deep-orange-alt.png',
 		},
 		{
+			label: 'deep-orange-star',
+			value: 'bullets/bullet-star-deep-orange.png',
+			icon: assets + 'bullets/bullet-star-deep-orange.png',
+		},
+		{
 			label: 'green',
 			value: 'bullets/bullet-green.png',
 			icon: assets + 'bullets/bullet-green.png',
@@ -179,6 +204,11 @@ export function _getIcons() {
 			label: 'green-alt',
 			value: 'bullets/bullet-green-alt.png',
 			icon: assets + 'bullets/bullet-green-alt.png',
+		},
+		{
+			label: 'green-star',
+			value: 'bullets/bullet-star-green.png',
+			icon: assets + 'bullets/bullet-star-green.png',
 		},
 		{
 			label: 'indigo',
@@ -191,6 +221,11 @@ export function _getIcons() {
 			icon: assets + 'bullets/bullet-indigo-alt.png',
 		},
 		{
+			label: 'indigo-star',
+			value: 'bullets/bullet-star-indigo.png',
+			icon: assets + 'bullets/bullet-star-indigo.png',
+		},
+		{
 			label: 'pink',
 			value: 'bullets/bullet-pink.png',
 			icon: assets + 'bullets/bullet-pink.png',
@@ -199,6 +234,11 @@ export function _getIcons() {
 			label: 'pink-alt',
 			value: 'bullets/bullet-pink-alt.png',
 			icon: assets + 'bullets/bullet-pink-alt.png',
+		},
+		{
+			label: 'pink-star',
+			value: 'bullets/bullet-star-pink.png',
+			icon: assets + 'bullets/bullet-star-pink.png',
 		},
 		{
 			label: 'purple',
@@ -211,6 +251,11 @@ export function _getIcons() {
 			icon: assets + 'bullets/bullet-purple-alt.png',
 		},
 		{
+			label: 'purple-star',
+			value: 'bullets/bullet-star-purple.png',
+			icon: assets + 'bullets/bullet-star-purple.png',
+		},
+		{
 			label: 'red',
 			value: 'bullets/bullet-red.png',
 			icon: assets + 'bullets/bullet-red.png',
@@ -221,6 +266,11 @@ export function _getIcons() {
 			icon: assets + 'bullets/bullet-red-alt.png',
 		},
 		{
+			label: 'red-star',
+			value: 'bullets/bullet-star-red.png',
+			icon: assets + 'bullets/bullet-star-red.png',
+		},
+		{
 			label: 'teal',
 			value: 'bullets/bullet-teal.png',
 			icon: assets + 'bullets/bullet-teal.png',
@@ -229,6 +279,11 @@ export function _getIcons() {
 			label: 'teal-alt',
 			value: 'bullets/bullet-teal-alt.png',
 			icon: assets + 'bullets/bullet-teal-alt.png',
+		},
+		{
+			label: 'teal-star',
+			value: 'bullets/bullet-star-teal.png',
+			icon: assets + 'bullets/bullet-star-teal.png',
 		},
 	];
 }

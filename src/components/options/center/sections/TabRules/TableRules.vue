@@ -50,8 +50,11 @@
 						</td>
 						<td>
 							<div class="flex items-center gap-2">
+								<span v-if="rule.tab.icon && isEmoji(rule.tab.icon)" class="text-xl">
+									{{ rule.tab.icon }}
+								</span>
 								<img
-									v-if="rule.tab.icon"
+									v-else-if="rule.tab.icon"
 									:alt="rule.name + '_icon'"
 									:src="getIconUrl(rule.tab.icon)"
 									class="w-6 h-6"
@@ -143,6 +146,15 @@ const getIconUrl = (icon: string): string | undefined => {
 	}
 
 	return chrome.runtime.getURL('/assets/' + icon);
+};
+
+const isEmoji = (str: string): boolean => {
+	// Check if it's a short string (emojis are typically 1-10 characters due to modifiers)
+	if (str.length > 10) return false;
+
+	// Regex to detect emoji characters
+	const emojiRegex = /^[\p{Emoji}\p{Emoji_Component}\p{Emoji_Modifier}\p{Emoji_Presentation}]+$/u;
+	return emojiRegex.test(str);
 };
 
 const emitter: any = inject('emitter');

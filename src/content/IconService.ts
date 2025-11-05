@@ -19,9 +19,16 @@ export class IconService {
 			icon.setAttribute('rel', 'old-icon');
 		});
 
-		const iconUrl = /^(https?|data):/.test(newIcon)
-			? newIcon
-			: chrome.runtime.getURL(`/assets/${newIcon}`);
+		let iconUrl: string;
+
+		// Check if it's an emoji (single character or emoji sequence)
+		if (this.isEmoji(newIcon)) {
+			iconUrl = this.emojiToDataUrl(newIcon);
+		} else if (/^(https?|data):/.test(newIcon)) {
+			iconUrl = newIcon;
+		} else {
+			iconUrl = chrome.runtime.getURL(`/assets/${newIcon}`);
+		}
 
 		const newIconLink = document.createElement('link');
 		newIconLink.type = 'image/x-icon';
@@ -30,5 +37,29 @@ export class IconService {
 		document.head.appendChild(newIconLink);
 
 		return true;
+	}
+
+	/**
+	 * Check if a string is an emoji
+	 */
+	private isEmoji(str: string): boolean {
+		// Check if it's a short string (emojis are typically 1-7 characters due to modifiers)
+		if (str.length > 10) return false;
+
+		// Regex to detect emoji characters
+		const emojiRegex = /^[\p{Emoji}\p{Emoji_Component}\p{Emoji_Modifier}\p{Emoji_Presentation}]+$/u;
+		return emojiRegex.test(str);
+	}
+
+	/**
+	 * Convert emoji to SVG data URL for use as favicon
+	 */
+	private emojiToDataUrl(emoji: string): string {
+		const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+			<text y="75" font-size="80">${emoji}</text>
+		</svg>`;
+
+		const encoded = encodeURIComponent(svg);
+		return `data:image/svg+xml,${encoded}`;
 	}
 }

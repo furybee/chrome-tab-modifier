@@ -99,10 +99,10 @@
 					<span class="label-text text-sm">Icon</span>
 				</div>
 
-				<CustomSelect v-model="currentRule.tab.icon" :items="icons" :show-label="false" />
+				<EmojiIconPicker v-model="currentRule.tab.icon" />
 
-				<button class="btn-link mt-1" @click.prevent="(event) => showCustomIconForm(event)">
-					Use custom icon
+				<button class="btn-link mt-1 text-xs" @click.prevent="(event) => showCustomIconForm(event)">
+					Use custom URL
 				</button>
 			</div>
 			<div
@@ -305,11 +305,11 @@
 import { useRulesStore } from '../../../../../stores/rules.store.ts';
 import { computed, inject, onMounted, ref, watch } from 'vue';
 import CustomSelect, { SelectItem } from '../../../../global/CustomSelect.vue';
+import EmojiIconPicker from './EmojiIconPicker.vue';
 import {
 	_chromeGroupColor,
 	_clone,
 	_getDetections,
-	_getIcons,
 } from '../../../../../common/helpers.ts';
 import { GLOBAL_EVENTS, Group, Rule } from '../../../../../common/types.ts';
 import HelpSwap from '../../../../global/HelpSwap.vue';
@@ -494,5 +494,4 @@ onMounted(() => {
 });
 
 const detections = _getDetections();
-const icons = _getIcons();
 </script>
