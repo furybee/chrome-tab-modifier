@@ -3,9 +3,13 @@ name: CI
 permissions:
   contents: read
   security-events: write
+  pull-requests: write
 
 on:
   push:
+    branches:
+      - '**'
+  pull_request:
     branches:
       - '**'
 
@@ -128,3 +132,125 @@ jobs:
         with:
           name: clamav-scan-log
           path: clamav-scan.log
+
+  build_extension:
+    name: Build Extension
+    runs-on: ubuntu-latest
+    if: github.event_name == 'pull_request'
+    strategy:
+      matrix:
+        node-version: [20.x]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build extension zip
+        run: yarn build-zip
+
+      - name: Get extension version
+        id: version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Extension version: $VERSION"
+
+      - name: Upload extension zip as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: tabee-extension-v${{ steps.version.outputs.version }}
+          path: dist/tabee-*.zip
+          retention-days: 30
+
+      - name: Find PR number
+        id: pr
+        run: |
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          echo "number=$PR_NUMBER" >> $GITHUB_OUTPUT
+          echo "PR Number: $PR_NUMBER"
+
+      - name: Comment PR with download link
+        if: steps.pr.outputs.number != ''
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+
+            // Find the zip file
+            const distDir = './dist';
+            const files = fs.readdirSync(distDir);
+            const zipFile = files.find(f => f.startsWith('tabee-') && f.endsWith('.zip'));
+
+            if (!zipFile) {
+              console.log('No zip file found');
+              return;
+            }
+
+            const version = '${{ steps.version.outputs.version }}';
+            const runId = context.runId;
+            const repo = context.repo;
+            const prNumber = ${{ steps.pr.outputs.number }};
+
+            const comment = `## 📦 Extension Build Ready!
+
+            **Version**: \`${version}\`
+            **File**: \`${zipFile}\`
+
+            ### Download
+            You can download the built extension from the [workflow artifacts](https://github.com/${repo.owner}/${repo.repo}/actions/runs/${runId}).
+
+            ### Installation
+            1. Download the zip file from artifacts
+            2. Extract the contents
+            3. Open Chrome and go to \`chrome://extensions/\`
+            4. Enable "Developer mode" (top right)
+            5. Click "Load unpacked" and select the extracted folder
+
+            ### Testing
+            - ✅ All tests passed
+            - ✅ Build successful
+            - ✅ Ready for testing
+
+            ---
+            <sub>Built by GitHub Actions</sub>`;
+
+            // Check if we already commented
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: repo.owner,
+              repo: repo.repo,
+              issue_number: prNumber,
+            });
+
+            const botComment = comments.find(comment =>
+              comment.user.type === 'Bot' &&
+              comment.body.includes('Extension Build Ready')
+            );
+
+            if (botComment) {
+              // Update existing comment
+              await github.rest.issues.updateComment({
+                owner: repo.owner,
+                repo: repo.repo,
+                comment_id: botComment.id,
+                body: comment
+              });
+              console.log('Updated existing comment');
+            } else {
+              // Create new comment
+              await github.rest.issues.createComment({
+                owner: repo.owner,
+                repo: repo.repo,
+                issue_number: prNumber,
+                body: comment
+              });
+              console.log('Created new comment');
+            }
