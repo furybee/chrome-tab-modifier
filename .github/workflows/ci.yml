@@ -136,7 +136,6 @@ jobs:
   build_extension:
     name: Build Extension
     runs-on: ubuntu-latest
-    if: github.event_name == 'pull_request'
     strategy:
       matrix:
         node-version: [20.x]
