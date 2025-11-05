@@ -3,7 +3,7 @@
 		<!-- Selected icon/emoji display / trigger button -->
 		<button
 			type="button"
-			class="btn btn-sm btn-outline flex items-center gap-2 min-w-[120px]"
+			class="btn btn-sm btn-outline hover:bg-base-300 focus:outline-primary flex items-center gap-2 min-w-[120px] !border-base-content/20"
 			@click="isOpen = !isOpen"
 		>
 			<span v-if="modelValue" class="text-base">{{ displayValue }}</span>
@@ -39,12 +39,12 @@
 			<!-- Content area -->
 			<div class="flex-1 overflow-y-auto p-2 min-h-0">
 				<!-- Images tab -->
-				<div v-if="currentTab === 'images'" class="grid grid-cols-7 gap-1">
+				<div v-if="currentTab === 'images'" class="grid grid-cols-7 gap-1 place-items-center">
 					<button
 						v-for="icon in filteredIcons"
 						:key="icon.value"
 						type="button"
-						class="btn btn-xs btn-square btn-ghost hover:bg-base-200 p-0"
+						class="btn btn-xs btn-square btn-ghost hover:bg-base-300 focus:outline-primary focus:outline-2 p-0"
 						:class="{ 'bg-base-300': isSelected(icon.value) }"
 						:title="icon.label"
 						@click="selectItem(icon.value)"
@@ -54,12 +54,12 @@
 				</div>
 
 				<!-- Emoji tabs -->
-				<div v-else class="grid grid-cols-7 gap-1">
+				<div v-else class="grid grid-cols-7 gap-1 place-items-center">
 					<button
 						v-for="emojiItem in filteredEmojis"
 						:key="emojiItem.emoji"
 						type="button"
-						class="btn btn-xs btn-square btn-ghost hover:bg-base-200 p-0 text-lg"
+						class="btn btn-xs btn-square btn-ghost hover:bg-base-300 focus:outline-primary focus:outline-2 p-0 text-lg"
 						:class="{ 'bg-base-300': isSelected(emojiItem.emoji) }"
 						:title="emojiItem.keywords.join(', ')"
 						@click="selectItem(emojiItem.emoji)"
