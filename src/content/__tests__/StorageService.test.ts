@@ -6,7 +6,7 @@ import type { Rule } from '../../common/types';
 // Mock chrome APIs
 const mockChrome = {
 	storage: {
-		sync: {
+		local: {
 			get: vi.fn(),
 		},
 	},
@@ -32,14 +32,14 @@ describe('StorageService', () => {
 	describe('getStorageAsync', () => {
 		it('should resolve with storage data', async () => {
 			const mockData = { rules: [], groups: [], settings: {} };
-			mockChrome.storage.sync.get.mockImplementation((_key, callback) => {
+			mockChrome.storage.local.get.mockImplementation((_key, callback) => {
 				callback({ tab_modifier: mockData });
 			});
 
 			const result = await service.getStorageAsync();
 
 			expect(result).toEqual(mockData);
-			expect(mockChrome.storage.sync.get).toHaveBeenCalledWith(
+			expect(mockChrome.storage.local.get).toHaveBeenCalledWith(
 				['tab_modifier', 'tab_modifier_compressed'],
 				expect.any(Function)
 			);
@@ -47,7 +47,7 @@ describe('StorageService', () => {
 
 		it('should reject on chrome runtime error', async () => {
 			mockChrome.runtime.lastError = { message: 'Storage error' };
-			mockChrome.storage.sync.get.mockImplementation((_key, callback) => {
+			mockChrome.storage.local.get.mockImplementation((_key, callback) => {
 				callback({});
 			});
 
@@ -57,7 +57,7 @@ describe('StorageService', () => {
 
 	describe('getRuleFromUrl', () => {
 		it('should return undefined if no storage data', async () => {
-			mockChrome.storage.sync.get.mockImplementation((_key, callback) => {
+			mockChrome.storage.local.get.mockImplementation((_key, callback) => {
 				callback({});
 			});
 
@@ -85,7 +85,7 @@ describe('StorageService', () => {
 				is_enabled: true,
 			};
 
-			mockChrome.storage.sync.get.mockImplementation((_key, callback) => {
+			mockChrome.storage.local.get.mockImplementation((_key, callback) => {
 				callback({ tab_modifier: { rules: [mockRule] } });
 			});
 
@@ -113,7 +113,7 @@ describe('StorageService', () => {
 				is_enabled: true,
 			};
 
-			mockChrome.storage.sync.get.mockImplementation((_key, callback) => {
+			mockChrome.storage.local.get.mockImplementation((_key, callback) => {
 				callback({ tab_modifier: { rules: [mockRule] } });
 			});
 
@@ -141,7 +141,7 @@ describe('StorageService', () => {
 				is_enabled: true,
 			};
 
-			mockChrome.storage.sync.get.mockImplementation((_key, callback) => {
+			mockChrome.storage.local.get.mockImplementation((_key, callback) => {
 				callback({ tab_modifier: { rules: [mockRule] } });
 			});
 
@@ -169,7 +169,7 @@ describe('StorageService', () => {
 				is_enabled: true,
 			};
 
-			mockChrome.storage.sync.get.mockImplementation((_key, callback) => {
+			mockChrome.storage.local.get.mockImplementation((_key, callback) => {
 				callback({ tab_modifier: { rules: [mockRule] } });
 			});
 
@@ -197,7 +197,7 @@ describe('StorageService', () => {
 				is_enabled: true,
 			};
 
-			mockChrome.storage.sync.get.mockImplementation((_key, callback) => {
+			mockChrome.storage.local.get.mockImplementation((_key, callback) => {
 				callback({ tab_modifier: { rules: [mockRule] } });
 			});
 
@@ -227,7 +227,7 @@ describe('StorageService', () => {
 				is_enabled: true,
 			};
 
-			mockChrome.storage.sync.get.mockImplementation((_key, callback) => {
+			mockChrome.storage.local.get.mockImplementation((_key, callback) => {
 				callback({ tab_modifier: { rules: [mockRule] } });
 			});
 
@@ -258,7 +258,7 @@ describe('StorageService', () => {
 				is_enabled: true,
 			};
 
-			mockChrome.storage.sync.get.mockImplementation((_key, callback) => {
+			mockChrome.storage.local.get.mockImplementation((_key, callback) => {
 				callback({ tab_modifier: { rules: [mockRule] } });
 			});
 
@@ -286,7 +286,7 @@ describe('StorageService', () => {
 				is_enabled: true,
 			};
 
-			mockChrome.storage.sync.get.mockImplementation((_key, callback) => {
+			mockChrome.storage.local.get.mockImplementation((_key, callback) => {
 				callback({ tab_modifier: { rules: [mockRule] } });
 			});
 
@@ -314,7 +314,7 @@ describe('StorageService', () => {
 				is_enabled: true,
 			};
 
-			mockChrome.storage.sync.get.mockImplementation((_key, callback) => {
+			mockChrome.storage.local.get.mockImplementation((_key, callback) => {
 				callback({ tab_modifier: { rules: [mockRule] } });
 			});
 
@@ -342,7 +342,7 @@ describe('StorageService', () => {
 				is_enabled: true,
 			};
 
-			mockChrome.storage.sync.get.mockImplementation((_key, callback) => {
+			mockChrome.storage.local.get.mockImplementation((_key, callback) => {
 				callback({ tab_modifier: { rules: [mockRule] } });
 			});
 
@@ -370,13 +370,41 @@ describe('StorageService', () => {
 				is_enabled: true,
 			};
 
-			mockChrome.storage.sync.get.mockImplementation((_key, callback) => {
+			mockChrome.storage.local.get.mockImplementation((_key, callback) => {
 				callback({ tab_modifier: { rules: [mockRule] } });
 			});
 
 			const result = await service.getRuleFromUrl('https://example.com');
 
 			expect(result).toEqual(mockRule);
+		});
+
+		it('should skip disabled rules', async () => {
+			const disabledRule: Rule = {
+				id: 'test',
+				name: 'Test',
+				detection: 'CONTAINS',
+				url_fragment: 'example.com',
+				tab: {
+					title: 'Test',
+					icon: null,
+					muted: false,
+					pinned: false,
+					protected: false,
+					unique: false,
+					title_matcher: null,
+					url_matcher: null,
+				},
+				is_enabled: false,
+			};
+
+			mockChrome.storage.local.get.mockImplementation((_key, callback) => {
+				callback({ tab_modifier: { rules: [disabledRule] } });
+			});
+
+			const result = await service.getRuleFromUrl('https://example.com/page');
+
+			expect(result).toBeUndefined();
 		});
 	});
 });

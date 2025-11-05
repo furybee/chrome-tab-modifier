@@ -38,7 +38,7 @@ export class StorageService {
 	 */
 	async getStorageAsync(): Promise<any> {
 		return new Promise((resolve, reject) => {
-			chrome.storage.sync.get([STORAGE_KEY, STORAGE_KEY_COMPRESSED], (items) => {
+			chrome.storage.local.get([STORAGE_KEY, STORAGE_KEY_COMPRESSED], (items) => {
 				if (chrome.runtime.lastError) {
 					reject(new Error(chrome.runtime.lastError.message));
 				} else {
@@ -71,6 +71,11 @@ export class StorageService {
 		}
 
 		const foundRule = tabModifier.rules.find((r: Rule) => {
+			// Skip disabled rules
+			if (r.is_enabled === false) {
+				return false;
+			}
+
 			const detectionType = r.detection ?? 'CONTAINS';
 			const urlFragment = r.url_fragment;
 
