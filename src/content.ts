@@ -11,6 +11,7 @@ import { IconService } from './content/IconService';
 import { StorageService } from './content/StorageService';
 import { RuleApplicationService } from './content/RuleApplicationService';
 import { SpotSearchUI } from './content/SpotSearchUI';
+import { UrlChangeDetector } from './content/UrlChangeDetector';
 
 // ============================================================
 // Service Initialization
@@ -36,16 +37,36 @@ try {
 // Initial Rule Application
 // ============================================================
 
-(async () => {
+/**
+ * Apply rules for a given URL
+ * This function is called on initial load and when URL changes (SPA navigation)
+ */
+async function applyRulesForUrl(url: string): Promise<void> {
 	try {
-		const rule = await storageService.getRuleFromUrl(location.href);
+		const rule = await storageService.getRuleFromUrl(url);
 		if (rule) {
+			console.log('[Tabee Content] 📋 Applying rule for URL:', url);
 			await ruleApplicationService.applyRule(rule);
 		}
 	} catch (error) {
-		console.error('[Tabee Content] Error applying initial rule:', error);
+		console.error('[Tabee Content] Error applying rule:', error);
 	}
-})();
+}
+
+// Apply rules on initial page load
+applyRulesForUrl(location.href);
+
+// ============================================================
+// SPA URL Change Detection
+// ============================================================
+
+// Setup URL change detector for Single Page Applications
+const urlChangeDetector = new UrlChangeDetector();
+urlChangeDetector.onChange(async (newUrl, oldUrl) => {
+	console.log('[Tabee Content] 🔄 SPA navigation detected, re-applying rules');
+	await applyRulesForUrl(newUrl);
+});
+urlChangeDetector.start();
 
 // ============================================================
 // Message Listeners
