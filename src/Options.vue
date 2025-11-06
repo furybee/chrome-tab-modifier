@@ -30,7 +30,16 @@
 							</div>
 						</div>
 
-						<div class="navbar-end mr-2">
+						<div class="navbar-end mr-2 flex gap-2">
+							<button
+								v-if="hasRules && currentContent.component === 'TabRulesPane'"
+								class="btn btn-xs btn-ghost tooltip tooltip-left flex items-center justify-center"
+								data-tip="Paste rule from clipboard"
+								@click="pasteRule"
+							>
+								<ClipboardIcon class="!w-4 !h-4" />
+								Paste rule
+							</button>
 							<a
 								v-if="hasRules && currentContent.component === 'TabRulesPane'"
 								class="btn btn-xs btn-circle btn-primary"
@@ -88,6 +97,7 @@ import HelpPane from './components/options/center/sections/HelpPane.vue';
 import DonationPane from './components/options/center/resources/DonationPane.vue';
 import BurgerIcon from './components/icons/BurgerIcon.vue';
 import CloseIcon from './components/icons/CloseIcon.vue';
+import ClipboardIcon from './components/icons/ClipboardIcon.vue';
 import { useRulesStore } from './stores/rules.store.ts';
 import Toaster from './components/global/Toaster.vue';
 import PlusIcon from './components/icons/PlusIcon.vue';
@@ -175,6 +185,29 @@ const openAddModal = () => {
 
 const openAddGroupModal = () => {
 	emitter.emit(GLOBAL_EVENTS.OPEN_ADD_GROUP_MODAL);
+};
+
+const pasteRule = async () => {
+	try {
+		await rulesStore.pasteRuleFromClipboard();
+		emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
+			type: 'success',
+			message: 'Rule pasted successfully!',
+		});
+	} catch (error) {
+		if (error instanceof Error) {
+			emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
+				type: 'error',
+				message: `Failed to paste rule: ${error.message}`,
+			});
+		} else {
+			emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
+				type: 'error',
+				message: 'Failed to paste rule from clipboard',
+			});
+		}
+		console.error(error);
+	}
 };
 
 const hasRules = computed<boolean>(() => {

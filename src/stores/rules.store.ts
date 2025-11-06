@@ -361,6 +361,53 @@ export const useRulesStore = defineStore('rules', {
 
 			return rule;
 		},
+		async copyRuleToClipboard(ruleId: string): Promise<void> {
+			const rule = this.getRuleById(ruleId);
+			if (!rule) {
+				throw new Error('Rule not found');
+			}
+
+			const ruleJson = JSON.stringify(rule, null, 2);
+			await navigator.clipboard.writeText(ruleJson);
+		},
+		async pasteRuleFromClipboard(): Promise<Rule> {
+			try {
+				const clipboardText = await navigator.clipboard.readText();
+				const rule = JSON.parse(clipboardText) as Rule;
+
+				// Validate that it's a valid rule
+				if (!rule.name || !rule.detection || !rule.url_fragment || !rule.tab) {
+					throw new Error('Invalid rule format');
+				}
+
+				// Generate new ID for the pasted rule
+				rule.id = _generateRandomId();
+
+				// Add a suffix to the rule name
+				const copyMatch = rule.name.match(/^(.*?)\s*\(Copy(?:\s+(\d+))?\)$/);
+				if (copyMatch) {
+					const baseName = copyMatch[1];
+					const copyNumber = copyMatch[2] ? parseInt(copyMatch[2], 10) : 1;
+					rule.name = `${baseName} (Copy ${copyNumber + 1})`;
+				} else {
+					rule.name = `${rule.name} (Copy)`;
+				}
+
+				// Enable the rule by default
+				rule.is_enabled = true;
+
+				this.rules.unshift(rule);
+
+				await this.save();
+
+				return rule;
+			} catch (error) {
+				if (error instanceof SyntaxError) {
+					throw new Error('Invalid JSON in clipboard');
+				}
+				throw error;
+			}
+		},
 		async moveUp(ruleId: string): Promise<Rule> {
 			const index = this.getRuleIndexById(ruleId);
 

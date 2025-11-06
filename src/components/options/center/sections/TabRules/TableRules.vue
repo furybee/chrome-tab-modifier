@@ -74,6 +74,14 @@
 							<div class="flex justify-end gap-8 invisible group-hover:visible overflow-hidden">
 								<button
 									class="btn btn-xs btn-circle tooltip flex items-center justify-items-center"
+									data-tip="Copy to clipboard"
+									@click.prevent="(event) => copyRule(event, rule.id)"
+								>
+									<ClipboardIcon class="!w-4 !h-4" />
+								</button>
+
+								<button
+									class="btn btn-xs btn-circle tooltip flex items-center justify-items-center"
 									data-tip="Duplicate"
 									@click.prevent="(event) => duplicateRule(event, rule.id)"
 								>
@@ -99,6 +107,7 @@
 import DuplicateIcon from '../../../../icons/DuplicateIcon.vue';
 import DeleteIcon from '../../../../icons/DeleteIcon.vue';
 import GripIcon from '../../../../icons/GripIcon.vue';
+import ClipboardIcon from '../../../../icons/ClipboardIcon.vue';
 import { computed, inject, ref, watch } from 'vue';
 import { GLOBAL_EVENTS, Group, Rule, RuleModalParams } from '../../../../../common/types.ts';
 import { useRulesStore } from '../../../../../stores/rules.store.ts';
@@ -174,6 +183,23 @@ const toggleRule = async (event: MouseEvent, rule: Rule) => {
 
 	await rulesStore.toggleRule(rule.id);
 	rules.value = [...rulesStore.rules]; // Update the rules array after toggling
+};
+
+const copyRule = async (event: MouseEvent, ruleId: string) => {
+	event.stopPropagation();
+	try {
+		await rulesStore.copyRuleToClipboard(ruleId);
+		emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
+			type: 'success',
+			message: 'Rule copied to clipboard! You can now share it with others.',
+		});
+	} catch (error) {
+		emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
+			type: 'error',
+			message: 'Failed to copy rule to clipboard',
+		});
+		console.error(error);
+	}
 };
 
 const duplicateRule = async (event: MouseEvent, ruleId: string) => {
