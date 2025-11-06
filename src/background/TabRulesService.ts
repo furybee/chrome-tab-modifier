@@ -42,6 +42,22 @@ export class TabRulesService {
 		if (!currentTab.id || !currentTab.url) return;
 
 		const rule = message.rule as Rule;
+
+		// Check if current tab URL matches the url_matcher pattern
+		// If not, skip unique tab logic (tab doesn't match the rule)
+		if (rule?.tab?.url_matcher) {
+			try {
+				const regex = new RegExp(rule.tab.url_matcher);
+				if (!regex.test(currentTab.url)) {
+					console.log('[TabRulesService] Current tab URL does not match url_matcher, skipping unique check');
+					return;
+				}
+			} catch (error) {
+				console.error('[TabRulesService] Invalid url_matcher regex:', error);
+				return;
+			}
+		}
+
 		const processedUrlFragment = _processUrlFragment(
 			message.url_fragment,
 			currentTab.url,
@@ -52,6 +68,21 @@ export class TabRulesService {
 
 		for (const tab of tabs) {
 			if (!tab.url || !tab.id) continue;
+
+			// Skip tabs that don't match the url_matcher pattern
+			// This prevents closing unrelated tabs that happen to have the same processed fragment
+			if (rule?.tab?.url_matcher) {
+				try {
+					const regex = new RegExp(rule.tab.url_matcher);
+					if (!regex.test(tab.url)) {
+						// This tab doesn't match the rule, skip it
+						continue;
+					}
+				} catch (error) {
+					console.error('[TabRulesService] Invalid url_matcher regex:', error);
+					continue;
+				}
+			}
 
 			// Process the fragment for each tab to compare
 			const tabProcessedFragment = _processUrlFragment(
