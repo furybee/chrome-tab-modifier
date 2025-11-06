@@ -99,7 +99,18 @@
 					<span class="label-text text-sm">Icon</span>
 				</div>
 
-				<EmojiIconPicker v-model="currentRule.tab.icon" />
+				<div class="flex w-full bg-base-200 rounded-md">
+					<div class="flex-1">
+						<EmojiIconPicker v-model="currentRule.tab.icon" />
+					</div>
+					<div
+						v-if="currentRule.tab.icon"
+						class="px-1 btn btn-xs btn-accent rounded-l-none"
+						@click="clearIcon"
+					>
+						<CloseIcon class="!w-4 !h-4" />
+					</div>
+				</div>
 
 				<button class="btn-link mt-1 text-xs" @click.prevent="(event) => showCustomIconForm(event)">
 					Use custom URL
@@ -388,6 +399,10 @@ const showCustomIconForm = (event: MouseEvent) => {
 const hideCustomIconForm = () => {
 	currentRule.value.tab.icon = '';
 	isCustomIconFormVisible.value = false;
+};
+
+const clearIcon = () => {
+	currentRule.value.tab.icon = '';
 };
 
 const availableGroups = rulesStore.groups.map((group: Group) => {

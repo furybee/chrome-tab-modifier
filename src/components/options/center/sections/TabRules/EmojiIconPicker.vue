@@ -3,20 +3,13 @@
 		<!-- Selected icon/emoji display / trigger button -->
 		<button
 			type="button"
-			class="btn btn-sm btn-outline hover:bg-base-300 focus:outline-primary flex items-center gap-2 min-w-[120px] !border-base-content/20"
+			class="btn btn-xs btn-outline hover:bg-base-300 focus:outline-primary flex items-center gap-2 w-full !border-base-content/20"
+			:class="{ 'rounded-r-none': modelValue }"
 			@click="isOpen = !isOpen"
 		>
-			<span v-if="modelValue" class="text-base">{{ displayValue }}</span>
+			<span v-if="modelValue" class="text-xs">{{ displayValue }}</span>
 			<span v-else class="text-xs opacity-60">No icon</span>
-			<svg
-				class="w-4 h-4 ml-auto"
-				:class="{ 'rotate-180': isOpen }"
-				fill="none"
-				stroke="currentColor"
-				viewBox="0 0 24 24"
-			>
-				<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-			</svg>
+			<ChevronDownIcon class="w-4 h-4 ml-auto" :class="{ 'rotate-180': isOpen }" />
 		</button>
 
 		<!-- Emoji/Icon picker dropdown -->
@@ -108,6 +101,7 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { _getIcons } from '../../../../../common/helpers';
 import { EMOJI_CATEGORIES } from '../../../../../common/emoji-data';
+import ChevronDownIcon from '../../../../icons/ChevronDownIcon.vue';
 
 interface EmojiIconPickerProps {
 	modelValue: string | null;
