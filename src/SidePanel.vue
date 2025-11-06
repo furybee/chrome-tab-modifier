@@ -57,9 +57,22 @@ const isInit = ref(false);
 const rule = ref(_getDefaultRule('', '', ''));
 const formKey = ref(0); // Key to force re-render of RuleForm
 
-function onRuleSaved() {
+async function onRuleSaved() {
 	// Reset the form to defaults after saving
 	rule.value = _getDefaultRule('', '', '');
+
+	// Reload the active tab to apply changes
+	try {
+		const queryOptions = { active: true, lastFocusedWindow: true };
+		const tabs = await chrome.tabs.query(queryOptions);
+
+		if (tabs.length > 0 && tabs[0].id) {
+			await chrome.tabs.reload(tabs[0].id);
+			console.log('[SidePanel] Reloaded active tab after saving');
+		}
+	} catch (error) {
+		console.error('[SidePanel] Error reloading tab:', error);
+	}
 }
 
 async function updateFormForUrl(url: string) {
