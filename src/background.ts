@@ -45,7 +45,16 @@ chrome.tabs.onUpdated.addListener(
 		}
 
 		const rule = await _getRuleFromUrl(urlToProcess);
-		await tabGroupsService.ungroupTab(rule, tab);
+		const tabModifier = await _getStorageAsync();
+
+		// Apply grouping logic FIRST to avoid race condition
+		// where ungroupTab removes the tab from group before content script re-applies it
+		if (rule && tabModifier) {
+			await tabGroupsService.applyGroupRuleToTab(rule, tab, tabModifier);
+		} else {
+			await tabGroupsService.ungroupTab(rule, tab);
+		}
+
 		await tabRulesService.applyRuleToTab(tab);
 	}
 );
@@ -153,9 +162,6 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
 			break;
 		case 'setProtected':
 			await handleSetProtected(tab.id);
-			break;
-		case 'setGroup':
-			await tabGroupsService.handleSetGroup(message.rule, tab);
 			break;
 		case 'setMuted':
 			await chrome.tabs.update(tab.id, { muted: true });
