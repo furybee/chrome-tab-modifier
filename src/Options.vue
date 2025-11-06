@@ -120,7 +120,7 @@ const sectionItems = [
 	{
 		title: 'Tab Hive',
 		emoji: '🍯',
-		description: 'Manage closed tabs and auto-close settings',
+		description: 'Manage closed tabs and reject-list',
 		component: 'TabHivePane',
 	},
 	{
