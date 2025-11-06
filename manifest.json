@@ -51,7 +51,8 @@
     "contextMenus",
     "scripting",
     "sidePanel",
-    "bookmarks"
+    "bookmarks",
+    "alarms"
   ],
   "host_permissions": [
     "http://*/*",

@@ -15,10 +15,10 @@ interface TabActivity {
 export class TabHiveService {
 	private static readonly CLOSED_TABS_STORAGE_KEY = 'closed_tabs';
 	private static readonly MAX_CLOSED_TABS = 100;
-	private static readonly CHECK_INTERVAL_MS = 60000; // 1 minute
+	private static readonly CHECK_INTERVAL_MINUTES = 1; // Check every 1 minute
+	private static readonly ALARM_NAME = 'tabee-auto-close-checker';
 
 	private tabActivityMap = new Map<number, TabActivity>();
-	private autoCloseInterval: number | null = null;
 
 	/**
 	 * Initialize auto-close tracking
@@ -75,41 +75,38 @@ export class TabHiveService {
 
 	/**
 	 * Start the periodic checker for inactive tabs
+	 * Uses chrome.alarms API which works reliably in service workers
 	 */
-	private startAutoCloseChecker(): void {
-		console.log('[Tabee] 🍯 Starting auto-close checker (runs every 60 seconds)');
+	private async startAutoCloseChecker(): Promise<void> {
+		console.log('[Tabee] 🍯 Starting auto-close checker using chrome.alarms (runs every minute)');
 
-		// Clear existing interval if any
-		if (this.autoCloseInterval) {
-			console.log('[Tabee] Clearing existing auto-close interval');
-			clearInterval(this.autoCloseInterval);
-		}
+		// Clear existing alarm if any
+		await chrome.alarms.clear(TabHiveService.ALARM_NAME);
 
-		// Check every minute
-		this.autoCloseInterval = setInterval(async () => {
-			await this.checkAndCloseInactiveTabs();
-		}, TabHiveService.CHECK_INTERVAL_MS);
+		// Create a repeating alarm that fires every minute
+		await chrome.alarms.create(TabHiveService.ALARM_NAME, {
+			periodInMinutes: TabHiveService.CHECK_INTERVAL_MINUTES,
+			delayInMinutes: TabHiveService.CHECK_INTERVAL_MINUTES, // First check after 1 minute
+		});
 
-		console.log('[Tabee] Auto-close checker started successfully');
+		console.log('[Tabee] Auto-close checker alarm created successfully');
 	}
 
 	/**
 	 * Stop the auto-close checker
 	 */
-	stopAutoCloseChecker(): void {
+	async stopAutoCloseChecker(): Promise<void> {
 		console.log('[Tabee] 🍯 Auto-close disabled via settings, stopping checker...');
-		if (this.autoCloseInterval) {
-			clearInterval(this.autoCloseInterval);
-			this.autoCloseInterval = null;
-		}
+		await chrome.alarms.clear(TabHiveService.ALARM_NAME);
 		// Clear the tracking map
 		this.tabActivityMap.clear();
 	}
 
 	/**
 	 * Check and close inactive tabs based on settings
+	 * This method is called by the chrome.alarms listener
 	 */
-	private async checkAndCloseInactiveTabs(): Promise<void> {
+	async checkAndCloseInactiveTabs(): Promise<void> {
 		try {
 			console.log('[Tabee] 🍯 Running auto-close check...');
 

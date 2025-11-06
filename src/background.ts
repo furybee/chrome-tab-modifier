@@ -327,6 +327,22 @@ chrome.action.onClicked.addListener(async (tab) => {
 });
 
 // =============================================================================
+// ALARM LISTENERS (for Tab Hive auto-close)
+// =============================================================================
+
+/**
+ * Listen for alarms to trigger Tab Hive auto-close checks
+ * chrome.alarms is used instead of setInterval because service workers
+ * can be suspended, which would stop setInterval timers
+ */
+chrome.alarms.onAlarm.addListener(async (alarm) => {
+	if (alarm.name === 'tabee-auto-close-checker') {
+		console.log('[Tabee] 🍯 Alarm triggered, checking for inactive tabs...');
+		await tabHiveService.checkAndCloseInactiveTabs();
+	}
+});
+
+// =============================================================================
 // INITIALIZATION
 // =============================================================================
 

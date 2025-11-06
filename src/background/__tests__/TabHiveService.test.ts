@@ -14,6 +14,10 @@ const mockChrome = {
 			set: vi.fn(),
 		},
 	},
+	alarms: {
+		clear: vi.fn(),
+		create: vi.fn(),
+	},
 };
 
 // @ts-ignore
