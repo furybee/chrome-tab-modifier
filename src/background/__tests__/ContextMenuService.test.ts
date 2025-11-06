@@ -23,7 +23,8 @@ describe('ContextMenuService', () => {
 		it('should create all context menus', () => {
 			service.initialize();
 
-			expect(mockChrome.contextMenus.create).toHaveBeenCalledTimes(3);
+			// 3 main menus + 3 reject list menus (1 parent + 2 children)
+			expect(mockChrome.contextMenus.create).toHaveBeenCalledTimes(6);
 
 			// Check rename tab menu
 			expect(mockChrome.contextMenus.create).toHaveBeenCalledWith({
@@ -45,6 +46,27 @@ describe('ContextMenuService', () => {
 				title: '🍯 Send to Tab Hive',
 				contexts: ['all'],
 			});
+
+			// Check Tab Hive reject menus
+			expect(mockChrome.contextMenus.create).toHaveBeenCalledWith({
+				id: 'tab-hive-reject-parent',
+				title: '🚫 Exclude from Tab Hive',
+				contexts: ['all'],
+			});
+
+			expect(mockChrome.contextMenus.create).toHaveBeenCalledWith({
+				id: 'tab-hive-reject-domain',
+				parentId: 'tab-hive-reject-parent',
+				title: '🌐 Exclude this domain',
+				contexts: ['all'],
+			});
+
+			expect(mockChrome.contextMenus.create).toHaveBeenCalledWith({
+				id: 'tab-hive-reject-url',
+				parentId: 'tab-hive-reject-parent',
+				title: '🔗 Exclude this URL',
+				contexts: ['all'],
+			});
 		});
 
 		it('should create menus in correct order', () => {
@@ -55,6 +77,9 @@ describe('ContextMenuService', () => {
 			expect(calls[0][0].id).toBe('rename-tab');
 			expect(calls[1][0].id).toBe('merge-windows');
 			expect(calls[2][0].id).toBe('send-to-hive');
+			expect(calls[3][0].id).toBe('tab-hive-reject-parent');
+			expect(calls[4][0].id).toBe('tab-hive-reject-domain');
+			expect(calls[5][0].id).toBe('tab-hive-reject-url');
 		});
 
 		it('should set all menus to "all" contexts', () => {

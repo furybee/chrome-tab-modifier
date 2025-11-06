@@ -61,6 +61,7 @@ export type Settings = {
 	lightweight_mode_apply_to_tab_hive: boolean;
 	auto_close_enabled: boolean;
 	auto_close_timeout: number; // en minutes
+	tab_hive_reject_list: string[]; // List of domains to exclude from auto-close
 };
 
 export type TabModifierSettings = {

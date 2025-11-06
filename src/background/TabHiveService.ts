@@ -130,7 +130,7 @@ export class TabHiveService {
 			let closedCount = 0;
 
 			for (const tab of allTabs) {
-				if (!tab.id) continue;
+				if (!tab.id || !tab.url) continue;
 
 				// Skip pinned tabs
 				if (tab.pinned) {
@@ -141,6 +141,12 @@ export class TabHiveService {
 				// Skip active tab
 				if (tab.active) {
 					console.log(`[Tabee] Skipping active tab: ${tab.title}`);
+					continue;
+				}
+
+				// Check if tab is in reject list
+				if (this.isTabInRejectList(tab.url, settings.settings.tab_hive_reject_list)) {
+					console.log(`[Tabee] 🚫 Skipping tab in reject list: ${tab.title} (${tab.url})`);
 					continue;
 				}
 
@@ -318,6 +324,46 @@ export class TabHiveService {
 			console.log(`[Tabee] Restored tab: ${closedTab.title}`);
 		} catch (error) {
 			console.error('[Tabee] Error restoring tab:', error);
+		}
+	}
+
+	/**
+	 * Check if a tab URL is in the reject list
+	 * The reject list can contain:
+	 * - Full URLs (e.g., "https://example.com/page")
+	 * - Domains (e.g., "example.com")
+	 */
+	private isTabInRejectList(tabUrl: string, rejectList: string[]): boolean {
+		if (!rejectList || rejectList.length === 0) {
+			return false;
+		}
+
+		try {
+			const url = new URL(tabUrl);
+			const domain = url.hostname;
+
+			for (const pattern of rejectList) {
+				// Check for exact URL match
+				if (pattern === tabUrl) {
+					return true;
+				}
+
+				// Check for domain match
+				// pattern could be "example.com" or "*.example.com"
+				if (pattern === domain) {
+					return true;
+				}
+
+				// Check if pattern matches domain or any subdomain
+				if (domain.endsWith('.' + pattern) || domain === pattern) {
+					return true;
+				}
+			}
+
+			return false;
+		} catch (error) {
+			console.error('[Tabee] Error checking reject list:', error);
+			return false;
 		}
 	}
 }

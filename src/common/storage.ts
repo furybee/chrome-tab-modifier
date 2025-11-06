@@ -24,6 +24,7 @@ export function _getDefaultTabModifierSettings(): TabModifierSettings {
 			lightweight_mode_apply_to_tab_hive: true,
 			auto_close_enabled: false,
 			auto_close_timeout: 30, // 30 minutes par défaut
+			tab_hive_reject_list: [],
 		},
 	};
 }

@@ -2,7 +2,7 @@
  * Main background service worker
  * Orchestrates all services following Dependency Inversion Principle
  */
-import { _getRuleFromUrl, _getStorageAsync } from './common/storage';
+import { _getRuleFromUrl, _getStorageAsync, _setStorage } from './common/storage';
 import { TabRulesService } from './background/TabRulesService';
 import { TabGroupsService } from './background/TabGroupsService';
 import { TabHiveService } from './background/TabHiveService';
@@ -219,6 +219,35 @@ async function handleSetProtected(tabId: number): Promise<void> {
 // CONTEXT MENUS
 // =============================================================================
 
+/**
+ * Add URL or domain to Tab Hive reject list
+ */
+async function addToTabHiveRejectList(url: string, type: 'domain' | 'url'): Promise<void> {
+	try {
+		const tabModifier = await _getStorageAsync();
+		if (!tabModifier) return;
+
+		let pattern: string;
+		if (type === 'domain') {
+			const urlObj = new URL(url);
+			pattern = urlObj.hostname;
+		} else {
+			pattern = url;
+		}
+
+		// Check if already in list
+		if (!tabModifier.settings.tab_hive_reject_list.includes(pattern)) {
+			tabModifier.settings.tab_hive_reject_list.push(pattern);
+			await _setStorage(tabModifier);
+			console.log(`[Tabee] 🚫 Added to Tab Hive reject list (${type}): ${pattern}`);
+		} else {
+			console.log(`[Tabee] Pattern already in reject list: ${pattern}`);
+		}
+	} catch (error) {
+		console.error('[Tabee] Error adding to reject list:', error);
+	}
+}
+
 contextMenuService.initialize();
 
 chrome.contextMenus.onClicked.addListener(async function (info, tab) {
@@ -230,6 +259,12 @@ chrome.contextMenus.onClicked.addListener(async function (info, tab) {
 	} else if (info.menuItemId === 'send-to-hive') {
 		if (!tab) return;
 		await tabHiveService.sendTabToHive(tab);
+	} else if (info.menuItemId === 'tab-hive-reject-domain') {
+		if (!tab?.url) return;
+		await addToTabHiveRejectList(tab.url, 'domain');
+	} else if (info.menuItemId === 'tab-hive-reject-url') {
+		if (!tab?.url) return;
+		await addToTabHiveRejectList(tab.url, 'url');
 	}
 });
 
