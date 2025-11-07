@@ -190,6 +190,8 @@ const openAddGroupModal = () => {
 const pasteRule = async () => {
 	try {
 		await rulesStore.pasteRuleFromClipboard();
+		// Refresh the store to update the UI
+		await rulesStore.init();
 		emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
 			type: 'success',
 			message: 'Rule pasted successfully!',
