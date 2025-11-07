@@ -73,6 +73,7 @@
 						<td>
 							<div class="flex justify-end gap-8 invisible group-hover:visible overflow-hidden">
 								<button
+									v-if="FEATURE_FLAGS.ENABLE_RULE_COPY_PASTE"
 									class="btn btn-xs btn-circle tooltip flex items-center justify-items-center"
 									data-tip="Copy to clipboard"
 									@click.prevent="(event) => copyRule(event, rule.id)"
@@ -115,6 +116,7 @@ import RefreshButton from '../../../../global/RefreshButton.vue';
 import { _chromeGroupColor, _shortify } from '../../../../../common/helpers.ts';
 import ColorVisualizer from '../TabGroups/ColorVisualizer.vue';
 import draggable from 'vuedraggable';
+import { FEATURE_FLAGS } from '../../../../../common/feature-flags.ts';
 
 const props = defineProps<{
 	rules: Rule[];

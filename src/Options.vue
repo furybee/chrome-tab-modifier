@@ -32,7 +32,7 @@
 
 						<div class="navbar-end mr-2 flex gap-2">
 							<button
-								v-if="hasRules && currentContent.component === 'TabRulesPane'"
+								v-if="FEATURE_FLAGS.ENABLE_RULE_COPY_PASTE && hasRules && currentContent.component === 'TabRulesPane'"
 								class="btn btn-xs btn-ghost tooltip tooltip-left flex items-center justify-center"
 								data-tip="Paste rule from clipboard"
 								@click="pasteRule"
@@ -102,6 +102,7 @@ import { useRulesStore } from './stores/rules.store.ts';
 import Toaster from './components/global/Toaster.vue';
 import PlusIcon from './components/icons/PlusIcon.vue';
 import { useMenuStore } from './stores/menu.store.ts';
+import { FEATURE_FLAGS } from './common/feature-flags.ts';
 
 const emitter: any = inject('emitter');
 
