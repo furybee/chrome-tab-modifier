@@ -6,8 +6,7 @@
 export class UrlChangeDetector {
 	private lastUrl: string;
 	private observers: Array<(newUrl: string, oldUrl: string) => void> = [];
-	private throttleTimeout: number | null = null;
-	private pendingCheck: boolean = false;
+	private debounceTimeout: number | null = null;
 
 	constructor() {
 		this.lastUrl = location.href;
@@ -17,10 +16,10 @@ export class UrlChangeDetector {
 	 * Start monitoring URL changes
 	 */
 	start(): void {
-		// Monitor DOM changes that might indicate URL changes (throttled)
+		// Monitor DOM changes that might indicate URL changes (heavily throttled)
 		this.setupMutationObserver();
 
-		// Intercept History API methods
+		// Intercept History API methods (primary detection for SPAs)
 		this.interceptHistoryAPI();
 
 		// Listen to popstate events (back/forward navigation)
@@ -28,7 +27,8 @@ export class UrlChangeDetector {
 			this.checkUrlChange();
 		});
 
-		// Periodic check as fallback (increased to 1000ms to reduce overhead)
+		// Periodic check as fallback (catches URL changes missed by other methods)
+		// 1000ms provides good coverage without excessive overhead
 		setInterval(() => {
 			this.checkUrlChange();
 		}, 1000);
@@ -67,64 +67,42 @@ export class UrlChangeDetector {
 	}
 
 	/**
-	 * Throttled version of checkUrlChange to prevent excessive calls
-	 * Uses requestIdleCallback when available to avoid blocking main thread
+	 * Debounced version of checkUrlChange with rate limiting
+	 * Prevents excessive calls during heavy DOM manipulation
 	 */
-	private throttledCheckUrlChange(): void {
-		// If a check is already scheduled, mark that another check is pending
-		if (this.throttleTimeout !== null) {
-			this.pendingCheck = true;
-			return;
+	private debouncedCheckUrlChange(): void {
+		// Cancel any pending check
+		if (this.debounceTimeout !== null) {
+			clearTimeout(this.debounceTimeout);
 		}
 
-		// Schedule the URL check
-		const performCheck = () => {
+		// Schedule the URL check with debounce
+		// This means: wait 500ms of "silence" before checking
+		this.debounceTimeout = setTimeout(() => {
+			this.debounceTimeout = null;
 			this.checkUrlChange();
-			this.throttleTimeout = null;
-
-			// If another check was requested during throttle, schedule it
-			if (this.pendingCheck) {
-				this.pendingCheck = false;
-				this.throttledCheckUrlChange();
-			}
-		};
-
-		// Use requestIdleCallback if available to avoid blocking main thread
-		// Otherwise fall back to setTimeout with a delay
-		if ('requestIdleCallback' in window) {
-			this.throttleTimeout = requestIdleCallback(performCheck, { timeout: 500 }) as any;
-		} else {
-			this.throttleTimeout = setTimeout(performCheck, 100) as any;
-		}
+		}, 500) as any; // 500ms debounce - waits for DOM changes to completely settle
 	}
 
 	/**
 	 * Setup MutationObserver to detect DOM changes that might indicate navigation
-	 * This is useful for SPAs that change content when navigating
-	 * Now uses throttling to prevent performance issues with large rule sets
+	 * Uses aggressive debouncing to prevent performance issues during page loads
 	 */
 	private setupMutationObserver(): void {
 		const observer = new MutationObserver(() => {
-			this.throttledCheckUrlChange();
+			// Use debouncing instead of throttling
+			// This ensures we only check AFTER mutations have settled
+			this.debouncedCheckUrlChange();
 		});
 
-		// Only observe the title element and meta tags in head (most common SPA navigation indicators)
-		// This dramatically reduces the number of callbacks compared to observing entire document
+		// Only observe the title element (most reliable SPA navigation indicator)
+		// Observing less = fewer callbacks = better performance
 		const titleElement = document.querySelector('title');
 		if (titleElement) {
 			observer.observe(titleElement, {
 				childList: true,
 				characterData: true,
 				subtree: true,
-			});
-		}
-
-		// Also observe head for meta tag changes (some SPAs update these)
-		const headElement = document.querySelector('head');
-		if (headElement) {
-			observer.observe(headElement, {
-				childList: true,
-				subtree: false, // Don't observe deep changes in head
 			});
 		}
 	}
