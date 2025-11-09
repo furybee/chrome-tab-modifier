@@ -1,5 +1,5 @@
 <template>
-	<div class="flex w-full bg-base-200 rounded-md">
+	<div class="flex w-full bg-base-200 rounded-md border border-base-content/20">
 		<details ref="dropdown" class="dropdown w-full">
 			<summary
 				class="btn btn-xs w-full flex flex-row flex-nowrap whitespace-nowrap justify-between items-center"
@@ -12,7 +12,7 @@
 						v-if="currentItem?.color"
 						:color="currentItem.color"
 						alt="_color"
-						class="!w-4 !h-4 mr-2"
+						class="!w-3 !h-3 mr-2"
 					/>
 
 					<template v-if="showLabel">
@@ -20,7 +20,7 @@
 					</template>
 				</div>
 				<span v-if="props.items.length === 0">-- no items --</span>
-				<ChevronDownIcon class="!w-4 !h-4 ml-2" />
+				<ChevronDownIcon class="w-4 h-4 ml-auto" />
 			</summary>
 			<ul
 				v-show="props.items.length > 0"
@@ -51,9 +51,9 @@
 
 <script lang="ts" setup>
 import { computed, ref } from 'vue';
-import ChevronDownIcon from '../icons/ChevronDownIcon.vue';
 import ColorVisualizer from '../options/center/sections/TabGroups/ColorVisualizer.vue';
 import CloseIcon from '../icons/CloseIcon.vue';
+import ChevronDownIcon from '../icons/ChevronDownIcon.vue';
 
 export interface SelectItem {
 	icon?: string | null;

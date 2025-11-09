@@ -53,7 +53,7 @@
 					<Toaster />
 				</div>
 			</div>
-			<div class="drawer-side">
+			<div class="drawer-side z-50">
 				<label aria-label="close sidebar" class="drawer-overlay" for="drawer-menu" />
 
 				<div class="h-full bg-base-300">
@@ -120,7 +120,7 @@ const sectionItems = [
 	{
 		title: 'Tab Hive',
 		emoji: '🍯',
-		description: 'Manage closed tabs and auto-close settings',
+		description: 'Manage closed tabs and settings',
 		component: 'TabHivePane',
 	},
 	{

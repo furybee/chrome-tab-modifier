@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Tabee: Tab Modifier",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "The original Tab Modifier reborn — rename, organize, and control your browser tabs effortlessly.",
   "homepage_url": "https://github.com/furybee/chrome-tab-modifier",
   "action": {
@@ -51,7 +51,8 @@
     "contextMenus",
     "scripting",
     "sidePanel",
-    "bookmarks"
+    "bookmarks",
+    "alarms"
   ],
   "host_permissions": [
     "http://*/*",

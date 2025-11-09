@@ -121,6 +121,10 @@ export const useRulesStore = defineStore('rules', {
 			if (settings.auto_close_timeout === undefined) {
 				settings.auto_close_timeout = 30;
 			}
+			// Add default value for Tab Hive reject list if it doesn't exist
+			if (settings.tab_hive_reject_list === undefined) {
+				settings.tab_hive_reject_list = [];
+			}
 			return settings;
 		},
 		async init() {

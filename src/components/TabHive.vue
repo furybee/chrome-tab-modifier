@@ -79,8 +79,8 @@
 			<div v-for="[domain, tabs] in groupedByDomain" :key="domain" class="space-y-2">
 				<div class="sticky top-0 bg-base-100 z-10 py-2">
 					<h3 class="font-semibold text-sm opacity-70 flex items-center gap-2">
-						<span class="badge badge-sm">{{ tabs.length }}</span>
 						{{ domain }}
+						<span class="badge badge-accent badge-sm">{{ tabs.length }}</span>
 					</h3>
 				</div>
 
@@ -131,7 +131,7 @@
 								</p>
 							</div>
 
-							<div class="flex flex-col items-center justify-center gap-1 flex-shrink-0">
+							<div class="flex flex-col items-end justify-center gap-1 flex-shrink-0">
 								<button
 									class="btn btn-xs btn-ghost btn-square"
 									title="Remove from list"
@@ -153,24 +153,25 @@
 									</svg>
 								</button>
 								<button
-									class="btn btn-xs btn-primary"
+									class="btn btn-xs btn-neutral flex items-center"
 									title="Restore tab"
 									@click="restoreTab(tab.id)"
 								>
 									<svg
 										xmlns="http://www.w3.org/2000/svg"
-										class="h-4 w-4"
 										fill="none"
 										viewBox="0 0 24 24"
+										stroke-width="1.5"
 										stroke="currentColor"
+										class="size-4"
 									>
 										<path
 											stroke-linecap="round"
 											stroke-linejoin="round"
-											stroke-width="2"
-											d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+											d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m6.75 12-3-3m0 0-3 3m3-3v6m-1.5-15H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z"
 										/>
 									</svg>
+									Restore
 								</button>
 							</div>
 						</div>

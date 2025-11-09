@@ -105,6 +105,7 @@ const createMockData = (rulesCount: number): TabModifierSettings => ({
 		lightweight_mode_apply_to_tab_hive: true,
 		auto_close_enabled: false,
 		auto_close_timeout: 30,
+		tab_hive_reject_list: [],
 	},
 });
 

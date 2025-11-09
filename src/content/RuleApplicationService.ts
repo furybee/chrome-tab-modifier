@@ -67,11 +67,8 @@ export class RuleApplicationService {
 			});
 		}
 
-		// Tab grouping
-		await chrome.runtime.sendMessage({
-			action: 'setGroup',
-			rule: rule,
-		});
+		// Tab grouping is now handled directly in background.ts to avoid race conditions
+		// No need to send a message here anymore
 	}
 
 	/**

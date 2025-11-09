@@ -161,5 +161,73 @@ describe('IconService', () => {
 
 			expect(result).toBe(true);
 		});
+
+		it('should convert emoji to SVG data URL', () => {
+			mockDocument.querySelectorAll.mockReturnValue([]);
+
+			const mockNewIcon = {
+				type: '',
+				rel: '',
+				href: '',
+			};
+			mockDocument.createElement.mockReturnValue(mockNewIcon);
+
+			service.processIcon('🚀');
+
+			expect(mockChrome.runtime.getURL).not.toHaveBeenCalled();
+			expect(mockNewIcon.href).toMatch(/^data:image\/svg\+xml,/);
+			// Decode the URL to check for emoji
+			const decoded = decodeURIComponent(mockNewIcon.href);
+			expect(decoded).toContain('🚀');
+		});
+
+		it('should handle emoji with skin tone modifiers', () => {
+			mockDocument.querySelectorAll.mockReturnValue([]);
+
+			const mockNewIcon = {
+				type: '',
+				rel: '',
+				href: '',
+			};
+			mockDocument.createElement.mockReturnValue(mockNewIcon);
+
+			service.processIcon('👍🏽');
+
+			expect(mockNewIcon.href).toMatch(/^data:image\/svg\+xml,/);
+			// Decode the URL to check for emoji
+			const decoded = decodeURIComponent(mockNewIcon.href);
+			expect(decoded).toContain('👍🏽');
+		});
+
+		it('should handle multi-character emojis', () => {
+			mockDocument.querySelectorAll.mockReturnValue([]);
+
+			const mockNewIcon = {
+				type: '',
+				rel: '',
+				href: '',
+			};
+			mockDocument.createElement.mockReturnValue(mockNewIcon);
+
+			service.processIcon('👨‍💻');
+
+			expect(mockNewIcon.href).toMatch(/^data:image\/svg\+xml,/);
+		});
+
+		it('should not treat regular text as emoji', () => {
+			mockDocument.querySelectorAll.mockReturnValue([]);
+
+			const mockNewIcon = {
+				type: '',
+				rel: '',
+				href: '',
+			};
+			mockDocument.createElement.mockReturnValue(mockNewIcon);
+
+			service.processIcon('icon.png');
+
+			expect(mockNewIcon.href).toBe('chrome-extension://mock-id/assets/icon.png');
+			expect(mockNewIcon.href).not.toMatch(/^data:image\/svg\+xml,/);
+		});
 	});
 });

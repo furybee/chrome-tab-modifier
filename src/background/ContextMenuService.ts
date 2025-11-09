@@ -10,6 +10,7 @@ export class ContextMenuService {
 		this.createRenameTabMenu();
 		this.createMergeWindowsMenu();
 		this.createSendToHiveMenu();
+		this.createTabHiveRejectMenus();
 	}
 
 	/**
@@ -41,6 +42,34 @@ export class ContextMenuService {
 		chrome.contextMenus.create({
 			id: 'send-to-hive',
 			title: '🍯 Send to Tab Hive',
+			contexts: ['all'],
+		});
+	}
+
+	/**
+	 * Create Tab Hive reject list context menus
+	 */
+	private createTabHiveRejectMenus(): void {
+		// Parent menu
+		chrome.contextMenus.create({
+			id: 'tab-hive-reject-parent',
+			title: '🚫 Exclude from Tab Hive',
+			contexts: ['all'],
+		});
+
+		// Child menu: Exclude domain
+		chrome.contextMenus.create({
+			id: 'tab-hive-reject-domain',
+			parentId: 'tab-hive-reject-parent',
+			title: '🌐 Exclude this domain',
+			contexts: ['all'],
+		});
+
+		// Child menu: Exclude URL
+		chrome.contextMenus.create({
+			id: 'tab-hive-reject-url',
+			parentId: 'tab-hive-reject-parent',
+			title: '🔗 Exclude this URL',
 			contexts: ['all'],
 		});
 	}

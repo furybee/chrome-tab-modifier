@@ -2,7 +2,7 @@
  * Main background service worker
  * Orchestrates all services following Dependency Inversion Principle
  */
-import { _getRuleFromUrl, _getStorageAsync } from './common/storage';
+import { _getRuleFromUrl, _getStorageAsync, _setStorage } from './common/storage';
 import { TabRulesService } from './background/TabRulesService';
 import { TabGroupsService } from './background/TabGroupsService';
 import { TabHiveService } from './background/TabHiveService';
@@ -45,7 +45,16 @@ chrome.tabs.onUpdated.addListener(
 		}
 
 		const rule = await _getRuleFromUrl(urlToProcess);
-		await tabGroupsService.ungroupTab(rule, tab);
+		const tabModifier = await _getStorageAsync();
+
+		// Apply grouping logic FIRST to avoid race condition
+		// where ungroupTab removes the tab from group before content script re-applies it
+		if (rule && tabModifier) {
+			await tabGroupsService.applyGroupRuleToTab(rule, tab, tabModifier);
+		} else {
+			await tabGroupsService.ungroupTab(rule, tab);
+		}
+
 		await tabRulesService.applyRuleToTab(tab);
 	}
 );
@@ -154,9 +163,6 @@ chrome.runtime.onMessage.addListener(async (message, sender) => {
 		case 'setProtected':
 			await handleSetProtected(tab.id);
 			break;
-		case 'setGroup':
-			await tabGroupsService.handleSetGroup(message.rule, tab);
-			break;
 		case 'setMuted':
 			await chrome.tabs.update(tab.id, { muted: true });
 			break;
@@ -213,6 +219,35 @@ async function handleSetProtected(tabId: number): Promise<void> {
 // CONTEXT MENUS
 // =============================================================================
 
+/**
+ * Add URL or domain to Tab Hive reject list
+ */
+async function addToTabHiveRejectList(url: string, type: 'domain' | 'url'): Promise<void> {
+	try {
+		const tabModifier = await _getStorageAsync();
+		if (!tabModifier) return;
+
+		let pattern: string;
+		if (type === 'domain') {
+			const urlObj = new URL(url);
+			pattern = urlObj.hostname;
+		} else {
+			pattern = url;
+		}
+
+		// Check if already in list
+		if (!tabModifier.settings.tab_hive_reject_list.includes(pattern)) {
+			tabModifier.settings.tab_hive_reject_list.push(pattern);
+			await _setStorage(tabModifier);
+			console.log(`[Tabee] 🚫 Added to Tab Hive reject list (${type}): ${pattern}`);
+		} else {
+			console.log(`[Tabee] Pattern already in reject list: ${pattern}`);
+		}
+	} catch (error) {
+		console.error('[Tabee] Error adding to reject list:', error);
+	}
+}
+
 contextMenuService.initialize();
 
 chrome.contextMenus.onClicked.addListener(async function (info, tab) {
@@ -224,6 +259,12 @@ chrome.contextMenus.onClicked.addListener(async function (info, tab) {
 	} else if (info.menuItemId === 'send-to-hive') {
 		if (!tab) return;
 		await tabHiveService.sendTabToHive(tab);
+	} else if (info.menuItemId === 'tab-hive-reject-domain') {
+		if (!tab?.url) return;
+		await addToTabHiveRejectList(tab.url, 'domain');
+	} else if (info.menuItemId === 'tab-hive-reject-url') {
+		if (!tab?.url) return;
+		await addToTabHiveRejectList(tab.url, 'url');
 	}
 });
 
@@ -318,6 +359,22 @@ chrome.action.onClicked.addListener(async (tab) => {
 
 	// Open the side panel for the current window
 	await chrome.sidePanel.open({ windowId: tab.windowId });
+});
+
+// =============================================================================
+// ALARM LISTENERS (for Tab Hive auto-close)
+// =============================================================================
+
+/**
+ * Listen for alarms to trigger Tab Hive auto-close checks
+ * chrome.alarms is used instead of setInterval because service workers
+ * can be suspended, which would stop setInterval timers
+ */
+chrome.alarms.onAlarm.addListener(async (alarm) => {
+	if (alarm.name === 'tabee-auto-close-checker') {
+		console.log('[Tabee] 🍯 Alarm triggered, checking for inactive tabs...');
+		await tabHiveService.checkAndCloseInactiveTabs();
+	}
 });
 
 // =============================================================================
