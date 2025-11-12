@@ -6,6 +6,7 @@
 export class UrlChangeDetector {
 	private lastUrl: string;
 	private observers: Array<(newUrl: string, oldUrl: string) => void> = [];
+	private debounceTimeout: number | null = null;
 
 	constructor() {
 		this.lastUrl = location.href;
@@ -15,10 +16,10 @@ export class UrlChangeDetector {
 	 * Start monitoring URL changes
 	 */
 	start(): void {
-		// Monitor DOM changes that might indicate URL changes
+		// Monitor DOM changes that might indicate URL changes (heavily throttled)
 		this.setupMutationObserver();
 
-		// Intercept History API methods
+		// Intercept History API methods (primary detection for SPAs)
 		this.interceptHistoryAPI();
 
 		// Listen to popstate events (back/forward navigation)
@@ -26,10 +27,11 @@ export class UrlChangeDetector {
 			this.checkUrlChange();
 		});
 
-		// Periodic check as fallback (every 500ms)
+		// Periodic check as fallback (catches URL changes missed by other methods)
+		// 1000ms provides good coverage without excessive overhead
 		setInterval(() => {
 			this.checkUrlChange();
-		}, 500);
+		}, 1000);
 	}
 
 	/**
@@ -65,19 +67,44 @@ export class UrlChangeDetector {
 	}
 
 	/**
+	 * Debounced version of checkUrlChange with rate limiting
+	 * Prevents excessive calls during heavy DOM manipulation
+	 */
+	private debouncedCheckUrlChange(): void {
+		// Cancel any pending check
+		if (this.debounceTimeout !== null) {
+			clearTimeout(this.debounceTimeout);
+		}
+
+		// Schedule the URL check with debounce
+		// This means: wait 500ms of "silence" before checking
+		this.debounceTimeout = setTimeout(() => {
+			this.debounceTimeout = null;
+			this.checkUrlChange();
+		}, 500) as any; // 500ms debounce - waits for DOM changes to completely settle
+	}
+
+	/**
 	 * Setup MutationObserver to detect DOM changes that might indicate navigation
-	 * This is useful for SPAs that change content when navigating
+	 * Uses aggressive debouncing to prevent performance issues during page loads
 	 */
 	private setupMutationObserver(): void {
 		const observer = new MutationObserver(() => {
-			this.checkUrlChange();
+			// Use debouncing instead of throttling
+			// This ensures we only check AFTER mutations have settled
+			this.debouncedCheckUrlChange();
 		});
 
-		// Observe the entire document for changes
-		observer.observe(document.documentElement, {
-			childList: true,
-			subtree: true,
-		});
+		// Only observe the title element (most reliable SPA navigation indicator)
+		// Observing less = fewer callbacks = better performance
+		const titleElement = document.querySelector('title');
+		if (titleElement) {
+			observer.observe(titleElement, {
+				childList: true,
+				characterData: true,
+				subtree: true,
+			});
+		}
 	}
 
 	/**
@@ -93,7 +120,7 @@ export class UrlChangeDetector {
 		history.pushState = (...args) => {
 			// Call original method
 			originalPushState.apply(history, args);
-			// Check for URL change
+			// Check for URL change immediately (not throttled, as History API calls are infrequent)
 			this.checkUrlChange();
 		};
 
@@ -101,7 +128,7 @@ export class UrlChangeDetector {
 		history.replaceState = (...args) => {
 			// Call original method
 			originalReplaceState.apply(history, args);
-			// Check for URL change
+			// Check for URL change immediately (not throttled, as History API calls are infrequent)
 			this.checkUrlChange();
 		};
 	}

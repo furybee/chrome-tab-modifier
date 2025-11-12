@@ -316,4 +316,89 @@ describe('TabRulesService - GitHub Unique Issue Test', () => {
 			// This is exactly what the user is experiencing!
 		});
 	});
+
+	describe('Simple unique without url_matcher', () => {
+		it('should work with simple CONTAINS detection and no url_matcher', async () => {
+			const currentTab = {
+				id: 1,
+				url: 'https://furybee.org/page1',
+			} as chrome.tabs.Tab;
+
+			const duplicateTab = {
+				id: 2,
+				url: 'https://furybee.org/page1',
+			} as chrome.tabs.Tab;
+
+			const differentPageTab = {
+				id: 3,
+				url: 'https://furybee.org/page2',
+			} as chrome.tabs.Tab;
+
+			const gmailTab = {
+				id: 4,
+				url: 'https://mail.google.com/mail',
+			} as chrome.tabs.Tab;
+
+			const message = {
+				url_fragment: 'furybee.org',
+				rule: {
+					id: 'oo747f6',
+					name: 'fury',
+					detection: 'CONTAINS',
+					url_fragment: 'furybee.org',
+					tab: {
+						unique: true,
+						url_matcher: null,
+					},
+				} as Rule,
+			};
+
+			mockChrome.tabs.query.mockImplementation((_queryInfo: any, callback: any) => {
+				callback([currentTab, duplicateTab, differentPageTab, gmailTab]);
+			});
+
+			await service.handleSetUnique(message, currentTab);
+
+			// Should close the exact duplicate
+			expect(mockChrome.tabs.remove).toHaveBeenCalledWith(duplicateTab.id);
+			expect(mockChrome.tabs.remove).toHaveBeenCalledTimes(1);
+
+			// Should NOT close different page or Gmail
+			expect(mockChrome.tabs.remove).not.toHaveBeenCalledWith(differentPageTab.id);
+			expect(mockChrome.tabs.remove).not.toHaveBeenCalledWith(gmailTab.id);
+		});
+
+		it('should NOT close Gmail when it matches detection but not the exact URL', async () => {
+			const currentTab = {
+				id: 1,
+				url: 'https://example.com/page',
+			} as chrome.tabs.Tab;
+
+			const gmailTab = {
+				id: 2,
+				url: 'https://mail.google.com/page',
+			} as chrome.tabs.Tab;
+
+			const message = {
+				url_fragment: 'page',
+				rule: {
+					detection: 'CONTAINS',
+					url_fragment: 'page',
+					tab: {
+						unique: true,
+						url_matcher: null,
+					},
+				} as Rule,
+			};
+
+			mockChrome.tabs.query.mockImplementation((_queryInfo: any, callback: any) => {
+				callback([currentTab, gmailTab]);
+			});
+
+			await service.handleSetUnique(message, currentTab);
+
+			// Should NOT close Gmail (different URL)
+			expect(mockChrome.tabs.remove).not.toHaveBeenCalled();
+		});
+	});
 });

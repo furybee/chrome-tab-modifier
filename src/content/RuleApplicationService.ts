@@ -9,6 +9,8 @@ import { IconService } from './IconService';
 export class RuleApplicationService {
 	private titleService: TitleService;
 	private iconService: IconService;
+	private titleObserver: MutationObserver | null = null;
+	private iconObserver: MutationObserver | null = null;
 
 	constructor(titleService: TitleService, iconService: IconService) {
 		this.titleService = titleService;
@@ -88,8 +90,19 @@ export class RuleApplicationService {
 		let originalTitle = originalTitleElement.getAttribute('content') || document.title;
 		document.title = this.titleService.processTitle(location.href, originalTitle, rule);
 
-		const targetNode = document.documentElement;
-		const config = { childList: true, subtree: true };
+		// CRITICAL FIX: Disconnect old observer before creating a new one
+		// This prevents memory leaks and infinite loops on SPAs
+		if (this.titleObserver) {
+			this.titleObserver.disconnect();
+			this.titleObserver = null;
+		}
+
+		// Only observe the title element, not the entire document
+		// This drastically reduces the number of mutation callbacks
+		const titleElement = document.querySelector('title');
+		if (!titleElement) return;
+
+		const config = { childList: true, characterData: true, subtree: true };
 		let lastTitle = document.title;
 
 		const callback = () => {
@@ -103,8 +116,9 @@ export class RuleApplicationService {
 			}
 		};
 
-		const observer = new MutationObserver(callback);
-		observer.observe(targetNode, config);
+		// Store the observer as an instance variable to reuse/disconnect later
+		this.titleObserver = new MutationObserver(callback);
+		this.titleObserver.observe(titleElement, config);
 	}
 
 	/**
@@ -117,9 +131,17 @@ export class RuleApplicationService {
 		const iconUrl = rule.tab.icon;
 		this.iconService.processIcon(iconUrl);
 
+		// CRITICAL FIX: Disconnect old observer before creating a new one
+		// This prevents memory leaks and infinite loops on SPAs
+		if (this.iconObserver) {
+			this.iconObserver.disconnect();
+			this.iconObserver = null;
+		}
+
 		let iconChangedByMe = false;
 
-		const iconObserver = new MutationObserver((mutations) => {
+		// Store the observer as an instance variable to reuse/disconnect later
+		this.iconObserver = new MutationObserver((mutations) => {
 			if (!iconChangedByMe) {
 				mutations.forEach((mutation) => {
 					if ((mutation.target as any).type === 'image/x-icon') {
@@ -146,7 +168,7 @@ export class RuleApplicationService {
 			}
 		});
 
-		iconObserver.observe(document.head, {
+		this.iconObserver.observe(document.head, {
 			attributes: true,
 			childList: true,
 			characterData: true,
