@@ -55,6 +55,18 @@ chrome.tabs.onUpdated.addListener(
 			await tabGroupsService.ungroupTab(rule, tab);
 		}
 
+		// Handle unique tab logic in background for faster duplicate closing
+		// This runs before content script is injected, closing duplicates during page load
+		if (rule?.tab?.unique && tab.id) {
+			await tabRulesService.handleSetUnique(
+				{
+					url_fragment: rule.url_fragment,
+					rule: rule,
+				},
+				tab
+			);
+		}
+
 		await tabRulesService.applyRuleToTab(tab);
 	}
 );
