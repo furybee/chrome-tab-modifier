@@ -245,10 +245,7 @@ describe('TabGroupsService', () => {
 				},
 				expect.any(Function)
 			);
-			expect(mockChrome.tabs.group).toHaveBeenCalledWith(
-				{ tabIds: [1] },
-				expect.any(Function)
-			);
+			expect(mockChrome.tabs.group).toHaveBeenCalledWith({ tabIds: [1] }, expect.any(Function));
 		});
 
 		it('should add tab to existing group if one exists', async () => {
@@ -363,10 +360,7 @@ describe('TabGroupsService', () => {
 				expect.any(Function)
 			);
 			// Should NOT create a new group
-			expect(mockChrome.tabs.group).not.toHaveBeenCalledWith(
-				{ tabIds: [1] },
-				expect.any(Function)
-			);
+			expect(mockChrome.tabs.group).not.toHaveBeenCalledWith({ tabIds: [1] }, expect.any(Function));
 		});
 	});
 

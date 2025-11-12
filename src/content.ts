@@ -73,7 +73,6 @@ urlChangeDetector.start();
 // ============================================================
 
 chrome.runtime.onMessage.addListener(async function (request) {
-
 	if (request.action === 'openPrompt') {
 		const title = prompt(
 			'Enter the new title, a Tab rule will be automatically created for you based on current URL'
@@ -96,7 +95,13 @@ chrome.runtime.onMessage.addListener(async function (request) {
 		spotSearchUI.toggle();
 		console.log('[Tabee Content] ✅ Spot search toggled');
 	} else if (request.action === 'spotSearchResults') {
-		console.log('[Tabee Content] 🔍 Displaying search results:', request.tabs.length, 'tabs,', request.bookmarks.length, 'bookmarks');
+		console.log(
+			'[Tabee Content] 🔍 Displaying search results:',
+			request.tabs.length,
+			'tabs,',
+			request.bookmarks.length,
+			'bookmarks'
+		);
 		// Display search results
 		spotSearchUI.displayResults(request.tabs, request.bookmarks);
 	}

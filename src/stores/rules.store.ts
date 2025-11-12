@@ -216,7 +216,11 @@ export const useRulesStore = defineStore('rules', {
 					console.log('[Tabee] setConfig() init() returned');
 				}
 
-				console.log('[Tabee] setConfig() returning mergedConfig with', mergedConfig.rules.length, 'rules');
+				console.log(
+					'[Tabee] setConfig() returning mergedConfig with',
+					mergedConfig.rules.length,
+					'rules'
+				);
 				return mergedConfig;
 			} catch (error) {
 				console.error('Failed to set config:', error);

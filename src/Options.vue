@@ -32,7 +32,11 @@
 
 						<div class="navbar-end mr-2 flex gap-2">
 							<button
-								v-if="FEATURE_FLAGS.ENABLE_RULE_COPY_PASTE && hasRules && currentContent.component === 'TabRulesPane'"
+								v-if="
+									FEATURE_FLAGS.ENABLE_RULE_COPY_PASTE &&
+									hasRules &&
+									currentContent.component === 'TabRulesPane'
+								"
 								class="btn btn-xs btn-ghost tooltip tooltip-left flex items-center justify-center"
 								data-tip="Paste rule from clipboard"
 								@click="pasteRule"

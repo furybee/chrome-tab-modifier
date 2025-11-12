@@ -49,7 +49,12 @@ vi.mock('../../common/helpers', () => ({
 	_processUrlFragment: vi.fn((_fragment, url) => url),
 }));
 
-import { _getRuleFromUrl, _shouldSkipUrl, _getDefaultRule, _setStorage } from '../../common/storage';
+import {
+	_getRuleFromUrl,
+	_shouldSkipUrl,
+	_getDefaultRule,
+	_setStorage,
+} from '../../common/storage';
 
 describe('TabRulesService', () => {
 	let service: TabRulesService;

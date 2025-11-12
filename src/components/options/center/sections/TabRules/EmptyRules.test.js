@@ -27,7 +27,11 @@ describe('Sample Rules', () => {
 				},
 			};
 
-			const result = processTitle('https://mail.google.com/mail/u/0/', 'Inbox (5) - john@gmail.com', rule);
+			const result = processTitle(
+				'https://mail.google.com/mail/u/0/',
+				'Inbox (5) - john@gmail.com',
+				rule
+			);
 			expect(result).toBe('Inbox (5) - john@gmail.com');
 		});
 	});
@@ -143,11 +147,7 @@ describe('Sample Rules', () => {
 				},
 			};
 
-			const result = processTitle(
-				'https://meet.google.com/abc-defg-hij',
-				'Team Standup',
-				rule
-			);
+			const result = processTitle('https://meet.google.com/abc-defg-hij', 'Team Standup', rule);
 			expect(result).toBe('[Meet] Team Standup');
 		});
 	});
@@ -193,11 +193,7 @@ describe('Sample Rules', () => {
 				},
 			};
 
-			const result = processTitle(
-				'https://fr.wikipedia.org/wiki/Paris',
-				'Paris — Wikipédia',
-				rule
-			);
+			const result = processTitle('https://fr.wikipedia.org/wiki/Paris', 'Paris — Wikipédia', rule);
 			expect(result).toBe('Paris');
 		});
 
@@ -310,11 +306,7 @@ describe('Sample Rules', () => {
 			};
 
 			// URL that doesn't match the pattern
-			const result = processTitle(
-				'https://github.com/user/repo',
-				'Repository Home',
-				rule
-			);
+			const result = processTitle('https://github.com/user/repo', 'Repository Home', rule);
 			expect(result).toBe('Issue #');
 		});
 
@@ -342,11 +334,7 @@ describe('Sample Rules', () => {
 				},
 			};
 
-			const result = processTitle(
-				'https://example.com',
-				'John Doe - Software Engineer',
-				rule
-			);
+			const result = processTitle('https://example.com', 'John Doe - Software Engineer', rule);
 			expect(result).toBe('Software Engineer (John Doe)');
 		});
 	});
