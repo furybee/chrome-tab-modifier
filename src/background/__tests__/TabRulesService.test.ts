@@ -224,15 +224,26 @@ describe('TabRulesService', () => {
 				url: 'https://different.com',
 			} as chrome.tabs.Tab;
 
+			const rule = {
+				id: 'rule1',
+				tab: { url_matcher: null },
+			};
+
 			const message = {
 				url_fragment: 'example.com',
-				rule: {
-					tab: { url_matcher: null },
-				},
+				rule: rule,
 			};
 
 			mockChrome.tabs.query.mockImplementation((_queryInfo: any, callback: any) => {
 				callback([currentTab, otherTab]);
+			});
+
+			// Mock _getRuleFromUrl to return rule only for currentTab, not for otherTab
+			vi.mocked(_getRuleFromUrl).mockImplementation(async (url: string) => {
+				if (url === currentTab.url) {
+					return rule as any;
+				}
+				return undefined;
 			});
 
 			await service.handleSetUnique(message, currentTab);
@@ -253,16 +264,23 @@ describe('TabRulesService', () => {
 				url: 'https://example.com/page',
 			} as chrome.tabs.Tab;
 
+			const rule = {
+				id: 'rule1',
+				tab: { url_matcher: null },
+			};
+
 			const message = {
 				url_fragment: 'example.com',
-				rule: {
-					tab: { url_matcher: null },
-				},
+				rule: rule,
 			};
 
 			mockChrome.tabs.query.mockImplementation((_queryInfo: any, callback: any) => {
 				callback([currentTab, duplicateTab]);
 			});
+
+			// Mock _getRuleFromUrl to return the rule for both tabs
+			vi.mocked(_getRuleFromUrl).mockResolvedValue(rule as any);
+
 			mockChrome.scripting.executeScript.mockRejectedValue(new Error('Cannot execute script'));
 			mockChrome.tabs.remove.mockResolvedValue(undefined);
 
