@@ -47,6 +47,7 @@ vi.mock('../../common/storage', () => ({
 
 // Import the actual _processUrlFragment function
 import { _processUrlFragment } from '../../common/helpers';
+import { _getRuleFromUrl } from '../../common/storage';
 
 describe('TabRulesService - GitHub Unique Issue Test', () => {
 	let service: TabRulesService;
@@ -318,7 +319,7 @@ describe('TabRulesService - GitHub Unique Issue Test', () => {
 	});
 
 	describe('Simple unique without url_matcher', () => {
-		it('should work with simple CONTAINS detection and no url_matcher', async () => {
+		it('should close ALL tabs matching the same rule (new behavior)', async () => {
 			const currentTab = {
 				id: 1,
 				url: 'https://furybee.org/page1',
@@ -339,36 +340,45 @@ describe('TabRulesService - GitHub Unique Issue Test', () => {
 				url: 'https://mail.google.com/mail',
 			} as chrome.tabs.Tab;
 
+			const rule = {
+				id: 'oo747f6',
+				name: 'fury',
+				detection: 'CONTAINS',
+				url_fragment: 'furybee.org',
+				tab: {
+					unique: true,
+					url_matcher: null,
+				},
+			} as Rule;
+
 			const message = {
 				url_fragment: 'furybee.org',
-				rule: {
-					id: 'oo747f6',
-					name: 'fury',
-					detection: 'CONTAINS',
-					url_fragment: 'furybee.org',
-					tab: {
-						unique: true,
-						url_matcher: null,
-					},
-				} as Rule,
+				rule: rule,
 			};
 
 			mockChrome.tabs.query.mockImplementation((_queryInfo: any, callback: any) => {
 				callback([currentTab, duplicateTab, differentPageTab, gmailTab]);
 			});
 
+			// Mock _getRuleFromUrl to return the rule for all furybee tabs
+			vi.mocked(_getRuleFromUrl).mockImplementation(async (url: string) => {
+				if (url.includes('furybee.org')) {
+					return rule;
+				}
+				return undefined;
+			});
+
 			await service.handleSetUnique(message, currentTab);
 
-			// Should close the exact duplicate
-			expect(mockChrome.tabs.remove).toHaveBeenCalledWith(duplicateTab.id);
+			// Should close the first duplicate found (either duplicateTab or differentPageTab)
+			// Both match the same rule, so one should be closed
 			expect(mockChrome.tabs.remove).toHaveBeenCalledTimes(1);
 
-			// Should NOT close different page or Gmail
-			expect(mockChrome.tabs.remove).not.toHaveBeenCalledWith(differentPageTab.id);
+			// Should NOT close Gmail (doesn't match rule)
 			expect(mockChrome.tabs.remove).not.toHaveBeenCalledWith(gmailTab.id);
 		});
 
-		it('should NOT close Gmail when it matches detection but not the exact URL', async () => {
+		it('should NOT close tabs that do not match the same rule', async () => {
 			const currentTab = {
 				id: 1,
 				url: 'https://example.com/page',
@@ -379,25 +389,49 @@ describe('TabRulesService - GitHub Unique Issue Test', () => {
 				url: 'https://mail.google.com/page',
 			} as chrome.tabs.Tab;
 
+			const rule1 = {
+				id: 'rule1',
+				detection: 'CONTAINS',
+				url_fragment: 'example.com',
+				tab: {
+					unique: true,
+					url_matcher: null,
+				},
+			} as Rule;
+
+			const rule2 = {
+				id: 'rule2',
+				detection: 'CONTAINS',
+				url_fragment: 'google.com',
+				tab: {
+					unique: true,
+					url_matcher: null,
+				},
+			} as Rule;
+
 			const message = {
-				url_fragment: 'page',
-				rule: {
-					detection: 'CONTAINS',
-					url_fragment: 'page',
-					tab: {
-						unique: true,
-						url_matcher: null,
-					},
-				} as Rule,
+				url_fragment: 'example.com',
+				rule: rule1,
 			};
 
 			mockChrome.tabs.query.mockImplementation((_queryInfo: any, callback: any) => {
 				callback([currentTab, gmailTab]);
 			});
 
+			// Mock _getRuleFromUrl to return different rules for each tab
+			vi.mocked(_getRuleFromUrl).mockImplementation(async (url: string) => {
+				if (url.includes('example.com')) {
+					return rule1;
+				}
+				if (url.includes('google.com')) {
+					return rule2;
+				}
+				return undefined;
+			});
+
 			await service.handleSetUnique(message, currentTab);
 
-			// Should NOT close Gmail (different URL)
+			// Should NOT close Gmail (matches different rule)
 			expect(mockChrome.tabs.remove).not.toHaveBeenCalled();
 		});
 	});

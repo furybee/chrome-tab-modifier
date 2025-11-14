@@ -54,20 +54,15 @@ export class RuleApplicationService {
 			this.applyIconRule(rule);
 		}
 
-		// Protection and unique tab handling
+		// Protection handling
 		if (rule.tab.protected) {
 			await chrome.runtime.sendMessage({
 				action: 'setProtected',
 			});
 		}
 
-		if (rule.tab.unique) {
-			await chrome.runtime.sendMessage({
-				action: 'setUnique',
-				url_fragment: rule.url_fragment,
-				rule: rule,
-			});
-		}
+		// Note: unique tab handling is now done in background.ts for faster duplicate closing
+		// No need to send message here as it's already handled during tab.onUpdated
 
 		// Tab grouping is now handled directly in background.ts to avoid race conditions
 		// No need to send a message here anymore

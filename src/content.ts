@@ -12,6 +12,14 @@ import { StorageService } from './content/StorageService';
 import { RuleApplicationService } from './content/RuleApplicationService';
 import { SpotSearchUI } from './content/SpotSearchUI';
 import { UrlChangeDetector } from './content/UrlChangeDetector';
+import { debugLog, initDebugMode } from './content/debugLog';
+
+// ============================================================
+// Debug Mode Initialization
+// ============================================================
+
+// Initialize debug mode from storage
+initDebugMode();
 
 // ============================================================
 // Service Initialization
@@ -24,11 +32,11 @@ const storageService = new StorageService(regexService);
 const ruleApplicationService = new RuleApplicationService(titleService, iconService);
 
 // Spot Search UI
-console.log('[Tabee Content] 🔍 Initializing Spot Search UI...');
+debugLog('[Tabee Content] 🔍 Initializing Spot Search UI...');
 const spotSearchUI = new SpotSearchUI();
 try {
 	spotSearchUI.init();
-	console.log('[Tabee Content] ✅ Spot Search UI initialized');
+	debugLog('[Tabee Content] ✅ Spot Search UI initialized');
 } catch (error) {
 	console.error('[Tabee Content] ❌ Failed to initialize Spot Search UI:', error);
 }
@@ -45,7 +53,7 @@ async function applyRulesForUrl(url: string): Promise<void> {
 	try {
 		const rule = await storageService.getRuleFromUrl(url);
 		if (rule) {
-			console.log('[Tabee Content] 📋 Applying rule for URL:', url);
+			debugLog('[Tabee Content] 📋 Applying rule for URL:', url);
 			await ruleApplicationService.applyRule(rule);
 		}
 	} catch (error) {
@@ -63,7 +71,7 @@ applyRulesForUrl(location.href);
 // Setup URL change detector for Single Page Applications
 const urlChangeDetector = new UrlChangeDetector();
 urlChangeDetector.onChange(async (newUrl, _oldUrl) => {
-	console.log('[Tabee Content] 🔄 SPA navigation detected, re-applying rules');
+	debugLog('[Tabee Content] 🔄 SPA navigation detected, re-applying rules');
 	await applyRulesForUrl(newUrl);
 });
 urlChangeDetector.start();
@@ -73,7 +81,6 @@ urlChangeDetector.start();
 // ============================================================
 
 chrome.runtime.onMessage.addListener(async function (request) {
-
 	if (request.action === 'openPrompt') {
 		const title = prompt(
 			'Enter the new title, a Tab rule will be automatically created for you based on current URL'
@@ -91,12 +98,18 @@ chrome.runtime.onMessage.addListener(async function (request) {
 	} else if (request.action === 'ungroupTab') {
 		await chrome.tabs.ungroup(request.tabId);
 	} else if (request.action === 'toggleSpotSearch') {
-		console.log('[Tabee Content] 🔍 Toggling spot search UI...');
+		debugLog('[Tabee Content] 🔍 Toggling spot search UI...');
 		// Toggle spot search UI
 		spotSearchUI.toggle();
-		console.log('[Tabee Content] ✅ Spot search toggled');
+		debugLog('[Tabee Content] ✅ Spot search toggled');
 	} else if (request.action === 'spotSearchResults') {
-		console.log('[Tabee Content] 🔍 Displaying search results:', request.tabs.length, 'tabs,', request.bookmarks.length, 'bookmarks');
+		debugLog(
+			'[Tabee Content] 🔍 Displaying search results:',
+			request.tabs.length,
+			'tabs,',
+			request.bookmarks.length,
+			'bookmarks'
+		);
 		// Display search results
 		spotSearchUI.displayResults(request.tabs, request.bookmarks);
 	}

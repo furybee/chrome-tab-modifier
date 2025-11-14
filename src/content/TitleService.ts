@@ -128,7 +128,7 @@ export class TitleService {
 
 				while ((matches = regex.exec(currentTitle)) !== null && iterationCount < maxIterations) {
 					for (let j = 0; j < matches.length; j++) {
-						let tag = '@' + i;
+						const tag = '@' + i;
 						title = this.updateTitle(title, tag, matches[j] ?? tag);
 						i++;
 					}
@@ -149,7 +149,7 @@ export class TitleService {
 
 				while ((matches = regex.exec(currentUrl)) !== null && iterationCount < maxIterations) {
 					for (let j = 0; j < matches.length; j++) {
-						let tag = '$' + i;
+						const tag = '$' + i;
 						title = this.updateTitle(title, tag, matches[j] ?? tag);
 						i++;
 					}

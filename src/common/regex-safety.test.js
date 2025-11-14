@@ -74,9 +74,7 @@ describe('Regex Safety', () => {
 		it('should match safe patterns correctly', () => {
 			expect(_safeRegexTestSync('example\\.com', 'https://example.com/path')).toBe(true);
 			expect(_safeRegexTestSync('example\\.com', 'https://other.com/path')).toBe(false);
-			expect(_safeRegexTestSync('^https://example\\.com', 'https://example.com/path')).toBe(
-				true
-			);
+			expect(_safeRegexTestSync('^https://example\\.com', 'https://example.com/path')).toBe(true);
 		});
 
 		it('should handle complex safe patterns from existing tests', () => {
@@ -96,13 +94,7 @@ describe('Regex Safety', () => {
 
 		it('should block dangerous ReDoS patterns', () => {
 			// These patterns are known to cause catastrophic backtracking
-			const dangerousPatterns = [
-				'(a+)+',
-				'(a*)*',
-				'(a|a)*',
-				'(x+|x+y+)*',
-				'(a+)+b',
-			];
+			const dangerousPatterns = ['(a+)+', '(a*)*', '(a|a)*', '(x+|x+y+)*', '(a+)+b'];
 
 			dangerousPatterns.forEach((pattern) => {
 				const result = _safeRegexTestSync(pattern, 'aaaaaaaaaaaaaaaaaaaaaaaaa');
@@ -127,9 +119,7 @@ describe('Regex Safety', () => {
 
 		it('should work with patterns from existing storage tests', () => {
 			// These are the actual patterns used in storage.test.js
-			expect(_safeRegexTestSync('example\\.com\\/path', 'https://example.com/path')).toBe(
-				true
-			);
+			expect(_safeRegexTestSync('example\\.com\\/path', 'https://example.com/path')).toBe(true);
 		});
 	});
 });

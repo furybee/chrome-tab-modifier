@@ -7,7 +7,16 @@
 			:class="{ 'rounded-r-none': modelValue }"
 			@click="isOpen = !isOpen"
 		>
-			<span v-if="modelValue" class="text-xs">{{ displayValue }}</span>
+			<!-- Show image if it's an icon path -->
+			<img
+				v-if="modelValue && isIconPath"
+				:src="selectedIconUrl"
+				class="w-4 h-4 object-contain"
+				:alt="modelValue"
+			/>
+			<!-- Show emoji if it's not a path -->
+			<span v-else-if="modelValue" class="text-xs">{{ displayValue }}</span>
+			<!-- Show placeholder if no value -->
 			<span v-else class="text-xs opacity-60">No icon</span>
 			<ChevronDownIcon class="w-4 h-4 ml-auto" :class="{ 'rotate-180': isOpen }" />
 		</button>
@@ -15,7 +24,7 @@
 		<!-- Emoji/Icon picker dropdown -->
 		<div
 			v-if="isOpen"
-			class="absolute z-50 mt-2 bg-base-100 border border-base-300 rounded-lg shadow-xl w-[310px] h-[300px] flex flex-col"
+			class="absolute z-50 mt-2 bg-base-100 border border-base-300 rounded-lg shadow-xl w-[350px] h-[250px] flex flex-col"
 			@click.stop
 		>
 			<!-- Search bar -->
@@ -123,7 +132,24 @@ const isSelected = (value: string) => {
 	return value === props.modelValue;
 };
 
-// Display value (for icons, show emoji; for asset paths, show icon)
+// Check if the current value is an icon path (not an emoji)
+const isIconPath = computed(() => {
+	if (!props.modelValue) return false;
+
+	// If it contains '/' or starts with 'http', it's a path
+	return props.modelValue.includes('/') || props.modelValue.startsWith('http');
+});
+
+// Get the URL for the selected icon
+const selectedIconUrl = computed(() => {
+	if (!props.modelValue) return '';
+
+	// Find the icon in the list
+	const icon = allIcons.value.find((i) => i.value === props.modelValue);
+	return icon?.icon || props.modelValue;
+});
+
+// Display value (for emojis only, icons are shown as <img>)
 const displayValue = computed(() => {
 	if (!props.modelValue) return '';
 
@@ -134,12 +160,6 @@ const displayValue = computed(() => {
 		!props.modelValue.startsWith('http')
 	) {
 		return props.modelValue;
-	}
-
-	// If it's an icon path, try to find it
-	const icon = allIcons.value.find((i) => i.value === props.modelValue);
-	if (icon) {
-		return '🖼️'; // Icon placeholder
 	}
 
 	return props.modelValue;

@@ -3,7 +3,6 @@
  * Protects against Regular Expression Denial-of-Service (ReDoS) attacks
  */
 
-
 /**
  * Checks if a regex pattern contains potentially dangerous constructs
  * that could lead to catastrophic backtracking

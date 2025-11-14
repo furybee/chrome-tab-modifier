@@ -118,11 +118,7 @@ describe('Detection vs Uniqueness Conflict', () => {
 			expect(detected).toBe(true); // ✅ Detection works!
 
 			// Uniqueness would use unique_pattern (with $1)
-			const uniqueId = _processUrlFragment(
-				config.tab.unique_pattern,
-				url,
-				config.tab.url_matcher
-			);
+			const uniqueId = _processUrlFragment(config.tab.unique_pattern, url, config.tab.url_matcher);
 			expect(uniqueId).toBe('mysite.atlassian.net/browse/ABC-123'); // ✅ Uniqueness works!
 
 			// Different ticket numbers would have different unique IDs

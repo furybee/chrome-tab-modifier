@@ -23,9 +23,7 @@
 			</li>
 		</ul>
 
-		<div v-if="errorValue" class="whitespace-pre-wrap text-red-500">
-			Error: {{ errorValue }}
-		</div>
+		<div v-if="errorValue" class="whitespace-pre-wrap text-red-500">Error: {{ errorValue }}</div>
 	</div>
 </template>
 

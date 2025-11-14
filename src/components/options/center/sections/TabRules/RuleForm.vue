@@ -317,11 +317,7 @@ import { useRulesStore } from '../../../../../stores/rules.store.ts';
 import { computed, inject, onMounted, ref, watch } from 'vue';
 import CustomSelect, { SelectItem } from '../../../../global/CustomSelect.vue';
 import EmojiIconPicker from './EmojiIconPicker.vue';
-import {
-	_chromeGroupColor,
-	_clone,
-	_getDetections,
-} from '../../../../../common/helpers.ts';
+import { _chromeGroupColor, _clone, _getDetections } from '../../../../../common/helpers.ts';
 import { GLOBAL_EVENTS, Group, Rule } from '../../../../../common/types.ts';
 import HelpSwap from '../../../../global/HelpSwap.vue';
 import { _getDefaultGroup, _getDefaultRule } from '../../../../../common/storage.ts';

@@ -1,3 +1,5 @@
+import { debugLog } from './debugLog';
+
 /**
  * Service responsible for detecting URL changes in Single Page Applications (SPAs)
  * SPAs use History API (pushState/replaceState) which doesn't trigger page reloads
@@ -50,7 +52,7 @@ export class UrlChangeDetector {
 			const oldUrl = this.lastUrl;
 			this.lastUrl = currentUrl;
 
-			console.log('[Tabee] 🔄 URL changed (SPA navigation):', {
+			debugLog('[Tabee] 🔄 URL changed (SPA navigation):', {
 				from: oldUrl,
 				to: currentUrl,
 			});

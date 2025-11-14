@@ -28,7 +28,7 @@ describe('WindowService', () => {
 			const singleWindow = {
 				id: 1,
 				focused: true,
-				type: 'normal' as 'normal',
+				type: 'normal' as const,
 				tabs: [{ id: 1 }],
 			};
 
@@ -44,14 +44,14 @@ describe('WindowService', () => {
 			const focusedWindow = {
 				id: 1,
 				focused: true,
-				type: 'normal' as 'normal',
+				type: 'normal' as const,
 				tabs: [{ id: 1 }, { id: 2 }],
 			};
 
 			const otherWindow = {
 				id: 2,
 				focused: false,
-				type: 'normal' as 'normal',
+				type: 'normal' as const,
 				tabs: [{ id: 3 }, { id: 4 }],
 			};
 
@@ -72,14 +72,14 @@ describe('WindowService', () => {
 			const normalWindow = {
 				id: 1,
 				focused: true,
-				type: 'normal' as 'normal',
+				type: 'normal' as const,
 				tabs: [{ id: 1 }],
 			};
 
 			const popupWindow = {
 				id: 2,
 				focused: false,
-				type: 'popup' as 'popup',
+				type: 'popup' as const,
 				tabs: [{ id: 2 }],
 			};
 
@@ -96,14 +96,14 @@ describe('WindowService', () => {
 			const window1 = {
 				id: 1,
 				focused: false,
-				type: 'normal' as 'normal',
+				type: 'normal' as const,
 				tabs: [{ id: 1 }],
 			};
 
 			const window2 = {
 				id: 2,
 				focused: false,
-				type: 'normal' as 'normal',
+				type: 'normal' as const,
 				tabs: [{ id: 2 }],
 			};
 
@@ -124,14 +124,14 @@ describe('WindowService', () => {
 			const window1 = {
 				id: 1,
 				focused: true,
-				type: 'normal' as 'normal',
+				type: 'normal' as const,
 				tabs: [{ id: 1 }],
 			};
 
 			const window2 = {
 				id: 2,
 				focused: false,
-				type: 'normal' as 'normal',
+				type: 'normal' as const,
 				tabs: [],
 			};
 
@@ -148,14 +148,14 @@ describe('WindowService', () => {
 			const window1 = {
 				id: 1,
 				focused: true,
-				type: 'normal' as 'normal',
+				type: 'normal' as const,
 				tabs: [{ id: 1 }],
 			};
 
 			const window2 = {
 				id: 2,
 				focused: false,
-				type: 'normal' as 'normal',
+				type: 'normal' as const,
 				tabs: [{ id: undefined }, { id: 2 }],
 			};
 
@@ -176,14 +176,14 @@ describe('WindowService', () => {
 			const window1 = {
 				id: 1,
 				focused: true,
-				type: 'normal' as 'normal',
+				type: 'normal' as const,
 				tabs: [{ id: 1 }],
 			};
 
 			const window2 = {
 				id: 2,
 				focused: false,
-				type: 'normal' as 'normal',
+				type: 'normal' as const,
 				tabs: [{ id: 2 }],
 			};
 

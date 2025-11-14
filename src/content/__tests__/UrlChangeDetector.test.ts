@@ -1,6 +1,12 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { UrlChangeDetector } from '../UrlChangeDetector';
 
+// Mock debugLog module
+vi.mock('../debugLog', () => ({
+	debugLog: vi.fn(),
+	initDebugMode: vi.fn(),
+}));
+
 describe('UrlChangeDetector', () => {
 	let detector: UrlChangeDetector;
 	let originalLocation: Location;
@@ -171,10 +177,7 @@ describe('UrlChangeDetector', () => {
 			history.pushState(null, '', '/page2');
 
 			// Verify URL change was detected via callback
-			expect(callback).toHaveBeenCalledWith(
-				'https://example.com/page2',
-				oldHref
-			);
+			expect(callback).toHaveBeenCalledWith('https://example.com/page2', oldHref);
 		});
 
 		it('should intercept replaceState and detect URL changes', () => {
@@ -190,10 +193,7 @@ describe('UrlChangeDetector', () => {
 			history.replaceState(null, '', '/page2');
 
 			// Verify URL change was detected via callback
-			expect(callback).toHaveBeenCalledWith(
-				'https://example.com/page2',
-				oldHref
-			);
+			expect(callback).toHaveBeenCalledWith('https://example.com/page2', oldHref);
 		});
 	});
 

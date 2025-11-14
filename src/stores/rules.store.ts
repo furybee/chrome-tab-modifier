@@ -125,6 +125,10 @@ export const useRulesStore = defineStore('rules', {
 			if (settings.tab_hive_reject_list === undefined) {
 				settings.tab_hive_reject_list = [];
 			}
+			// Add default value for debug mode if it doesn't exist
+			if (settings.debug_mode === undefined) {
+				settings.debug_mode = false;
+			}
 			return settings;
 		},
 		async init() {
@@ -216,7 +220,11 @@ export const useRulesStore = defineStore('rules', {
 					console.log('[Tabee] setConfig() init() returned');
 				}
 
-				console.log('[Tabee] setConfig() returning mergedConfig with', mergedConfig.rules.length, 'rules');
+				console.log(
+					'[Tabee] setConfig() returning mergedConfig with',
+					mergedConfig.rules.length,
+					'rules'
+				);
 				return mergedConfig;
 			} catch (error) {
 				console.error('Failed to set config:', error);

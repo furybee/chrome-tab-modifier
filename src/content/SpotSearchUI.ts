@@ -4,6 +4,7 @@
  */
 
 import type { SpotSearchTab, SpotSearchBookmark } from '../background/SpotSearchService';
+import { debugLog } from './debugLog';
 
 export enum ItemType {
 	TAB = 'tab',
@@ -22,13 +23,13 @@ export class SpotSearchUI {
 	 * Initialize the UI components
 	 */
 	init(): void {
-		console.log('[SpotSearchUI] 🔍 Init called');
+		debugLog('[SpotSearchUI] 🔍 Init called');
 		if (this.container) {
-			console.log('[SpotSearchUI] ℹ️ Already initialized');
+			debugLog('[SpotSearchUI] ℹ️ Already initialized');
 			return; // Already initialized
 		}
 
-		console.log('[SpotSearchUI] 🔍 Creating components...');
+		debugLog('[SpotSearchUI] 🔍 Creating components...');
 		this.createOverlay();
 		this.createContainer();
 		this.createSearchInput();
@@ -48,24 +49,24 @@ export class SpotSearchUI {
 		document.body.appendChild(container);
 
 		this.injectStyles();
-		console.log('[SpotSearchUI] ✅ Components created and injected');
+		debugLog('[SpotSearchUI] ✅ Components created and injected');
 	}
 
 	/**
 	 * Toggle visibility of the spot search
 	 */
 	toggle(): void {
-		console.log('[SpotSearchUI] 🔍 Toggle called, current state:', this.isVisible);
+		debugLog('[SpotSearchUI] 🔍 Toggle called, current state:', this.isVisible);
 		if (!this.container || !this.overlay) {
-			console.log('[SpotSearchUI] ❌ Container or overlay not found');
+			debugLog('[SpotSearchUI] ❌ Container or overlay not found');
 			return;
 		}
 
 		if (this.isVisible) {
-			console.log('[SpotSearchUI] 🔍 Hiding...');
+			debugLog('[SpotSearchUI] 🔍 Hiding...');
 			this.hide();
 		} else {
-			console.log('[SpotSearchUI] 🔍 Showing...');
+			debugLog('[SpotSearchUI] 🔍 Showing...');
 			this.show();
 		}
 	}
@@ -74,9 +75,9 @@ export class SpotSearchUI {
 	 * Show the spot search
 	 */
 	show(): void {
-		console.log('[SpotSearchUI] 🔍 Show called');
+		debugLog('[SpotSearchUI] 🔍 Show called');
 		if (!this.container || !this.overlay || !this.searchInput) {
-			console.log('[SpotSearchUI] ❌ Missing components');
+			debugLog('[SpotSearchUI] ❌ Missing components');
 			return;
 		}
 
@@ -84,7 +85,7 @@ export class SpotSearchUI {
 		this.overlay.style.display = 'block';
 		this.searchInput.focus();
 		this.isVisible = true;
-		console.log('[SpotSearchUI] ✅ UI shown');
+		debugLog('[SpotSearchUI] ✅ UI shown');
 
 		// Trigger initial search
 		this.handleSearch();
@@ -232,14 +233,25 @@ export class SpotSearchUI {
 			this.resultsContainer.querySelectorAll('.tabee-spot-item')
 		) as HTMLDivElement[];
 
+		let selectedItem: HTMLDivElement | null = null;
+
+		// Batch DOM writes: first update all classes
 		items.forEach((item, index) => {
 			if (index === this.currentIndex) {
 				item.classList.add('tabee-spot-item-selected');
-				item.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+				selectedItem = item;
 			} else {
 				item.classList.remove('tabee-spot-item-selected');
 			}
 		});
+
+		// Then scroll after all class updates are done
+		// Use requestAnimationFrame to avoid forced reflow
+		if (selectedItem) {
+			requestAnimationFrame(() => {
+				selectedItem?.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+			});
+		}
 	}
 
 	/**

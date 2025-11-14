@@ -14,6 +14,20 @@
 					</div>
 				</div>
 
+				<div class="grid grid-cols-6 mt-4">
+					<div class="col-span-5">
+						<h3 class="font-bold">Debug Mode</h3>
+						<p>Enable console logs in content script for troubleshooting</p>
+					</div>
+					<div class="col-span-1 flex justify-end">
+						<input
+							v-model="debugModeEnabled"
+							class="toggle toggle-xs toggle-primary"
+							type="checkbox"
+						/>
+					</div>
+				</div>
+
 				<!--				<div class="grid grid-cols-6 mt-4">-->
 				<!--					<div class="col-span-5">-->
 				<!--						<h3 class="font-bold">Notifications</h3>-->
@@ -315,6 +329,9 @@ const importModal = ref(null);
 const fileInput = ref<HTMLInputElement | null>(null);
 const fileLoaded = ref(false);
 
+// Debug Mode
+const debugModeEnabled = ref(rulesStore.settings.debug_mode ?? false);
+
 // Lightweight Mode
 const lightweightModeEnabled = ref(rulesStore.settings.lightweight_mode_enabled ?? false);
 const lightweightModePatterns = ref<LightweightModePattern[]>(
@@ -340,6 +357,16 @@ const themes = _getThemes();
 
 watch(currentTheme, (theme) => {
 	rulesStore.applyTheme(theme);
+});
+
+watch(debugModeEnabled, async (enabled) => {
+	rulesStore.settings.debug_mode = enabled;
+	await rulesStore.save();
+
+	emitter.emit(GLOBAL_EVENTS.SHOW_TOAST, {
+		type: 'success',
+		message: `Debug Mode ${enabled ? 'enabled' : 'disabled'}!`,
+	});
 });
 
 watch(lightweightModeEnabled, async (enabled) => {
