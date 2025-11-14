@@ -1,6 +1,12 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { UrlChangeDetector } from '../UrlChangeDetector';
 
+// Mock debugLog module
+vi.mock('../debugLog', () => ({
+	debugLog: vi.fn(),
+	initDebugMode: vi.fn(),
+}));
+
 describe('UrlChangeDetector', () => {
 	let detector: UrlChangeDetector;
 	let originalLocation: Location;
