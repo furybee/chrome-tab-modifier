@@ -48,7 +48,7 @@
     "vue-eslint-parser": "^9.4.2",
     "vue-tsc": "^2.0.24"
   },
-  "resolutions": {
+  "overrides": {
     "cross-spawn": "^7.0.5"
   }
 }

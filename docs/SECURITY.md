@@ -22,10 +22,10 @@ Tabee uses multiple security scanning tools in the CI/CD pipeline to ensure code
 - **Action on detection**: Pipeline fails if secrets are found
 
 ### 3. Dependency Vulnerability Audit
-- **Purpose**: Checks for known vulnerabilities in npm/yarn dependencies
+- **Purpose**: Checks for known vulnerabilities in npm dependencies
 - **Configuration**: `.github/workflows/ci.yml` - `dependency_audit` job
 - **Severity**: Fails on HIGH severity and above
-- **Tool**: `audit-ci` with yarn
+- **Tool**: `audit-ci` with npm
 
 ### 4. Test Coverage
 - **Purpose**: Ensures code quality and tracks test coverage

@@ -1,7 +1,6 @@
 # <img src="public/assets/icon_16.png" alt="icon"> Tabee
 
 ![GitHub Release](https://img.shields.io/github/v/release/furybee/chrome-tab-modifier?style=flat-square&labelColor=black&v) [![license](https://img.shields.io/badge/license-MIT-ff4081.svg?style=flat-square&labelColor=black)](./LICENSE) ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/furybee/chrome-tab-modifier/ci.yml?style=flat-square&label=CI&labelColor=black) [![.nvmrc](https://img.shields.io/badge/.nvmrc-20-00e676.svg?style=flat-square&labelColor=black)](./.nvmrc)
-[![yarn:required](https://img.shields.io/badge/yarn-required-aeea00.svg?style=flat-square&labelColor=black)](https://yarnpkg.com/en/)
 [![Conventional Commits](https://img.shields.io/badge/Conventional%20Commits-1.0.0-ffab00.svg?style=flat-square&labelColor=black)](https://conventionalcommits.org) ![pr welcome](https://img.shields.io/badge/PRs-welcome-09FF33.svg?style=flat-square&labelColor=black)
 
 The original Tab Modifier.
@@ -158,19 +157,17 @@ In case you want to contribute or just want to play with the code, follow the gu
 
 ### Setup
 
-Download and install [NodeJS](http://nodejs.org/download/) v18 to get [npm](https://www.npmjs.org/).
+Download and install [NodeJS](http://nodejs.org/download/) v20+ to get [npm](https://www.npmjs.org/).
 
 💡 Use `nvm` to allow you to quickly install and use different versions of node via the command line.
 
-Install `yarn` globally:
+Clone the project and install dependencies:
 
 ```bash
-npm install -g yarn
+npm install
 ```
 
-Clone the project and install dependencies with `yarn`.
-
-Type `yarn dev` to watch your changes inside `src/` folder or type `yarn build` after each change.
+Type `npm run dev` to watch your changes inside `src/` folder or type `npm run build` after each change.
 
 ### Load local extension in Chrome
 

@@ -28,7 +28,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install dependencies
-        run: yarn install
+        run: npm ci
 
       - name: 'Test'
         run: npx vitest --coverage.enabled true
@@ -84,10 +84,10 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci
 
       - name: Audit dependencies (high severity and above)
-        run: npx --yes audit-ci --package-manager yarn --severity high
+        run: npx --yes audit-ci --package-manager npm --severity high
 
   clamav_malware_scan:
     name: ClamAV Malware Scan
@@ -146,10 +146,10 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci
 
       - name: Build extension zip
-        run: yarn build-zip
+        run: npm run build-zip
 
       - name: Get extension version
         id: version
