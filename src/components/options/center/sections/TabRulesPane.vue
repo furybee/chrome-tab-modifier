@@ -5,7 +5,18 @@
 		<div v-else class="container mx-auto max-w-5xl p-4">
 			<div class="card bg-base-200">
 				<div class="card-body">
-					<TableRules :rules="rulesStore.rules" :groups="rulesStore.groups" />
+					<!-- Show message when search has no results -->
+					<div
+						v-if="rulesStore.filteredRules.length === 0 && rulesStore.searchQuery"
+						class="text-center py-8 text-base-content/60"
+					>
+						<p>No rules found matching "{{ rulesStore.searchQuery }}"</p>
+					</div>
+					<TableRules
+						v-else
+						:rules="rulesStore.filteredRules"
+						:groups="rulesStore.groups"
+					/>
 				</div>
 			</div>
 

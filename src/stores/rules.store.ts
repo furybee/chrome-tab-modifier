@@ -22,7 +22,24 @@ export const useRulesStore = defineStore('rules', {
 			rules: [] as Rule[],
 			groups: [] as Group[],
 			settings: { theme: 'dim' } as Settings,
+			searchQuery: '' as string,
 		};
+	},
+	getters: {
+		filteredRules: (state): Rule[] => {
+			if (!state.searchQuery.trim()) {
+				return state.rules;
+			}
+
+			const query = state.searchQuery.toLowerCase().trim();
+			return state.rules.filter((rule) => {
+				const name = rule.name?.toLowerCase() || '';
+				const urlFragment = rule.url_fragment?.toLowerCase() || '';
+				const title = rule.tab?.title?.toLowerCase() || '';
+
+				return name.includes(query) || urlFragment.includes(query) || title.includes(query);
+			});
+		},
 	},
 	actions: {
 		fixDuplicateRuleIds(rules: Rule[]) {
@@ -513,6 +530,12 @@ export const useRulesStore = defineStore('rules', {
 			} catch (error) {
 				console.error('Failed to load rules:', error);
 			}
+		},
+		setSearchQuery(query: string) {
+			this.searchQuery = query;
+		},
+		clearSearchQuery() {
+			this.searchQuery = '';
 		},
 	},
 });
