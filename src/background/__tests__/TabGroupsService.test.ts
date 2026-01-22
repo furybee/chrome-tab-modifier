@@ -6,6 +6,7 @@ const mockChrome = {
 	tabs: {
 		ungroup: vi.fn(),
 		group: vi.fn(),
+		get: vi.fn(),
 	},
 	tabGroups: {
 		get: vi.fn(),
@@ -131,6 +132,8 @@ describe('TabGroupsService', () => {
 				title: 'GitHub',
 				color: 'blue',
 			});
+			// Mock chrome.tabs.get to return tab without splitViewId (not in split view)
+			mockChrome.tabs.get.mockResolvedValue(tab);
 
 			await service.ungroupTab(rule, tab);
 
@@ -219,6 +222,8 @@ describe('TabGroupsService', () => {
 			};
 			const tabModifier = (await _getStorageAsync())!;
 
+			// Mock chrome.tabs.get to return tab without splitViewId (not in split view)
+			mockChrome.tabs.get.mockResolvedValue(tab);
 			// Mock query to return no groups
 			mockChrome.tabGroups.query.mockImplementation((_queryInfo: any, callback: any) => {
 				callback([]);
@@ -235,7 +240,7 @@ describe('TabGroupsService', () => {
 			await service.applyGroupRuleToTab(rule, tab, tabModifier);
 
 			// Wait for async operations
-			await new Promise((resolve) => setTimeout(resolve, 10));
+			await new Promise((resolve) => setTimeout(resolve, 50));
 
 			expect(mockChrome.tabGroups.query).toHaveBeenCalledWith(
 				{
@@ -245,10 +250,7 @@ describe('TabGroupsService', () => {
 				},
 				expect.any(Function)
 			);
-			expect(mockChrome.tabs.group).toHaveBeenCalledWith(
-				{ tabIds: [1] },
-				expect.any(Function)
-			);
+			expect(mockChrome.tabs.group).toHaveBeenCalledWith({ tabIds: [1] }, expect.any(Function));
 		});
 
 		it('should add tab to existing group if one exists', async () => {
@@ -283,6 +285,8 @@ describe('TabGroupsService', () => {
 				color: 'blue',
 			};
 
+			// Mock chrome.tabs.get to return tab without splitViewId (not in split view)
+			mockChrome.tabs.get.mockResolvedValue(tab);
 			// Mock query to return one group
 			mockChrome.tabGroups.query.mockImplementation((_queryInfo: any, callback: any) => {
 				callback([existingGroup]);
@@ -299,7 +303,7 @@ describe('TabGroupsService', () => {
 			await service.applyGroupRuleToTab(rule, tab, tabModifier);
 
 			// Wait for async operations
-			await new Promise((resolve) => setTimeout(resolve, 10));
+			await new Promise((resolve) => setTimeout(resolve, 50));
 
 			expect(mockChrome.tabs.group).toHaveBeenCalledWith(
 				{ groupId: 5, tabIds: [1] },
@@ -339,6 +343,8 @@ describe('TabGroupsService', () => {
 				{ id: 7, title: 'GitHub', color: 'blue' },
 			];
 
+			// Mock chrome.tabs.get to return tab without splitViewId (not in split view)
+			mockChrome.tabs.get.mockResolvedValue(tab);
 			// Mock query to return multiple groups (bug scenario)
 			mockChrome.tabGroups.query.mockImplementation((_queryInfo: any, callback: any) => {
 				callback(duplicateGroups);
@@ -355,7 +361,7 @@ describe('TabGroupsService', () => {
 			await service.applyGroupRuleToTab(rule, tab, tabModifier);
 
 			// Wait for async operations
-			await new Promise((resolve) => setTimeout(resolve, 10));
+			await new Promise((resolve) => setTimeout(resolve, 50));
 
 			// Should use the first group (id: 5) instead of creating a new one
 			expect(mockChrome.tabs.group).toHaveBeenCalledWith(
@@ -363,10 +369,7 @@ describe('TabGroupsService', () => {
 				expect.any(Function)
 			);
 			// Should NOT create a new group
-			expect(mockChrome.tabs.group).not.toHaveBeenCalledWith(
-				{ tabIds: [1] },
-				expect.any(Function)
-			);
+			expect(mockChrome.tabs.group).not.toHaveBeenCalledWith({ tabIds: [1] }, expect.any(Function));
 		});
 	});
 

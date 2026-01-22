@@ -1,7 +1,7 @@
 {
   "name": "tabee",
   "private": true,
-  "version": "1.1.4",
+  "version": "1.1.5",
   "license": "MIT",
   "type": "module",
   "scripts": {
@@ -13,7 +13,7 @@
     "tsc": "vue-tsc",
     "build": "rm -rf ./dist && vite build",
     "preview": "vite preview",
-    "build-zip": "rm -rf ./dist && rm -f tabee.zip && yarn build && cd ./dist && zip -r ../tabee.zip *"
+    "build-zip": "rm -rf ./dist && rm -f tabee.zip && npm run build && cd ./dist && zip -r ../tabee.zip *"
   },
   "dependencies": {
     "lz-string": "^1.5.0",
@@ -48,7 +48,7 @@
     "vue-eslint-parser": "^9.4.2",
     "vue-tsc": "^2.0.24"
   },
-  "resolutions": {
+  "overrides": {
     "cross-spawn": "^7.0.5"
   }
 }

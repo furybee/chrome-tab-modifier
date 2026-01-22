@@ -130,11 +130,17 @@ describe('Rules Store', () => {
 		expect(store.rules[2].name).toBe('Original Rule (Copy 2)');
 
 		// Update the first duplicated rule's title (not name)
-		const updatedDuplicate1 = { ...duplicatedRule1, tab: { ...duplicatedRule1.tab, title: 'Updated Title 1' } };
+		const updatedDuplicate1 = {
+			...duplicatedRule1,
+			tab: { ...duplicatedRule1.tab, title: 'Updated Title 1' },
+		};
 		await store.updateRule(updatedDuplicate1);
 
 		// Update the second duplicated rule's title (not name)
-		const updatedDuplicate2 = { ...duplicatedRule2, tab: { ...duplicatedRule2.tab, title: 'Updated Title 2' } };
+		const updatedDuplicate2 = {
+			...duplicatedRule2,
+			tab: { ...duplicatedRule2.tab, title: 'Updated Title 2' },
+		};
 		await store.updateRule(updatedDuplicate2);
 
 		// Verify that each rule was updated correctly (checking tab.title)

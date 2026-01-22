@@ -300,7 +300,11 @@ export function _isRuleEnabled(rule: Rule): boolean {
 	return rule.is_enabled;
 }
 
-export function _processUrlFragment(urlFragment: string, currentUrl: string, urlMatcher?: string | null): string {
+export function _processUrlFragment(
+	urlFragment: string,
+	currentUrl: string,
+	urlMatcher?: string | null
+): string {
 	if (!urlMatcher || !urlFragment.includes('$')) {
 		return urlFragment;
 	}
@@ -316,7 +320,10 @@ export function _processUrlFragment(urlFragment: string, currentUrl: string, url
 			for (let j = 0; j < matches.length; j++) {
 				const placeholder = '$' + i;
 				if (processedFragment.includes(placeholder)) {
-					processedFragment = processedFragment.replace(new RegExp('\\' + placeholder, 'g'), matches[j] || '');
+					processedFragment = processedFragment.replace(
+						new RegExp('\\' + placeholder, 'g'),
+						matches[j] || ''
+					);
 				}
 				i++;
 			}

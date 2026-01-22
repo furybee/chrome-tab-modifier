@@ -60,12 +60,16 @@ describe('RegexService', () => {
 
 	describe('createSafeRegex', () => {
 		it('should throw error for unsafe patterns', () => {
-			expect(() => service.createSafeRegex('(?=.*)+')).toThrow('Potentially unsafe regex pattern detected');
+			expect(() => service.createSafeRegex('(?=.*)+')).toThrow(
+				'Potentially unsafe regex pattern detected'
+			);
 		});
 
 		it('should throw error for patterns longer than 200 characters', () => {
 			const longPattern = 'a'.repeat(201);
-			expect(() => service.createSafeRegex(longPattern)).toThrow('Potentially unsafe regex pattern detected');
+			expect(() => service.createSafeRegex(longPattern)).toThrow(
+				'Potentially unsafe regex pattern detected'
+			);
 		});
 
 		it('should create regex with default flags', () => {

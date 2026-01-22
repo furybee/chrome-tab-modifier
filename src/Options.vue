@@ -31,8 +31,38 @@
 						</div>
 
 						<div class="navbar-end mr-2 flex gap-2">
+							<!-- Search bar for Rules -->
+							<label
+								v-if="hasRules && currentContent.component === 'TabRulesPane'"
+								class="input input-xs input-bordered flex items-center gap-2 w-48 focus-within:w-64 transition-all"
+							>
+								<input
+									ref="searchInput"
+									v-model="searchQuery"
+									type="text"
+									class="grow min-w-0"
+									placeholder="Search rules..."
+									@input="onSearchInput"
+									@keydown.escape="clearSearch"
+								/>
+								<button
+									v-if="searchQuery"
+									class="btn btn-xs btn-ghost btn-circle"
+									@click="clearSearch"
+								>
+									<CloseIcon class="!w-3 !h-3" />
+								</button>
+								<template v-else>
+									<kbd class="kbd kbd-xs">{{ isMac ? '⌘' : 'Ctrl' }}</kbd>
+									<kbd class="kbd kbd-xs">K</kbd>
+								</template>
+							</label>
 							<button
-								v-if="FEATURE_FLAGS.ENABLE_RULE_COPY_PASTE && hasRules && currentContent.component === 'TabRulesPane'"
+								v-if="
+									FEATURE_FLAGS.ENABLE_RULE_COPY_PASTE &&
+									hasRules &&
+									currentContent.component === 'TabRulesPane'
+								"
 								class="btn btn-xs btn-ghost tooltip tooltip-left flex items-center justify-center"
 								data-tip="Paste rule from clipboard"
 								@click="pasteRule"
@@ -88,7 +118,7 @@
 <script lang="ts" setup>
 import Menu from './components/options/left/Menu.vue';
 import { Components, GLOBAL_EVENTS, MenuItem } from './common/types.ts';
-import { computed, inject, onMounted, ref } from 'vue';
+import { computed, inject, onMounted, onUnmounted, ref } from 'vue';
 import TabRulesPane from './components/options/center/sections/TabRulesPane.vue';
 import TabGroupsPane from './components/options/center/sections/TabGroupsPane.vue';
 import TabHivePane from './components/options/center/sections/TabHivePane.vue';
@@ -170,11 +200,37 @@ const rulesStore = useRulesStore();
 const menuStore = useMenuStore();
 
 const currentContent = ref<MenuItem>(sectionItems[0]);
+const searchInput = ref<HTMLInputElement | null>(null);
+const searchQuery = ref('');
+
+const onSearchInput = () => {
+	rulesStore.setSearchQuery(searchQuery.value);
+};
+
+const clearSearch = () => {
+	searchQuery.value = '';
+	rulesStore.clearSearchQuery();
+};
+
+const handleKeydown = (event: KeyboardEvent) => {
+	// Ctrl+K or Cmd+K to focus search
+	if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
+		event.preventDefault();
+		if (currentContent.value.component === 'TabRulesPane' && searchInput.value) {
+			searchInput.value.focus();
+		}
+	}
+};
 
 const onMenuClicked = (menuItem: MenuItem) => {
 	currentContent.value = menuItem;
 
 	menuStore.setCurrentMenuItem(menuItem);
+
+	// Clear search when navigating away from rules
+	if (menuItem.component !== 'TabRulesPane') {
+		clearSearch();
+	}
 
 	const drawerMenu = document.getElementById('drawer-menu') as HTMLInputElement;
 	drawerMenu.checked = false;
@@ -221,6 +277,10 @@ const hasGroups = computed<boolean>(() => {
 	return rulesStore.groups.length > 0;
 });
 
+const isMac = computed<boolean>(() => {
+	return navigator.platform.toLowerCase().includes('mac');
+});
+
 onMounted(async () => {
 	menuStore.setCurrentMenuItem(currentContent.value);
 
@@ -229,6 +289,13 @@ onMounted(async () => {
 	emitter.on(GLOBAL_EVENTS.NAVIGATE_TO_SETTINGS, () => {
 		onMenuClicked(sectionItems.find((item) => item.component === 'SettingsPane')!);
 	});
+
+	// Add keyboard shortcut listener
+	document.addEventListener('keydown', handleKeydown);
+});
+
+onUnmounted(() => {
+	document.removeEventListener('keydown', handleKeydown);
 });
 </script>
 

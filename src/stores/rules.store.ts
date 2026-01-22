@@ -22,7 +22,24 @@ export const useRulesStore = defineStore('rules', {
 			rules: [] as Rule[],
 			groups: [] as Group[],
 			settings: { theme: 'dim' } as Settings,
+			searchQuery: '' as string,
 		};
+	},
+	getters: {
+		filteredRules: (state): Rule[] => {
+			if (!state.searchQuery.trim()) {
+				return state.rules;
+			}
+
+			const query = state.searchQuery.toLowerCase().trim();
+			return state.rules.filter((rule) => {
+				const name = rule.name?.toLowerCase() || '';
+				const urlFragment = rule.url_fragment?.toLowerCase() || '';
+				const title = rule.tab?.title?.toLowerCase() || '';
+
+				return name.includes(query) || urlFragment.includes(query) || title.includes(query);
+			});
+		},
 	},
 	actions: {
 		fixDuplicateRuleIds(rules: Rule[]) {
@@ -125,6 +142,10 @@ export const useRulesStore = defineStore('rules', {
 			if (settings.tab_hive_reject_list === undefined) {
 				settings.tab_hive_reject_list = [];
 			}
+			// Add default value for debug mode if it doesn't exist
+			if (settings.debug_mode === undefined) {
+				settings.debug_mode = false;
+			}
 			return settings;
 		},
 		async init() {
@@ -216,7 +237,11 @@ export const useRulesStore = defineStore('rules', {
 					console.log('[Tabee] setConfig() init() returned');
 				}
 
-				console.log('[Tabee] setConfig() returning mergedConfig with', mergedConfig.rules.length, 'rules');
+				console.log(
+					'[Tabee] setConfig() returning mergedConfig with',
+					mergedConfig.rules.length,
+					'rules'
+				);
 				return mergedConfig;
 			} catch (error) {
 				console.error('Failed to set config:', error);
@@ -505,6 +530,12 @@ export const useRulesStore = defineStore('rules', {
 			} catch (error) {
 				console.error('Failed to load rules:', error);
 			}
+		},
+		setSearchQuery(query: string) {
+			this.searchQuery = query;
+		},
+		clearSearchQuery() {
+			this.searchQuery = '';
 		},
 	},
 });

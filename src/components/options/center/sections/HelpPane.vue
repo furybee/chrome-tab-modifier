@@ -17,22 +17,67 @@
 				<h2 class="card-title">✨ Features</h2>
 
 				<ul class="list-disc ml-3 space-y-1">
-					<li><strong>Rename tabs</strong> - Customize tab titles with static text or dynamic patterns.</li>
-					<li><strong>Change favicons</strong> - Replace any tab icon with custom images, URLs, or paste directly from clipboard.</li>
-					<li><strong>Pin tabs</strong> - Automatically pin important websites to keep them always visible.</li>
-					<li><strong>Group tabs</strong> - Organize tabs into custom colored groups for better workspace management.</li>
-					<li><strong>Protect tabs</strong> - Prevent accidental closure with a confirmation dialog on protected websites.</li>
-					<li><strong>Unique tabs</strong> - Automatically close duplicate tabs to keep your browser clean.</li>
+					<li>
+						<strong>Rename tabs</strong> - Customize tab titles with static text or dynamic
+						patterns.
+					</li>
+					<li>
+						<strong>Change favicons</strong> - Replace any tab icon with custom images, URLs, or
+						paste directly from clipboard.
+					</li>
+					<li>
+						<strong>Pin tabs</strong> - Automatically pin important websites to keep them always
+						visible.
+					</li>
+					<li>
+						<strong>Group tabs</strong> - Organize tabs into custom colored groups for better
+						workspace management.
+					</li>
+					<li>
+						<strong>Protect tabs</strong> - Prevent accidental closure with a confirmation dialog on
+						protected websites.
+					</li>
+					<li>
+						<strong>Unique tabs</strong> - Automatically close duplicate tabs to keep your browser
+						clean.
+					</li>
 					<li><strong>Mute tabs</strong> - Silence any website before it starts playing sound.</li>
-					<li><strong>Auto-close inactive tabs</strong> - Automatically close tabs after a specified duration and restore them from Tab Hive.</li>
-					<li><strong>Tab Hive</strong> - View and restore recently closed tabs with search functionality.</li>
-					<li><strong>Spot Search</strong> - Instantly search through all your open tabs and bookmarks with a spotlight-style interface (Alt+Shift+E).</li>
-					<li><strong>Merge windows</strong> - Combine all browser windows into one with a keyboard shortcut (Alt+Shift+W) or context menu.</li>
-					<li><strong>Lightweight Mode</strong> - Reduce memory usage by disabling Tabee on specific domains.</li>
-					<li><strong>RegEx support</strong> - Use advanced pattern matching with regular expressions for URL detection and title manipulation.</li>
-					<li><strong>Context menu</strong> - Right-click any page to quickly create or edit rules for that URL.</li>
-					<li><strong>Side Panel</strong> - Quick access to Tab Hive and rule creation from Chrome's side panel.</li>
-					<li><strong>Sync across devices</strong> - All your rules and settings sync automatically via Chrome Sync.</li>
+					<li>
+						<strong>Auto-close inactive tabs</strong> - Automatically close tabs after a specified
+						duration and restore them from Tab Hive.
+					</li>
+					<li>
+						<strong>Tab Hive</strong> - View and restore recently closed tabs with search
+						functionality.
+					</li>
+					<li>
+						<strong>Spot Search</strong> - Instantly search through all your open tabs and bookmarks
+						with a spotlight-style interface (Alt+Shift+E).
+					</li>
+					<li>
+						<strong>Merge windows</strong> - Combine all browser windows into one with a keyboard
+						shortcut (Alt+Shift+W) or context menu.
+					</li>
+					<li>
+						<strong>Lightweight Mode</strong> - Reduce memory usage by disabling Tabee on specific
+						domains.
+					</li>
+					<li>
+						<strong>RegEx support</strong> - Use advanced pattern matching with regular expressions
+						for URL detection and title manipulation.
+					</li>
+					<li>
+						<strong>Context menu</strong> - Right-click any page to quickly create or edit rules for
+						that URL.
+					</li>
+					<li>
+						<strong>Side Panel</strong> - Quick access to Tab Hive and rule creation from Chrome's
+						side panel.
+					</li>
+					<li>
+						<strong>Sync across devices</strong> - All your rules and settings sync automatically
+						via Chrome Sync.
+					</li>
 					<li>And the icing on the cake... <strong>Combine all of them!</strong></li>
 				</ul>
 			</div>
@@ -43,15 +88,20 @@
 				<h2 class="card-title">⌨️ Keyboard Shortcuts</h2>
 
 				<h3 class="font-bold">Spot Search</h3>
-				<p>
-					Quickly search through your open tabs and bookmarks with a spotlight-style interface:
-				</p>
+				<p>Quickly search through your open tabs and bookmarks with a spotlight-style interface:</p>
 				<ul class="list-disc ml-3">
-					<li><strong>Windows/Linux:</strong> <kbd class="kbd kbd-sm">Alt</kbd> + <kbd class="kbd kbd-sm">Shift</kbd> + <kbd class="kbd kbd-sm">E</kbd></li>
-					<li><strong>Mac:</strong> <kbd class="kbd kbd-sm">⌘ Command</kbd> + <kbd class="kbd kbd-sm">Shift</kbd> + <kbd class="kbd kbd-sm">E</kbd></li>
+					<li>
+						<strong>Windows/Linux:</strong> <kbd class="kbd kbd-sm">Alt</kbd> +
+						<kbd class="kbd kbd-sm">Shift</kbd> + <kbd class="kbd kbd-sm">E</kbd>
+					</li>
+					<li>
+						<strong>Mac:</strong> <kbd class="kbd kbd-sm">⌘ Command</kbd> +
+						<kbd class="kbd kbd-sm">Shift</kbd> + <kbd class="kbd kbd-sm">E</kbd>
+					</li>
 				</ul>
 				<p class="mt-2">
-					Type to filter tabs by title, URL, or tab group. Use arrow keys to navigate and press Enter to switch to a tab or open a bookmark.
+					Type to filter tabs by title, URL, or tab group. Use arrow keys to navigate and press
+					Enter to switch to a tab or open a bookmark.
 				</p>
 
 				<h3 class="font-bold">Merge All Windows</h3>
@@ -60,8 +110,14 @@
 					shortcut:
 				</p>
 				<ul class="list-disc ml-3">
-					<li><strong>Windows/Linux:</strong> <kbd class="kbd kbd-sm">Alt</kbd> + <kbd class="kbd kbd-sm">Shift</kbd> + <kbd class="kbd kbd-sm">W</kbd></li>
-					<li><strong>Mac:</strong> <kbd class="kbd kbd-sm">⌘ Command</kbd> + <kbd class="kbd kbd-sm">Shift</kbd> + <kbd class="kbd kbd-sm">W</kbd></li>
+					<li>
+						<strong>Windows/Linux:</strong> <kbd class="kbd kbd-sm">Alt</kbd> +
+						<kbd class="kbd kbd-sm">Shift</kbd> + <kbd class="kbd kbd-sm">W</kbd>
+					</li>
+					<li>
+						<strong>Mac:</strong> <kbd class="kbd kbd-sm">⌘ Command</kbd> +
+						<kbd class="kbd kbd-sm">Shift</kbd> + <kbd class="kbd kbd-sm">W</kbd>
+					</li>
 				</ul>
 				<p class="mt-2">
 					You can also access this feature by right-clicking anywhere and selecting "Merge All
@@ -101,28 +157,51 @@
 
 				<h3 class="font-bold">Title</h3>
 				<p>This action will rewrite the website title.</p>
-				<p>
-					Another advanced usage can be used with the title, you can inject some parts of the URL
-					with the dollar syntax. This feature is linked to the "URL matcher" action, see
-					afterwards. Use $0, $1, etc. depending on your regular expression defined in "URL
-					matcher".
+				<p>You can use special variables in your title:</p>
+				<ul class="list-disc ml-3 space-y-1">
+					<li>
+						<code class="bg-base-300 px-1 rounded">{title}</code> - The original page title
+					</li>
+					<li>
+						<code class="bg-base-300 px-1 rounded">{.css-selector}</code> - Extract text from any
+						element on the page using a CSS selector
+					</li>
+				</ul>
+				<p class="mt-2">
+					<strong>Example for YouTube:</strong> To prepend the channel name to video titles, use:
 				</p>
 				<p>
-					As you can scan the URL, you can also scan the title and inject some parts of it with the
-					"at (@)" syntax. This feature is linked to the "Title matcher" action, see afterwards. Use
-					@0, @1, etc. depending on your regular expression defined in "Title matcher".
+					<code class="bg-base-300 px-1 rounded">{.ytd-channel-name a} - {title}</code>
+				</p>
+				<p class="mt-2">
+					This works with any valid CSS selector:
+					<code class="bg-base-300 px-1 rounded">{#header h1}</code>,
+					<code class="bg-base-300 px-1 rounded">{.author-name}</code>,
+					<code class="bg-base-300 px-1 rounded">{[data-testid="username"]}</code>, etc.
+				</p>
+				<p class="mt-2">
+					<strong>Advanced:</strong> You can also inject parts of the URL with the dollar ($)
+					syntax. This feature is linked to the "URL matcher" action. Use $0, $1, etc. depending on
+					your regular expression defined in "URL matcher".
+				</p>
+				<p>
+					Similarly, you can inject parts of the title with the "at" (@) syntax. This feature is
+					linked to the "Title matcher" action. Use @0, @1, etc. depending on your regular
+					expression defined in "Title matcher".
 				</p>
 
 				<h3 class="font-bold">Icon</h3>
 				<p>This action will replace the website (fav)icon.</p>
 				<p>You can select an icon provided by the extension.</p>
 				<p>
-					Otherwise, you can define an icon URL in the input like
-					"https://example.com/favicon.ico".
+					Otherwise, you can define an icon URL in the input like "https://example.com/favicon.ico".
 				</p>
 				<p>For local icons from your computer, you have multiple options:</p>
 				<ul class="list-disc ml-3">
-					<li><strong>Paste directly</strong>: Copy an image (screenshot, file, etc.) and paste it directly into the "Custom Icon" field - it will be automatically converted to base64!</li>
+					<li>
+						<strong>Paste directly</strong>: Copy an image (screenshot, file, etc.) and paste it
+						directly into the "Custom Icon" field - it will be automatically converted to base64!
+					</li>
 					<li>Upload your icon somewhere like imgur.com and paste the direct link</li>
 					<li>Use a service to convert your icon to Data URI format manually</li>
 				</ul>

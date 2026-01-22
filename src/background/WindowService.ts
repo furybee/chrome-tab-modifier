@@ -50,7 +50,7 @@ export class WindowService {
 								index: -1, // Append at the end
 							});
 
-			console.log(`[Tabee] Moved ${tabIds.length} tabs from window ${window.id}`);
+							console.log(`[Tabee] Moved ${tabIds.length} tabs from window ${window.id}`);
 						} catch (error) {
 							console.error(`[Tabee] Error moving tabs from window ${window.id}:`, error);
 						}

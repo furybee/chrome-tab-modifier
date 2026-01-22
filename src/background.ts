@@ -26,7 +26,32 @@ const spotSearchService = new SpotSearchService();
  * Handle tab updates - apply rules when URL changes
  */
 chrome.tabs.onUpdated.addListener(
-	async (_: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab) => {
+	async (tabId: number, changeInfo: chrome.tabs.TabChangeInfo, tab: chrome.tabs.Tab) => {
+		// Track split view changes (Chrome 140+)
+		// Manipulating tabs in split view can crash Chrome
+		const changeInfoWithSplitView = changeInfo as chrome.tabs.TabChangeInfo & {
+			splitViewId?: number;
+		};
+
+		// If splitViewId changed, update our tracking
+		if (changeInfoWithSplitView.splitViewId !== undefined) {
+			if (changeInfoWithSplitView.splitViewId === -1) {
+				// Tab exited split view
+				tabGroupsService.markTabNotInSplitView(tabId);
+			} else {
+				// Tab entered split view
+				tabGroupsService.markTabInSplitView(tabId);
+				console.log('[Tabee] Skipping tab update - split view change detected:', tabId);
+				return;
+			}
+		}
+
+		// Also check the tab object for split view status
+		if (tabGroupsService.isTabInSplitView(tab)) {
+			console.log('[Tabee] Skipping tab update - tab is in split view:', tabId);
+			return;
+		}
+
 		// Process on URL change OR when tab completes loading
 		const shouldProcess = changeInfo.url || (changeInfo.status === 'complete' && tab.url);
 
@@ -49,10 +74,26 @@ chrome.tabs.onUpdated.addListener(
 
 		// Apply grouping logic FIRST to avoid race condition
 		// where ungroupTab removes the tab from group before content script re-applies it
-		if (rule && tabModifier) {
-			await tabGroupsService.applyGroupRuleToTab(rule, tab, tabModifier);
-		} else {
-			await tabGroupsService.ungroupTab(rule, tab);
+		try {
+			if (rule && tabModifier) {
+				await tabGroupsService.applyGroupRuleToTab(rule, tab, tabModifier);
+			} else {
+				await tabGroupsService.ungroupTab(rule, tab);
+			}
+		} catch (error) {
+			console.log('[Tabee] Error applying group rule (tab may be in split view):', error);
+		}
+
+		// Handle unique tab logic in background for faster duplicate closing
+		// This runs before content script is injected, closing duplicates during page load
+		if (rule?.tab?.unique && tab.id) {
+			await tabRulesService.handleSetUnique(
+				{
+					url_fragment: rule.url_fragment,
+					rule: rule,
+				},
+				tab
+			);
 		}
 
 		await tabRulesService.applyRuleToTab(tab);
@@ -63,8 +104,21 @@ chrome.tabs.onUpdated.addListener(
  * Handle tab moves - reapply group rules
  */
 chrome.tabs.onMoved.addListener(async (tabId) => {
-	const tab = await chrome.tabs.get(tabId);
+	let tab: chrome.tabs.Tab;
+	try {
+		tab = await chrome.tabs.get(tabId);
+	} catch {
+		// Tab may have been closed or is in an invalid state
+		return;
+	}
+
 	if (!tab?.url) return;
+
+	// Skip if tab is in split view (Chrome 140+)
+	if (tabGroupsService.isTabInSplitView(tab)) {
+		console.log('[Tabee] Skipping tab move - tab is in split view:', tabId);
+		return;
+	}
 
 	// Skip processing if lightweight mode excludes this URL
 	if (!(await tabRulesService.shouldProcessUrl(tab.url))) {
@@ -77,7 +131,11 @@ chrome.tabs.onMoved.addListener(async (tabId) => {
 	const rule = await _getRuleFromUrl(tab.url);
 	if (!rule) return;
 
-	await tabGroupsService.applyGroupRuleToTab(rule, tab, tabModifier);
+	try {
+		await tabGroupsService.applyGroupRuleToTab(rule, tab, tabModifier);
+	} catch (error) {
+		console.log('[Tabee] Error applying group rule on move (tab may be in split view):', error);
+	}
 });
 
 /**

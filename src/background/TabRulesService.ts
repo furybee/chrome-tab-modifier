@@ -74,12 +74,14 @@ export class TabRulesService {
 		for (const tab of tabs) {
 			if (!tab.url || !tab.id) continue;
 
-			// CRITICAL FIX: When url_matcher is NOT defined, compare full URLs
-			// This prevents closing unrelated tabs (e.g., Gmail when refreshing GitHub)
+			// When url_matcher is NOT defined, check if tab matches the same rule
 			if (!rule?.tab?.url_matcher) {
-				// Without url_matcher, we use exact URL comparison for safety
-				// This ensures only true duplicates (same exact URL) are closed
-				if (tab.url === currentTab.url && tab.id !== currentTab.id) {
+				// Check if this tab would match the same rule (using rule detection logic)
+				const tabRule = await _getRuleFromUrl(tab.url);
+
+				// If both tabs match the same rule, they're duplicates (close the other tab)
+				// This allows all tabs matching the rule to be considered as one "unique" group
+				if (tabRule?.id === rule.id && tab.id !== currentTab.id) {
 					// Remove beforeunload handler from the duplicate tab before closing it
 					try {
 						await chrome.scripting.executeScript({

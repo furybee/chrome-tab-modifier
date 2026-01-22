@@ -62,6 +62,7 @@ export type Settings = {
 	auto_close_enabled: boolean;
 	auto_close_timeout: number; // en minutes
 	tab_hive_reject_list: string[]; // List of domains to exclude from auto-close
+	debug_mode: boolean; // Enable/disable console logs in content script
 };
 
 export type TabModifierSettings = {

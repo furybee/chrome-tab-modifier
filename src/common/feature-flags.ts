@@ -6,5 +6,5 @@ export const FEATURE_FLAGS = {
 	 * Enable copy/paste rule functionality
 	 * This feature allows users to copy rules to clipboard and paste them
 	 */
-	ENABLE_RULE_COPY_PASTE: false,
+	ENABLE_RULE_COPY_PASTE: true,
 } as const;

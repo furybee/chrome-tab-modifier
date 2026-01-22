@@ -137,9 +137,7 @@
 					<input
 						v-model="newPatternValue"
 						type="text"
-						:placeholder="
-							newPatternType === 'domain' ? 'example.com' : 'https://example.com/page'
-						"
+						:placeholder="newPatternType === 'domain' ? 'example.com' : 'https://example.com/page'"
 						class="input input-sm input-bordered"
 					/>
 					<label class="label">
@@ -155,7 +153,7 @@
 
 				<div class="modal-action">
 					<button class="btn btn-sm" @click="closeAddPatternModal">Cancel</button>
-					<button class="btn btn-sm btn-primary" @click="addPattern" :disabled="!newPatternValue">
+					<button class="btn btn-sm btn-primary" :disabled="!newPatternValue" @click="addPattern">
 						Add
 					</button>
 				</div>

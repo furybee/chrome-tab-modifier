@@ -37,3 +37,5 @@ tsconfig.tsbuildinfo
 # Claude Code configuration
 .claude/
 CLAUDE.md
+
+CHANGELOG-*

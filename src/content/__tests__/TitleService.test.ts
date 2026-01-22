@@ -320,13 +320,15 @@ describe('TitleService', () => {
 					unique: false,
 					// Regex to capture segments separated by " | "
 					// Each ([^|]+) captures text that is not a pipe character (will include surrounding whitespace)
-					title_matcher: '([^|]+)\\s*\\|\\s*([^|]+)\\s*\\|\\s*([^|]+)\\s*\\|\\s*([^|]+)\\s*\\|\\s*([^|]+)',
+					title_matcher:
+						'([^|]+)\\s*\\|\\s*([^|]+)\\s*\\|\\s*([^|]+)\\s*\\|\\s*([^|]+)\\s*\\|\\s*([^|]+)',
 					url_matcher: null,
 				},
 				is_enabled: true,
 			};
 
-			const originalTitle = 'Work Item | OrgName - CSS - 45% Savings Share | Customer Name | Category | App Console';
+			const originalTitle =
+				'Work Item | OrgName - CSS - 45% Savings Share | Customer Name | Category | App Console';
 			const result = service.processTitle('https://example.com', originalTitle, rule);
 
 			// The regex captures groups with surrounding whitespace, but they are trimmed during replacement
