@@ -1,10 +1,14 @@
 /**
- * Debug logging utilities for content scripts
+ * Debug logging for content scripts.
+ * Re-exports the core debugLog from common/ and adds initDebugMode()
+ * which reads the debug flag from Chrome storage.
  */
 
+import { setDebugMode } from '../common/debugLog';
 import { _getStorageAsync } from '../common/storage';
 
-let debugModeEnabled = false;
+// Re-export so existing content-script imports keep working
+export { debugLog, isDebugMode } from '../common/debugLog';
 
 /**
  * Initialize debug mode from storage
@@ -13,7 +17,7 @@ export async function initDebugMode(): Promise<void> {
 	try {
 		const config = await _getStorageAsync();
 		if (config?.settings?.debug_mode) {
-			debugModeEnabled = true;
+			setDebugMode(true);
 		}
 	} catch (error) {
 		// Silently fail if storage is not available
@@ -23,23 +27,13 @@ export async function initDebugMode(): Promise<void> {
 	chrome.storage.onChanged.addListener(async (changes, areaName) => {
 		if (areaName === 'local' && (changes.tab_modifier_compressed || changes.tab_modifier)) {
 			try {
-				// Reload settings from storage to get the updated value
 				const config = await _getStorageAsync();
 				if (config?.settings?.debug_mode !== undefined) {
-					debugModeEnabled = config.settings.debug_mode;
+					setDebugMode(config.settings.debug_mode);
 				}
 			} catch (error) {
 				// Silently fail
 			}
 		}
 	});
-}
-
-/**
- * Conditional logging function that respects debug mode setting
- */
-export function debugLog(...args: any[]) {
-	if (debugModeEnabled) {
-		console.log(...args);
-	}
 }

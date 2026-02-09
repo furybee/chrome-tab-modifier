@@ -1,7 +1,7 @@
 {
   "name": "tabee",
   "private": true,
-  "version": "1.1.5",
+  "version": "1.1.6",
   "license": "MIT",
   "type": "module",
   "scripts": {
@@ -27,9 +27,9 @@
     "@types/chrome": "^0.0.268",
     "@typescript-eslint/eslint-plugin": "^7.18.0",
     "@typescript-eslint/parser": "^7.18.0",
-    "@vitejs/plugin-vue": "^5.1.4",
-    "@vitest/coverage-v8": "^2.1.9",
-    "@vitest/ui": "^2.1.9",
+    "@vitejs/plugin-vue": "^6.0.4",
+    "@vitest/coverage-v8": "^4.0.18",
+    "@vitest/ui": "^4.0.18",
     "@vue/eslint-config-typescript": "^13.0.0",
     "autoprefixer": "^10.4.19",
     "daisyui": "^4.12.2",
@@ -43,8 +43,8 @@
     "prettier": "^3.3.3",
     "tailwindcss": "^3.4.13",
     "typescript": "*",
-    "vite": "^5.4.6",
-    "vitest": "^2.1.9",
+    "vite": "^7.3.1",
+    "vitest": "^4.0.18",
     "vue-eslint-parser": "^9.4.2",
     "vue-tsc": "^2.0.24"
   },
