@@ -2,6 +2,7 @@ import { Group, Rule, TabModifierSettings } from './types.ts';
 import { _clone, _generateRandomId } from './helpers.ts';
 import { _safeRegexTestSync } from './regex-safety.ts';
 import { compressToUTF16, decompressFromUTF16 } from 'lz-string';
+import { debugLog } from '../content/debugLog.ts';
 
 export const STORAGE_KEY = 'tab_modifier';
 export const STORAGE_KEY_COMPRESSED = 'tab_modifier_compressed';
@@ -167,7 +168,7 @@ async function _loadFromStorage(
 					const decompressed = _decompressData(compressed);
 
 					if (decompressed) {
-						console.log(
+						debugLog(
 							`[Tabee] Loaded data from ${metadata.chunkCount} chunks (${storageName} storage)`
 						);
 						resolve(decompressed);
@@ -189,7 +190,7 @@ async function _loadFromStorage(
 				if (items[STORAGE_KEY_COMPRESSED]) {
 					const decompressed = _decompressData(items[STORAGE_KEY_COMPRESSED]);
 					if (decompressed) {
-						console.log(`[Tabee] Loaded compressed data from ${storageName} storage`);
+						debugLog(`[Tabee] Loaded compressed data from ${storageName} storage`);
 						resolve(decompressed);
 						return;
 					}
@@ -197,7 +198,7 @@ async function _loadFromStorage(
 
 				// Try uncompressed
 				if (items[STORAGE_KEY]) {
-					console.log(`[Tabee] Loaded uncompressed data from ${storageName} storage`);
+					debugLog(`[Tabee] Loaded uncompressed data from ${storageName} storage`);
 					resolve(items[STORAGE_KEY]);
 					return;
 				}
@@ -218,14 +219,14 @@ export async function _getStorageAsync(): Promise<TabModifierSettings | undefine
 		}
 
 		// If not found in local, try sync storage (migration path)
-		console.log('[Tabee] No data in local storage, checking sync storage for migration...');
+		debugLog('[Tabee] No data in local storage, checking sync storage for migration...');
 		data = await _loadFromStorage(chrome.storage.sync, 'sync');
 
 		if (data) {
 			// Migrate data from sync to local
-			console.log('[Tabee] Migrating data from sync storage to local storage...');
+			debugLog('[Tabee] Migrating data from sync storage to local storage...');
 			await _setStorage(data);
-			console.log('[Tabee] Migration complete!');
+			debugLog('[Tabee] Migration complete!');
 
 			// Clean up sync storage
 			await _clearSyncStorage();
@@ -256,7 +257,7 @@ async function _clearSyncStorage(): Promise<void> {
 
 	if (keysToRemove.length > 0) {
 		await chrome.storage.sync.remove(keysToRemove);
-		console.log(`[Tabee] Cleared ${keysToRemove.length} keys from sync storage`);
+		debugLog(`[Tabee] Cleared ${keysToRemove.length} keys from sync storage`);
 	}
 }
 
@@ -273,7 +274,7 @@ export async function _clearStorage(): Promise<void> {
 
 	if (keysToRemove.length > 0) {
 		await chrome.storage.local.remove(keysToRemove);
-		console.log(`[Tabee] Cleared ${keysToRemove.length} keys from local storage`);
+		debugLog(`[Tabee] Cleared ${keysToRemove.length} keys from local storage`);
 	}
 
 	// Also clear sync storage (for migration cleanup)
@@ -294,7 +295,7 @@ export async function _setStorage(tabModifier: TabModifierSettings): Promise<voi
 		const compressed = _compressData(data);
 		const compressedSize = compressed.length;
 
-		console.log(
+		debugLog(
 			`[Tabee] Saving ${originalSize} bytes (compressed to ${compressedSize} bytes) to local storage`
 		);
 
@@ -304,13 +305,13 @@ export async function _setStorage(tabModifier: TabModifierSettings): Promise<voi
 			[STORAGE_KEY_COMPRESSED]: compressed,
 		});
 
-		console.log(`[Tabee] Data saved successfully to local storage`);
+		debugLog(`[Tabee] Data saved successfully to local storage`);
 
 		// Clean up any old sync storage data (migration cleanup)
 		await _clearSyncStorage();
 
 		const ratio = ((1 - compressedSize / originalSize) * 100).toFixed(1);
-		console.log(
+		debugLog(
 			`[Tabee] Storage complete: ${originalSize} → ${compressedSize} bytes (${ratio}% reduction)`
 		);
 	} catch (error) {
