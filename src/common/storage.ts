@@ -2,7 +2,7 @@ import { Group, Rule, TabModifierSettings } from './types.ts';
 import { _clone, _generateRandomId } from './helpers.ts';
 import { _safeRegexTestSync } from './regex-safety.ts';
 import { compressToUTF16, decompressFromUTF16 } from 'lz-string';
-import { debugLog } from '../content/debugLog.ts';
+import { debugLog } from './debugLog.ts';
 
 export const STORAGE_KEY = 'tab_modifier';
 export const STORAGE_KEY_COMPRESSED = 'tab_modifier_compressed';
