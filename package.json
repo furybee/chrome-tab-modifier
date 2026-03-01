@@ -32,7 +32,7 @@
     "@vitest/ui": "^4.0.18",
     "@vue/eslint-config-typescript": "^13.0.0",
     "autoprefixer": "^10.4.19",
-    "daisyui": "^4.12.2",
+    "daisyui": "^5.5.19",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.25.2",
