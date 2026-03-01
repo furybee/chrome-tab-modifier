@@ -30,7 +30,7 @@
     "@vitejs/plugin-vue": "^6.0.4",
     "@vitest/coverage-v8": "^4.0.18",
     "@vitest/ui": "^4.0.18",
-    "@vue/eslint-config-typescript": "^13.0.0",
+    "@vue/eslint-config-typescript": "^14.7.0",
     "autoprefixer": "^10.4.19",
     "daisyui": "^4.12.2",
     "eslint": "^8.57.1",
