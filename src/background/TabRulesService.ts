@@ -149,6 +149,11 @@ export class TabRulesService {
 	async handleRenameTab(tab: chrome.tabs.Tab, title: string): Promise<void> {
 		if (!tab?.id || !tab?.url || !URL.canParse(tab.url)) return;
 
+		// Quick-rename rules are inserted before broader URL rules. Preserve the
+		// actions from the rule that currently applies so the title override does
+		// not accidentally ungroup, unmute, or otherwise change the tab.
+		const matchingRule = await _getRuleFromUrl(tab.url);
+
 		let tabModifier = await _getStorageAsync();
 
 		if (!tabModifier) {
@@ -158,6 +163,20 @@ export class TabRulesService {
 		const urlParams = new URL(tab.url);
 		const ruleName = title + ' (' + urlParams.host.substring(0, 15) + ')';
 		const rule = _getDefaultRule(ruleName, title ?? '', urlParams.href);
+
+		if (matchingRule) {
+			rule.tab.icon = matchingRule.tab.icon;
+			rule.tab.pinned = matchingRule.tab.pinned;
+			rule.tab.protected = matchingRule.tab.protected;
+			rule.tab.unique = matchingRule.tab.unique;
+			rule.tab.muted = matchingRule.tab.muted;
+			rule.tab.group_id = matchingRule.tab.group_id;
+
+			// A quick rename is a literal title override. Matchers from the broader
+			// rule must not transform the title entered by the user.
+			rule.tab.title_matcher = null;
+			rule.tab.url_matcher = null;
+		}
 
 		tabModifier.rules.unshift(rule);
 

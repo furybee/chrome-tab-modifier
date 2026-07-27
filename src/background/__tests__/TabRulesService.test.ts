@@ -51,6 +51,7 @@ vi.mock('../../common/helpers', () => ({
 
 import {
 	_getRuleFromUrl,
+	_getStorageAsync,
 	_shouldSkipUrl,
 	_getDefaultRule,
 	_setStorage,
@@ -62,6 +63,7 @@ describe('TabRulesService', () => {
 	beforeEach(() => {
 		service = new TabRulesService();
 		vi.clearAllMocks();
+		vi.mocked(_getRuleFromUrl).mockResolvedValue(undefined);
 	});
 
 	describe('applyRuleToTab', () => {
@@ -358,7 +360,7 @@ describe('TabRulesService', () => {
 			expect(_setStorage).not.toHaveBeenCalled();
 		});
 
-		it('should create a new rule and reload tab', async () => {
+		it('should create a rename-only rule and reload an unmatched tab', async () => {
 			const mockRule = {
 				id: 'new-rule',
 				name: 'New Title (example.com)',
@@ -389,8 +391,134 @@ describe('TabRulesService', () => {
 			await service.handleRenameTab(tab, 'New Title');
 
 			expect(_getDefaultRule).toHaveBeenCalled();
-			expect(_setStorage).toHaveBeenCalled();
+			expect(_setStorage).toHaveBeenCalledWith(
+				expect.objectContaining({ rules: [mockRule] })
+			);
 			expect(mockChrome.tabs.reload).toHaveBeenCalledWith(1);
+		});
+
+		it('should inherit actions from the currently matching rule while replacing its title', async () => {
+			const matchingRule = {
+				id: 'pull-request-rule',
+				name: 'Pull requests',
+				detection: 'CONTAINS',
+				url_fragment: 'pullrequest',
+				tab: {
+					title: '[PR] {title} - $1 - @1',
+					icon: 'bullets/bullet-blue.png',
+					muted: true,
+					pinned: false,
+					protected: true,
+					unique: true,
+					group_id: 'pull-requests-group',
+					title_matcher: '(.+)',
+					url_matcher: 'pullrequest/(\\d+)',
+				},
+				is_enabled: true,
+			};
+			const renameRule = {
+				id: 'rename-rule',
+				name: 'Fix grouping (example.com)',
+				detection: 'CONTAINS',
+				url_fragment: 'https://example.com/pullrequest/42',
+				tab: {
+					title: 'Fix grouping',
+					icon: null,
+					muted: false,
+					pinned: false,
+					protected: false,
+					unique: false,
+					group_id: null,
+					title_matcher: 'default-title-matcher',
+					url_matcher: 'default-url-matcher',
+				},
+				is_enabled: true,
+			};
+			const storedSettings = {
+				rules: [matchingRule],
+				groups: [],
+				settings: {},
+			};
+
+			vi.mocked(_getRuleFromUrl).mockResolvedValue(matchingRule);
+			vi.mocked(_getStorageAsync).mockResolvedValue(storedSettings as any);
+			vi.mocked(_getDefaultRule).mockReturnValue(renameRule);
+			vi.mocked(_setStorage).mockResolvedValue(undefined);
+			mockChrome.tabs.reload.mockResolvedValue(undefined);
+
+			await service.handleRenameTab(
+				{ id: 1, url: 'https://example.com/pullrequest/42' } as chrome.tabs.Tab,
+				'Fix grouping'
+			);
+
+			expect(renameRule.tab).toEqual({
+				title: 'Fix grouping',
+				icon: 'bullets/bullet-blue.png',
+				muted: true,
+				pinned: false,
+				protected: true,
+				unique: true,
+				group_id: 'pull-requests-group',
+				title_matcher: null,
+				url_matcher: null,
+			});
+			expect(storedSettings.rules).toEqual([renameRule, matchingRule]);
+			expect(matchingRule.tab.title).toBe('[PR] {title} - $1 - @1');
+			expect(mockChrome.tabs.reload).toHaveBeenCalledWith(1);
+		});
+
+		it('should preserve inherited actions when quick-renaming a second time', async () => {
+			const existingRenameRule = {
+				id: 'first-rename',
+				name: 'First name',
+				detection: 'CONTAINS',
+				url_fragment: 'https://example.com/pullrequest/42',
+				tab: {
+					title: 'First name',
+					icon: 'bullets/bullet-blue.png',
+					muted: true,
+					pinned: false,
+					protected: true,
+					unique: false,
+					group_id: 'pull-requests-group',
+					title_matcher: null,
+					url_matcher: null,
+				},
+				is_enabled: true,
+			};
+			const secondRenameRule = {
+				id: 'second-rename',
+				name: 'Second name',
+				detection: 'CONTAINS',
+				url_fragment: 'https://example.com/pullrequest/42',
+				tab: {
+					title: 'Second name',
+					icon: null,
+					muted: false,
+					pinned: false,
+					protected: false,
+					unique: false,
+					group_id: null,
+					title_matcher: null,
+					url_matcher: null,
+				},
+				is_enabled: true,
+			};
+
+			vi.mocked(_getRuleFromUrl).mockResolvedValue(existingRenameRule);
+			vi.mocked(_getDefaultRule).mockReturnValue(secondRenameRule);
+
+			await service.handleRenameTab(
+				{ id: 1, url: 'https://example.com/pullrequest/42' } as chrome.tabs.Tab,
+				'Second name'
+			);
+
+			expect(secondRenameRule.tab).toMatchObject({
+				icon: 'bullets/bullet-blue.png',
+				muted: true,
+				protected: true,
+				group_id: 'pull-requests-group',
+			});
 		});
 	});
 
