@@ -13,12 +13,12 @@
 		<div class="grid grid-cols-1 md:grid-cols-3 gap-2 text-md">
 			<DonationCard link="https://www.buymeacoffee.com/xyugxh7bk" name="Buy Me a Coffee">
 				<template #icon>
-					<BuyMeACoffeeIcon class="!h-4" />
+					<BuyMeACoffeeIcon class="h-4!" />
 				</template>
 			</DonationCard>
 			<DonationCard link="https://donate.stripe.com/fZeg1Sgml971dbieUU" name="Credit Card">
 				<template #icon>
-					<DonationIcon class="!h-4 text-black" />
+					<DonationIcon class="h-4! text-black" />
 				</template>
 			</DonationCard>
 			<DonationCard
@@ -26,7 +26,7 @@
 				name="Paypal"
 			>
 				<template #icon>
-					<PayPalIcon class="!h-4" />
+					<PayPalIcon class="h-4!" />
 				</template>
 			</DonationCard>
 		</div>

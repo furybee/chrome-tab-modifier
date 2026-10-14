@@ -1,18 +1,13 @@
 <template>
 	<div class="w-full">
 		<form class="mb-4" @submit.prevent="visualizeRegex">
-			<div class="form-control w-full md:flex-0">
+			<div class="form-control w-full">
 				<div class="label">
 					<span class="label-text text-xs text-accent">Test string</span>
 				</div>
 
 				<div class="flex">
-					<input
-						id="text"
-						v-model="text"
-						type="text"
-						class="input input-xs input-bordered border-accent w-full"
-					/>
+					<input id="text" v-model="text" type="text" class="input input-xs border-accent w-full" />
 				</div>
 			</div>
 		</form>

@@ -6,7 +6,7 @@
 					v-model="searchQuery"
 					type="text"
 					placeholder="🔍 Search tabs..."
-					class="input input-sm input-bordered w-full pr-8"
+					class="input input-sm w-full pr-8"
 				/>
 				<button
 					v-if="searchQuery"
@@ -30,7 +30,7 @@
 					</svg>
 				</button>
 			</div>
-			<button class="btn btn-xs btn-ghost flex-shrink-0" title="Clear all" @click="clearAllTabs">
+			<button class="btn btn-xs btn-ghost shrink-0" title="Clear all" @click="clearAllTabs">
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					class="h-5 w-5"
@@ -87,12 +87,12 @@
 				<div
 					v-for="tab in tabs"
 					:key="tab.id"
-					class="card bg-base-200 shadow-sm hover:shadow-md transition-shadow"
+					class="card bg-base-200 shadow-xs hover:shadow-md transition-shadow"
 				>
 					<div class="card-body p-3">
 						<div class="flex items-start gap-3">
-							<div class="avatar flex-shrink-0">
-								<div class="w-6 h-6 rounded">
+							<div class="avatar shrink-0">
+								<div class="w-6 h-6 rounded-sm">
 									<img
 										v-if="tab.favIconUrl"
 										:src="tab.favIconUrl"
@@ -131,7 +131,7 @@
 								</p>
 							</div>
 
-							<div class="flex flex-col items-end justify-center gap-1 flex-shrink-0">
+							<div class="flex flex-col items-end justify-center gap-1 shrink-0">
 								<button
 									class="btn btn-xs btn-ghost btn-square"
 									title="Remove from list"

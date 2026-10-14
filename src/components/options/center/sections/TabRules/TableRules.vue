@@ -20,7 +20,7 @@
 					<tr class="group cursor-pointer hover:bg-base-100" @click="editRule(rule)">
 						<td class="cursor-grab active:cursor-grabbing">
 							<div class="opacity-0 group-hover:opacity-50 transition-opacity">
-								<GripIcon class="!w-4 !h-4" />
+								<GripIcon class="w-4! h-4!" />
 							</div>
 						</td>
 						<td>
@@ -78,7 +78,7 @@
 									data-tip="Copy to clipboard"
 									@click.prevent="(event) => copyRule(event, rule.id)"
 								>
-									<ClipboardIcon class="!w-4 !h-4" />
+									<ClipboardIcon class="w-4! h-4!" />
 								</button>
 
 								<button
@@ -86,7 +86,7 @@
 									data-tip="Duplicate"
 									@click.prevent="(event) => duplicateRule(event, rule.id)"
 								>
-									<DuplicateIcon class="!w-4 !h-4" />
+									<DuplicateIcon class="w-4! h-4!" />
 								</button>
 
 								<button
@@ -94,7 +94,7 @@
 									data-tip="Delete"
 									@click.prevent="(event) => deleteRule(event, rule.id)"
 								>
-									<DeleteIcon class="!w-4 !h-4" />
+									<DeleteIcon class="w-4! h-4!" />
 								</button>
 							</div>
 						</td>

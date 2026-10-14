@@ -5,7 +5,7 @@
 		</div>
 
 		<!-- Tabs -->
-		<div role="tablist" class="tabs tabs-bordered tabs-lg bg-base-200 relative z-10">
+		<div role="tablist" class="tabs tabs-border tabs-lg bg-base-200 relative z-10">
 			<a
 				role="tab"
 				class="tab text-sm"

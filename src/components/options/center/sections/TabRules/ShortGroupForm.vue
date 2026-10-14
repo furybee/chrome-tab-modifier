@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<div v-if="model" class="flex gap-2">
-			<div class="form-control flex-0">
+			<div class="form-control">
 				<div class="flex gap-2">
 					<CustomSelect
 						v-model="model.color"
@@ -11,10 +11,10 @@
 					/>
 				</div>
 			</div>
-			<div class="form-control w-full flex-0">
+			<div class="form-control w-full">
 				<input
 					v-model="model.title"
-					class="input input-xs input-bordered w-full"
+					class="input input-xs w-full"
 					placeholder="e.g. Google"
 					required
 					type="text"

@@ -14,7 +14,7 @@
 			<input
 				ref="currentGroupTitleInput"
 				v-model="currentGroup.title"
-				class="input input-xs input-bordered w-full"
+				class="input input-xs w-full"
 				placeholder="e.g. Google"
 				required
 				type="text"
