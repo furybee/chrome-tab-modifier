@@ -1,7 +1,10 @@
 # Proposal: Add `unique_pattern` Field to Rule Schema
 
 ## Status
-🟡 **Proposed** - Not yet implemented
+⚪ **Superseded** - Not implemented. Solved without a new field (#507): when `url_matcher` has
+capture groups and `url_fragment` has no `$n` placeholders, the captured values are the unique key,
+so tabs are duplicates only if they capture the same values. See `_getUniqueKey` in
+`src/common/helpers.ts`.
 
 ## Problem Statement
 

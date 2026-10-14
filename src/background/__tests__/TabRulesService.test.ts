@@ -46,7 +46,7 @@ vi.mock('../../common/storage', () => ({
 
 // Mock helpers module
 vi.mock('../../common/helpers', () => ({
-	_processUrlFragment: vi.fn((_fragment, url) => url),
+	_getUniqueKey: vi.fn((_fragment, url) => url),
 }));
 
 import {

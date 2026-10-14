@@ -334,3 +334,31 @@ export function _processUrlFragment(
 
 	return processedFragment;
 }
+
+/**
+ * Computes the key used by the "unique" option to decide whether two tabs are duplicates.
+ * - url_fragment with $n placeholders: the processed fragment (explicit template)
+ * - url_matcher with capture groups: the captured values, so e.g. each GitHub issue number
+ *   is its own unique group
+ * - otherwise: the url_fragment itself, so every tab of the rule is one group
+ */
+export function _getUniqueKey(
+	urlFragment: string,
+	currentUrl: string,
+	urlMatcher?: string | null
+): string {
+	if (!urlMatcher || urlFragment.includes('$')) {
+		return _processUrlFragment(urlFragment, currentUrl, urlMatcher);
+	}
+
+	try {
+		const match = new RegExp(urlMatcher).exec(currentUrl);
+		if (match && match.length > 1) {
+			return JSON.stringify(match.slice(1));
+		}
+	} catch (e) {
+		console.error('Tabee: Error computing unique key:', e);
+	}
+
+	return urlFragment;
+}

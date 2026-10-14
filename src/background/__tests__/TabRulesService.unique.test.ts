@@ -437,4 +437,58 @@ describe('TabRulesService - GitHub Unique Issue Test', () => {
 			expect(mockChrome.tabs.remove).not.toHaveBeenCalled();
 		});
 	});
+
+	describe('url_matcher capture groups as unique key (#507)', () => {
+		// The sample GitHub Issues rule: REGEX detection without $ placeholders
+		const message = {
+			url_fragment: 'github\\.com/.+/issues/\\d+',
+			rule: {
+				id: 'github-issues',
+				detection: 'REGEX',
+				url_fragment: 'github\\.com/.+/issues/\\d+',
+				tab: {
+					unique: true,
+					url_matcher: 'github\\.com/.+/issues/(\\d+)',
+				},
+			} as Rule,
+		};
+
+		it('should close another tab of the same issue', async () => {
+			const currentTab = {
+				id: 1,
+				url: 'https://github.com/owner/repo/issues/123',
+			} as chrome.tabs.Tab;
+			const sameIssue = {
+				id: 2,
+				url: 'https://github.com/owner/repo/issues/123#issuecomment-1',
+			} as chrome.tabs.Tab;
+			const otherIssue = {
+				id: 3,
+				url: 'https://github.com/owner/repo/issues/456',
+			} as chrome.tabs.Tab;
+
+			mockChrome.tabs.query.mockImplementation((_queryInfo: any, callback: any) => {
+				callback([currentTab, sameIssue, otherIssue]);
+			});
+
+			await service.handleSetUnique(message, currentTab);
+
+			expect(mockChrome.tabs.remove).toHaveBeenCalledTimes(1);
+			expect(mockChrome.tabs.remove).toHaveBeenCalledWith(2);
+		});
+
+		it('should keep tabs of different issues open', async () => {
+			const tab123 = { id: 1, url: 'https://github.com/owner/repo/issues/123' } as chrome.tabs.Tab;
+			const tab456 = { id: 2, url: 'https://github.com/owner/repo/issues/456' } as chrome.tabs.Tab;
+			const tab789 = { id: 3, url: 'https://github.com/other/repo/issues/789' } as chrome.tabs.Tab;
+
+			mockChrome.tabs.query.mockImplementation((_queryInfo: any, callback: any) => {
+				callback([tab123, tab456, tab789]);
+			});
+
+			await service.handleSetUnique(message, tab123);
+
+			expect(mockChrome.tabs.remove).not.toHaveBeenCalled();
+		});
+	});
 });
