@@ -76,7 +76,11 @@ chrome.tabs.onUpdated.addListener(
 		// where ungroupTab removes the tab from group before content script re-applies it
 		try {
 			if (rule && tabModifier) {
-				await tabGroupsService.applyGroupRuleToTab(rule, tab, tabModifier);
+				// Not awaited: grouping waits for its per-group lock and retries (up to ~60s),
+				// which must not delay the unique and title logic below
+				tabGroupsService.applyGroupRuleToTab(rule, tab, tabModifier).catch((error) => {
+					console.log('[Tabee] Error applying group rule (tab may be in split view):', error);
+				});
 			} else {
 				await tabGroupsService.ungroupTab(rule, tab);
 			}

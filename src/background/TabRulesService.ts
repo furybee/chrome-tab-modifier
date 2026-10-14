@@ -38,7 +38,14 @@ export class TabRulesService {
 	}
 
 	/**
-	 * Handle unique tab logic - close duplicates
+	 * In-memory lock per unique group. onUpdated (url + complete) and the content
+	 * script's setUnique message fire for the same page load in parallel; without
+	 * this, the calls interleave and close each other's tabs.
+	 */
+	private uniqueLocks = new Map<string, Promise<void>>();
+
+	/**
+	 * Handle unique tab logic - close all duplicates
 	 */
 	async handleSetUnique(message: any, currentTab: chrome.tabs.Tab): Promise<void> {
 		if (!currentTab.id || !currentTab.url) return;
@@ -69,7 +76,34 @@ export class TabRulesService {
 			rule?.tab?.url_matcher
 		);
 
+		// Without url_matcher every tab of the rule is one group; with it, the group is the processed fragment
+		const lockKey = rule?.tab?.url_matcher
+			? `${rule?.id ?? ''}|${processedUrlFragment}`
+			: `${rule?.id ?? ''}`;
+
+		const previous = this.uniqueLocks.get(lockKey) ?? Promise.resolve();
+		const run = previous
+			.catch(() => undefined)
+			.then(() => this.closeDuplicates(rule, urlFragment, processedUrlFragment, currentTab));
+		this.uniqueLocks.set(lockKey, run);
+
+		try {
+			await run;
+		} finally {
+			if (this.uniqueLocks.get(lockKey) === run) this.uniqueLocks.delete(lockKey);
+		}
+	}
+
+	private async closeDuplicates(
+		rule: Rule,
+		urlFragment: string,
+		processedUrlFragment: string,
+		currentTab: chrome.tabs.Tab
+	): Promise<void> {
 		const tabs = await this.queryTabs({});
+
+		// The current tab may have been closed by a call that held the lock before this one
+		if (!tabs.some((t) => t.id === currentTab.id)) return;
 
 		for (const tab of tabs) {
 			if (!tab.url || !tab.id) continue;
@@ -99,8 +133,7 @@ export class TabRulesService {
 					}
 
 					// Close the duplicate tab (keep the current tab)
-					await chrome.tabs.remove(tab.id);
-					return; // Exit after closing the first duplicate
+					await this.removeTab(tab.id);
 				}
 				continue;
 			}
@@ -137,9 +170,17 @@ export class TabRulesService {
 				}
 
 				// Close the duplicate tab (keep the current tab)
-				await chrome.tabs.remove(tab.id);
-				return; // Exit after closing the first duplicate
+				await this.removeTab(tab.id);
 			}
+		}
+	}
+
+	private async removeTab(tabId: number): Promise<void> {
+		try {
+			await chrome.tabs.remove(tabId);
+		} catch (error) {
+			// Tab already closed by the user or by another handler
+			console.log(`[TabRulesService] Could not close tab ${tabId}:`, error);
 		}
 	}
 
