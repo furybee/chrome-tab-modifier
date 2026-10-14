@@ -180,6 +180,13 @@
 					<code class="bg-base-300 px-1 rounded-sm">{[data-testid="username"]}</code>, etc.
 				</p>
 				<p class="mt-2">
+					A selector uses the first matching element. Add
+					<code class="bg-base-300 px-1 rounded-sm">|all</code> to join the text of every matching
+					element with a space, e.g.
+					<code class="bg-base-300 px-1 rounded-sm">{.tags span|all}</code>, or choose the separator
+					after a colon: <code class="bg-base-300 px-1 rounded-sm">{.tags span|all:, }</code>.
+				</p>
+				<p class="mt-2">
 					<strong>Advanced:</strong> You can also inject parts of the URL with the dollar ($)
 					syntax. This feature is linked to the "URL matcher" action. Use $0, $1, etc. depending on
 					your regular expression defined in "URL matcher".
