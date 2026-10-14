@@ -48,11 +48,22 @@ jobs:
         with:
           fetch-depth: 0  # Fetch all history for all branches and tags
 
-      - name: Run Gitleaks
-        uses: gitleaks/gitleaks-action@v3
+      # The gitleaks CLI (MIT) needs no license, unlike gitleaks-action for organizations,
+      # whose GITLEAKS_LICENSE secret is not passed to pull requests from forks
+      - name: Install Gitleaks
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}  # Only needed for Gitleaks Enterprise
+          GITLEAKS_VERSION: 8.30.1
+        run: |
+          curl -sSfL "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz" \
+            | tar -xz -C /usr/local/bin gitleaks
+          gitleaks version
+
+      - name: Run Gitleaks
+        run: |
+          gitleaks git . \
+            --log-opts="${{ github.event.pull_request.base.sha }}..${{ github.event.pull_request.head.sha }}" \
+            --report-format sarif --report-path results.sarif \
+            --redact --verbose
 
       - name: Upload Gitleaks SARIF as artifact
         if: always() && hashFiles('results.sarif') != ''
@@ -61,8 +72,9 @@ jobs:
           name: gitleaks-scan-results
           path: results.sarif
 
+      # Needs a write token, which pull requests from forks don't get
       - name: Upload Gitleaks SARIF to Code Scanning
-        if: always() && hashFiles('results.sarif') != ''
+        if: always() && hashFiles('results.sarif') != '' && github.event.pull_request.head.repo.full_name == github.repository
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: results.sarif
@@ -172,8 +184,9 @@ jobs:
           echo "number=$PR_NUMBER" >> $GITHUB_OUTPUT
           echo "PR Number: $PR_NUMBER"
 
+      # Pull requests from forks get a read-only token and can't comment; the artifact stays on the run page
       - name: Comment PR with download link
-        if: steps.pr.outputs.number != ''
+        if: steps.pr.outputs.number != '' && github.event.pull_request.head.repo.full_name == github.repository
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
