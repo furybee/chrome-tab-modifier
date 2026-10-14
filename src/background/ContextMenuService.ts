@@ -7,10 +7,13 @@ export class ContextMenuService {
 	 * Initialize all context menus
 	 */
 	initialize(): void {
-		this.createRenameTabMenu();
-		this.createMergeWindowsMenu();
-		this.createSendToHiveMenu();
-		this.createTabHiveRejectMenus();
+		// Menus persist across service worker restarts: clear them first to avoid duplicate ids
+		chrome.contextMenus.removeAll(() => {
+			this.createRenameTabMenu();
+			this.createMergeWindowsMenu();
+			this.createSendToHiveMenu();
+			this.createTabHiveRejectMenus();
+		});
 	}
 
 	/**

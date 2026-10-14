@@ -5,6 +5,7 @@ import { ContextMenuService } from '../ContextMenuService';
 const mockChrome = {
 	contextMenus: {
 		create: vi.fn(),
+		removeAll: vi.fn((callback?: () => void) => callback?.()),
 	},
 };
 
@@ -17,6 +18,8 @@ describe('ContextMenuService', () => {
 	beforeEach(() => {
 		service = new ContextMenuService();
 		vi.clearAllMocks();
+		mockChrome.contextMenus.create.mockReset();
+		mockChrome.contextMenus.removeAll.mockImplementation((callback?: () => void) => callback?.());
 	});
 
 	describe('initialize', () => {
@@ -67,6 +70,35 @@ describe('ContextMenuService', () => {
 				title: '🔗 Exclude this URL',
 				contexts: ['all'],
 			});
+		});
+
+		it('should remove existing menus before creating them', () => {
+			service.initialize();
+
+			expect(mockChrome.contextMenus.removeAll).toHaveBeenCalledTimes(1);
+			expect(mockChrome.contextMenus.removeAll.mock.invocationCallOrder[0]).toBeLessThan(
+				mockChrome.contextMenus.create.mock.invocationCallOrder[0]
+			);
+		});
+
+		it('should not create duplicate ids when initialized again (service worker restart)', () => {
+			// Stateful fake: like Chrome, menus persist and duplicate ids are rejected
+			const menuIds = new Set<string>();
+			const duplicates: string[] = [];
+			mockChrome.contextMenus.create.mockImplementation(({ id }: { id: string }) => {
+				if (menuIds.has(id)) duplicates.push(id);
+				menuIds.add(id);
+			});
+			mockChrome.contextMenus.removeAll.mockImplementation((callback?: () => void) => {
+				menuIds.clear();
+				callback?.();
+			});
+
+			service.initialize();
+			new ContextMenuService().initialize();
+
+			expect(duplicates).toEqual([]);
+			expect(menuIds.size).toBe(6);
 		});
 
 		it('should create menus in correct order', () => {
