@@ -55,8 +55,8 @@
 						with a spotlight-style interface (Alt+Shift+E).
 					</li>
 					<li>
-						<strong>Merge windows</strong> - Combine all browser windows into one with a keyboard
-						shortcut (Alt+Shift+W) or context menu.
+						<strong>Merge windows</strong> - Combine all browser windows into one from the context
+						menu or a keyboard shortcut you choose.
 					</li>
 					<li>
 						<strong>Lightweight Mode</strong> - Reduce memory usage by disabling Tabee on specific
@@ -106,22 +106,13 @@
 
 				<h3 class="font-bold">Merge All Windows</h3>
 				<p>
-					Quickly merge all browser windows into the currently focused window using the keyboard
-					shortcut:
+					Merge all browser windows into the currently focused window by right-clicking anywhere and
+					selecting "Merge All Windows" from the context menu.
 				</p>
-				<ul class="list-disc ml-3">
-					<li>
-						<strong>Windows/Linux:</strong> <kbd class="kbd kbd-sm">Alt</kbd> +
-						<kbd class="kbd kbd-sm">Shift</kbd> + <kbd class="kbd kbd-sm">W</kbd>
-					</li>
-					<li>
-						<strong>Mac:</strong> <kbd class="kbd kbd-sm">⌘ Command</kbd> +
-						<kbd class="kbd kbd-sm">Shift</kbd> + <kbd class="kbd kbd-sm">W</kbd>
-					</li>
-				</ul>
 				<p class="mt-2">
-					You can also access this feature by right-clicking anywhere and selecting "Merge All
-					Windows" from the context menu.
+					It has no keyboard shortcut by default, to avoid merging windows by accident. You can
+					assign one in
+					<code class="bg-base-300 px-1 rounded-sm">chrome://extensions/shortcuts</code>.
 				</p>
 			</div>
 		</div>
