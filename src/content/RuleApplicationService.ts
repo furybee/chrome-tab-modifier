@@ -92,10 +92,10 @@ export class RuleApplicationService {
 			this.titleObserver = null;
 		}
 
-		// Only observe the title element, not the entire document
-		// This drastically reduces the number of mutation callbacks
-		const titleElement = document.querySelector('title');
-		if (!titleElement) return;
+		// Observe <head> rather than the <title> element: some sites (e.g. GitHub) replace
+		// the <title> element, which would leave an observer on the old one blind.
+		// Still far fewer mutation callbacks than observing the entire document.
+		if (!document.head) return;
 
 		const config = { childList: true, characterData: true, subtree: true };
 		let lastTitle = document.title;
@@ -113,7 +113,7 @@ export class RuleApplicationService {
 
 		// Store the observer as an instance variable to reuse/disconnect later
 		this.titleObserver = new MutationObserver(callback);
-		this.titleObserver.observe(titleElement, config);
+		this.titleObserver.observe(document.head, config);
 	}
 
 	/**
