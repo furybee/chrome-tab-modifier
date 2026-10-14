@@ -320,8 +320,11 @@ export async function _setStorage(tabModifier: TabModifierSettings): Promise<voi
 	}
 }
 
-export async function _getRuleFromUrl(url: string): Promise<Rule | undefined> {
-	const tabModifier = await _getStorageAsync();
+export async function _getRuleFromUrl(
+	url: string,
+	settings?: TabModifierSettings
+): Promise<Rule | undefined> {
+	const tabModifier = settings ?? (await _getStorageAsync());
 	if (!tabModifier) {
 		return;
 	}
