@@ -37,8 +37,8 @@ Take full control of your browser tabs with Tabee! Rename, organize, and customi
 - Keyboard navigation - use arrow keys (↑↓) to navigate, Enter to select, Escape to close
 
 🪟 Windows Merger
-- Merge all browser windows into one from the right-click context menu
-- No default shortcut, so windows are never merged by accident (assign one in chrome://extensions/shortcuts if you want)
+- Merge all browser windows into one with Alt+Shift+W (Option+Shift+W on Mac)
+- Also accessible via right-click context menu
 
 ⚡ Performance Mode
 - Lightweight mode for specific domains

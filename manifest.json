@@ -60,6 +60,12 @@
   ],
   "commands": {
     "merge-windows": {
+      "suggested_key": {
+        "default": "Alt+Shift+W",
+        "linux": "Alt+Shift+W",
+        "mac": "Alt+Shift+W",
+        "windows": "Alt+Shift+W"
+      },
       "description": "Merge all windows into the current one"
     },
     "spot-search": {
