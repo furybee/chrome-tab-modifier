@@ -20,7 +20,7 @@ const mockChrome = {
 	},
 };
 
-// @ts-ignore
+// @ts-expect-error - partial mock of the chrome global
 global.chrome = mockChrome;
 
 describe('TabHiveService', () => {

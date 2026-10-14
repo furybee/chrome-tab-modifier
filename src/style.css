@@ -4,8 +4,8 @@
 @tailwind components;
 
 .tooltip:before {
-    text-wrap: nowrap;
-    max-width: none !important;
+	text-wrap: nowrap;
+	max-width: none !important;
 }
 
 @tailwind utilities;

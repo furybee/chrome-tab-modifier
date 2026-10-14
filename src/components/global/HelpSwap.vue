@@ -33,5 +33,5 @@
 	</label>
 </template>
 <script lang="ts" setup>
-const model = defineModel();
+const model = defineModel({ type: Boolean });
 </script>

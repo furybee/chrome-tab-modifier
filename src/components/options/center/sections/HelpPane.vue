@@ -159,9 +159,7 @@
 				<p>This action will rewrite the website title.</p>
 				<p>You can use special variables in your title:</p>
 				<ul class="list-disc ml-3 space-y-1">
-					<li>
-						<code class="bg-base-300 px-1 rounded">{title}</code> - The original page title
-					</li>
+					<li><code class="bg-base-300 px-1 rounded">{title}</code> - The original page title</li>
 					<li>
 						<code class="bg-base-300 px-1 rounded">{.css-selector}</code> - Extract text from any
 						element on the page using a CSS selector

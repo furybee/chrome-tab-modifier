@@ -15,7 +15,7 @@ import { compressToUTF16 } from 'lz-string';
 const mockLocalStorage: Record<string, any> = {};
 const mockSyncStorage: Record<string, any> = {};
 
-// @ts-ignore - global is from vitest setup
+// @ts-expect-error - global is from vitest setup
 global.chrome = {
 	storage: {
 		local: {

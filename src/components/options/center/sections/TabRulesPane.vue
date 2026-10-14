@@ -12,11 +12,7 @@
 					>
 						<p>No rules found matching "{{ rulesStore.searchQuery }}"</p>
 					</div>
-					<TableRules
-						v-else
-						:rules="rulesStore.filteredRules"
-						:groups="rulesStore.groups"
-					/>
+					<TableRules v-else :rules="rulesStore.filteredRules" :groups="rulesStore.groups" />
 				</div>
 			</div>
 
