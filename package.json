@@ -11,6 +11,8 @@
     "coverage": "npx vitest --run --coverage.enabled true",
     "dev": "rm -rf ./dist && vite",
     "tsc": "vue-tsc",
+    "lint": "eslint src",
+    "format:check": "prettier --check src",
     "build": "rm -rf ./dist && vite build",
     "preview": "vite preview",
     "build-zip": "rm -rf ./dist && rm -f tabee.zip && npm run build && cd ./dist && zip -r ../tabee.zip *"

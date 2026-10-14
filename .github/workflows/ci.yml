@@ -39,6 +39,32 @@ jobs:
         if: always()
         uses: davelosert/vitest-coverage-report-action@v2
 
+  lint:
+    name: Lint & Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: ESLint
+        run: npm run lint
+
+      - name: Prettier
+        if: always()
+        run: npm run format:check
+
+      - name: Type check
+        if: always()
+        run: npm run tsc
+
   gitleaks_scan:
     name: Gitleaks Secret Scan
     runs-on: ubuntu-latest
