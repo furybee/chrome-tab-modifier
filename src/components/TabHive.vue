@@ -217,7 +217,7 @@ const groupedByDomain = computed(() => {
 				groups.set(domain, []);
 			}
 			groups.get(domain)!.push(tab);
-		} catch (e) {
+		} catch {
 			// Invalid URL, put in "Unknown" group
 			if (!groups.has('Unknown')) {
 				groups.set('Unknown', []);

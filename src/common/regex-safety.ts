@@ -45,7 +45,7 @@ export function _isRegexPatternSafe(pattern: string): boolean {
 		new RegExp(pattern);
 
 		return true;
-	} catch (error) {
+	} catch {
 		// Invalid regex pattern
 		return false;
 	}

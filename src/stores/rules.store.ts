@@ -428,7 +428,7 @@ export const useRulesStore = defineStore('rules', {
 				return rule;
 			} catch (error) {
 				if (error instanceof SyntaxError) {
-					throw new Error('Invalid JSON in clipboard');
+					throw new Error('Invalid JSON in clipboard', { cause: error });
 				}
 				throw error;
 			}
