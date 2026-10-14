@@ -257,7 +257,8 @@
 						<div class="label">
 							<span class="text-xs opacity-80 label-text-alt">
 								Regex to capture text from URL. Use $0, $1, $2... in Tab Title to reference captured
-								groups.</span
+								groups. With "Unique", tabs are duplicates only if they capture the same values
+								(e.g. the same issue number).</span
 							>
 						</div>
 						<RegexVisualizer class="mt-2" tag="$" :regex="currentRule.tab.url_matcher" />

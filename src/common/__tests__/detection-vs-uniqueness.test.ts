@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { _processUrlFragment } from '../helpers';
+import { describe, it, expect, vi } from 'vitest';
+import { _getUniqueKey, _processUrlFragment } from '../helpers';
 
 /**
  * This test demonstrates the fundamental conflict between detection and uniqueness
@@ -210,6 +210,37 @@ describe('Detection vs Uniqueness Conflict', () => {
 			expect(uniqueId1).not.toBe(uniqueId2);
 
 			// So issue #123 and #456 can coexist!
+		});
+	});
+
+	describe('_getUniqueKey (#507)', () => {
+		const matcher = 'github\\.com/.+/issues/(\\d+)';
+
+		it('uses the captured values when url_matcher has capture groups', () => {
+			const fragment = 'github\\.com/.+/issues/\\d+';
+
+			expect(_getUniqueKey(fragment, 'https://github.com/a/b/issues/123', matcher)).toBe('["123"]');
+			expect(_getUniqueKey(fragment, 'https://github.com/a/b/issues/456', matcher)).toBe('["456"]');
+		});
+
+		it('keeps the processed fragment when url_fragment has $ placeholders', () => {
+			expect(
+				_getUniqueKey('github.com/issues/$1', 'https://github.com/a/b/issues/123', matcher)
+			).toBe('github.com/issues/123');
+		});
+
+		it('falls back to url_fragment without url_matcher, without capture groups, or without a match', () => {
+			const url = 'https://github.com/a/b/issues/123';
+
+			expect(_getUniqueKey('github.com', url, null)).toBe('github.com');
+			expect(_getUniqueKey('github.com', url, 'github\\.com/.+/issues/\\d+')).toBe('github.com');
+			expect(_getUniqueKey('github.com', 'https://example.com', matcher)).toBe('github.com');
+		});
+
+		it('falls back to url_fragment on an invalid regex', () => {
+			vi.spyOn(console, 'error').mockImplementation(() => undefined);
+
+			expect(_getUniqueKey('github.com', 'https://github.com', '(')).toBe('github.com');
 		});
 	});
 });

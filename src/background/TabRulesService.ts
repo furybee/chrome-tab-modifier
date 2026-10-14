@@ -7,7 +7,7 @@ import {
 	_setStorage,
 	_shouldSkipUrl,
 } from '../common/storage';
-import { _processUrlFragment } from '../common/helpers';
+import { _getUniqueKey } from '../common/helpers';
 
 /**
  * Service responsible for applying tab modification rules
@@ -70,21 +70,15 @@ export class TabRulesService {
 			}
 		}
 
-		const processedUrlFragment = _processUrlFragment(
-			urlFragment,
-			currentTab.url,
-			rule?.tab?.url_matcher
-		);
+		const uniqueKey = _getUniqueKey(urlFragment, currentTab.url, rule?.tab?.url_matcher);
 
-		// Without url_matcher every tab of the rule is one group; with it, the group is the processed fragment
-		const lockKey = rule?.tab?.url_matcher
-			? `${rule?.id ?? ''}|${processedUrlFragment}`
-			: `${rule?.id ?? ''}`;
+		// Without url_matcher every tab of the rule is one group; with it, the group is the unique key
+		const lockKey = rule?.tab?.url_matcher ? `${rule?.id ?? ''}|${uniqueKey}` : `${rule?.id ?? ''}`;
 
 		const previous = this.uniqueLocks.get(lockKey) ?? Promise.resolve();
 		const run = previous
 			.catch(() => undefined)
-			.then(() => this.closeDuplicates(rule, urlFragment, processedUrlFragment, currentTab));
+			.then(() => this.closeDuplicates(rule, urlFragment, uniqueKey, currentTab));
 		this.uniqueLocks.set(lockKey, run);
 
 		try {
@@ -97,7 +91,7 @@ export class TabRulesService {
 	private async closeDuplicates(
 		rule: Rule,
 		urlFragment: string,
-		processedUrlFragment: string,
+		uniqueKey: string,
 		currentTab: chrome.tabs.Tab
 	): Promise<void> {
 		const tabs = await this.queryTabs({});
@@ -151,11 +145,10 @@ export class TabRulesService {
 				continue;
 			}
 
-			// Process the fragment for each tab to compare
-			const tabProcessedFragment = _processUrlFragment(urlFragment, tab.url, rule.tab.url_matcher);
+			// Same unique key (captured values or processed fragment) means duplicate
+			const tabUniqueKey = _getUniqueKey(urlFragment, tab.url, rule.tab.url_matcher);
 
-			// Compare processed fragments instead of raw URL
-			if (tabProcessedFragment === processedUrlFragment && tab.id !== currentTab.id) {
+			if (tabUniqueKey === uniqueKey && tab.id !== currentTab.id) {
 				// Remove beforeunload handler from the duplicate tab before closing it
 				try {
 					await chrome.scripting.executeScript({
