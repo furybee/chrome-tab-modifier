@@ -1,6 +1,6 @@
 <template>
 	<button @click="onRefreshClicked">
-		<RefreshIcon class="!w-4 !h-4 text-accent" :class="{ 'rotate-animation': isRefreshRotating }" />
+		<RefreshIcon class="w-4! h-4! text-accent" :class="{ 'rotate-animation': isRefreshRotating }" />
 	</button>
 </template>
 <script setup lang="ts">

@@ -12,7 +12,7 @@
 				class="btn btn-xs btn-circle bg-transparent border-none hover:text-accent"
 				@click="openOptions"
 			>
-				<SettingsIcon class="!w-4 !h-4" />
+				<SettingsIcon class="w-4! h-4!" />
 			</button>
 		</div>
 	</h3>
@@ -25,7 +25,7 @@
 			<input
 				ref="currentRuleNameInput"
 				v-model="currentRule.name"
-				class="input input-xs input-bordered w-full"
+				class="input input-xs w-full"
 				placeholder="e.g. Pinned GMail"
 				required
 				type="text"
@@ -37,11 +37,11 @@
 			</div>
 		</div>
 
-		<div class="form-control w-full md:max-w-xs md:flex-0">
+		<div class="form-control w-full md:max-w-xs">
 			<div class="label">
 				<span class="label-text text-sm">Detection</span>
 			</div>
-			<select v-model="currentRule.detection" class="select select-xs select-bordered">
+			<select v-model="currentRule.detection" class="select select-xs">
 				<option v-for="(detection, index) in detections" :key="index" :value="detection.value">
 					{{ detection.name }}
 				</option>
@@ -54,7 +54,7 @@
 			</div>
 			<input
 				v-model="currentRule.url_fragment"
-				class="input input-xs input-bordered w-full md:max-w-xs"
+				class="input input-xs w-full md:max-w-xs"
 				placeholder="e.g mail.google.com"
 				required
 				type="text"
@@ -69,7 +69,7 @@
 		<hr class="border-base-300" />
 
 		<div class="flex flex-wrap md:flex-nowrap gap-2 mt-4">
-			<div v-if="!isGroupFormVisible" class="form-control w-full md:max-w-xs md:flex-0">
+			<div v-if="!isGroupFormVisible" class="form-control w-full md:max-w-xs">
 				<div class="label">
 					<span class="label-text text-sm">Group</span>
 				</div>
@@ -80,21 +80,18 @@
 					Create new group
 				</button>
 			</div>
-			<div v-else class="bg-base-300 rounded-md w-full md:max-w-xs md:flex-0 px-2 pb-2">
+			<div v-else class="bg-base-300 rounded-md w-full md:max-w-xs px-2 pb-2">
 				<div class="flex justify-between items-center">
 					<div class="label">
 						<span class="label-text text-sm">Group</span>
 					</div>
-					<CloseIcon class="cursor-pointer hover:text-error !h-4 !w-4" @click="hideGroupForm" />
+					<CloseIcon class="cursor-pointer hover:text-error h-4! w-4!" @click="hideGroupForm" />
 				</div>
 
 				<ShortGroupForm v-if="newGroup" v-model="newGroup" @on-close="hideGroupForm" />
 			</div>
 
-			<div
-				v-show="!isCustomIconFormVisible"
-				class="form-control w-full md:w-40 md:max-w-xs md:flex-0"
-			>
+			<div v-show="!isCustomIconFormVisible" class="form-control w-full md:w-40 md:max-w-xs">
 				<div class="label">
 					<span class="label-text text-sm">Icon</span>
 				</div>
@@ -108,7 +105,7 @@
 						class="px-1 btn btn-xs btn-accent rounded-l-none"
 						@click="clearIcon"
 					>
-						<CloseIcon class="!w-4 !h-4" />
+						<CloseIcon class="w-4! h-4!" />
 					</div>
 				</div>
 
@@ -118,14 +115,14 @@
 			</div>
 			<div
 				v-show="isCustomIconFormVisible"
-				class="bg-base-300 rounded-md w-full md:max-w-xs md:flex-0 px-2 pb-2"
+				class="bg-base-300 rounded-md w-full md:max-w-xs px-2 pb-2"
 			>
 				<div class="flex justify-between items-center">
 					<div class="label">
 						<span class="label-text text-sm">Custom Icon</span>
 					</div>
 					<CloseIcon
-						class="cursor-pointer hover:text-error !h-4 !w-4"
+						class="cursor-pointer hover:text-error h-4! w-4!"
 						@click="hideCustomIconForm"
 					/>
 				</div>
@@ -134,7 +131,7 @@
 					<img v-if="isCustomIcon" :src="currentRule.tab.icon" class="w-6 h-6" />
 					<input
 						v-model="currentRule.tab.icon"
-						class="input input-xs input-bordered w-full"
+						class="input input-xs w-full"
 						:class="{
 							'input-error':
 								!isCustomIcon && currentRule.tab.icon !== '' && currentRule.tab.icon !== null,
@@ -158,7 +155,7 @@
 				</div>
 				<input
 					v-model="currentRule.tab.title"
-					class="input input-xs input-bordered w-full"
+					class="input input-xs w-full"
 					placeholder="e.g. Hey {title}"
 					required
 					type="text"
@@ -230,7 +227,7 @@
 					</div>
 					<input
 						v-model="currentRule.tab.title_matcher"
-						class="input input-xs input-bordered w-full"
+						class="input input-xs w-full"
 						placeholder="Title matcher"
 						required
 						type="text"
@@ -251,7 +248,7 @@
 					</div>
 					<input
 						v-model="currentRule.tab.url_matcher"
-						class="input input-xs input-bordered w-full"
+						class="input input-xs w-full"
 						placeholder="URL matcher"
 						required
 						type="text"

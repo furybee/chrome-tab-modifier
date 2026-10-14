@@ -12,7 +12,7 @@
 						v-if="currentItem?.color"
 						:color="currentItem.color"
 						alt="_color"
-						class="!w-3 !h-3 mr-2"
+						class="w-3! h-3! mr-2"
 					/>
 
 					<template v-if="showLabel">
@@ -24,7 +24,7 @@
 			</summary>
 			<ul
 				v-show="props.items.length > 0"
-				class="w-full p-0 shadow menu dropdown-content z-[1] bg-base-300 rounded-md max-h-36 overflow-x-hidden overflow-y-auto flex flex-row"
+				class="w-full p-0 shadow-sm menu dropdown-content z-1 bg-base-300 rounded-md max-h-36 overflow-x-hidden overflow-y-auto flex flex-row"
 				tabindex="0"
 			>
 				<li
@@ -34,8 +34,8 @@
 					@click="onItemSelected(item)"
 				>
 					<a>
-						<img v-if="item.icon" :src="item.icon" alt="_icon" class="!w-4 !h-4 mr-2" />
-						<ColorVisualizer v-if="item.color" :color="item.color" class="!w-4 !h-4 mr-2" />
+						<img v-if="item.icon" :src="item.icon" alt="_icon" class="w-4! h-4! mr-2" />
+						<ColorVisualizer v-if="item.color" :color="item.color" class="w-4! h-4! mr-2" />
 						<template v-if="showLabel">
 							{{ item.label }}
 						</template>
@@ -44,7 +44,7 @@
 			</ul>
 		</details>
 		<div v-if="showClearBtn" class="px-1 btn btn-xs btn-accent rounded-l-none" @click="clearValue">
-			<CloseIcon class="!w-4 !h-4" />
+			<CloseIcon class="w-4! h-4!" />
 		</div>
 	</div>
 </template>

@@ -1,11 +1,126 @@
-@import url('/fonts/quicksand.css');
+@import url('/fonts/quicksand.css') layer(base);
 
-@tailwind base;
-@tailwind components;
+@import 'tailwindcss';
 
-.tooltip:before {
-	text-wrap: nowrap;
-	max-width: none !important;
+/* daisyUI compat layer sits right after daisyUI's components, below Tailwind utilities */
+@layer utilities.daisyui, utilities.daisyui-v4-compat;
+
+@plugin 'daisyui' {
+	themes:
+		dim --default,
+		light,
+		dark --prefersdark,
+		cupcake,
+		valentine,
+		halloween;
 }
 
-@tailwind utilities;
+@plugin 'daisyui/theme' {
+	name: 'tabee';
+	default: false;
+	prefersdark: false;
+	color-scheme: dark;
+
+	--color-primary: #fbbf24; /* Amber-400 - Jaune d'abeille */
+	--color-primary-content: #0a0a0a; /* Texte foncé sur jaune */
+	--color-secondary: #f59e0b; /* Amber-500 - Orange miel */
+	--color-secondary-content: #0a0a0a; /* Texte foncé sur orange */
+	--color-accent: #fde047; /* Yellow-300 - Jaune clair */
+	--color-accent-content: #0a0a0a; /* Texte foncé */
+	--color-neutral: #1f1f1f; /* Gris très foncé */
+	--color-neutral-content: #e5e7eb; /* Texte clair */
+	--color-base-100: #161616; /* Fond presque noir */
+	--color-base-200: #141414; /* Fond très sombre */
+	--color-base-300: #121212; /* Fond sombre */
+	--color-base-content: #e5e7eb; /* Texte principal clair */
+	--color-info: #3b82f6; /* Bleu info */
+	--color-info-content: #ffffff; /* Texte blanc sur bleu */
+	--color-success: #10b981; /* Vert succès */
+	--color-success-content: #ffffff; /* Texte blanc sur vert */
+	--color-warning: #f59e0b; /* Orange warning (miel) */
+	--color-warning-content: #0a0a0a; /* Texte foncé sur orange */
+	--color-error: #ef4444; /* Rouge erreur */
+	--color-error-content: #ffffff; /* Texte blanc sur rouge */
+
+	--radius-selector: 0.5rem;
+	--radius-field: 0.25rem;
+	--radius-box: 0.5rem;
+	--size-selector: 0.25rem;
+	--size-field: 0.25rem;
+	--border: 1px;
+	--depth: 1;
+	--noise: 0;
+}
+
+@theme {
+	--font-sans: Quicksand, ui-sans-serif, system-ui, sans-serif;
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+	*,
+	::after,
+	::before,
+	::backdrop,
+	::file-selector-button {
+		border-color: var(--color-gray-200, currentcolor);
+	}
+}
+
+/*
+  daisyUI 5 removed form-control, label-text and label-text-alt, and restyled label.
+  These rules keep the daisyUI 4 form look until the forms move to fieldset/legend.
+  This layer comes after daisyUI's, so it wins without !important.
+*/
+@layer utilities.daisyui-v4-compat {
+	.form-control {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.label {
+		display: flex;
+		user-select: none;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0;
+		padding: 0.5rem 0.25rem;
+		white-space: normal;
+		color: inherit;
+	}
+
+	.label-text {
+		font-size: 0.875rem;
+		line-height: 1.25rem;
+		color: var(--color-base-content);
+	}
+
+	.label-text-alt {
+		font-size: 0.75rem;
+		line-height: 1rem;
+		color: var(--color-base-content);
+	}
+
+	/* daisyUI 4 fields stretched to the full width of their form-control */
+	.form-control > :is(.input, .select, .textarea, .file-input) {
+		width: 100%;
+	}
+
+	/* daisyUI 4 tabs shared the full width equally */
+	.tabs > .tab {
+		flex: 1 1 0%;
+	}
+
+	/* Keep tooltips on a single line */
+	.tooltip[data-tip]:before {
+		text-wrap: nowrap;
+		max-width: none;
+	}
+}

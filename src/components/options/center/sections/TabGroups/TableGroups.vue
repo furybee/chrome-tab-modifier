@@ -28,7 +28,7 @@
 								data-tip="Delete"
 								@click.prevent="(event) => deleteGroup(event, group.id)"
 							>
-								<DeleteIcon class="!w-4 !h-4" />
+								<DeleteIcon class="w-4! h-4!" />
 							</button>
 						</div>
 					</td>

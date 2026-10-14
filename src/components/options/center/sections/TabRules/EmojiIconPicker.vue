@@ -33,7 +33,7 @@
 					v-model="searchQuery"
 					type="text"
 					placeholder="Search..."
-					class="input input-xs input-bordered w-full"
+					class="input input-xs w-full"
 					@keydown.escape="isOpen = false"
 				/>
 			</div>

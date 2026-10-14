@@ -146,7 +146,7 @@
 							<label class="label">
 								<span class="label-text">Type</span>
 							</label>
-							<select v-model="newPattern.type" class="select select-bordered select-xs">
+							<select v-model="newPattern.type" class="select select-xs">
 								<option value="domain">Domain (simple matching)</option>
 								<option value="regex">Regex (advanced)</option>
 							</select>
@@ -160,7 +160,7 @@
 								v-model="newPattern.pattern"
 								type="text"
 								placeholder="e.g., example.com or ^https://.*\\.example\\.com"
-								class="input input-bordered input-xs w-full"
+								class="input input-xs w-full"
 							/>
 							<label class="label">
 								<span class="label-text-alt">
@@ -214,7 +214,7 @@
 								type="number"
 								min="1"
 								max="1440"
-								class="input input-bordered input-xs w-24"
+								class="input input-xs w-24"
 							/>
 							<span class="text-xs">minute(s)</span>
 						</div>
@@ -247,7 +247,7 @@
 										ref="fileInput"
 										type="file"
 										accept=".json"
-										class="file-input file-input-xs file-input-bordered w-full"
+										class="file-input file-input-xs w-full"
 										@change="onFileChanged"
 									/>
 								</label>

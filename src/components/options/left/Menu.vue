@@ -3,14 +3,14 @@
 		<li v-for="menuItem in props.menuItems" :key="menuItem.component">
 			<a
 				:class="{
-					active: menuStore.currentMenuItem?.title === menuItem.title,
+					'menu-active': menuStore.currentMenuItem?.title === menuItem.title,
 				}"
 				@click.prevent="onMenuClicked(menuItem)"
 			>
 				<span class="text-xl">{{ menuItem.emoji }}</span>
 				{{ menuItem.title }}
 				<template v-if="menuItem.link">
-					<ExternalIcon class="!w-3 !h-3" />
+					<ExternalIcon class="w-3! h-3!" />
 				</template>
 			</a>
 		</li>

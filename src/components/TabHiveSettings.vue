@@ -33,7 +33,7 @@
 							type="number"
 							min="1"
 							max="1440"
-							class="input input-xs input-bordered w-full"
+							class="input input-xs w-full"
 							@change="saveSettings"
 						/>
 					</div>
@@ -124,7 +124,7 @@
 					<label class="label">
 						<span class="label-text">Type</span>
 					</label>
-					<select v-model="newPatternType" class="select select-sm select-bordered">
+					<select v-model="newPatternType" class="select select-sm">
 						<option value="domain">Domain</option>
 						<option value="url">URL</option>
 					</select>
@@ -138,7 +138,7 @@
 						v-model="newPatternValue"
 						type="text"
 						:placeholder="newPatternType === 'domain' ? 'example.com' : 'https://example.com/page'"
-						class="input input-sm input-bordered"
+						class="input input-sm"
 					/>
 					<label class="label">
 						<span class="label-text-alt opacity-70">

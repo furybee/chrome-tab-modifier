@@ -159,9 +159,11 @@
 				<p>This action will rewrite the website title.</p>
 				<p>You can use special variables in your title:</p>
 				<ul class="list-disc ml-3 space-y-1">
-					<li><code class="bg-base-300 px-1 rounded">{title}</code> - The original page title</li>
 					<li>
-						<code class="bg-base-300 px-1 rounded">{.css-selector}</code> - Extract text from any
+						<code class="bg-base-300 px-1 rounded-sm">{title}</code> - The original page title
+					</li>
+					<li>
+						<code class="bg-base-300 px-1 rounded-sm">{.css-selector}</code> - Extract text from any
 						element on the page using a CSS selector
 					</li>
 				</ul>
@@ -169,13 +171,13 @@
 					<strong>Example for YouTube:</strong> To prepend the channel name to video titles, use:
 				</p>
 				<p>
-					<code class="bg-base-300 px-1 rounded">{.ytd-channel-name a} - {title}</code>
+					<code class="bg-base-300 px-1 rounded-sm">{.ytd-channel-name a} - {title}</code>
 				</p>
 				<p class="mt-2">
 					This works with any valid CSS selector:
-					<code class="bg-base-300 px-1 rounded">{#header h1}</code>,
-					<code class="bg-base-300 px-1 rounded">{.author-name}</code>,
-					<code class="bg-base-300 px-1 rounded">{[data-testid="username"]}</code>, etc.
+					<code class="bg-base-300 px-1 rounded-sm">{#header h1}</code>,
+					<code class="bg-base-300 px-1 rounded-sm">{.author-name}</code>,
+					<code class="bg-base-300 px-1 rounded-sm">{[data-testid="username"]}</code>, etc.
 				</p>
 				<p class="mt-2">
 					<strong>Advanced:</strong> You can also inject parts of the URL with the dollar ($)

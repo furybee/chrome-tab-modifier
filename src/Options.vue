@@ -34,7 +34,7 @@
 							<!-- Search bar for Rules -->
 							<label
 								v-if="hasRules && currentContent.component === 'TabRulesPane'"
-								class="input input-xs input-bordered flex items-center gap-2 w-48 focus-within:w-64 transition-all"
+								class="input input-xs flex items-center gap-2 w-48 focus-within:w-64 transition-all"
 							>
 								<input
 									ref="searchInput"
@@ -50,7 +50,7 @@
 									class="btn btn-xs btn-ghost btn-circle"
 									@click="clearSearch"
 								>
-									<CloseIcon class="!w-3 !h-3" />
+									<CloseIcon class="w-3! h-3!" />
 								</button>
 								<template v-else>
 									<kbd class="kbd kbd-xs">{{ isMac ? '⌘' : 'Ctrl' }}</kbd>
@@ -67,7 +67,7 @@
 								data-tip="Paste rule from clipboard"
 								@click="pasteRule"
 							>
-								<ClipboardIcon class="!w-4 !h-4" />
+								<ClipboardIcon class="w-4! h-4!" />
 								Paste rule
 							</button>
 							<a
@@ -75,14 +75,14 @@
 								class="btn btn-xs btn-circle btn-primary"
 								@click="openAddModal"
 							>
-								<PlusIcon class="!w-3 !h-3" />
+								<PlusIcon class="w-3! h-3!" />
 							</a>
 							<a
 								v-if="hasGroups && currentContent.component === 'TabGroupsPane'"
 								class="btn btn-xs btn-circle btn-primary"
 								@click="openAddGroupModal"
 							>
-								<PlusIcon class="!w-3 !h-3" />
+								<PlusIcon class="w-3! h-3!" />
 							</a>
 						</div>
 					</div>

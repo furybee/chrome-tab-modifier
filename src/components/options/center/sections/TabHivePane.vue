@@ -2,7 +2,7 @@
 	<div class="flex justify-center items-start pt-8 pb-20 px-4">
 		<div class="w-full max-w-4xl">
 			<!-- Tabs Navigation -->
-			<div role="tablist" class="tabs tabs-bordered mb-6">
+			<div role="tablist" class="tabs tabs-border mb-6">
 				<a
 					role="tab"
 					class="tab"
