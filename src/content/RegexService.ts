@@ -45,7 +45,7 @@ export class RegexService {
 			return new RegExp(pattern, flags);
 		} catch (e) {
 			const errorMessage = e instanceof Error ? e.message : 'Unknown error';
-			throw new Error(`Invalid regex pattern: ${errorMessage}`);
+			throw new Error(`Invalid regex pattern: ${errorMessage}`, { cause: e });
 		}
 	}
 }

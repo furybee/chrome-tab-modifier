@@ -28,7 +28,7 @@ export class TitleService {
 		// Try to decode URI, but if it fails (e.g., contains unencoded %), use the value as-is
 		try {
 			return title.replace(tag, decodeURI(value));
-		} catch (e) {
+		} catch {
 			return title.replace(tag, value);
 		}
 	}

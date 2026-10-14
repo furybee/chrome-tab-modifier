@@ -68,7 +68,7 @@ function createSafeRegex(pattern: string, flags = 'g'): RegExp {
 		// nosemgrep: javascript.lang.security.audit.detect-non-literal-regexp.detect-non-literal-regexp
 		return new RegExp(pattern, flags);
 	} catch (e: any) {
-		throw new Error(`Invalid regex pattern: ${e.message}`);
+		throw new Error(`Invalid regex pattern: ${e.message}`, { cause: e });
 	}
 }
 

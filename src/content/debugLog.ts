@@ -19,7 +19,7 @@ export async function initDebugMode(): Promise<void> {
 		if (config?.settings?.debug_mode) {
 			setDebugMode(true);
 		}
-	} catch (error) {
+	} catch {
 		// Silently fail if storage is not available
 	}
 
@@ -31,7 +31,7 @@ export async function initDebugMode(): Promise<void> {
 				if (config?.settings?.debug_mode !== undefined) {
 					setDebugMode(config.settings.debug_mode);
 				}
-			} catch (error) {
+			} catch {
 				// Silently fail
 			}
 		}
