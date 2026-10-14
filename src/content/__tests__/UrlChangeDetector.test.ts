@@ -10,12 +10,10 @@ vi.mock('../debugLog', () => ({
 describe('UrlChangeDetector', () => {
 	let detector: UrlChangeDetector;
 	let originalLocation: Location;
-	let originalHistory: History;
 
 	beforeEach(() => {
 		// Save original objects
 		originalLocation = window.location;
-		originalHistory = window.history;
 
 		// Mock location.href
 		delete (window as any).location;
@@ -24,10 +22,10 @@ describe('UrlChangeDetector', () => {
 		};
 
 		// Mock history API
-		window.history = {
+		vi.stubGlobal('history', {
 			pushState: vi.fn(),
 			replaceState: vi.fn(),
-		} as any;
+		});
 
 		detector = new UrlChangeDetector();
 	});
@@ -35,7 +33,7 @@ describe('UrlChangeDetector', () => {
 	afterEach(() => {
 		// Restore original objects
 		(window as any).location = originalLocation;
-		window.history = originalHistory;
+		vi.unstubAllGlobals();
 		vi.clearAllTimers();
 	});
 

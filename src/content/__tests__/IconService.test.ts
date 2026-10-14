@@ -20,8 +20,7 @@ const mockDocument = {
 	createElement: vi.fn(),
 };
 
-// @ts-expect-error - partial mock of the document global
-global.document = mockDocument as any;
+vi.stubGlobal('document', mockDocument);
 
 describe('IconService', () => {
 	let service: IconService;

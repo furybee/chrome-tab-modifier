@@ -133,7 +133,6 @@
 				<div class="flex items-center justify-between gap-2">
 					<img v-if="isCustomIcon" :src="currentRule.tab.icon" class="w-6 h-6" />
 					<input
-						ref="customIconInput"
 						v-model="currentRule.tab.icon"
 						class="input input-xs input-bordered w-full"
 						:class="{
@@ -460,7 +459,6 @@ const save = async () => {
 
 const isAdvancedOpenWhenMounted = ref(false);
 const currentRuleNameInput = ref<HTMLInputElement | null>(null);
-const customIconInput = ref<HTMLInputElement | null>(null);
 
 const handleImagePaste = async (event: ClipboardEvent) => {
 	const items = event.clipboardData?.items;
