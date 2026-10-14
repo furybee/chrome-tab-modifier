@@ -9,9 +9,9 @@ const mockDocument = {
 	querySelectorAll: vi.fn(),
 };
 
-// @ts-ignore
+// @ts-expect-error - partial mock of the document global
 global.document = mockDocument as any;
-// @ts-ignore
+// @ts-expect-error - partial mock of the location global
 global.location = { href: 'https://example.com/page' };
 
 describe('TitleService', () => {

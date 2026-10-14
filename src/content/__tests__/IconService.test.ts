@@ -8,7 +8,7 @@ const mockChrome = {
 	},
 };
 
-// @ts-ignore
+// @ts-expect-error - partial mock of the chrome global
 global.chrome = mockChrome;
 
 // Mock document
@@ -20,7 +20,7 @@ const mockDocument = {
 	createElement: vi.fn(),
 };
 
-// @ts-ignore
+// @ts-expect-error - partial mock of the document global
 global.document = mockDocument as any;
 
 describe('IconService', () => {
