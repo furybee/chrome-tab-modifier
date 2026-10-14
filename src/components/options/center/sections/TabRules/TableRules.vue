@@ -40,7 +40,15 @@
 								/>
 							</div>
 						</td>
-						<td scope="row">{{ rule.name }}</td>
+						<td scope="row">
+							{{ rule.name }}
+							<kbd
+								v-if="rule.shortcut"
+								class="kbd kbd-xs ml-1"
+								:title="`Toggled by shortcut ${rule.shortcut}`"
+								>⌨ {{ rule.shortcut }}</kbd
+							>
+						</td>
 						<td>
 							<template v-if="!rule.tab.group_id">-</template>
 							<div v-else-if="groupsById[rule.tab.group_id]" class="flex items-center gap-2">

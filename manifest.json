@@ -76,6 +76,36 @@
         "windows": "Alt+Shift+E"
       },
       "description": "Search tabs and bookmarks"
+    },
+    "toggle-rule-1": {
+      "description": "Toggle the rules assigned to shortcut 1"
+    },
+    "toggle-rule-2": {
+      "description": "Toggle the rules assigned to shortcut 2"
+    },
+    "toggle-rule-3": {
+      "description": "Toggle the rules assigned to shortcut 3"
+    },
+    "toggle-rule-4": {
+      "description": "Toggle the rules assigned to shortcut 4"
+    },
+    "toggle-rule-5": {
+      "description": "Toggle the rules assigned to shortcut 5"
+    },
+    "toggle-rule-6": {
+      "description": "Toggle the rules assigned to shortcut 6"
+    },
+    "toggle-rule-7": {
+      "description": "Toggle the rules assigned to shortcut 7"
+    },
+    "toggle-rule-8": {
+      "description": "Toggle the rules assigned to shortcut 8"
+    },
+    "toggle-rule-9": {
+      "description": "Toggle the rules assigned to shortcut 9"
+    },
+    "toggle-rule-10": {
+      "description": "Toggle the rules assigned to shortcut 10"
     }
   }
 }

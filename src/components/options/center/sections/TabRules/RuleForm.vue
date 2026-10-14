@@ -264,6 +264,28 @@
 						<RegexVisualizer class="mt-2" tag="$" :regex="currentRule.tab.url_matcher" />
 					</div>
 				</label>
+				<label class="form-control w-full flex-1">
+					<div class="label">
+						<span class="label-text text-sm">Keyboard shortcut</span>
+						<a class="link text-xs" @click.prevent="openShortcutsPage">Set keys</a>
+					</div>
+					<select
+						v-model="currentRule.shortcut"
+						class="select select-xs w-full"
+						@focus="loadShortcutKeys"
+					>
+						<option :value="null">None</option>
+						<option v-for="slot in shortcutSlots" :key="slot" :value="slot">
+							Shortcut {{ slot }} — {{ shortcutKeys[slot] || 'no key set' }}
+						</option>
+					</select>
+					<div v-if="showHelp" class="label">
+						<span class="text-xs opacity-80 label-text-alt">
+							Enables or disables this rule from any page. Rules sharing a shortcut are toggled
+							together. Choose the keys with "Set keys".</span
+						>
+					</div>
+				</label>
 			</div>
 		</details>
 	</div>
@@ -315,7 +337,7 @@ import { computed, inject, onMounted, ref, watch } from 'vue';
 import CustomSelect, { SelectItem } from '../../../../global/CustomSelect.vue';
 import EmojiIconPicker from './EmojiIconPicker.vue';
 import { _chromeGroupColor, _clone, _getDetections } from '../../../../../common/helpers.ts';
-import { GLOBAL_EVENTS, Group, Rule } from '../../../../../common/types.ts';
+import { GLOBAL_EVENTS, Group, Rule, RULE_SHORTCUT_SLOTS } from '../../../../../common/types.ts';
 import HelpSwap from '../../../../global/HelpSwap.vue';
 import { _getDefaultGroup, _getDefaultRule } from '../../../../../common/storage.ts';
 import ShortGroupForm from './ShortGroupForm.vue';
@@ -350,6 +372,8 @@ const showHelp = ref(false);
 const isGroupFormVisible = ref(false);
 const newGroup = ref<Group | null>(null);
 const currentRule = ref(_clone(rulesStore.currentRule ?? defaultRule));
+// Rules created before keyboard shortcuts have no shortcut field
+currentRule.value.shortcut ??= null;
 
 const isEditMode = computed(() => !!rulesStore.currentRule);
 
@@ -491,9 +515,29 @@ const handleImagePaste = async (event: ClipboardEvent) => {
 	}
 };
 
+const shortcutSlots = Array.from({ length: RULE_SHORTCUT_SLOTS }, (_, i) => i + 1);
+const shortcutKeys = ref<Record<number, string>>({});
+
+// Keys the user assigned to the toggle-rule-N commands in chrome://extensions/shortcuts
+const loadShortcutKeys = async () => {
+	const commands = await chrome.commands.getAll();
+	shortcutKeys.value = Object.fromEntries(
+		commands.flatMap((command) => {
+			const slot = command.name?.match(/^toggle-rule-(\d+)$/)?.[1];
+			return slot && command.shortcut ? [[Number(slot), command.shortcut]] : [];
+		})
+	);
+};
+
+const openShortcutsPage = () => chrome.tabs.create({ url: 'chrome://extensions/shortcuts' });
+
 onMounted(() => {
 	isAdvancedOpenWhenMounted.value =
-		!!currentRule.value.tab.title_matcher || !!currentRule.value.tab.url_matcher;
+		!!currentRule.value.tab.title_matcher ||
+		!!currentRule.value.tab.url_matcher ||
+		!!currentRule.value.shortcut;
+
+	loadShortcutKeys();
 
 	if (currentRuleNameInput.value) {
 		currentRuleNameInput.value.focus();

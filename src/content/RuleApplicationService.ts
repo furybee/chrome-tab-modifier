@@ -69,6 +69,23 @@ export class RuleApplicationService {
 	}
 
 	/**
+	 * Stops applying the current rule and restores the page's own title
+	 * Used when a rule is disabled while the page is open (the favicon is restored on next load)
+	 */
+	reset(): void {
+		this.titleObserver?.disconnect();
+		this.titleObserver = null;
+		this.iconObserver?.disconnect();
+		this.iconObserver = null;
+
+		const originalTitleElement = document.querySelector('meta[name="original-tab-modifier-title"]');
+		if (originalTitleElement) {
+			document.title = originalTitleElement.getAttribute('content') ?? document.title;
+			originalTitleElement.remove();
+		}
+	}
+
+	/**
 	 * Applies title rule with MutationObserver for dynamic title changes
 	 * @param rule - The rule containing title configuration
 	 */

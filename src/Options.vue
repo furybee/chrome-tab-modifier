@@ -286,6 +286,8 @@ onMounted(async () => {
 
 	await rulesStore.init();
 
+	chrome.runtime.onMessage.addListener(onRuntimeMessage);
+
 	emitter.on(GLOBAL_EVENTS.NAVIGATE_TO_SETTINGS, () => {
 		onMenuClicked(sectionItems.find((item) => item.component === 'SettingsPane')!);
 	});
@@ -296,7 +298,15 @@ onMounted(async () => {
 
 onUnmounted(() => {
 	document.removeEventListener('keydown', handleKeydown);
+	chrome.runtime.onMessage.removeListener(onRuntimeMessage);
 });
+
+// Rules toggled by keyboard shortcut: reload them so the list shows the new state
+const onRuntimeMessage = (message: { action?: string }) => {
+	if (message?.action === 'rulesToggled') {
+		rulesStore.init();
+	}
+};
 </script>
 
 <style scoped>

@@ -27,7 +27,14 @@ export type Rule = {
 	url_fragment: string;
 	tab: Tab;
 	is_enabled: boolean;
+	// Keyboard shortcut slot (1 to RULE_SHORTCUT_SLOTS) that toggles this rule
+	shortcut?: number | null;
 };
+
+/**
+ * Number of "toggle-rule-N" commands declared in manifest.json
+ */
+export const RULE_SHORTCUT_SLOTS = 10;
 
 export type Group = {
 	id: string;
