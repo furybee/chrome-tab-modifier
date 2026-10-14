@@ -182,7 +182,7 @@ describe('TabRulesService', () => {
 			expect(mockChrome.tabs.update).not.toHaveBeenCalled();
 		});
 
-		it('should handle multiple duplicate tabs by closing only the first one', async () => {
+		it('should close every duplicate tab, not only the first one', async () => {
 			const currentTab = {
 				id: 1,
 				url: 'https://example.com/page',
@@ -213,9 +213,10 @@ describe('TabRulesService', () => {
 
 			await service.handleSetUnique(message, currentTab);
 
-			// Should only close the first duplicate found
-			expect(mockChrome.tabs.remove).toHaveBeenCalledTimes(1);
+			// Should close all duplicates found
+			expect(mockChrome.tabs.remove).toHaveBeenCalledTimes(2);
 			expect(mockChrome.tabs.remove).toHaveBeenCalledWith(2);
+			expect(mockChrome.tabs.remove).toHaveBeenCalledWith(3);
 		});
 
 		it('should not close any tabs if no duplicates exist', async () => {

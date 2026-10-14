@@ -210,9 +210,10 @@ describe('TabRulesService - GitHub Unique Issue Test', () => {
 
 			await service.handleSetUnique(message, currentTab);
 
-			// Should only close the first duplicate found
-			expect(mockChrome.tabs.remove).toHaveBeenCalledTimes(1);
+			// Should close all duplicates found
+			expect(mockChrome.tabs.remove).toHaveBeenCalledTimes(2);
 			expect(mockChrome.tabs.remove).toHaveBeenCalledWith(2);
+			expect(mockChrome.tabs.remove).toHaveBeenCalledWith(3);
 		});
 	});
 
@@ -370,9 +371,10 @@ describe('TabRulesService - GitHub Unique Issue Test', () => {
 
 			await service.handleSetUnique(message, currentTab);
 
-			// Should close the first duplicate found (either duplicateTab or differentPageTab)
-			// Both match the same rule, so one should be closed
-			expect(mockChrome.tabs.remove).toHaveBeenCalledTimes(1);
+			// duplicateTab and differentPageTab both match the same rule, so both are closed
+			expect(mockChrome.tabs.remove).toHaveBeenCalledTimes(2);
+			expect(mockChrome.tabs.remove).toHaveBeenCalledWith(duplicateTab.id);
+			expect(mockChrome.tabs.remove).toHaveBeenCalledWith(differentPageTab.id);
 
 			// Should NOT close Gmail (doesn't match rule)
 			expect(mockChrome.tabs.remove).not.toHaveBeenCalledWith(gmailTab.id);
