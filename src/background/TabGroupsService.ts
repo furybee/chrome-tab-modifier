@@ -16,6 +16,13 @@ export class TabGroupsService {
 	private splitViewTabs: Set<number> = new Set();
 
 	/**
+	 * In-memory lock per window + Tabee group. Two tabs matching rules of the same
+	 * group are processed in parallel: both query, find no group, and both create one.
+	 * The lock holds until the group exists with its title, so the next query finds it.
+	 */
+	private groupLocks = new Map<string, Promise<void>>();
+
+	/**
 	 * Mark a tab as being in split view
 	 */
 	markTabInSplitView(tabId: number): void {
@@ -136,9 +143,23 @@ export class TabGroupsService {
 			windowId: tab.windowId,
 		};
 
-		chrome.tabGroups.query(tabGroupsQueryInfo, (groups: chrome.tabGroups.TabGroup[]) =>
-			this.handleTabGroups(groups, tab, tmGroup)
-		);
+		const lockKey = `${tab.windowId}|${tmGroup.id}`;
+		const previous = this.groupLocks.get(lockKey) ?? Promise.resolve();
+		const run = previous
+			.catch(() => undefined)
+			.then(async () => {
+				const groups = await new Promise<chrome.tabGroups.TabGroup[]>((resolve) =>
+					chrome.tabGroups.query(tabGroupsQueryInfo, (result) => resolve(result ?? []))
+				);
+				await this.handleTabGroups(groups, tab, tmGroup);
+			});
+		this.groupLocks.set(lockKey, run);
+
+		try {
+			await run;
+		} finally {
+			if (this.groupLocks.get(lockKey) === run) this.groupLocks.delete(lockKey);
+		}
 	}
 
 	/**
@@ -165,7 +186,7 @@ export class TabGroupsService {
 			const group = groups[0];
 			const tabId = tab.id;
 
-			const execute = async () => {
+			const execute = async (): Promise<void> => {
 				// Quick check using tracking set (fastest)
 				if (this.isTabIdInSplitView(tabId)) {
 					console.log('[Tabee] Tab in split view (tracked), aborting group:', tabId);
@@ -194,31 +215,34 @@ export class TabGroupsService {
 					return;
 				}
 
-				chrome.tabs.group({ groupId: group.id, tabIds: [tabId] }, (groupId: number) => {
-					if (chrome.runtime.lastError) {
-						const errorMsg = chrome.runtime.lastError.message || '';
-						// Check if error is split view related
-						if (
-							errorMsg.includes('split') ||
-							errorMsg.includes('Cannot group') ||
-							this.isTabIdInSplitView(tabId)
-						) {
-							console.log('[Tabee] Split view error detected, stopping retries:', errorMsg);
-							this.handleTabGroupsMaxRetries = 600;
-							return;
+				return new Promise<void>((resolve) => {
+					chrome.tabs.group({ groupId: group.id, tabIds: [tabId] }, (groupId: number) => {
+						if (chrome.runtime.lastError) {
+							const errorMsg = chrome.runtime.lastError.message || '';
+							// Check if error is split view related
+							if (
+								errorMsg.includes('split') ||
+								errorMsg.includes('Cannot group') ||
+								this.isTabIdInSplitView(tabId)
+							) {
+								console.log('[Tabee] Split view error detected, stopping retries:', errorMsg);
+								this.handleTabGroupsMaxRetries = 600;
+								resolve();
+								return;
+							}
+							if (this.handleTabGroupsMaxRetries > 0) {
+								setTimeout(() => resolve(execute()), 100);
+								this.handleTabGroupsMaxRetries--;
+								return;
+							}
 						}
-						if (this.handleTabGroupsMaxRetries > 0) {
-							setTimeout(() => execute(), 100);
-							this.handleTabGroupsMaxRetries--;
-							return;
-						}
-					}
-					this.handleTabGroupsMaxRetries = 600;
-					this.updateTabGroup(groupId, tmGroup);
+						this.handleTabGroupsMaxRetries = 600;
+						resolve(this.updateTabGroup(groupId, tmGroup));
+					});
 				});
 			};
 
-			execute();
+			await execute();
 		}
 	}
 
@@ -228,7 +252,7 @@ export class TabGroupsService {
 	private async createAndSetupGroup(tabIds: number[], tmGroup: Group): Promise<void> {
 		const tabId = tabIds[0]; // We only ever pass one tab
 
-		const execute = async () => {
+		const execute = async (): Promise<void> => {
 			// Quick check using tracking set (fastest)
 			if (this.isTabIdInSplitView(tabId)) {
 				console.log('[Tabee] Tab in split view (tracked), aborting createGroup:', tabId);
@@ -240,10 +264,7 @@ export class TabGroupsService {
 			try {
 				const currentTab = await chrome.tabs.get(tabId);
 				if (this.isTabInSplitView(currentTab)) {
-					console.log(
-						'[Tabee] Tab entered split view, aborting createAndSetupGroup:',
-						tabId
-					);
+					console.log('[Tabee] Tab entered split view, aborting createAndSetupGroup:', tabId);
 					this.createAndSetupGroupMaxRetries = 600; // Reset retries
 					return;
 				}
@@ -260,41 +281,41 @@ export class TabGroupsService {
 				return;
 			}
 
-			chrome.tabs.group({ tabIds: tabIds }, (groupId: number) => {
-				if (chrome.runtime.lastError) {
-					const errorMsg = chrome.runtime.lastError.message || '';
-					// Check if error is split view related
-					if (
-						errorMsg.includes('split') ||
-						errorMsg.includes('Cannot group') ||
-						this.isTabIdInSplitView(tabId)
-					) {
-						console.log(
-							'[Tabee] Split view error in createGroup, stopping retries:',
-							errorMsg
-						);
-						this.createAndSetupGroupMaxRetries = 600;
-						return;
+			return new Promise<void>((resolve) => {
+				chrome.tabs.group({ tabIds: tabIds }, (groupId: number) => {
+					if (chrome.runtime.lastError) {
+						const errorMsg = chrome.runtime.lastError.message || '';
+						// Check if error is split view related
+						if (
+							errorMsg.includes('split') ||
+							errorMsg.includes('Cannot group') ||
+							this.isTabIdInSplitView(tabId)
+						) {
+							console.log('[Tabee] Split view error in createGroup, stopping retries:', errorMsg);
+							this.createAndSetupGroupMaxRetries = 600;
+							resolve();
+							return;
+						}
+						if (this.createAndSetupGroupMaxRetries > 0) {
+							setTimeout(() => resolve(execute()), 100);
+							this.createAndSetupGroupMaxRetries--;
+							return;
+						}
 					}
-					if (this.createAndSetupGroupMaxRetries > 0) {
-						setTimeout(() => execute(), 100);
-						this.createAndSetupGroupMaxRetries--;
-						return;
-					}
-				}
-				this.createAndSetupGroupMaxRetries = 600;
-				this.updateTabGroup(groupId, tmGroup);
+					this.createAndSetupGroupMaxRetries = 600;
+					resolve(this.updateTabGroup(groupId, tmGroup));
+				});
 			});
 		};
 
-		execute();
+		await execute();
 	}
 
 	/**
 	 * Update tab group properties
 	 */
-	private updateTabGroup(groupId: number, tmGroup: Group): void {
-		if (!groupId) return;
+	private updateTabGroup(groupId: number, tmGroup: Group): Promise<void> {
+		if (!groupId) return Promise.resolve();
 
 		const updateProperties = {
 			title: tmGroup.title,
@@ -302,17 +323,19 @@ export class TabGroupsService {
 			collapsed: tmGroup.collapsed,
 		} as chrome.tabGroups.UpdateProperties;
 
-		const execute = () => {
-			chrome.tabGroups.update(groupId, updateProperties, () => {
-				if (chrome.runtime.lastError && this.updateTabGroupMaxRetries > 0) {
-					setTimeout(() => execute(), 100);
-					this.updateTabGroupMaxRetries--;
-					return;
-				}
+		const execute = (): Promise<void> =>
+			new Promise<void>((resolve) => {
+				chrome.tabGroups.update(groupId, updateProperties, () => {
+					if (chrome.runtime.lastError && this.updateTabGroupMaxRetries > 0) {
+						setTimeout(() => resolve(execute()), 100);
+						this.updateTabGroupMaxRetries--;
+						return;
+					}
+					resolve();
+				});
 			});
-		};
 
-		execute();
+		return execute();
 	}
 
 	/**
