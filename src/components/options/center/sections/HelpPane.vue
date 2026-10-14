@@ -56,7 +56,7 @@
 					</li>
 					<li>
 						<strong>Merge windows</strong> - Combine all browser windows into one with a keyboard
-						shortcut (Alt+Shift+W) or context menu.
+						shortcut (Alt+Shift+W, Option+Shift+W on Mac) or context menu.
 					</li>
 					<li>
 						<strong>Lightweight Mode</strong> - Reduce memory usage by disabling Tabee on specific
@@ -115,13 +115,14 @@
 						<kbd class="kbd kbd-sm">Shift</kbd> + <kbd class="kbd kbd-sm">W</kbd>
 					</li>
 					<li>
-						<strong>Mac:</strong> <kbd class="kbd kbd-sm">⌘ Command</kbd> +
+						<strong>Mac:</strong> <kbd class="kbd kbd-sm">⌥ Option</kbd> +
 						<kbd class="kbd kbd-sm">Shift</kbd> + <kbd class="kbd kbd-sm">W</kbd>
 					</li>
 				</ul>
 				<p class="mt-2">
 					You can also access this feature by right-clicking anywhere and selecting "Merge All
-					Windows" from the context menu.
+					Windows" from the context menu. To change or remove the shortcut, go to
+					<code class="bg-base-300 px-1 rounded-sm">chrome://extensions/shortcuts</code>.
 				</p>
 			</div>
 		</div>

@@ -63,10 +63,10 @@
       "suggested_key": {
         "default": "Alt+Shift+W",
         "linux": "Alt+Shift+W",
-        "mac": "Command+Shift+W",
+        "mac": "Alt+Shift+W",
         "windows": "Alt+Shift+W"
       },
-      "description": "Merge windows"
+      "description": "Merge all windows into the current one"
     },
     "spot-search": {
       "suggested_key": {

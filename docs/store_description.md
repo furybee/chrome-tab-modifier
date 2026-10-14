@@ -37,7 +37,7 @@ Take full control of your browser tabs with Tabee! Rename, organize, and customi
 - Keyboard navigation - use arrow keys (↑↓) to navigate, Enter to select, Escape to close
 
 🪟 Windows Merger
-- Merge all browser windows into one with Alt+Shift+W (or Cmd+Shift+W on Mac)
+- Merge all browser windows into one with Alt+Shift+W (Option+Shift+W on Mac)
 - Also accessible via right-click context menu
 
 ⚡ Performance Mode
