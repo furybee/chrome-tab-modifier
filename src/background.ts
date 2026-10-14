@@ -8,6 +8,7 @@ import { TabGroupsService } from './background/TabGroupsService';
 import { TabHiveService } from './background/TabHiveService';
 import { WindowService } from './background/WindowService';
 import { ContextMenuService } from './background/ContextMenuService';
+import { RuleShortcutService } from './background/RuleShortcutService';
 import { SpotSearchService } from './background/SpotSearchService';
 
 // Initialize services (Dependency Injection)
@@ -16,6 +17,7 @@ const tabGroupsService = new TabGroupsService();
 const tabHiveService = new TabHiveService();
 const windowService = new WindowService();
 const contextMenuService = new ContextMenuService();
+const ruleShortcutService = new RuleShortcutService();
 const spotSearchService = new SpotSearchService();
 
 // =============================================================================
@@ -378,6 +380,17 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
 
 chrome.commands.onCommand.addListener(async (command, tab) => {
 	console.log('[Tabee] 🔍 Command received:', command);
+
+	// toggle-rule-N: enable/disable the rules assigned to shortcut N
+	const shortcutSlot = ruleShortcutService.getSlotFromCommand(command);
+	if (shortcutSlot !== null) {
+		const enabled = await ruleShortcutService.toggleSlot(shortcutSlot);
+		await ruleShortcutService.showFeedback(enabled);
+		if (enabled !== null) {
+			await ruleShortcutService.propagateChange();
+		}
+		return;
+	}
 
 	if (command === 'merge-windows') {
 		await windowService.mergeAllWindows();

@@ -92,6 +92,14 @@ chrome.runtime.onMessage.addListener(async function (request) {
 				title: title,
 			});
 		}
+	} else if (request.action === 'reapplyRules') {
+		// A rule was toggled (e.g. by keyboard shortcut): apply the rule that now matches, if any
+		const rule = await storageService.getRuleFromUrl(location.href);
+		if (rule) {
+			await ruleApplicationService.applyRule(rule);
+		} else {
+			ruleApplicationService.reset();
+		}
 	} else if (request.action === 'applyRule') {
 		// Don't update title because it will be updated by the MutationObserver
 		await ruleApplicationService.applyRule(request.rule, false);
