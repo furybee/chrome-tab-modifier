@@ -105,6 +105,53 @@ describe('TitleService', () => {
 			expect(result).toBe('Wildcard Content');
 		});
 
+		it('should join the text of all matched elements with |all', () => {
+			mockDocument.querySelectorAll.mockReturnValue([
+				{ childNodes: [], textContent: 'tag1' },
+				{ childNodes: [], textContent: ' tag2 ' },
+				{ childNodes: [], textContent: 'tag3' },
+			]);
+
+			const result = service.getTextBySelector('.filter-tags-selected-wrap span|all');
+
+			expect(mockDocument.querySelectorAll).toHaveBeenCalledWith('.filter-tags-selected-wrap span');
+			expect(result).toBe('tag1 tag2 tag3');
+		});
+
+		it('should use the separator given after |all:, spaces included', () => {
+			mockDocument.querySelectorAll.mockReturnValue([
+				{ childNodes: [], textContent: 'ex1' },
+				{ childNodes: [], textContent: 'ex2' },
+			]);
+
+			expect(service.getTextBySelector('.exclude span|all: -')).toBe('ex1 -ex2');
+			expect(service.getTextBySelector('.exclude span|all:, ')).toBe('ex1, ex2');
+		});
+
+		it('should skip empty elements and return empty string when nothing matches with |all', () => {
+			mockDocument.querySelectorAll.mockReturnValue([
+				{ childNodes: [], textContent: 'a' },
+				{ childNodes: [], textContent: '   ' },
+				{ childNodes: [], textContent: 'b' },
+			]);
+			expect(service.getTextBySelector('span|all')).toBe('a b');
+
+			mockDocument.querySelectorAll.mockReturnValue([]);
+			expect(service.getTextBySelector('span|all')).toBe('');
+		});
+
+		it('should support |all with wildcard selectors', () => {
+			mockDocument.querySelectorAll.mockReturnValue([
+				{ childNodes: [], textContent: 'one' },
+				{ childNodes: [], textContent: 'two' },
+			]);
+
+			const result = service.getTextBySelector('.prefix* span|all');
+
+			expect(mockDocument.querySelectorAll).toHaveBeenCalledWith('[class*="prefix"] span');
+			expect(result).toBe('one two');
+		});
+
 		it('should trim the result', () => {
 			const mockElement = {
 				childNodes: [],
@@ -118,6 +165,29 @@ describe('TitleService', () => {
 	});
 
 	describe('processTitle', () => {
+		it('should join all matched elements in a title template', () => {
+			mockDocument.querySelectorAll.mockImplementation((selector: string) =>
+				selector === '.included span'
+					? [
+							{ childNodes: [], textContent: 'tag1' },
+							{ childNodes: [], textContent: 'tag2' },
+						]
+					: [
+							{ childNodes: [], textContent: 'ex1' },
+							{ childNodes: [], textContent: 'ex2' },
+						]
+			);
+			const rule = {
+				tab: {
+					title: '{.included span|all} -{.excluded span|all: -}',
+					title_matcher: null,
+					url_matcher: null,
+				},
+			} as unknown as Rule;
+
+			expect(service.processTitle('https://example.com', 'Page', rule)).toBe('tag1 tag2 -ex1 -ex2');
+		});
+
 		it('should return title with selector values replaced', () => {
 			const mockElement = {
 				childNodes: [],

@@ -36,21 +36,47 @@ export class TitleService {
 	/**
 	 * Extracts text content from DOM using a CSS selector
 	 * Supports wildcard selectors with * character
+	 * Supports a `|all` suffix to join the text of every matched element:
+	 * `{.tags span|all}` joins with a space, `{.tags span|all:, }` with ", "
+	 * (everything after `all:` is used as the separator, spaces included)
 	 * @param selector - CSS selector string
 	 * @returns Extracted text content or empty string
 	 */
 	getTextBySelector(selector: string): string {
-		let el: Element | null = null;
+		const allMatch = selector.match(/^(.*?)\|all(?::(.*))?$/s);
 
-		if (selector.includes('*')) {
-			const parts = selector.split(' ');
+		if (allMatch) {
+			const separator = allMatch[2] ?? ' ';
 
-			const toSafe = (s: string) =>
-				typeof CSS !== 'undefined' && CSS.escape
-					? CSS.escape(s)
-					: s.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/]/g, '\\]');
+			return this.querySelectorAll(allMatch[1].trim())
+				.map((el) => this.getElementText(el))
+				.filter((text) => text !== '')
+				.join(separator);
+		}
 
-			const modifiedParts = parts.map((part) => {
+		const el = selector.includes('*')
+			? (this.querySelectorAll(selector)[0] ?? null)
+			: document.querySelector(selector);
+
+		return el ? this.getElementText(el) : '';
+	}
+
+	/**
+	 * Finds every element matching a selector, expanding wildcard (*) parts
+	 */
+	private querySelectorAll(selector: string): Element[] {
+		if (!selector.includes('*')) {
+			return Array.from(document.querySelectorAll(selector));
+		}
+
+		const toSafe = (s: string) =>
+			typeof CSS !== 'undefined' && CSS.escape
+				? CSS.escape(s)
+				: s.replace(/\\/g, '\\\\').replace(/"/g, '\\"').replace(/]/g, '\\]');
+
+		const modifiedSelector = selector
+			.split(' ')
+			.map((part) => {
 				if (!part.includes('*')) return part;
 				if (part.startsWith('.')) {
 					const raw = part.replace(/\./g, '').replace(/\*/g, '');
@@ -58,37 +84,33 @@ export class TitleService {
 				}
 				const rawAttr = part.replace(/\*/g, '');
 				return `[${toSafe(rawAttr)}]`;
-			});
+			})
+			.join(' ');
 
-			const modifiedSelector = modifiedParts.join(' ');
-			const elements = document.querySelectorAll(modifiedSelector);
+		return Array.from(document.querySelectorAll(modifiedSelector));
+	}
 
-			if (elements.length > 0) {
-				el = elements[0];
-			}
+	/**
+	 * Reads the text of an element (input value, selected option, or text content)
+	 */
+	private getElementText(el: Element): string {
+		let targetEl: any = el;
+		if (el.childNodes.length > 0) {
+			targetEl = el.childNodes[0];
+		}
+
+		let value: string;
+
+		if (targetEl.tagName?.toLowerCase() === 'input') {
+			value = (targetEl as HTMLInputElement).value;
+		} else if (targetEl.tagName?.toLowerCase() === 'select') {
+			const selectEl = targetEl as HTMLSelectElement;
+			value = selectEl.options[selectEl.selectedIndex].text;
 		} else {
-			el = document.querySelector(selector);
+			value = targetEl.innerText || targetEl.textContent;
 		}
 
-		let value = '';
-
-		if (el) {
-			let targetEl: any = el;
-			if (el.childNodes.length > 0) {
-				targetEl = el.childNodes[0];
-			}
-
-			if (targetEl.tagName?.toLowerCase() === 'input') {
-				value = (targetEl as HTMLInputElement).value;
-			} else if (targetEl.tagName?.toLowerCase() === 'select') {
-				const selectEl = targetEl as HTMLSelectElement;
-				value = selectEl.options[selectEl.selectedIndex].text;
-			} else {
-				value = targetEl.innerText || targetEl.textContent;
-			}
-		}
-
-		return value.trim();
+		return (value ?? '').trim();
 	}
 
 	/**
