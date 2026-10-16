@@ -12,4 +12,8 @@ export default defineConfig({
 		},
 	},
 	plugins: [vue(), crx({ manifest: manifest as unknown as ManifestV3Export })],
+	build: {
+		// Chrome Web Store reviewers rejected minified code as obfuscated: ship readable code
+		minify: false,
+	},
 });
