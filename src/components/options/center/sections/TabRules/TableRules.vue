@@ -15,100 +15,103 @@
 					</th>
 				</tr>
 			</thead>
-			<draggable v-model="rules" tag="tbody" item-key="id" @end="onDragEnd">
-				<template #item="{ element: rule }">
-					<tr class="group cursor-pointer hover:bg-base-100" @click="editRule(rule)">
-						<td class="cursor-grab active:cursor-grabbing">
-							<div class="opacity-0 group-hover:opacity-50 transition-opacity">
-								<GripIcon class="w-4! h-4!" />
-							</div>
-						</td>
-						<td>
-							<div class="tooltip tooltip-right" data-tip="Enable / Disable Rule">
-								<input
-									v-if="rule.is_enabled"
-									:checked="true"
-									type="checkbox"
-									class="toggle toggle-xs toggle-primary"
-									@click.prevent="(event) => toggleRule(event, rule)"
-								/>
-								<input
-									v-else
-									type="checkbox"
-									class="toggle toggle-xs toggle-success"
-									@click.prevent="(event) => toggleRule(event, rule)"
-								/>
-							</div>
-						</td>
-						<td scope="row">
-							{{ rule.name }}
-							<kbd
-								v-if="rule.shortcut"
-								class="kbd kbd-xs ml-1"
-								:title="`Toggled by shortcut ${rule.shortcut}`"
-								>⌨ {{ rule.shortcut }}</kbd
+			<VueDraggable v-model="rules" tag="tbody" @end="onDragEnd">
+				<tr
+					v-for="rule in rules"
+					:key="rule.id"
+					class="group cursor-pointer hover:bg-base-100"
+					@click="editRule(rule)"
+				>
+					<td class="cursor-grab active:cursor-grabbing">
+						<div class="opacity-0 group-hover:opacity-50 transition-opacity">
+							<GripIcon class="w-4! h-4!" />
+						</div>
+					</td>
+					<td>
+						<div class="tooltip tooltip-right" data-tip="Enable / Disable Rule">
+							<input
+								v-if="rule.is_enabled"
+								:checked="true"
+								type="checkbox"
+								class="toggle toggle-xs toggle-primary"
+								@click.prevent="(event) => toggleRule(event, rule)"
+							/>
+							<input
+								v-else
+								type="checkbox"
+								class="toggle toggle-xs toggle-success"
+								@click.prevent="(event) => toggleRule(event, rule)"
+							/>
+						</div>
+					</td>
+					<td scope="row">
+						{{ rule.name }}
+						<kbd
+							v-if="rule.shortcut"
+							class="kbd kbd-xs ml-1"
+							:title="`Toggled by shortcut ${rule.shortcut}`"
+							>⌨ {{ rule.shortcut }}</kbd
+						>
+					</td>
+					<td>
+						<template v-if="!rule.tab.group_id">-</template>
+						<div v-else-if="groupsById[rule.tab.group_id]" class="flex items-center gap-2">
+							<ColorVisualizer :color="_chromeGroupColor(groupsById[rule.tab.group_id].color)" />
+							{{ groupsById[rule.tab.group_id].title }}
+						</div>
+					</td>
+					<td>
+						<div class="flex items-center gap-2">
+							<span v-if="rule.tab.icon && isEmoji(rule.tab.icon)" class="text-xl">
+								{{ rule.tab.icon }}
+							</span>
+							<img
+								v-else-if="rule.tab.icon"
+								:alt="rule.name + '_icon'"
+								:src="getIconUrl(rule.tab.icon)"
+								class="w-6 h-6"
+							/>
+							{{ rule.tab.title && rule.tab.title !== '' ? rule.tab.title : '' }}
+						</div>
+					</td>
+					<td>
+						{{ rule.detection }}
+					</td>
+					<td>
+						<div class="tooltip" :data-tip="rule.url_fragment">
+							{{ _shortify(rule.url_fragment, 20) }}
+						</div>
+					</td>
+					<td>
+						<div class="flex justify-end gap-8 invisible group-hover:visible overflow-hidden">
+							<button
+								v-if="FEATURE_FLAGS.ENABLE_RULE_COPY_PASTE"
+								class="btn btn-xs btn-circle tooltip flex items-center justify-items-center"
+								data-tip="Copy to clipboard"
+								@click.prevent="(event) => copyRule(event, rule.id)"
 							>
-						</td>
-						<td>
-							<template v-if="!rule.tab.group_id">-</template>
-							<div v-else-if="groupsById[rule.tab.group_id]" class="flex items-center gap-2">
-								<ColorVisualizer :color="_chromeGroupColor(groupsById[rule.tab.group_id].color)" />
-								{{ groupsById[rule.tab.group_id].title }}
-							</div>
-						</td>
-						<td>
-							<div class="flex items-center gap-2">
-								<span v-if="rule.tab.icon && isEmoji(rule.tab.icon)" class="text-xl">
-									{{ rule.tab.icon }}
-								</span>
-								<img
-									v-else-if="rule.tab.icon"
-									:alt="rule.name + '_icon'"
-									:src="getIconUrl(rule.tab.icon)"
-									class="w-6 h-6"
-								/>
-								{{ rule.tab.title && rule.tab.title !== '' ? rule.tab.title : '' }}
-							</div>
-						</td>
-						<td>
-							{{ rule.detection }}
-						</td>
-						<td>
-							<div class="tooltip" :data-tip="rule.url_fragment">
-								{{ _shortify(rule.url_fragment, 20) }}
-							</div>
-						</td>
-						<td>
-							<div class="flex justify-end gap-8 invisible group-hover:visible overflow-hidden">
-								<button
-									v-if="FEATURE_FLAGS.ENABLE_RULE_COPY_PASTE"
-									class="btn btn-xs btn-circle tooltip flex items-center justify-items-center"
-									data-tip="Copy to clipboard"
-									@click.prevent="(event) => copyRule(event, rule.id)"
-								>
-									<ClipboardIcon class="w-4! h-4!" />
-								</button>
+								<ClipboardIcon class="w-4! h-4!" />
+							</button>
 
-								<button
-									class="btn btn-xs btn-circle tooltip flex items-center justify-items-center"
-									data-tip="Duplicate"
-									@click.prevent="(event) => duplicateRule(event, rule.id)"
-								>
-									<DuplicateIcon class="w-4! h-4!" />
-								</button>
+							<button
+								class="btn btn-xs btn-circle tooltip flex items-center justify-items-center"
+								data-tip="Duplicate"
+								@click.prevent="(event) => duplicateRule(event, rule.id)"
+							>
+								<DuplicateIcon class="w-4! h-4!" />
+							</button>
 
-								<button
-									class="btn btn-xs btn-circle btn-outline tooltip flex items-center justify-items-center btn-error"
-									data-tip="Delete"
-									@click.prevent="(event) => deleteRule(event, rule.id)"
-								>
-									<DeleteIcon class="w-4! h-4!" />
-								</button>
-							</div>
-						</td>
-					</tr>
-				</template>
-			</draggable>
+							<button
+								class="btn btn-xs btn-circle btn-outline tooltip flex items-center justify-items-center btn-error"
+								data-tip="Delete"
+								@click.prevent="(event) => deleteRule(event, rule.id)"
+							>
+								<DeleteIcon class="w-4! h-4!" />
+							</button>
+						</div>
+					</td>
+				</tr>
+			</VueDraggable>
 		</table>
 	</div>
 </template>
@@ -123,7 +126,7 @@ import { useRulesStore } from '../../../../../stores/rules.store.ts';
 import RefreshButton from '../../../../global/RefreshButton.vue';
 import { _chromeGroupColor, _shortify } from '../../../../../common/helpers.ts';
 import ColorVisualizer from '../TabGroups/ColorVisualizer.vue';
-import draggable from 'vuedraggable';
+import { VueDraggable } from 'vue-draggable-plus';
 import { FEATURE_FLAGS } from '../../../../../common/feature-flags.ts';
 
 const props = defineProps<{
