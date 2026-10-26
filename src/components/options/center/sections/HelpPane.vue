@@ -75,8 +75,8 @@
 						side panel.
 					</li>
 					<li>
-						<strong>Sync across devices</strong> - All your rules and settings sync automatically
-						via Chrome Sync.
+						<strong>Backup & restore</strong> - Export all your rules and groups to a JSON file and
+						import them on another device or browser.
 					</li>
 					<li>And the icing on the cake... <strong>Combine all of them!</strong></li>
 				</ul>
