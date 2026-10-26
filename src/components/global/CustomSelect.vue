@@ -1,10 +1,11 @@
 <template>
 	<div class="flex w-full bg-base-200 rounded-md border border-base-content/20">
 		<details ref="dropdown" class="dropdown w-full">
+			<!-- No tabindex: <summary> is natively focusable, and daisyUI 5 sets pointer-events: none on a
+			focused [tabindex]:first-child of .dropdown, so the click never reached it (#576) -->
 			<summary
 				class="btn btn-xs w-full flex flex-row flex-nowrap whitespace-nowrap justify-between items-center"
 				role="button"
-				tabindex="0"
 			>
 				<div class="flex items-center">
 					<img v-if="currentItem?.icon" :src="currentItem.icon" alt="_icon" class="w-4 h-4 mr-2" />
