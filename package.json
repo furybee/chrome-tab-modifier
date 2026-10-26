@@ -31,7 +31,7 @@
     "@types/chrome": "^0.0.268",
     "@vitejs/plugin-vue": "^6.0.10",
     "@vitest/coverage-v8": "^5.0.4",
-    "@vitest/ui": "^5.0.4",
+    "@vitest/ui": "^5.0.5",
     "daisyui": "^5.7.50",
     "eslint": "^10.12.0",
     "eslint-config-prettier": "^10.1.8",
