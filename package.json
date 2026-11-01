@@ -43,7 +43,7 @@
     "prettier": "^3.3.3",
     "tailwindcss": "^4.3.3",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.71.2",
+    "typescript-eslint": "^8.72.1",
     "vite": "^8.3.4",
     "vitest": "^5.0.5",
     "vue-eslint-parser": "^10.4.1",
