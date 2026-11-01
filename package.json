@@ -20,7 +20,7 @@
   "dependencies": {
     "lz-string": "^1.5.0",
     "mitt": "^3.0.1",
-    "pinia": "^2.1.7",
+    "pinia": "^4.1.0",
     "vue": "^3.4.21",
     "vue-draggable-plus": "^0.6.1"
   },
